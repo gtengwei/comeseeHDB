@@ -24,7 +24,7 @@ of the application.
 • At the end of the 9th week, the ZEA wants to see the complete system architecture,
 system design, and the initial application prototype.  
 • At the end of the 11th week, the ZEA will invite all the participating teams to
-demonstrate their working application prototype to other teamsin the same class.
+demonstrate their working application prototype to other teamsin the same class.  
 Any application proposals are welcome! However, the participating teams are required
 to use government data APIs or other data APIs for real world data. The teams must obtain
 access to the data API through the government agency websites or other authorized data
