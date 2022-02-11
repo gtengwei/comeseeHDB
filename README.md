@@ -8,7 +8,7 @@ learn and work.
 You can find a list of applications that were developed using the government on the website
 https://data.gov.sg/. However, the number of ways to use the data to make our nation
 smarter is only limited by your imagination!
-The competition will last 11 weeks. The milestones are described below.
+The competition will last 11 weeks. The milestones are described below.  
 • At the end of the 2nd week, the ZEA wants to see proposals of applications with
 clear target users, application features, and market values. Your application must not
 be a simple presentation of data extracted from these databases. Instead, it should
