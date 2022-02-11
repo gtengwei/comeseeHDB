@@ -1,13 +1,12 @@
-# comeseeHDB
-Building the Smart Nation
+# Building the Smart Nation comeseeHDB
 The Smart Nation movement went from conceptualization to real action. The ZEA
 (CZ2006/CE2006 Authority) launched its fourth Data-Driven Smart Nation Competition in
 January 2017. The goal ofthe competition is to elicit innovative applications that exploit
 the publicly available government data (https://data.gov.sg/ ) to change the ways we live,
-learn and work.
+learn and work.  
 You can find a list of applications that were developed using the government on the website
 https://data.gov.sg/. However, the number of ways to use the data to make our nation
-smarter is only limited by your imagination!
+smarter is only limited by your imagination!  
 The competition will last 11 weeks. The milestones are described below.  
 • At the end of the 2nd week, the ZEA wants to see proposals of applications with
 clear target users, application features, and market values. Your application must not
