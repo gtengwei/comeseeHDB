@@ -2,22 +2,27 @@
 {% block title %}Home{% endblock %} 
 
 {% block content%}
-  <h1 align="center">Notes</h1>
-  <ul class="list-group list-group-flush" id="notes">
-    {% for note in user.notes %}
+  <h1 align="center">Reviews</h1>
+  <ul class="list-group list-group-flush" id="reviews">
+    {% for review in user.reviews %}
     <li class="list-group-item">
-      {{ note.data }}
-      <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+      <img src="{{ user.avatar(50) }}">
+      <b>{{user.username}}</b>
+      <div style="word-wrap: break-word; width:1000px">
+        <p>{{ review.data }}</p>
+      </div>
+      
+      <button type="button" class="close" onClick="deleteReview({{ review.id }})">
         <span aria-hidden="true">&times;</span>
       </button>
     </li>
     {% endfor %}
   </ul>
   <form method="POST">
-    <textarea name="note" id="note" class="form-control"></textarea>
+    <textarea name="review" id="review" class="form-control" placeholder="Write your review here!"></textarea>
     <br />
     <div align="center">
-      <button type="submit" class="btn btn-primary">Add Note</button>
+      <button type="submit" class="btn btn-primary">Add Review</button>
     </div>
   </form>
-  {% endblock %}
+{% endblock %}
