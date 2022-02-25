@@ -14,11 +14,7 @@ user = Blueprint('user', __name__)
 @login_required
 def profile(username):
     user = User.query.filter_by(username=username).first_or_404()
-    posts = [
-        {'author': user, 'body': 'Test post #1'},
-        {'author': user, 'body': 'Test post #2'}
-    ]
-    return render_template('profile.html', user=user, posts=posts)
+    return render_template('profile.html', user=user)
 
 ## Request password change for every unique user
 @user.route('/request-password-change/<username>', methods=['GET', 'POST'])

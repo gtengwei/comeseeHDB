@@ -20,9 +20,9 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        user = User.query.filter_by(email=email).first()
-        user_verify_email = User.query.filter_by(email=email).first().email_verified
+        user = User.query.filter_by(email=email).first()  
         if user:
+            user_verify_email = User.query.filter_by(email=email).first().email_verified
             if user_verify_email == 0:
                 flash('Please verify your email address first.', category='error')
                 return redirect(url_for('auth.login'))
