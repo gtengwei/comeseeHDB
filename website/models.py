@@ -29,7 +29,7 @@ class User(db.Model, UserMixin):
     postal_code_change = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
     reviews = db.relationship('Review')
     email_verified = db.Column(db.Boolean(), nullable=False, default=False)
-    email_verified_date = db.Column(db.DateTime(timezone=True))
+    email_verified_date = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
 
     def get_token(self,expires_sec=120):
         serial=Serializer(current_app.config['SECRET_KEY'],expires_in = expires_sec)
@@ -50,6 +50,8 @@ class User(db.Model, UserMixin):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=retro&s={}'.format(
             digest, size)
+    
+
 
 
 #Base = declarative_base()
@@ -69,7 +71,8 @@ class Flat(db.Model):
     flat_model = db.Column(String(150))
     lease_commence_date = db.Column(String(150))
     remaining_lease = db.Column(String(150))
-    resale_price = db.Column(Float)   
+    resale_price = db.Column(Integer)  
+
 
 def create_Flat_table():
     #This will create the table in the database

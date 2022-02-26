@@ -4,6 +4,7 @@
 {% block content %}
 <head>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  
 
 
 
@@ -24,7 +25,34 @@
     </style>
 </head> 
 
+<form method="POST">
+  <div class="container py-2 ">
+      <div class="row justify-content-center">
+          <div class="input-group col-md-4" >
+              <input class="form-control py-2 border-right-0 border" name="search" id="search" placeholder = "Search for Properties here!">
+              <span class="input-group-append ">
+                  <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" >
+                    <i class="fa fa-search"></i>
+                  </button>
+                  <div class="btn-group">
+                    <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Sort
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" name= "price_high" id = "price_high" href="{{ url_for('views.sort',  criteria = 'price_high') }}">Price (High to Low)</a>
+                      <a class="dropdown-item" name = "price_low" id="price_low" href="{{ url_for('views.sort', criteria = 'price_low') }}">Price (Low to High)</a>
+                      <a class="dropdown-item" name = "remaining_lease_high" id="remaining_lease_high" href="{{ url_for('views.sort', criteria = 'remaining_lease_high') }}">Remaining Lease (High to Low)</a>
+                    </div>
+                  </div>
+                </span>
+          </div>
+      </div>
+  </div>
+</form>
+
+
 <body class="bg">
+  
   <div id="properties" class="card-body mx-auto bg-pink" style="width: 30rem;">
     {% for entry in data %}
       <div class="card mb-3">
@@ -70,7 +98,7 @@
 
 
   function downloadContent(index, limit) {
-    $.get('/api?index=' + index + '&limit=' + limit, (data) => {
+    $.get('/load_home?index=' + index + '&limit=' + limit, (data) => {
       for (var index = 0; index < data.data.length; index++) {
         var entry = "/flat-details/" + data.data[index][0];   
         var page = `
