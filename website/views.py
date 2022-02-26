@@ -65,6 +65,13 @@ def flat_details(flatId):
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
+    '''if request.method == 'POST':
+        flash('Flat favourited!', category = 'success')
+        user = request.form.get(current_user.id)
+        flat = request.form.get(current_flat)
+        new_favourites = Favourites(user_id = user, flat_id = flat)
+        db.session.add(new_favourites)
+        db.session.commit()'''
     os.chdir("/Users/nanshiyuan/Documents/GitHub/website")
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
@@ -72,7 +79,7 @@ def home():
     c.execute(myquery)
     data=list(c.fetchall())
 
-    return render_template('home.html', user=current_user,data=data[:15])
+    return render_template('home.html', user=current_user,data=data[:15],heartcolour="white")
 
 @views.route('/api', methods=['GET', 'POST'])
 def api():

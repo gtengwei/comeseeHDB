@@ -19,6 +19,11 @@ class Review(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'))
 
+'''class Favourites(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'))'''
+
 # Table for User entity
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -28,6 +33,7 @@ class User(db.Model, UserMixin):
     postal_code = db.Column(db.String(150))
     postal_code_change = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
     reviews = db.relationship('Review')
+    #favourites = db.relationship('Favourites')
     email_verified = db.Column(db.Boolean(), nullable=False, default=False)
     email_verified_date = db.Column(db.DateTime(timezone=True))
 
@@ -78,6 +84,3 @@ def create_Flat_table():
     os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
     df = pd.read_csv('test.csv')
     df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
-
-
-    
