@@ -6,7 +6,6 @@ from . import db
 import json
 import sqlite3
 import os
-from datetime import datetime
 import random
 
 views = Blueprint('views', __name__)
@@ -66,13 +65,14 @@ def flat_details(flatId):
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     myquery = ("SELECT id, street_name, resale_price,flat_type, storey_range FROM Flat;")
     c.execute(myquery)
     data=list(c.fetchall())
     #random.shuffle(data)
+    #print(os.getcwd())
+    
     ## Search for flats from homepage
     if request.method == 'POST':
         street_name = request.form.get('search')
@@ -87,18 +87,18 @@ def home():
             return render_template("search.html", user = current_user, street_name = street_name)
 
     session.clear()
-    return render_template('home.html', user=current_user,data=data[:15])
+    return render_template('home.html', user=current_user,flats=data[:15])
 
 ## Infinte Scrolling for Home Page
 @views.route('/load_home', methods=['GET', 'POST'])
 def load_home():
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     myquery = ("SELECT id, street_name, resale_price,flat_type, storey_range FROM Flat;")
     c.execute(myquery)
     data=list(c.fetchall())
     #random.shuffle(data)
+
     if request.args:
         index = int(request.args.get('index'))
         limit = int(request.args.get('limit'))

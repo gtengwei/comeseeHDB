@@ -5,6 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 from flask_mail import Mail
+import os
+
 app = Flask(__name__)
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -42,7 +44,7 @@ app.register_blueprint(user, url_prefix='/')
 from .models import *
 
 create_database(app)
-
+os.chdir("website")
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.init_app(app)

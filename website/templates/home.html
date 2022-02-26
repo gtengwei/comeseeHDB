@@ -54,22 +54,22 @@
 <body class="bg">
   
   <div id="properties" class="card-body mx-auto bg-pink" style="width: 30rem;">
-    {% for entry in data %}
+    {% for flat in flats %}
       <div class="card mb-3">
         <div class="card-header">
-          <strong><a href ="{{ url_for('views.flat_details', flatId=entry[0]) }}" target = "_blank">{{entry[1]}}</strong></a>
+          <strong><a href ="{{ url_for('views.flat_details', flatId=flat[0]) }}" target = "_blank">{{flat[1]}}</strong></a>
         </div>
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <img src="{{entry['image']}}" class="img-thumbnail">
+              <img src="{{flat['image']}}" class="img-thumbnail">
             </div>
             <div class="col">
-              <p><strong>Price: </strong>${{entry[2]}}</p>
+              <p><strong>Price: </strong>${{flat[2]}}</p>
               <br/>
-              <p><strong>Flat Type: </strong>{{entry[3]}}</p>
+              <p><strong>Flat Type: </strong>{{flat[3]}}</p>
               <br/>
-              <p><strong>Floor: </strong>{{entry[4]}}</p>
+              <p><strong>Floor: </strong>{{flat[4]}}</p>
               
             </div>
           </div>
