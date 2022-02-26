@@ -61,3 +61,4 @@ def send_mail_verify(user):
 def calculate_time_difference(current_datetime, datetime_to_compare):
     time_difference = current_datetime - datetime_to_compare
     return time_difference.days
+

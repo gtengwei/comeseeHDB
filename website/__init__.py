@@ -5,13 +5,13 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 from flask_mail import Mail
-
 app = Flask(__name__)
 db = SQLAlchemy()
 DB_NAME = "database.db"
 
 def create_database(app):
     if not path.exists('website/' + DB_NAME):
+        create_Flat_table()
         db.create_all(app=app)
         print('Created Database!')
 
@@ -31,7 +31,6 @@ app.config['MAIL_PASSWORD'] = 'Lattadcane123'
 mail=Mail(app)
 
 db.init_app(app)
-
 from .views import views
 from .auth import auth
 from .user import user
@@ -40,7 +39,7 @@ app.register_blueprint(views, url_prefix='/')
 app.register_blueprint(auth, url_prefix='/')
 app.register_blueprint(user, url_prefix='/')
 
-from .models import User, Review
+from .models import *
 
 create_database(app)
 

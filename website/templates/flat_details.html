@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+    
+{% block title %}Flat Details{% endblock %}
+    
+{% block content %}
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="\static\comeseeHDB logo.jpg" alt="First slide">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="\static\comeseeHDB logo.jpg" alt="Second slide">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="\static\comeseeHDB logo.jpg" alt="Third slide">
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+<h1>{{flat.street_name}}</h1>
+<div class="row"> 
+<div class="col-sm-3">
+    <p class="mb-0">Price</p>
+</div>
+<div class="col-sm-9">
+    <p class="text-muted mb-0">${{flat.resale_price}}</p>
+</div>
+</div>
+<hr>
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Flat Type</p>
+</div>
+<div class="col-sm-9">
+    <p class="text-muted mb-0">{{flat.flat_type}}</p>
+</div>
+</div>
+<hr>
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Storey Range</p>
+</div>
+<div class="col-sm-9">
+    <p class="text-muted mb-0">{{flat.storey_range}}</p>
+</div>
+</div>
+<hr>
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Sold Date</p>
+</div>
+<div class="col-sm-9">
+    <p class="text-muted mb-0">{{flat.month}}</p>
+</div>
+</div>
+<hr>
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Town</p>
+</div>
+<div class="col-sm-9">
+    <p class="text-muted mb-0">{{flat.town}}</p>
+</div>
+</div>
+<hr>
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Block</p>
+</div>
+<div class="col-sm-9">
+    <p class="text-muted mb-0">{{flat.block}}</p>
+</div>
+</div>
+<hr>
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Floor Area (Metre Square)</p>
+</div>
+<div class="col-sm-9">
+    <p class="text-muted mb-0">{{flat.floor_area_sqm}}</p>
+</div>
+</div>
+<hr>
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Flat Model</p>
+</div>
+<div class="col-sm-9">
+    <p class="text-muted mb-0">{{flat.flat_model}}</p>
+</div>
+</div>
+<hr>
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Remaining Lease</p>
+</div>
+<div class="col-sm-9">
+    <p class="text-muted mb-0">{{flat.remaining_lease}}</p>
+</div>
+</div>
+
+<h1 align="center">Reviews</h1>
+  
+  <form method="POST">
+    <textarea name="review" id="review" class="form-control" placeholder="Write your review here!"></textarea>
+    <br />
+    <div align="center">
+      <button type="submit" class="btn btn-primary">Add Review</button>
+    </div>
+  </form>
+  <ul class="list-group list-group-flush" id="reviews">
+    {% for review in user.reviews %}
+    <li class="list-group-item">
+      <img src="{{ user.avatar(50) }}">
+      <b>{{user.username}}</b>
+      <div style="word-wrap: break-word; width:1000px">
+        <p>{{ review.data }}</p>
+            <div class="row justify-content-end">
+                <p class="text-muted mb-0"> {{review.date}}</p>
+            </div>
+      </div>
+      
+      <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

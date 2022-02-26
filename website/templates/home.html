@@ -1,28 +1,106 @@
-{% extends "base.html" %} 
-{% block title %}Home{% endblock %} 
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %}
 
-{% block content%}
-  <h1 align="center">Reviews</h1>
-  <ul class="list-group list-group-flush" id="reviews">
-    {% for review in user.reviews %}
-    <li class="list-group-item">
-      <img src="{{ user.avatar(50) }}">
-      <b>{{user.username}}</b>
-      <div style="word-wrap: break-word; width:1000px">
-        <p>{{ review.data }}</p>
-      </div>
+{% block content %}
+<head>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+    <style>
+      /* Modify the background color */
       
-      <button type="button" class="close" onClick="deleteReview({{ review.id }})">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </li>
+      .card {
+          background-color: white;
+      }
+      .card-header {
+          background-color: pink;
+  
+      }
+      .card-body {
+          background-color: white;
+  
+      }
+    </style>
+</head> 
+
+<body class="bg">
+  <div id="properties" class="card-body mx-auto bg-pink" style="width: 30rem;">
+    {% for entry in data %}
+      <div class="card mb-3">
+        <div class="card-header">
+          <strong><a href ="{{ url_for('views.flat_details', flatId=entry[0]) }}" target = "_blank">{{entry[1]}}</strong></a>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <img src="{{entry['image']}}" class="img-thumbnail">
+            </div>
+            <div class="col">
+              <p><strong>Price: </strong>${{entry[2]}}</p>
+              <br/>
+              <p><strong>Flat Type: </strong>{{entry[3]}}</p>
+              <br/>
+              <p><strong>Floor: </strong>{{entry[4]}}</p>
+              
+            </div>
+          </div>
+        </div>
+      </div>
     {% endfor %}
-  </ul>
-  <form method="POST">
-    <textarea name="review" id="review" class="form-control" placeholder="Write your review here!"></textarea>
-    <br />
-    <div align="center">
-      <button type="submit" class="btn btn-primary">Add Review</button>
-    </div>
-  </form>
+  </div>
+        
+
+  
+
+<script type="text/javascript">
+  var index = 20;
+  var limit = 20;
+
+  $(window).scroll(() => {
+    var current_y = $(window).scrollTop();
+    var window_height = $(window).height();
+    var document_height = $(document).height();
+    
+    if (current_y + window_height  == document_height) {
+      downloadContent(index, limit);
+      index += 10
+    }
+  });
+
+
+  function downloadContent(index, limit) {
+    $.get('/api?index=' + index + '&limit=' + limit, (data) => {
+      for (var index = 0; index < data.data.length; index++) {
+        var entry = "/flat-details/" + data.data[index][0];   
+        var page = `
+          <div class="card mb-3">
+            <div class="card-header">
+              <strong>` +`<a href="${entry}" target = "_blank">`+ data.data[index][1] + `</strong></a>
+            </div> 
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <img src="` + data.data[index].image + `" class="img-thumbnail">
+                </div>
+                <div class="col">
+                  <p><strong>Price: </strong>` +`$`+ data.data[index][2] + `</p>
+                  <br/>
+                  <p><strong>Flat Type: </strong>` + data.data[index][3] + `</p>
+                  <br/>
+                  <p><strong>Floor: </strong>` + data.data[index][4] + `</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+
+        $('#properties').append(page)
+      }
+    });
+  }
+  
+  </script>
+
+  </body>
 {% endblock %}
