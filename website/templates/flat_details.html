@@ -111,31 +111,43 @@
 </div>
 </div>
 
-<h1 align="center">Reviews</h1>
-  
-  <form method="POST">
-    <textarea name="review" id="review" class="form-control" placeholder="Write your review here!"></textarea>
+<br>
+
+<form method="POST">
+  <span class="input-group-append ">
+    <textarea name="review" id="review" class="form-control" style ="height: 50px" placeholder="Write your review here!"></textarea>
     <br />
     <div align="center">
-      <button type="submit" class="btn btn-primary">Add Review</button>
+      <button type="submit" class="btn btn-primary btn-sm">Add Review</button>
     </div>
-  </form>
-  <ul class="list-group list-group-flush" id="reviews">
-    {% for review in user.reviews %}
-    <li class="list-group-item">
-      <img src="{{ user.avatar(50) }}">
-      <b>{{user.username}}</b>
-      <div style="word-wrap: break-word; width:1000px">
-        <p>{{ review.data }}</p>
-            <div class="row justify-content-end">
-                <p class="text-muted mb-0"> {{review.date}}</p>
-            </div>
-      </div>
-      
-      <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </li>
-    {% endfor %}
-  </ul>
+  </span>
+</form>
+
+<h1 align="center">Reviews</h1>
+
+<br>
+
+{% if flat.reviews|length == 0 %}
+  <h3 class="text-muted mb-0" align="center">No reviews yet!</h3>
+{% endif %}
+
+<ul class="list-group list-group-flush" id="reviews">
+  {% for review in flat.reviews|reverse %}
+  <li class="list-group-item">
+    <img src="{{ review.user.avatar(50) }}">
+    <b>{{review.user.username}}</b>
+    <div style="word-wrap: break-word; width:1000px">
+      <p>{{ review.data }}</p>
+          <div class="row justify-content-end">
+              <small class="text-muted mb-0"> Posted {{moment(review.date).fromNow() }}</small>
+          </div>
+    </div>
+    {% if review.user == user %}
+    <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
 {% endblock %}
