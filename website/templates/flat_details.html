@@ -118,7 +118,12 @@
     <textarea name="review" id="review" class="form-control" style ="height: 50px" placeholder="Write your review here!"></textarea>
     <br />
     <div align="center">
+      {% if user.is_authenticated %}
       <button type="submit" class="btn btn-primary btn-sm">Add Review</button>
+    ``{% else %}
+      <a href="/login" class="btn btn-primary btn-sm">Login to add review</a>
+    {% endif %}
+    
     </div>
   </span>
 </form>
@@ -129,6 +134,8 @@
 
 {% if flat.reviews|length == 0 %}
   <h3 class="text-muted mb-0" align="center">No reviews yet!</h3>
+{% else %}
+  <h3 class="text-muted mb-0" align="right">{{flat.reviews|length}} Reviews Posted</h3>
 {% endif %}
 
 <ul class="list-group list-group-flush" id="reviews">

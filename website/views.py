@@ -43,7 +43,6 @@ def delete_review():
 
 ## Route for every flat
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
-@login_required
 def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
     if request.method == 'POST':
@@ -63,7 +62,6 @@ def flat_details(flatId):
 
 ## Route for Home Page
 @views.route('/', methods=['GET', 'POST'])
-@login_required
 def home():
     os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")   
     #os.chdir("website") 
@@ -2217,7 +2215,6 @@ def load_sort():
         
 
 @views.route('/filter', methods=['GET', 'POST'])  
-@login_required
 def filter():
     if request.method == 'POST':
         towns = request.form.getlist('town')
