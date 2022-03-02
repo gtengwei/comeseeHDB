@@ -82,7 +82,7 @@ def create_Flat_table():
     #This will create the table in the database
     engine = create_engine('sqlite:///website/database.db')
     db.Model.metadata.create_all(engine)
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
+    os.chdir("C:/Users/User/Documents/GitHub/comeseeHDB/website")
     df = pd.read_csv('test.csv')
     df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
 

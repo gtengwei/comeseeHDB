@@ -63,9 +63,9 @@ def flat_details(flatId):
 ## Route for Home Page
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")   
+    os.chdir("C:/Users/User/Documents/GitHub/comeseeHDB/website")
     #os.chdir("website") 
-    #print(os.getcwd())
+    print(os.getcwd())
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     myquery = ("SELECT id, street_name, resale_price,flat_type, storey_range FROM Flat;")
@@ -132,7 +132,7 @@ def home():
 ## Infinte Scrolling for Home Page
 @views.route('/load_home', methods=['GET', 'POST'])
 def load_home():
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
+    os.chdir("C:/Users/User/Documents/GitHub/comeseeHDB/website")
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     myquery = ("SELECT id, street_name, resale_price,flat_type, storey_range FROM Flat;")
