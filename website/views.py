@@ -65,13 +65,13 @@ def flat_details(flatId):
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
-    '''if request.method == 'POST':
+    if request.method == 'POST':
         flash('Flat favourited!', category = 'success')
         user = request.form.get(current_user.id)
-        flat = request.form.get(current_flat)
-        new_favourites = Favourites(user_id = user, flat_id = flat)
+        flat = request.data
+        new_favourites = Favourites(user_id = 1, flat_id = 0)
         db.session.add(new_favourites)
-        db.session.commit()'''
+        db.session.commit()
     os.chdir("/Users/nanshiyuan/Documents/GitHub/website")
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
@@ -79,7 +79,30 @@ def home():
     c.execute(myquery)
     data=list(c.fetchall())
 
-    return render_template('home.html', user=current_user,data=data[:15],heartcolour="white")
+    return render_template('home.html', user=current_user,data=data[:15])
+
+@views.route('/unfavourite', methods=['POST'])
+def unfavourite():
+    favourite = json.loads(request.data)
+    print(request.data)
+    print("next line")
+    print(favourite)
+    favouriteID = favourite['favouriteID']
+    favourite = Favourites.query.get(favouriteID)
+    if favourite:
+        if favourite.user_id == current_user.id:
+            db.session.delete(favourite)
+            db.session.commit()
+    return jsonify({})
+
+@views.route('/favourite', methods=['POST'])
+def favourite():
+    flat = json.loads(request.data)
+    flatID = flat['flatID']
+    new_favourites = Favourites(user_id = current_user.id , flat_id = flatID)
+    db.session.add(new_favourites)
+    db.session.commit()
+    return jsonify({})
 
 @views.route('/api', methods=['GET', 'POST'])
 def api():

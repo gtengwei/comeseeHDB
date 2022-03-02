@@ -7,3 +7,20 @@ function deleteReview(reviewId,flatId) {
   });
 }
 
+function unfavourite(favouriteID) {
+  fetch("/unfavourite",{
+    method: "POST",
+    body: JSON.stringify({ favouriteID:favouriteID }),
+  }).then((_res) => {
+    window.location.hreft = "/";
+  });
+}
+
+function favourite(flatID) {
+  fetch("/favourite",{
+    method: "POST",
+    body: JSON.stringify({ flatID:flatID }),
+  }).then((_res) => {
+    window.location.hreft = "/";
+  });
+}

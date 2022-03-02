@@ -19,10 +19,10 @@ class Review(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'))
 
-'''class Favourites(db.Model):
+class Favourites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'))'''
+    flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'))
 
 # Table for User entity
 class User(db.Model, UserMixin):
@@ -33,9 +33,9 @@ class User(db.Model, UserMixin):
     postal_code = db.Column(db.String(150))
     postal_code_change = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
     reviews = db.relationship('Review')
-    #favourites = db.relationship('Favourites')
     email_verified = db.Column(db.Boolean(), nullable=False, default=False)
     email_verified_date = db.Column(db.DateTime(timezone=True))
+    favourites = db.relationship('Favourites')
 
     def get_token(self,expires_sec=120):
         serial=Serializer(current_app.config['SECRET_KEY'],expires_in = expires_sec)
@@ -81,6 +81,6 @@ def create_Flat_table():
     #This will create the table in the database
     engine = create_engine('sqlite:///website/database.db')
     db.Model.metadata.create_all(engine)
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
+    os.chdir("/Users/nanshiyuan/Documents/github/website")
     df = pd.read_csv('test.csv')
     df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
