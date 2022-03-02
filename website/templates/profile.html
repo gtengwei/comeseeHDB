@@ -1,0 +1,86 @@
+{% extends "base.html" %} 
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h1 align="center">Profile</h1>
+
+<section style="background-color: pink;">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+                <img src="{{ user.avatar(100) }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+              <h5 class="my-3">{{user.username}}</h5>
+
+              <div class="d-flex justify-content-center mb-2">
+                <a <button type="button" class="btn btn-primary" href="{{ url_for('user.profile', username=current_user.username) }}">Personal Information</button></a> 
+                <a <button type="button" class="btn btn-outline-primary ms-1" href="{{ url_for('user.favourites', username=current_user.username) }}">Favourites</button></a>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body">     
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Username</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{user.username}}</p>
+                        <div class="row justify-content-end">
+                            <a <button type="button" class="btn btn-secondary " href="{{ url_for('user.change_username', username=current_user.username) }}">Change Username</button></a>   
+                        </div>       
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.email}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Postal District</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.postal_code}}
+                    <div class="row justify-content-end">
+                        <a <button type="button" class="btn btn-secondary" href="{{ url_for('user.change_postal_code', username=current_user.username) }}">Change Postal Code</button></a>
+                    </p>
+                    </div>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Password</p>
+                </div>
+                <div class="col-sm-9">
+                    <div class="row justify-content-end">
+                        <a <button type="button" class="btn btn-secondary ms-1" href="{{ url_for('user.request_password_change', username=current_user.username) }}">Request Password Change</a>
+                    </div>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Last Changed Postal Code</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{user.postal_code_change}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

@@ -1,5 +1,6 @@
-{% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
-%}
+{% extends "base.html" %} {% block title %}Login{% endblock %} 
+
+{% block content %}
 <form method="POST">
   <h3 align="center">Login</h3>
   <div class="form-group">
@@ -24,6 +25,10 @@
   </div>
   <br />
   <button type="submit" class="btn btn-primary">Login</button>
+  <br/>
+  <br/>
   <a href="/forgot-password">Forgot Password?</a>
+  <br/>
+  <a href="/verify-email">Send Verification Email</a>
 </form>
 {% endblock %}

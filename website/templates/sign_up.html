@@ -3,6 +3,7 @@
 {% block content %}
 <form method="POST">
   <h3 align="center">Sign Up</h3>
+
   <div class="form-group">
     <label for="email">Email Address</label>
     <input
@@ -13,26 +14,18 @@
       placeholder="Enter email"
     />
   </div>
+
   <div class="form-group">
-    <label for="firstName">First Name</label>
+    <label for="username">Username</label>
     <input
       type="text"
       class="form-control"
-      id="firstName"
-      name="firstName"
-      placeholder="Enter first name"
+      id="username"
+      name="username"
+      placeholder="Enter username"
     />
   </div>
-  <div class="form-group">
-    <label for="lastName">Last Name</label>
-    <input
-      type="text"
-      class="form-control"
-      id="lastName"
-      name="lastName"
-      placeholder="Enter last name"
-    />
-  </div>
+
   <div class="form-group">
     <label for="postalCode">Postal Code</label>
     <input
@@ -40,9 +33,10 @@
       class="form-control"
       id="postalCode"
       name="postalCode"
-      placeholder="Enter postal code"
+      placeholder="Enter first 2 digits of postal code"
     />
   </div>
+
   <div class="form-group">
     <label for="password1">Password</label>
     <input
@@ -54,13 +48,13 @@
     />
   </div>
   <div class="form-group">
-    <label for="password2">Re-enter Password</label>
+    <label for="password2">Confirm password</label>
     <input
       type="password"
       class="form-control"
       id="password2"
       name="password2"
-      placeholder="Re-enter password"
+      placeholder="Confirm password"
     />
   </div>
   <br />
