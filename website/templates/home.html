@@ -6,10 +6,7 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
   
-  <script>
-    var heart_type = document.getElementById("favourite_button");
-    heart_type.setAttribute = ('class', "fa-solid fa-heart");
-  </script>
+  
 
     <style>
       /* Modify the background color */
@@ -27,7 +24,7 @@
   
       }
       
-      .favourite_button {
+      button[class^="favourite_button"] {
           background-color: pink;
           border:none;
           outline:none;
@@ -45,22 +42,102 @@
 </head> 
 
 <body class="bg">
+  <button class = "like_btn">
+    <span id ="testing"><i class="fa-solid fa-heart"></i></span>
+  </button>
+  <script type="text/javascript">
+    const likeBtn = document.querySelector(".like_btn");
+    let likeIcon = document.querySelector("#testing");
+    var clicked = false;
+    likeBtn.addEventListener("click", () => {
+      if (!clicked) {
+        clicked = true;
+        likeIcon.innerHTML = '<i class="fa-solid fa-heart"></i>';
+      }else{
+        clicked = false;
+        likeIcon.innerHTML = '<i class="fa-regular fa-heart"></i>';
+      }
+    });
+  </script> 
+  <button class = "like_btn_1">
+    <span id ="testing_1"><i class="fa-solid fa-heart"></i></span>
+  </button>
+  <script type="text/javascript">
+    var x = "_1"
+    var clicked = false;
+    document.querySelector(".like_btn" + x).addEventListener("click", () => {
+      if (!clicked) {
+        clicked = true;
+        document.querySelector("#testing" + x).innerHTML = '<i class="fa-solid fa-heart"></i>';
+      }else{
+        clicked = false;
+        document.querySelector("#testing" + x).innerHTML = '<i class="fa-regular fa-heart"></i>';
+      }
+    });
+  </script> 
+  <button class="favourite_button-1">
+    <span id ="favourite_button_id-1"><i class="fa-regular fa-heart"></i></span>
+  </button>
+
+  <script type="text/javascript">
+    const favouriteBtn = document.querySelector(".favourite_button-1");
+    let favouriteIcon = document.querySelector("#favourite_button_id-1");
+    let clicked = false;
+    favouriteBtn.addEventListener("click", () => {
+      if (!clicked) {
+        clicked = true;
+        favouriteIcon.innerHTML = '<i class="fa-solid fa-heart"></i>';
+      }else{
+        clicked = false;
+        favouriteIcon.innerHTML = '<i class="fa-regular fa-heart"></i>';
+      }
+    });
+  </script> 
+  
+  
   <div id="properties" class="card-body mx-auto bg-pink" style="width: 30rem;">
-    
     {% for entry in data %}
       <div class="card mb-3">
         <div class="card-header">
           <strong><a href ="{{ url_for('views.flat_details', flatId=entry[0]) }}" target = "_blank">{{entry[1]}}</strong></a>
           <button class="favourite_button" type="button" onClick="favourite({{  entry[0] }})">
-            <span><i id="favourtie_button" class="fa-regular fa-heart"></i></span>
-          </button>  
-              {% for favourite in user.favourites %}
-                {% if entry[0] == favourite.flat_id %}
-                <button class="unfavourite_button" type="button" onClick="unfavourite({{  favourite.id }})">
-                  <span><i id="favourtie_button" class="fa-solid fa-heart"></i></span>
-                </button>
-                {% endif %}               
-              {% endfor %}
+            <span id ="favourite_button_id"><i class="fa-regular fa-heart"></i></span>
+          </button>
+          <script type="text/javascript">
+            document.querySelector(".favourite_button").className = ("favourite_button" + entry[0].toString());
+            document.querySelector("#favourtie_button_id").id = ("favourite_button_id" + entry[0].toString());
+          </script>
+          
+          
+          {% for favourite in user.favourites %}
+            {% if entry[0] == favourite.flat_id %}
+            <script type="text/javascript">
+              console.log('gigigigi');
+              window['click' + entry[0].toString()] = true;
+            </script>
+            {% endif %}               
+          {% endfor %}
+
+          <script type="text/javascript">
+            if (window['click' + entry[0].toString()]) {
+              window['click' + entry[0].toString()] = false;
+              document.querySelector("#favourite_button_id" + entry[0].toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
+            }else{
+              window['click' + entry[0].toString()] = true;
+              document.querySelector("#favourite_button_id" + entry[0].toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
+            };
+
+            document.querySelector(".favourite_button" + entry[0].toString()).addEventListener("click", () => {
+              if (window['click' + entry[0].toString()]) {
+                window['click' + entry[0].toString()] = false;
+                document.querySelector("#favourite_button_id" + entry[0].toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
+              }else{
+                window['click' + entry[0].toString()] = true;
+                document.querySelector("#favourite_button_id" + entry[0].toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
+              }
+            });
+          </script>
+          
         </div>
         <div class="card-body">
           <div class="row">
@@ -81,10 +158,10 @@
     {% endfor %}
   </div>
         
-
-  
+    
 
 <script type="text/javascript">
+
   var index = 20;
   var limit = 20;
 
@@ -103,7 +180,7 @@
   function downloadContent(index, limit) {
     $.get('/api?index=' + index + '&limit=' + limit, (data) => {
       for (var index = 0; index < data.data.length; index++) {
-        var entry = "/flat-details/" + data.data[index][0];   
+        var entry = "/flat-details/" + data.data[index][0];  
         var page = `
           <div class="card mb-3">
             <div class="card-header">
