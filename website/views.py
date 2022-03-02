@@ -133,6 +133,7 @@ def home():
 @views.route('/load_home', methods=['GET', 'POST'])
 def load_home():
     os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
+    print(os.getcwd())
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     myquery = ("SELECT id, street_name, resale_price,flat_type, storey_range FROM Flat;")

@@ -122,9 +122,61 @@
         </div>
     </div>
   </form>
-{% if session['street_name'] %}
-<h1 align="center">You searched for: {{session['street_name']}}</h1>
+
+
+{% if session['street_name'] and session['towns'] and session['flat_types'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['street_name']}}</h3>
+<h3 align="center">Filtered by {{session['towns']}}, {{session['flat_types']}}, {{session['amenities']}}</h3>
+
+{% elif session['street_name'] and session['towns'] and session['flat_types'] %}
+<h3 align="center">You searched for: {{session['street_name']}}</h3>
+<h3 align="center">Filtered by {{session['towns']}}, {{session['flat_types']}}</h3>
+
+{% elif session['street_name'] and session['towns'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['street_name']}}</h3>
+<h3 align="center">Filtered by {{session['towns']}}, {{session['amenities']}}</h3>
+
+{% elif session['street_name'] and session['flat_types'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['street_name']}}</h3>
+<h3 align="center">Filtered by {{session['flat_types']}}, {{session['amenities']}}</h3>
+
+{% elif session['street_name'] and session['towns'] %}
+<h3 align="center">You searched for: {{session['street_name']}}</h3>
+<h3 align="center">Filtered by {{session['towns']}}</h3>
+
+{% elif session['street_name'] and session['flat_types'] %}
+<h3 align="center">You searched for: {{session['street_name']}}</h3>
+<h3 align="center">Filtered by {{session['flat_types']}}</h3>
+
+{% elif session['street_name'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['street_name']}}</h3>
+<h3 align="center">Filtered by {{session['amenities']}}</h3>
+
+{% elif session['towns'] and session['flat_types'] and session['amenities'] %}
+<h3 align="center">Filtered by {{session['towns']}}, {{session['flat_types']}}, {{session['amenities']}}</h3>
+
+{% elif session['towns'] and session['flat_types'] %}
+<h3 align="center">Filtered by {{session['towns']}}, {{session['flat_types']}}</h3>
+
+{% elif session['towns'] and session['amenities'] %}
+<h3 align="center">Filtered by {{session['towns']}}, {{session['amenities']}}</h3>
+
+{% elif session['flat_types'] and session['amenities'] %}
+<h3 align="center">Filtered by {{session['flat_types']}}, {{session['amenities']}}</h3>
+
+{% elif session['towns'] %}
+<h3 align="center">Filtered by {{session['towns']}}</h3>
+
+{% elif session['flat_types'] %}
+<h3 align="center">Filtered by {{session['flat_types']}}</h3>
+
+{% elif session['amenities'] %}
+<h3 align="center">Filtered by {{session['amenities']}}</h3>
+
+{% elif session['street_name'] %}
+<h3 align="center">You searched for: {{session['street_name']}}</h3>
 {% endif %}
+
 {% if flats|length == 0 %}
   <h3 class="text-muted mb-0" align="center">No flats found!</h3>
 {% endif %}
