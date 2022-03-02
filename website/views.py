@@ -63,9 +63,9 @@ def flat_details(flatId):
 ## Route for Home Page
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")   
+    os.chdir("C:/Users/User/Documents/GitHub/comeseeHDB/website")
     #os.chdir("website") 
-    #print(os.getcwd())
+    print(os.getcwd())
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     myquery = ("SELECT id, street_name, resale_price,flat_type, storey_range FROM Flat;")
