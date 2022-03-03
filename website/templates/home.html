@@ -1,28 +1,220 @@
-{% extends "base.html" %} 
-{% block title %}Home{% endblock %} 
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %}
 
-{% block content%}
-  <h1 align="center">Reviews</h1>
-  <ul class="list-group list-group-flush" id="reviews">
-    {% for review in user.reviews %}
-    <li class="list-group-item">
-      <img src="{{ user.avatar(50) }}">
-      <b>{{user.username}}</b>
-      <div style="word-wrap: break-word; width:1000px">
-        <p>{{ review.data }}</p>
-      </div>
+{% block content %}
+<head>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  
+
+
+
+    <style>
+      /* Modify the background color */
       
-      <button type="button" class="close" onClick="deleteReview({{ review.id }})">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </li>
+      .card {
+          background-color: white;
+      }
+      .card-header {
+          background-color: pink;
+  
+      }
+      .card-body {
+          background-color: white;
+  
+      }
+    </style>
+</head> 
+
+<form method="POST">
+  <div class="container py-2 ">
+      <div class="row justify-content-center">
+          <div class="input-group col-md-4" >
+              <input class="form-control py-2 border-right-0 border" name="search" id="search" placeholder = "Search here!">
+              <span class="input-group-append ">
+                  <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" >
+                    <i class="fa fa-search"></i>
+                  </button>
+                  <a href= "filter" <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" ></button> </a>
+                  <div class="btn-group">
+                    <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Sort
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" name= "price_high" id = "price_high" href="{{ url_for('views.sort',  criteria = 'price_high') }}">Price (High to Low)</a>
+                      <a class="dropdown-item" name = "price_low" id="price_low" href="{{ url_for('views.sort', criteria = 'price_low') }}">Price (Low to High)</a>
+                      <a class="dropdown-item" name = "remaining_lease_high" id="remaining_lease_high" href="{{ url_for('views.sort', criteria = 'remaining_lease_high') }}">Remaining Lease (High to Low)</a>
+                      <a class="dropdown-item" name = "remaining_lease_low" id="remaining_lease_low" href="{{ url_for('views.sort', criteria = 'remaining_lease_low') }}">Remaining Lease (Low to High)</a>
+                      <a class="dropdown-item" name = "storey_high" id="storey_high" href="{{ url_for('views.sort', criteria = 'storey_high') }}">Floor (High to Low)</a>
+                      <a class="dropdown-item" name = "storey_low" id="storey_low" href="{{ url_for('views.sort', criteria = 'storey_low') }}">Floor (Low to High)</a>
+                    </div>
+                  </div> 
+                </span>
+
+                <button class="btn btn-outline-primary ms-1" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="filter">Filters<span class="fa fa-filter pl-1"></span></button>
+                <div class="collapse" id="filter">
+                    <div class="border-bottom pb-2 ml-2">
+                        <h4 id="burgundy">Filter</h4>
+                    </div>
+
+                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#town" aria-expanded="false" aria-controls="town"><h6 class="font-weight-bold">Towns<span class="fa fa-building pl-1"></h6></span></button>
+                    <div class="collapse" id="town">
+                        <div class="py-2 border-bottom ml-3">
+                            <div style="color: pink"><span class="fa fa-minus"></span></div>
+                            
+                                <div class="form-group"> <input type="checkbox" id="ang mo kio" name="town" value="ANG MO KIO"> <label for="ang mo kio">Ang Mo Kio</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="bedok" name="town" value ="BEDOK"> <label for="bedok">Bedok</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="bukit batok" name="town" value = "BISHAN"> <label for="bukit batok">Bukit Batok</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="bukit merah" name="town" value = "BUKIT MERAH"> <label for="bukit merah">Bukit Merah</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="bukit panjang" name="town" value = "BUKIT PANJANG"> <label for="bukit panjang">Bukit Panjang</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="bukit timah" name="town" value = "BUKIT TIMAH"> <label for="bukit timah">Bukit Timah</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="central area" name="town" value = "CENTRAL AREA"> <label for="central area">Central Area</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="choa chu kang" name="town" value = "CHOA CHU KANG"> <label for="choa chu kang">Choa Chu Kang</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="clementi" name="town" value = "CLEMENTI"> <label for="clementi">Clementi</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="geylang" name="town" value = "GEYLANG"> <label for="geylang">Geylang</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="hougang" name="town" value = "HOUGANG"> <label for="houhang">Hougang</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="jurong east" name="town" value = "JURONG EAST"> <label for="jurong east">Jurong East</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="jurong west" name="town" value = "JURONG WEST"> <label for="jurong west">Jurong West</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="kallang/whampoa" name="town" value = "KALLANG/WHAMPOA"> <label for="kallang/whampoa">Kallang/Whompoa</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="pasir ris" name="town" value = "PASIR RIS"> <label for="pasir ris">Pasir Ris</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="punggol" name="town" value = "PUNGGOL"> <label for="punggol">Punggol</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="queenstown" name="town" value = "QUEENSTOWN"> <label for="queenstown">Queenstown</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="sembawang" name="town" value = "SEMBAWANG"> <label for="sembawang">Sembawang</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="sengkeng" name="town" value = "SENGKANG"> <label for="sengkang">Sengkang</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="serangoon" name="town" value = "SERANGOON"> <label for="serangoon">Serangoon</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="tampines" name="town" value = "TAMPINES"> <label for="tampines">Tampines</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="toa payoh" name="town" value = "TOA PAYOH"> <label for="toa payoh">Toa Payoh</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="woodlands" name="town" value = "WOODLANDS"> <label for="woodlands">Woodlands</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="yishun" name="town" value = "YISHUN"> <label for="yishun">Yishun</label> </div>
+
+
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#flat_type" aria-expanded="false" aria-controls="flat_type"><h6 class="font-weight-bold">Flat Types<span class="fa fa-home pl-1"></h6></span></button>
+                    <div class="collapse" id="flat_type">
+                        <div class="py-2 border-bottom ml-3">
+                            <div style="color: pink"><span class="fa fa-minus"></span></div>
+                            
+                                <div class="form-group"> <input type="checkbox" id="2room" name="flat_type" value="2 ROOM"> <label for="2room">2 Room</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="3room" name="flat_type" value="3 ROOM"> <label for="3room">3 Room</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="4room" name="flat_type" value="4 ROOM"> <label for="4room">4 Room</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="5room" name="flat_type" value="5 ROOM"> <label for="5room">5 Room</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="executive" name="flat_type" value="EXECUTIVE"> <label for="executive">Executive</label> </div>
+                            
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#amentity" aria-expanded="false" aria-controls="amentity"><h6 class="font-weight-bold">Amenities<span class="fa fa-university pl-1"></h6></span></button>
+                    <div class="collapse" id="amentity">
+                        <div class="py-2 ml-3">
+                            <h6 class="font-weight-bold">Amenities</h6>
+                            <div style="color: pink"><span class="fa fa-minus"></span></div>
+                            
+                                <div class="form-group"> <input type="checkbox" id="busInterchange" name="amenity" value = "BUS INTERCHANGE"> <label for="busInterchange">Bus Interchange</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="hospital" name="amenity" value = "HOSPITAL"> <label for="hospital">Hospital</label> </div>
+                        
+                        </div>
+                    </div>
+
+                </div>
+          </div>
+      </div>
+  </div>
+</form>
+
+
+<body class="bg">
+  
+  <div id="properties" class="card-body mx-auto bg-pink" style="width: 30rem;">
+    {% for flat in flats %}
+      <div class="card mb-3">
+        <div class="card-header">
+          <strong><a href ="{{ url_for('views.flat_details', flatId=flat[0]) }}" target = "_blank">{{flat[1]}}</strong></a>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <img src="{{flat['image']}}" class="img-thumbnail">
+            </div>
+            <div class="col">
+              <p><strong>Price: </strong>${{flat[2]}}</p>
+              <br/>
+              <p><strong>Flat Type: </strong>{{flat[3]}}</p>
+              <br/>
+              <p><strong>Floor: </strong>{{flat[4]}}</p>
+              
+            </div>
+          </div>
+        </div>
+      </div>
     {% endfor %}
-  </ul>
-  <form method="POST">
-    <textarea name="review" id="review" class="form-control" placeholder="Write your review here!"></textarea>
-    <br />
-    <div align="center">
-      <button type="submit" class="btn btn-primary">Add Review</button>
-    </div>
-  </form>
+  </div>
+        
+
+  
+
+<script type="text/javascript">
+  var index = 20;
+  var limit = 20;
+
+  $(window).scroll(() => {
+    var current_y = $(window).scrollTop();
+    var window_height = $(window).height();
+    var document_height = $(document).height();
+
+    
+    
+    if (current_y + window_height == document_height) {
+      downloadContent(index, limit);
+      index += 10
+    }
+    
+    /*var scrollPercent = (current_y / (document_height)) * 100;
+
+    if (scrollPercent > 90) {
+      downloadContent(index, limit);
+      index += 10
+    }
+    */
+  });
+
+
+  function downloadContent(index, limit) {
+    $.get('/load_home?index=' + index + '&limit=' + limit, (data) => {
+      for (var index = 0; index < data.data.length; index++) {
+        var entry = "/flat-details/" + data.data[index][0];   
+        var page = `
+          <div class="card mb-3">
+            <div class="card-header">
+              <strong>` +`<a href="${entry}" target = "_blank">`+ data.data[index][1] + `</strong></a>
+            </div> 
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <img src="` + data.data[index].image + `" class="img-thumbnail">
+                </div>
+                <div class="col">
+                  <p><strong>Price: </strong>` +`$`+ data.data[index][2] + `</p>
+                  <br/>
+                  <p><strong>Flat Type: </strong>` + data.data[index][3] + `</p>
+                  <br/>
+                  <p><strong>Floor: </strong>` + data.data[index][4] + `</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+
+        $('#properties').append(page)
+      }
+    });
+  }
+  
+  </script>
+
+  </body>
 {% endblock %}
