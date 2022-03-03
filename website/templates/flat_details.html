@@ -32,8 +32,8 @@
   </div>
 
 
-<html>
-  <iframe
+
+<iframe
       id="map"
       width="600"
       height="450"
@@ -48,11 +48,11 @@
     let blk = '{{ flat.block }}'
     let street = '{{ flat.street_name }}'
 
-    let adsURL = url_string+ blk + "+" + street
+    let adsURL = url_string + blk + "+" + street
     console.log(adsURL);
     map.src = adsURL;
 </script>
-</html>
+
 
 <h1>{{flat.street_name}}</h1>
 <div class="row"> 
