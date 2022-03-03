@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h1 align="center">Profile</h1>
+
+<section style="background-color: pink;">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+                <img src="{{ user.avatar(100) }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+              <h5 class="my-3">{{user.username}}</h5>
+              <div class="d-flex justify-content-center mb-2">
+                <a <button type="button" class="btn btn-primary" href="{{ url_for('user.profile', username=current_user.username) }}">Personal Information</button></a> 
+                <a <button type="button" class="btn btn-outline-primary ms-1" href="{{ url_for('user.favourites', username=current_user.username) }}">Favourites</button></a>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </section>
+{% endblock %}

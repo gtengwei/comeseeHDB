@@ -1,0 +1,40 @@
+{% include "profile.html" %}
+{% block content %}
+
+<script>
+    $(document).ready(function(){
+        $("#changeUsernameModal").modal('show');
+    });
+</script>
+<form method="POST">
+    <div class="modal fade" id="changeUsernameModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h4 class="modal-title w-100 font-weight-bold">Change Username</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+    
+          <div class="modal-body mx-3">
+            <div class="md-form mb-5">
+                <label for="username">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  name="username"
+                  placeholder="Enter new username"
+                />
+            </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <button type ="submit" class ="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
+{% endblock %}
