@@ -32,15 +32,18 @@ mail=Mail(app)
 
 db.init_app(app)
 
+# Insert Blueprint here
 from .views import views
 from .auth import auth
 from .user import user
+from .HDBFlatUI import flat
 
 app.register_blueprint(views, url_prefix='/')
 app.register_blueprint(auth, url_prefix='/')
 app.register_blueprint(user, url_prefix='/')
+app.register_blueprint(flat, url_prefix='/')
 
-from .models import User, Review
+from .models import User, Review, HDBFlat
 
 create_database(app)
 

@@ -5,7 +5,7 @@ from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
-from flask_mail import Message
+from flask_mail import Message as MailMessage
 import json
 from random import randint
 from .misc import *
@@ -21,8 +21,8 @@ def login():
         password = request.form.get('password')
 
         user = User.query.filter_by(email=email).first()
-        user_verify_email = User.query.filter_by(email=email).first().email_verified
-        if user:
+        if user is not None:
+            user_verify_email = User.query.filter_by(email=email).first().email_verified
             if user_verify_email == 0:
                 flash('Please verify your email address first.', category='error')
                 return redirect(url_for('auth.login'))

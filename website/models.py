@@ -8,6 +8,19 @@ from hashlib import md5
 from random import randint
 from datetime import datetime
 
+# Table for HDBFlat entity
+class HDBFlat(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    month_sold = db.Column(db.String(150))
+    blk_no = db.Column(db.String(150))
+    street = db.Column(db.String(150))
+    town = db.Column(db.String(150)) #might consider making it as enum instead
+    flat_type = db.Column(db.String(150))
+    floor_area_sqm = db.Column(db.Integer)
+    resale_price = db.Column(db.Integer)
+    lease_commence_date = db.Column(db.Integer)
+    remaining_lease = db.Column(db.String(150))
+
 ## Table for Note entity (To be changed to placeholders/HDB flats)
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
