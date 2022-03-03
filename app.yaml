@@ -1,0 +1,7 @@
+runtime: python38
+
+handlers:
+- url: /static
+  static_dir: website/static
+- url: /.*
+  script: main.app

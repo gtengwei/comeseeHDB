@@ -1,0 +1,5 @@
+Flask
+flask_login
+flask_sqlalchemy
+flask_mail
+itsdangerous==2.0.1
