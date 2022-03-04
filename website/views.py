@@ -82,8 +82,7 @@ def home():
     c.execute(myquery)
     data = list(c.fetchall())
     # random.shuffle(data)
-    # print(os.getcwd())
-
+    
     # Search for flats from homepage
     if request.method == 'POST':
         towns = request.form.getlist('town')
