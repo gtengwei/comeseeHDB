@@ -17,25 +17,21 @@
                 <a <button type="button" class="btn btn-outline-primary ms-1" href="{{ url_for('user.favourites', username=current_user.username) }}">Favourites</button></a>
               </div>
             </div>
-            <a <button type="button" class="btn btn-primary" href="{{ url_for('views.review') }}">reviews</button></a> 
           </div>
           
         </div>
         <div class="col-lg-8">
           <div class="card mb-4">
-            <div class="card-body">
+            <div class="card-body">     
               <div class="row">
                 <div class="col-sm-3">
                   <p class="mb-0">Username</p>
                 </div>
                 <div class="col-sm-9">
-                    <p class="text-muted mb-0">{{user.username}}
+                    <p class="text-muted mb-0">{{user.username}}</p>
                         <div class="row justify-content-end">
-                            <a <button type="button" class="btn btn-secondary " href="{{ url_for('user.change_username', username=current_user.username) }}">Change Username</button></a> 
-                        </p>
-                        </div>
-                   
-                        
+                            <a <button type="button" class="btn btn-secondary " href="{{ url_for('user.change_username', username=current_user.username) }}">Change Username</button></a>   
+                        </div>       
                 </div>
               </div>
               <hr>
