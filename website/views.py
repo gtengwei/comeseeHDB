@@ -84,13 +84,9 @@ def home():
 @views.route('/unfavourite', methods=['POST'])
 def unfavourite():
     favourite = json.loads(request.data)
-    print(request.data)
-    print("next line")
-    print(favourite)
-    favouriteID = favourite['favouriteID']
-    favourite = Favourites.query.get(favouriteID)
-    if favourite:
-        if favourite.user_id == current_user.id:
+    flatID = favourite['favouriteID']
+    for favourite in Favourites.query.all():
+        if favourite.user_id == current_user.id and favourite.flat_id == flatID:
             db.session.delete(favourite)
             db.session.commit()
     return jsonify({})
