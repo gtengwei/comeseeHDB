@@ -3,3 +3,7 @@ flask_login
 flask_sqlalchemy
 flask_mail
 itsdangerous==2.0.1
+flask_moment
+datetime
+pandas
+pymysql
