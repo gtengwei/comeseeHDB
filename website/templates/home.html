@@ -135,9 +135,31 @@
         var entry = "/flat-details/" + data.data[index][0];  
         var page = `
           <div class="card mb-3">
+
             <div class="card-header">
               <strong>` +`<a href="${entry}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-            </div> 
+              <button class="favourite_button" type="button" onClick="favourite(`+ data.data[index][0] +`)">
+                <span id ="favourite_button_id"><i class="fa-regular fa-heart"></i></span>
+              </button> `
+        $('#properties').append(page)
+
+        var script = document.createElement("script");
+        script.type = "text/javscript";
+        script.innerHTML = `
+                var x = "data.data[index][0]";
+                document.querySelector(".favourite_button").className = ("favourite_button" + x.toString());
+                document.querySelector("#favourite_button_id").id = ("favourite_button_id" + x.toString());
+                window['click' + x.toString()] = false;
+              `
+        document.body.appendChild(script);
+        
+
+
+
+        var page =
+            `</div>
+            
+            
             <div class="card-body">
               <div class="row">
                 <div class="col">

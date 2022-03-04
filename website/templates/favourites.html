@@ -2,6 +2,9 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
+<head>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
 <h1 align="center">Profile</h1>
 
 <section style="background-color: pink;">
@@ -20,7 +23,11 @@
         </div>
         <div class="col-lg-8">
           <div class="card mb-4">
+            {% for entry in data %}
+            {% endfor%}
+            {% for fav in user.favourites%}
             <p>testing12345</p>
+            {% endfor %}
           </div>
         </div>      
       </div>
