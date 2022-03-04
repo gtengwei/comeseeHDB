@@ -23,12 +23,3 @@ class HDB_Flats(Base):
     lease_commence_date = Column(Date)
     remaining_lease = Column(Float)
     resale_price = Column(Float)
-
-def create_HDB_Flats_table(engine):
-    #This will create the table in the database
-    engine = create_engine('sqlite:///website/database.db')
-    Base.metadata.create_all(engine)
-    file_name = 'test.csv'
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
-    df = pd.read_csv('test.csv')
-    df.to_sql(con=engine, index_label='id', name=HDB_Flats.__tablename__, if_exists='replace')

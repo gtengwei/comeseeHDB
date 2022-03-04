@@ -35,11 +35,12 @@ def delete_review():
     review = Review.query.get(reviewId)
     if review:
         if review.user_id == current_user.id:
+            flatId = review.flat_id
             db.session.delete(review)
-            flash('Review deleted!', category='success')
             db.session.commit()
+            flash('Review deleted!', category='success')
 
-    return jsonify({})
+    return render_template("flat_details.html", user=current_user, flat = flatId)
 
 ## Route for every flat
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
@@ -63,12 +64,12 @@ def flat_details(flatId):
 ## Route for Home Page
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    os.chdir("C:/Users/User/Documents/GitHub/comeseeHDB/website")
+    os.chdir("C:/Users/Yap Xuan Ying/Documents/WORK!!!/comeseeHDB/website")
     #os.chdir("website") 
     print(os.getcwd())
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
-    myquery = ("SELECT id, street_name, resale_price,flat_type, storey_range FROM Flat;")
+    myquery = ("SELECT id, street_name, resale_price,flat_type, storey_range FROM flat;")
     c.execute(myquery)
     data=list(c.fetchall())
     #random.shuffle(data)
@@ -132,10 +133,10 @@ def home():
 ## Infinte Scrolling for Home Page
 @views.route('/load_home', methods=['GET', 'POST'])
 def load_home():
-    os.chdir("C:/Users/User/Documents/GitHub/comeseeHDB/website")
+    os.chdir("C:/Users/Yap Xuan Ying/Documents/WORK!!!/comeseeHDB/website")
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
-    myquery = ("SELECT id, street_name, resale_price,flat_type, storey_range FROM Flat;")
+    myquery = ("SELECT id, street_name, resale_price,flat_type, storey_range FROM flat;")
     c.execute(myquery)
     data=list(c.fetchall())
     #random.shuffle(data)
