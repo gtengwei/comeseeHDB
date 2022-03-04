@@ -6,13 +6,14 @@ import os
 
 Base = declarative_base()
 
+
 class HDB_Flats(Base):
-    #Tell SQLAlchemy what the table name is and if there's any table-specific arguments it should know about
+    # Tell SQLAlchemy what the table name is and if there's any table-specific arguments it should know about
     __tablename__ = 'HDB_Flats'
     __table_args__ = {'sqlite_autoincrement': True}
-    #tell SQLAlchemy the name of column and its attributes:
-    id = Column(Integer, primary_key=True, nullable = False)
-    month = Column(Integer) 
+    # tell SQLAlchemy the name of column and its attributes:
+    id = Column(Integer, primary_key=True, nullable=False)
+    month = Column(Integer)
     town = Column(String)
     flat_type = Column(String)
     block = Column(String)
@@ -24,11 +25,32 @@ class HDB_Flats(Base):
     remaining_lease = Column(Float)
     resale_price = Column(Float)
 
+
 def create_HDB_Flats_table(engine):
-    #This will create the table in the database
+    # This will create the table in the database
     engine = create_engine('sqlite:///website/database.db')
     Base.metadata.create_all(engine)
     file_name = 'test.csv'
     os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
     df = pd.read_csv('test.csv')
-    df.to_sql(con=engine, index_label='id', name=HDB_Flats.__tablename__, if_exists='replace')
+    df.to_sql(con=engine, index_label='id',
+              name=HDB_Flats.__tablename__, if_exists='replace')
+
+
+def main():
+    os.chdir("C:/Users/chery/OneDrive/Documents/GitHub/website")
+    df = pd.read_csv('test.csv')
+    # print(df.dtypes)
+    df['price_per_square_metre'] = round(
+        df['resale_price'] / df['floor_area_sqm'])
+    # print(df['price_per_square_metre'])
+    df['block'].astype(str)
+    df['street_name'].astype(str)
+    df['address'] = df['street_name'] + ' BLK' + df['block']
+    # print(df['address'])
+    # writing into the file
+    df.to_csv("test.csv", index=False)
+
+
+if __name__ == "__main__":
+    main()
