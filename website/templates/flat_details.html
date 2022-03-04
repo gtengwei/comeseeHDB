@@ -63,7 +63,9 @@
     <p class="text-muted mb-0">${{flat.resale_price}}</p>
 </div>
 </div>
+
 <hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Flat Type</p>
@@ -72,7 +74,9 @@
     <p class="text-muted mb-0">{{flat.flat_type}}</p>
 </div>
 </div>
+
 <hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Storey Range</p>
@@ -81,7 +85,9 @@
     <p class="text-muted mb-0">{{flat.storey_range}}</p>
 </div>
 </div>
+
 <hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Sold Date</p>
@@ -90,7 +96,9 @@
     <p class="text-muted mb-0">{{flat.month}}</p>
 </div>
 </div>
+
 <hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Town</p>
@@ -99,7 +107,9 @@
     <p class="text-muted mb-0">{{flat.town}}</p>
 </div>
 </div>
+
 <hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Block</p>
@@ -108,7 +118,9 @@
     <p class="text-muted mb-0">{{flat.block}}</p>
 </div>
 </div>
+
 <hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Floor Area (Metre Square)</p>
@@ -117,7 +129,20 @@
     <p class="text-muted mb-0">{{flat.floor_area_sqm}}</p>
 </div>
 </div>
+
 <hr>
+
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Price per Square Metre</p>
+</div>
+<div class="col-sm-9">
+    <p class="text-muted mb-0">${{flat.price_per_sqm}}</p>
+</div>
+</div>
+
+<hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Flat Model</p>
@@ -126,7 +151,9 @@
     <p class="text-muted mb-0">{{flat.flat_model}}</p>
 </div>
 </div>
+
 <hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Remaining Lease</p>
@@ -145,7 +172,7 @@
     <div align="center">
       {% if user.is_authenticated %}
       <button type="submit" class="btn btn-primary btn-sm">Add Review</button>
-    ``{% else %}
+      {% else %}
       <a href="/login" class="btn btn-primary btn-sm">Login to add review</a>
     {% endif %}
     
@@ -160,7 +187,7 @@
 {% if flat.reviews|length == 0 %}
   <h3 class="text-muted mb-0" align="center">No reviews yet!</h3>
 {% else %}
-  <h3 class="text-muted mb-0" align="right">{{flat.reviews|length}} Reviews Posted</h3>
+  <h3 class="text-muted mb-0" align="right">{{flat.reviews|length}} Review(s) Posted</h3>
 {% endif %}
 
 <ul class="list-group list-group-flush" id="reviews">

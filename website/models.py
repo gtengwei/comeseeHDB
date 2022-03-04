@@ -74,7 +74,9 @@ class Flat(db.Model):
     flat_model = db.Column(String(150))
     lease_commence_date = db.Column(String(150))
     remaining_lease = db.Column(String(150))
-    resale_price = db.Column(Integer)  
+    resale_price = db.Column(Integer) 
+    price_per_sqm = db.Column(Integer)
+    address = db.Column(String(150))
     reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
     
 
@@ -82,7 +84,7 @@ def create_Flat_table():
     #This will create the table in the database
     engine = create_engine('sqlite:///website/database.db')
     db.Model.metadata.create_all(engine)
-    os.chdir("C:/Users/User/Documents/GitHub/comeseeHDB/website")
+    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
     df = pd.read_csv('test.csv')
     df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
 

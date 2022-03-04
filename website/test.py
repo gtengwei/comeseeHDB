@@ -38,17 +38,18 @@ def create_HDB_Flats_table(engine):
 
 
 def main():
-    os.chdir("C:/Users/chery/OneDrive/Documents/GitHub/website")
+    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
     df = pd.read_csv('test.csv')
     # print(df.dtypes)
-    df['price_per_square_metre'] = round(
+    df['price_per_sqm'] = round(
         df['resale_price'] / df['floor_area_sqm'])
     # print(df['price_per_square_metre'])
     df['block'].astype(str)
     df['street_name'].astype(str)
-    df['address'] = df['street_name'] + ' BLK' + df['block']
+    df['address'] = df['street_name'] + ' BLK ' + df['block']
     # print(df['address'])
     # writing into the file
+    #df.drop('price_per_square_metre', axis=1, inplace=True)
     df.to_csv("test.csv", index=False)
 
 
