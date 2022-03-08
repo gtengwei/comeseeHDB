@@ -9,6 +9,7 @@ import os
 import random
 from pathlib import Path
 import mysql.connector
+import pymysql
 
 views = Blueprint('views', __name__)
 
@@ -77,8 +78,8 @@ def home():
     print(cwd)
     os.chdir(cwd)
     #print(os.getcwd())
-    conn = sqlite3.connect("database.db")
-    #conn = mysql.connector.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
+    #conn = sqlite3.connect("database.db")
+    conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     myquery = (
         "SELECT id, address, resale_price,flat_type, storey_range FROM Flat;")
@@ -157,7 +158,8 @@ def home():
 def load_home():
     #os.chdir(os.getcwd() + "/website")
     #print(os.getcwd())
-    conn = sqlite3.connect("database.db")
+    #conn = sqlite3.connect("database.db")
+    conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     myquery = (
         "SELECT id, address, resale_price,flat_type, storey_range FROM Flat;")
