@@ -5,6 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 from flask_mail import Mail
+from flask_moment import Moment
+
 app = Flask(__name__)
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -25,10 +27,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'lattadcane@gmail.com'
-app.config['MAIL_PASSWORD'] = 'Lattadcane123'
+app.config['MAIL_USERNAME'] = 'cz2006.clutch@gmail.com'
+app.config['MAIL_PASSWORD'] = 'Clutch123!'
 
 mail=Mail(app)
+moment = Moment(app)
 
 db.init_app(app)
 from .views import views
@@ -42,7 +45,7 @@ app.register_blueprint(user, url_prefix='/')
 from .models import *
 
 create_database(app)
-
+#os.chdir("website")
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
