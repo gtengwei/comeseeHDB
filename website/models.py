@@ -74,7 +74,9 @@ class Flat(db.Model):
     flat_model = db.Column(String(150))
     lease_commence_date = db.Column(String(150))
     remaining_lease = db.Column(String(150))
-    resale_price = db.Column(Integer)  
+    resale_price = db.Column(Integer) 
+    price_per_sqm = db.Column(Integer)
+    address = db.Column(String(150))
     reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
     
 

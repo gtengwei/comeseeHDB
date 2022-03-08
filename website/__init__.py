@@ -27,8 +27,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'lattadcane@gmail.com'
-app.config['MAIL_PASSWORD'] = 'Lattadcane123'
+app.config['MAIL_USERNAME'] = 'cz2006.clutch@gmail.com'
+app.config['MAIL_PASSWORD'] = 'Clutch123!'
 
 mail=Mail(app)
 moment = Moment(app)
