@@ -30,11 +30,10 @@ def create_database(app):
         database = "mysql_database"
     )
     cursor = conn.cursor()
+    cursor.execute("SET GLOBAL FOREIGN_KEY_CHECKS = 0")
 
     ## MUST CREATE FLAT TABLE FIRST BEFORE OTHER TABLES
     ## IF NOT WILL RESULT IN ERRORS
-    if not cursor.execute("SHOW TABLES LIKE 'flat'"):
-        create_Flat_table()
     if not cursor.execute("SHOW TABLES LIKE 'review'"):
         db.create_all(app=app)
         print('Created Database!')
