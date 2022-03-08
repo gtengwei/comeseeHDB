@@ -35,6 +35,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(150))
     postal_code = db.Column(db.String(150))
     postal_code_change = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
+    reviews = db.relationship('Review')
+    favourites = db.relationship('Favourites')
     email_verified = db.Column(db.Boolean(), nullable=False, default=False)
     email_verified_date = db.Column(db.DateTime(timezone=True))
     favourites = db.relationship('Favourites')
@@ -85,6 +87,17 @@ class Flat(db.Model):
     price_per_sqm = db.Column(Integer)
     address = db.Column(String(150))
     reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
+    resale_price = db.Column(Float)   
+
+def create_Flat_table():
+    #This will create the table in the database
+    engine = create_engine('sqlite:///website/database.db')
+    db.Model.metadata.create_all(engine)
+    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
+    df = pd.read_csv('test.csv')
+    df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
+
+
     
 
 def create_Flat_table():
