@@ -5,6 +5,7 @@ import pandas as pd
 import os
 import mysql.connector
 import csv
+import pymysql
 
 Base = declarative_base()
 
@@ -64,7 +65,7 @@ def create_flat_csv():
 
 
 def create_mysql_database():
-    database = mysql.connector.connect(
+    database = pymysql.connect(
         host="localhost",
         user="root",
         passwd="Clutch123!"
@@ -83,6 +84,7 @@ def print_database():
     cursor.execute("SELECT * FROM flat")
     for row in cursor.fetchall():
         print(row)
+        
 if __name__ == "__main__":
     #main()
     #create_database()

@@ -8,6 +8,7 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from flask_moment import Moment
 import mysql.connector
+import pymysql
 
 from website.test import create_mysql_database
 
@@ -23,7 +24,7 @@ def create_database(app):
     #    print('Created Database!')
 
     create_mysql_database()
-    conn = mysql.connector.connect(
+    conn = pymysql.connect(
         host="localhost",
         user="root",
         passwd="Clutch123!",
