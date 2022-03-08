@@ -11,20 +11,20 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 import pandas as pd
 import os
+from pathlib import Path
+from sqlalchemy.dialects.mysql import BIGINT
 
 ## To migrate database
-##
-## Table for Note entity (To be changed to placeholders/HDB flats)
 class Review(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(BIGINT, primary_key=True, nullable=False)
     data = db.Column(db.String(500), nullable=False)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable = False)
-    flat_id = db.Column(db.Integer, db.ForeignKey('flat.id', ondelete="CASCADE"), nullable = False)
+    user_id = db.Column(BIGINT, db.ForeignKey('user.id'), nullable=False)
+    flat_id = db.Column(BIGINT, db.ForeignKey('flat.id'), nullable=False)
 
 # Table for User entity
 class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(BIGINT, primary_key=True, nullable=False)
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     username = db.Column(db.String(150))
@@ -63,30 +63,36 @@ class Flat(db.Model):
     #__tablename__ = 'HDB_Flats'
     #__table_args__ = {'sqlite_autoincrement': True}
     #tell SQLAlchemy the name of column and its attributes:
-    id = db.Column(Integer, primary_key=True, nullable = False)
-    month = db.Column(Integer) 
-    town = db.Column(String(150))
-    flat_type = db.Column(String(150))
-    block = db.Column(String(150))
-    street_name = db.Column(String(150))
-    storey_range = db.Column(String(150))
-    floor_area_sqm = db.Column(Float)
-    flat_model = db.Column(String(150))
-    lease_commence_date = db.Column(String(150))
-    remaining_lease = db.Column(String(150))
-    resale_price = db.Column(Integer) 
-    price_per_sqm = db.Column(Integer)
-    address = db.Column(String(150))
+    id = db.Column(BIGINT, primary_key=True, nullable=False)
+    month = db.Column(db.String(150)) 
+    town = db.Column(db.String(150))
+    flat_type = db.Column(db.String(150))
+    block = db.Column(db.String(150))
+    street_name = db.Column(db.String(150))
+    storey_range = db.Column(db.String(150))
+    floor_area_sqm = db.Column(db.Float)
+    flat_model = db.Column(db.String(150))
+    lease_commence_date = db.Column(db.String(150))
+    remaining_lease = db.Column(db.String(150))
+    resale_price = db.Column(db.Integer) 
+    price_per_sqm = db.Column(db.Integer)
+    address = db.Column(db.String(150))
     reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
     
 
 def create_Flat_table():
-    #This will create the table in the database
-    engine = create_engine('sqlite:///website/database.db')
+    #To create the table in the database (SQLite)
+    #engine = create_engine('sqlite:///website/database.db')
+    #db.Model.metadata.create_all(engine)
+    #os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
+    #df = pd.read_csv('test.csv')
+    #df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
+
+    # To create the table in the database (MySQL)
+    engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
     db.Model.metadata.create_all(engine)
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
-    df = pd.read_csv('test.csv')
-    df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
-
-
+    cwd = Path(__file__).parent.absolute()
+    os.chdir(cwd)    
+    df = pd.read_csv('test.csv')    
+    df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
     
