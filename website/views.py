@@ -77,7 +77,7 @@ def home():
     #print(os.getcwd())
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
-    myquery = ("SELECT id, address, resale_price,flat_type, storey_range FROM Flat;")
+    myquery = ('SELECT id, address, resale_price,flat_type, storey_range FROM Flat;')
     c.execute(myquery)
     data = list(c.fetchall())
     # random.shuffle(data)

@@ -31,14 +31,14 @@ def create_HDB_Flats_table(engine):
     engine = create_engine('sqlite:///website/database.db')
     Base.metadata.create_all(engine)
     file_name = 'test.csv'
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
+    os.chdir("C:/Users/Hannah V/Documents/GitHub/comeseeHDB/website")
     df = pd.read_csv('test.csv')
     df.to_sql(con=engine, index_label='id',
               name=HDB_Flats.__tablename__, if_exists='replace')
 
 
 def main():
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
+    os.chdir("C:/Users/Hannah V/Documents/GitHub/comeseeHDB/website")
     df = pd.read_csv('test.csv')
     # print(df.dtypes)
     df['price_per_sqm'] = round(
