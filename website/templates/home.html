@@ -73,7 +73,6 @@
               document.querySelector(".favourite_button" + x.toString()).setAttribute( 'onClick', ("unfavourite(" +   x.toString()  + ")"));
             }else{
               document.querySelector("#favourite_button_id" + x.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
-              //document.querySelector(".favourite_button" + x.toString()).onClick = ("unfavourite({{  entry[0] }})");
             };
 
             document.querySelector(".favourite_button" + x.toString()).addEventListener("click", () => {

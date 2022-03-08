@@ -3,6 +3,21 @@
 {% block title %}Flat Details{% endblock %}
     
 {% block content %}
+<head>
+  <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
+  <style>
+    .street_name {
+      display: inline-flex;
+    }
+
+    button[class^="favourite_button"] {
+      background-color: white;
+      border:none;
+      outline:none;
+      color: red;
+    }
+  </style>
+</head>
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -29,7 +44,46 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
-<h1>{{flat.street_name}}</h1>
+<div class="street_name">
+  <h1>{{flat.street_name}}</h1>
+  <button class="favourite_button" type="button" onClick="favourite({{ flat.id }})">
+    <span id ="favourite_button_id"><i class="fa-regular fa-heart"></i></span>
+  </button>
+  <script type="text/javascript">
+    var x = "{{flat.id|tojson}}";
+    window['click' + x.toString()] = false;
+  </script>
+  {% for favourite in user.favourites %}
+    {% if flat.id == favourite.flat_id %}
+      <script type="text/javascript">
+        var x = "{{flat.id|tojson}}";
+        window['click' + x.toString()] = true;
+      </script>
+    {% endif %}               
+  {% endfor %}
+  <script type="text/javascript">
+    var x = "{{flat.id|tojson}}";
+    console.log(window['click' + x.toString()]);
+    if (window['click' + x.toString()]) {
+      document.querySelector("#favourite_button_id").innerHTML = '<i class="fa-solid fa-heart"></i>';
+      document.querySelector(".favourite_button").setAttribute( 'onClick', ("unfavourite(" +   x.toString()  + ")"));
+    }else{
+      document.querySelector("#favourite_button_id").innerHTML = '<i class="fa-regular fa-heart"></i>';
+    };
+    document.querySelector(".favourite_button").addEventListener("click", () => {
+      var x =  "{{flat.id|tojson}}";
+      if (window['click' + x.toString()]) {
+        window['click' + x.toString()] = false;
+        document.querySelector("#favourite_button_id").innerHTML = '<i class="fa-regular fa-heart"></i>';
+        document.querySelector(".favourite_button").setAttribute( 'onClick', ("favourite(" +   x.toString()  + ")"));
+      }else{
+        window['click' + x.toString()] = true;
+        document.querySelector("#favourite_button_id").innerHTML = '<i class="fa-solid fa-heart"></i>';
+        document.querySelector(".favourite_button").setAttribute( 'onClick', ("unfavourite(" +   x.toString()  + ")"));
+      }
+   });
+  </script>
+</div>
 <div class="row"> 
 <div class="col-sm-3">
     <p class="mb-0">Price</p>
