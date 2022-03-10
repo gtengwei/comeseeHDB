@@ -1,6 +1,6 @@
 ## Everything related to the user
-from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
+from .models import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
@@ -102,7 +102,11 @@ def change_postal_code(username):
 @user.route('/favourites/<username>', methods=['GET', 'POST']) 
 @login_required
 def favourites(username):
-    return render_template("favourites.html", user=current_user)
+    fav_list = []
+    for x in Favourites.query.all():
+        if x.user_id == current_user.id:
+            fav_list.append(x.flat_id)
+    return render_template("favourites.html", user=current_user, flats = [Flat.query.get(x) for x in fav_list])
 
 
 

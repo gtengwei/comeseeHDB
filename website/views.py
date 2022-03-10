@@ -71,13 +71,6 @@ def flat_details(flatId):
 # Route for Home Page
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    if request.method == 'POST':
-        flash('Flat favourited!', category = 'success')
-        user = request.form.get(current_user.id)
-        flat = request.data
-        new_favourites = Favourites(user_id = 1, flat_id = 0)
-        db.session.add(new_favourites)
-        db.session.commit()
     cwd = Path(__file__).parent.absolute()
     print(cwd)
     os.chdir(cwd)
@@ -152,7 +145,7 @@ def home():
             return render_template("search.html", user=current_user, address=address)
 
     session.clear()
-    return render_template('home.html', user=current_user, flats=data[:15])
+    return render_template('home.html', user=current_user, flats=data[:15], favourites = Favourites.query.all())
 
 @views.route('/unfavourite', methods=['POST'])
 def unfavourite():
@@ -166,17 +159,13 @@ def unfavourite():
 
 @views.route('/favourite', methods=['POST'])
 def favourite():
+    print("i am here")
     flat = json.loads(request.data)
     flatID = flat['flatID']
     new_favourites = Favourites(user_id = current_user.id , flat_id = flatID)
     db.session.add(new_favourites)
     db.session.commit()
     return jsonify({})
-
-@views.route('/api', methods=['GET', 'POST'])
-def api():
-# Infinte Scrolling for Home Page
-
 
 @views.route('/load_home', methods=['GET', 'POST'])
 def load_home():
@@ -189,34 +178,6 @@ def load_home():
     c.execute(myquery)
     data = list(c.fetchall())
     # random.shuffle(data)
-            flash('Review is too long! Maximum length for a review is 500 characters', category='error')
-        else:
-            new_review = Review(data=review, user_id=current_user.id, flat_id = flatId)
-            db.session.add(new_review)
-            db.session.commit()
-            flash('Review added!', category='success')
-    return render_template("flat_details.html", user=current_user, flat = flat)
-
-
-@views.route('/', methods=['GET', 'POST'])
-@login_required
-def home():
-    os.chdir("/Users/nanshiyuan/Documents/Github/website")
-    conn = sqlite3.connect("database.db")
-    c = conn.cursor()
-    myquery = ("SELECT id, street_name, resale_price,flat_type, storey_range FROM Flat;")
-    c.execute(myquery)
-    data=list(c.fetchall())
-
-    return render_template('home.html', user=current_user,data=data[:15])
-
-@views.route('/api', methods=['GET', 'POST'])
-def api():
-    conn = sqlite3.connect("database.db")
-    c = conn.cursor()
-    myquery = ("SELECT id, street_name, resale_price,flat_type, storey_range FROM Flat;")
-    c.execute(myquery)
-    data=list(c.fetchall())
 
     if request.args:
         index = int(request.args.get('index'))
@@ -225,9 +186,6 @@ def api():
         return jsonify({'data': data[index:limit + index]})
     else:
         return jsonify({'data': data})
-
-# Route for Searching flats
-
 
 @views.route('/search/<search>', methods=['GET', 'POST'])
 def search(search):

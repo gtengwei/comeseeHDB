@@ -8,6 +8,8 @@ function deleteReview(reviewId,flatId) {
 }
 
 function unfavourite(favouriteID) {
+  document.getElementById("favourite_button_id" + favouriteID.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
+  document.getElementById("favourite_button" + favouriteID.toString()).setAttribute( 'onClick', ("favourite(" + favouriteID.toString() + ")"));
   fetch("/unfavourite",{
     method: "POST",
     body: JSON.stringify({ favouriteID:favouriteID }),
@@ -17,6 +19,8 @@ function unfavourite(favouriteID) {
 }
 
 function favourite(flatID) {
+  document.getElementById("favourite_button_id" + flatID.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
+  document.getElementById("favourite_button" + flatID.toString()).setAttribute( 'onClick', ("unfavourite(" + flatID.toString() + ")"));
   fetch("/favourite",{
     method: "POST",
     body: JSON.stringify({ flatID:flatID }),

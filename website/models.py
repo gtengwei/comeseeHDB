@@ -35,11 +35,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(150))
     postal_code = db.Column(db.String(150))
     postal_code_change = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
-    reviews = db.relationship('Review')
     favourites = db.relationship('Favourites')
     email_verified = db.Column(db.Boolean(), nullable=False, default=False)
-    email_verified_date = db.Column(db.DateTime(timezone=True))
-    favourites = db.relationship('Favourites')
     email_verified_date = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
     reviews = db.relationship('Review', backref = 'user', passive_deletes=True)
 
@@ -83,11 +80,11 @@ class Flat(db.Model):
     flat_model = db.Column(String(150))
     lease_commence_date = db.Column(String(150))
     remaining_lease = db.Column(String(150))
-    resale_price = db.Column(Integer) 
     price_per_sqm = db.Column(Integer)
     address = db.Column(String(150))
     reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
-    resale_price = db.Column(Float)   
+    resale_price = db.Column(Float)
+    favourites = db.relationship('Favourites', backref = 'flat', passive_deletes=True)   
 
 def create_Flat_table():
     #This will create the table in the database

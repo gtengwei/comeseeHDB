@@ -150,50 +150,23 @@
     {% for flat in flats %}
       <div class="card mb-3">
         <div class="card-header">
-          <strong><a href ="{{ url_for('views.flat_details', flatId=entry[0]) }}" target = "_blank">{{entry[1]}}</strong></a>
-          <button class="favourite_button" type="button" onClick="favourite({{ entry[0] }})">
-            <span id ="favourite_button_id"><i class="fa-regular fa-heart"></i></span>
-          </button>
-          <script type="text/javascript">
-            var x = "{{entry[0]|tojson}}";
-            document.querySelector(".favourite_button").className = ("favourite_button" + x.toString());
-            document.querySelector("#favourite_button_id").id = ("favourite_button_id" + x.toString());
-            window['click' + x.toString()] = false;
-          </script>
-           
-          {% for favourite in user.favourites %}
-            {% if entry[0] == favourite.flat_id %}
-              <script type="text/javascript">
-                var x = "{{entry[0]|tojson}}";
-                window['click' + x.toString()] = true;
-              </script>
-            {% endif %}               
-          {% endfor %}
-
-          <script type="text/javascript">
-            var x = "{{entry[0]|tojson}}";
-            if (window['click' + x.toString()]) {
-              document.querySelector("#favourite_button_id" + x.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
-              document.querySelector(".favourite_button" + x.toString()).setAttribute( 'onClick', ("unfavourite(" +   x.toString()  + ")"));
-            }else{
-              document.querySelector("#favourite_button_id" + x.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
-            };
-
-            document.querySelector(".favourite_button" + x.toString()).addEventListener("click", () => {
-              var x =  "{{entry[0]|tojson}}";
-              if (window['click' + x.toString()]) {
-                window['click' + x.toString()] = false;
-                document.querySelector("#favourite_button_id" + x.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
-                document.querySelector(".favourite_button" + x.toString()).setAttribute( 'onClick', ("favourite(" +   x.toString()  + ")"));
-              }else{
-                window['click' + x.toString()] = true;
-                document.querySelector("#favourite_button_id" + x.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
-                document.querySelector(".favourite_button" + x.toString()).setAttribute( 'onClick', ("unfavourite(" +   x.toString()  + ")"));
-              }
-            });
-          </script>
-          
           <strong><a href ="{{ url_for('views.flat_details', flatId=flat[0]) }}" target = "_blank">{{flat[1]}}</strong></a>
+          <button class="favourite_button" id ="favourite_button{{flat[0]}}" type="button" onClick="favourite({{ flat[0] }})">
+            <span id ="favourite_button_id{{flat[0]}}"><i class="fa-regular fa-heart"></i></span>
+          </button>
+          {% if flat[0] in user.favourites|map(attribute="flat_id")|list %}
+          <script type="text/javascript">
+            var x = "{{flat[0]|tojson}}";
+            document.getElementById("favourite_button_id" + x.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
+            document.getElementById("favourite_button" + x.toString()).setAttribute( 'onClick', ("unfavourite(" +   x.toString()  + ")")); 
+          </script>
+          {% else %}
+          <script type="text/javascript">
+            var x = "{{flat[0]|tojson}}";
+            document.getElementById("favourite_button_id" + x.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
+          </script>
+          {% endif %}
+
         </div>
         <div class="card-body">
           <div class="row">
@@ -215,7 +188,7 @@
   </div>
         
     
-
+  <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}">
 <script type="text/javascript">
 
   var index = 20;
@@ -246,29 +219,36 @@
   function downloadContent(index, limit) {
     $.get('/load_home?index=' + index + '&limit=' + limit, (data) => {
       for (var index = 0; index < data.data.length; index++) {
-        var entry = "/flat-details/" + data.data[index][0];  
+        var favourite = $('#my-data').data().f;
+        var flat = "/flat-details/" + data.data[index][0];  
         var page = `
           <div class="card mb-3">
 
             <div class="card-header">
-              <strong>` +`<a href="${entry}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-              <button class="favourite_button" type="button" onClick="favourite(`+ data.data[index][0] +`)">
-                <span id ="favourite_button_id"><i class="fa-regular fa-heart"></i></span>
-              </button> `
+              <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
+            <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="favourite(`+ data.data[index][0] +`)">
+              <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
+            </button> 
+            `
         $('#properties').append(page)
 
         var script = document.createElement("script");
-        script.type = "text/javscript";
+        script.type = "text/javascript";
+        if (favourite.includes(data.data[index][0])) {
         script.innerHTML = `
-                var x = "data.data[index][0]";
-                document.querySelector(".favourite_button").className = ("favourite_button" + x.toString());
-                document.querySelector("#favourite_button_id").id = ("favourite_button_id" + x.toString());
-                window['click' + x.toString()] = false;
-              `
+            var x = "`+data.data[index][0]+`";
+            document.getElementById("favourite_button_id" + x.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
+            document.getElementById("favourite_button" + x.toString()).setAttribute( 'onClick', ("unfavourite(" +   x.toString()  + ")")); 
+        `
+        }
+        else {
+        script.innerHTML = `
+            var x = "`+data.data[index][0]+`";
+            document.getElementById("favourite_button_id" + x.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
+        `
+        }    
         document.body.appendChild(script);
         
-
-
 
         var page =
             `</div>
