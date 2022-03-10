@@ -10,6 +10,7 @@ import random
 from pathlib import Path
 import mysql.connector
 import pymysql
+from .misc import *
 
 views = Blueprint('views', __name__)
 
@@ -78,8 +79,8 @@ def home():
     print(cwd)
     os.chdir(cwd)
     #print(os.getcwd())
-    #conn = sqlite3.connect("database.db")
-    conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
+    conn = sqlite3.connect("database.db")
+    #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     myquery = (
         "SELECT id, address, resale_price,flat_type, storey_range FROM Flat;")
@@ -158,8 +159,8 @@ def home():
 def load_home():
     #os.chdir(os.getcwd() + "/website")
     #print(os.getcwd())
-    #conn = sqlite3.connect("database.db")
-    conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
+    conn = sqlite3.connect("database.db")
+    #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     myquery = (
         "SELECT id, address, resale_price,flat_type, storey_range FROM Flat;")
@@ -1451,6 +1452,9 @@ def sort(criteria):
                     # flat_types
                     flats = Flat.query.filter(
                         Flat.flat_type.in_(flat_types)).all()
+                    
+                    sorting_criteria(flat,criteria)
+                    '''
                     if criteria == 'price_high':
                         flats.sort(key=lambda x: x.resale_price, reverse=True)
                         session['criteria'] = criteria
@@ -1487,6 +1491,7 @@ def sort(criteria):
                             key=lambda x: x.price_per_sqm, reverse=False)
                         session['criteria'] = criteria
                         return render_template('sort.html', user=current_user, flats=flats[:15])
+                    '''
             else:
                 # amenities
                 flats = Flat.query.filter(Flat.amenity.in_(amenities)).all()
@@ -2898,6 +2903,8 @@ def load_sort():
         # flat_types
         elif flat_types:
             flats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
+            sorting_criteria_load(flats, criteria)
+            '''
             if criteria == 'price_high':
                 flats.sort(key=lambda x: x.resale_price, reverse=True)
                 for flat in flats:
@@ -3002,6 +3009,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
+            '''
 
         # amenities
         elif amenities:

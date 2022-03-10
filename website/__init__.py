@@ -23,6 +23,7 @@ def create_database(app):
     #    db.create_all(app=app)
     #    print('Created Database!')
 
+    '''
     create_mysql_database()
     conn = pymysql.connect(
         host="localhost",
@@ -38,14 +39,15 @@ def create_database(app):
     if not cursor.execute("SHOW TABLES LIKE 'review'"):
         db.create_all(app=app)
         print('Created Database!')
-
+    '''
+    return
 
 
 #def create_app():
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
-#app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8'
 
 # To send reset password email to user
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
