@@ -151,7 +151,7 @@ def home():
     session.clear()
     return render_template('home.html', user=current_user, flats=data[:15])
 
-# Infinte Scrolling for Home Page
+# Infinite Scrolling for Home Page
 
 
 @views.route('/load_home', methods=['GET', 'POST'])
@@ -178,8 +178,8 @@ def load_home():
 # Route for Searching flats
 
 
-@views.route('/search/<search>', methods=['GET', 'POST'])
-def search(search):
+@views.route('/search/<address>', methods=['GET', 'POST'])
+def search(address):
     if request.method == 'POST':
         address = request.form.get('search')
         towns = request.form.getlist('town')
@@ -238,9 +238,9 @@ def search(search):
         else:
             flash(
                 'No results found! Please ensure you typed in the correct format of address.', category='error')
-            return render_template("search.html", user=current_user, address=search)
+            return render_template("search.html", user=current_user, address=address)
 
-    return render_template('home.html', user=current_user, search=search)
+    return render_template('search.html', user=current_user, address=address)
 
 # Infinite Scrolling for Search Page
 
