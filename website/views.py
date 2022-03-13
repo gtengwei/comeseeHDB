@@ -16,28 +16,7 @@ views = Blueprint('views', __name__)
 
 INDEX = 20 # Number of items to show on homepage
 
-@views.route('/reviews', methods=['GET', 'POST'])
-@login_required
-def review(flat_id):
-    if request.method == 'POST':
-        review = request.form.get('review')
-
-        if len(review) < 1:
-            flash('Review is too short!', category='error')
-        elif len(review) > 500:
-            flash(
-                'Review is too long! Maximum length for a review is 500 characters', category='error')
-        else:
-            new_review = Review(
-                data=review, user_id=current_user.id, flat_id=flat_id)
-            db.session.add(new_review)
-            db.session.commit()
-            flash('Review added!', category='success')
-
-    return render_template("review.html", user=current_user)
-
-
-@views.route('/delete-review', methods=['GET', 'POST'])
+@views.route('/delete-review', methods=['GET','POST'])
 def delete_review():
     review = json.loads(request.data)
     reviewId = review['reviewId']
@@ -47,13 +26,12 @@ def delete_review():
             db.session.delete(review)
             flash('Review deleted!', category='success')
             db.session.commit()
-
     return jsonify({})
 
 # Route for every flat
 
-
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
+@login_required
 def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
     if request.method == 'POST':
@@ -151,11 +129,32 @@ def home():
             return render_template("search.html", user=current_user, address=address)
 
     session.clear()
-    return render_template('home.html', user=current_user, flats=data[:INDEX])
+    return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = current_user.favourites)
 
+
+
+@views.route('/unfavourite', methods=['POST'])
+def unfavourite():
+    favourite = json.loads(request.data)
+    flatID = favourite['favouriteID']
+    for favourite in Favourites.query.all():
+        if favourite.user_id == current_user.id and favourite.flat_id == flatID:
+            db.session.delete(favourite)
+            db.session.commit()
+    return jsonify({})
+
+@views.route('/favourite', methods=['POST'])
+def favourite():
+    print("i am here")
+    flat = json.loads(request.data)
+    flatID = flat['flatID']
+    new_favourites = Favourites(user_id = current_user.id , flat_id = flatID)
+    db.session.add(new_favourites)
+    db.session.commit()
+    return jsonify({})
+
+    
 # Infinite Scrolling for Home Page
-
-
 @views.route('/load_home', methods=['GET', 'POST'])
 def load_home():
 
@@ -401,6 +400,7 @@ def load_search():
         index = int(request.args.get('index'))
         limit = int(request.args.get('limit'))
 
+    
         return jsonify({'data': data[index:limit + index]})
     else:
         return jsonify({'data': data})
