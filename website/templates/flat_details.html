@@ -45,8 +45,30 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
+
+  <iframe
+  id="map"
+  width="600"
+  height="450"
+  style="border:0"
+  loading="lazy"
+  allowfullscreen
+  src="">
+</iframe>
+<script>
+let myIframe = document.getElementById("map");
+let url_string = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBAwQozORKPVVJNGL-wd46qlbn7QLNW1u0&q=";
+let blk = '{{ flat.block }}'
+let street = '{{ flat.street_name }}'
+
+let adsURL = url_string + blk + "+" + street
+console.log(adsURL);
+map.src = adsURL;
+</script>
+
+
 <div class="street_name">
-  <h1>{{flat.street_name}}</h1>
+  <h1>{{flat.address}}</h1>
   <button class="favourite_button" type="button" onClick="favourite({{ flat.id }})">
     <span id ="favourite_button_id"><i class="fa-regular fa-heart"></i></span>
   </button>
@@ -88,28 +110,9 @@
 
 
 
-<iframe
-      id="map"
-      width="600"
-      height="450"
-      style="border:0"
-      loading="lazy"
-      allowfullscreen
-      src="">
-</iframe>
-<script>
-    let myIframe = document.getElementById("map");
-    let url_string = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBAwQozORKPVVJNGL-wd46qlbn7QLNW1u0&q=";
-    let blk = '{{ flat.block }}'
-    let street = '{{ flat.street_name }}'
-
-    let adsURL = url_string + blk + "+" + street
-    console.log(adsURL);
-    map.src = adsURL;
-</script>
 
 
-<h1>{{flat.street_name}}</h1>
+
 <div class="row"> 
 <div class="col-sm-3">
     <p class="mb-0">Price</p>
