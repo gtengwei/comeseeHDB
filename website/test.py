@@ -3,7 +3,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 import pandas as pd
 import os
-import mysql.connector
 import csv
 import pymysql
 
@@ -17,13 +16,13 @@ class HDB_Flats(Base):
     # tell SQLAlchemy the name of column and its attributes:
     id = Column(Integer, primary_key=True, nullable=False)
     month = Column(Integer)
-    town = Column(String)
-    flat_type = Column(String)
-    block = Column(String)
-    street_name = Column(String)
-    storey_range = Column(String)
+    town = Column(String(150))
+    flat_type = Column(String(150))
+    block = Column(String(150))
+    street_name = Column(String(150))
+    storey_range = Column(String(150))
     floor_area_sqm = Column(Float)
-    flat_model = Column(String)
+    flat_model = Column(String(150))
     lease_commence_date = Column(Date)
     remaining_lease = Column(Float)
     resale_price = Column(Float)
@@ -32,16 +31,16 @@ class HDB_Flats(Base):
 def create_HDB_Flats_table(engine):
     # This will create the table in the database
     engine = create_engine('sqlite:///website/database.db')
-    Base.metadata.create_all(engine)
+    # Base.metadata.create_all(engine)
     file_name = 'test.csv'
-    os.chdir("C:/Users/Hannah V/Documents/GitHub/comeseeHDB/website")
+    # os.chdir("C:/Users/Hannah V/Documents/GitHub/comeseeHDB/website")
     df = pd.read_csv('test.csv')
     df.to_sql(con=engine, index_label='id',
               name=HDB_Flats.__tablename__, if_exists='replace')
 
 
 def main():
-    os.chdir("C:/Users/Hannah V/Documents/GitHub/comeseeHDB/website")
+    # os.chdir("C:/Users/Hannah V/Documents/GitHub/comeseeHDB/website")
     df = pd.read_csv('test.csv')
     # print(df.dtypes)
     df['price_per_sqm'] = round(
@@ -56,10 +55,10 @@ def main():
     df.to_csv("test.csv", index=False)
 
 def create_flat_csv(): 
-
-    engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
-    #Base.metadata.create_all(engine)
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
+    
+    engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
+    # Base.metadata.create_all(engine)
+    # os.chdir("C:/Users/Hannah V/Documents/GitHub/comeseeHDB/website")
     df = pd.read_csv('test.csv')    
     df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
 
@@ -75,7 +74,7 @@ def create_mysql_database():
 
 
 def print_database():
-    database = mysql.connector.connect(
+    database = pymysql.connect(
         host="localhost",
         user="root",
         passwd="Clutch123!"
@@ -86,6 +85,7 @@ def print_database():
         print(row)
         
 if __name__ == "__main__":
-    #main()
-    #create_database()
+    # main()
+    # create_mysql_database()
+    # print_database()
     create_flat_csv()

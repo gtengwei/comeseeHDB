@@ -1,4 +1,5 @@
 # For creation of stuff that can be viewed on homepage
+from db import open_connection
 from flask import Blueprint, render_template, request, flash, jsonify, session, redirect, url_for
 from flask_login import login_required, current_user
 from .models import *
@@ -79,9 +80,10 @@ def home():
     os.chdir(cwd)
     #print(os.getcwd())
     #conn = sqlite3.connect("database.db")
-    conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
+    conn = open_connection()
+    # conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
-    myquery = ('SELECT id, address, resale_price,flat_type, storey_range FROM Flat;')
+    myquery = ('SELECT id, address, resale_price,flat_type, storey_range FROM flat;')
     c.execute(myquery)
     data = list(c.fetchall())
     # random.shuffle(data)
@@ -158,7 +160,8 @@ def load_home():
     #os.chdir(os.getcwd() + "/website")
     #print(os.getcwd())
     #conn = sqlite3.connect("database.db")
-    conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
+    conn = open_connection()
+    # conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     myquery = (
         "SELECT id, address, resale_price,flat_type, storey_range FROM Flat;")

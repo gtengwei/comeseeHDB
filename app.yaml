@@ -2,6 +2,12 @@ runtime: python38
 
 handlers:
 - url: /static
-  static_dir: website/static
+  static_dir: website/static/logo.png
 - url: /.*
   script: main.app
+
+env_variables:
+  CLOUD_SQL_USERNAME: root
+  CLOUD_SQL_PASSWORD: Clutch123!
+  CLOUD_SQL_DATABASE_NAME: mysql_database
+  CLOUD_SQL_CONNECTION_NAME: comesee-hdb:asia-southeast1:comeseehdb-database

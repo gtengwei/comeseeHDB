@@ -1,13 +1,14 @@
 ## To create the app and database
 
+from io import open_code
 from venv import create
+from db import open_connection
 from flask import Flask, Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_moment import Moment
-import mysql.connector
 import pymysql
 
 from website.test import create_mysql_database
@@ -23,29 +24,39 @@ def create_database(app):
     #    db.create_all(app=app)
     #    print('Created Database!')
 
-    create_mysql_database()
-    conn = pymysql.connect(
-        host="localhost",
-        user="root",
-        passwd="Clutch123!",
-        database = "mysql_database"
-    )
+    # create_mysql_database()
+    conn = open_connection()
+    # conn = pymysql.connect(
+    #     host="localhost",
+    #     user="root",
+    #     passwd="Clutch123!",
+    #     database = "mysql_database"
+    # )
     cursor = conn.cursor()
-    cursor.execute("SET GLOBAL FOREIGN_KEY_CHECKS = 0")
-
+    cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
     ## MUST CREATE FLAT TABLE FIRST BEFORE OTHER TABLES
     ## IF NOT WILL RESULT IN ERRORS
     if not cursor.execute("SHOW TABLES LIKE 'review'"):
         db.create_all(app=app)
         print('Created Database!')
-
+def create_flat_csv(): 
+    
+    engine = create_engine('mysql+pymysql://root:Clutch123!@/mysql_database?unix_socket=/cloudsql/comesee-hdb:asia-southeast1:comeseehdb-database')
+    # engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
+    # Base.metadata.create_all(engine)
+    # os.chdir("C:/Users/Hannah V/Documents/GitHub/comeseeHDB/website")
+    os.chdir("/srv/website")
+    df = pd.read_csv('test.csv')  
+    conn = open_connection()
+    df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
 
 
 #def create_app():
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
 #app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Clutch123!@/mysql_database?unix_socket=/cloudsql/comesee-hdb:asia-southeast1:comeseehdb-database'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8'
 
 # To send reset password email to user
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -68,6 +79,7 @@ app.register_blueprint(user, url_prefix='/')
 
 from .models import *
 
+# create_flat_csv()
 create_database(app)
 #os.chdir("website")
 login_manager = LoginManager()

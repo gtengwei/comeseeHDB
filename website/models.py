@@ -90,7 +90,8 @@ def create_Flat_table():
     #df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
 
     # To create the table in the database (MySQL)
-    engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
+    engine = create_engine('mysql+pymysql://root:Clutch123!@/mysql_database?unix_socket=/cloudsql/comesee-hdb:asia-southeast1:comeseehdb-database')
+    # engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
     db.Model.metadata.create_all(engine)
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)    
