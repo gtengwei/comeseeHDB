@@ -43,6 +43,8 @@
                         <a class="dropdown-item" name = "remaining_lease_low" id="remaining_lease_low" href="{{ url_for('views.sort', criteria = 'remaining_lease_low') }}">Remaining Lease (Low to High)</a>
                         <a class="dropdown-item" name = "storey_high" id="storey_high" href="{{ url_for('views.sort', criteria = 'storey_high') }}">Floor (High to Low)</a>
                         <a class="dropdown-item" name = "storey_low" id="storey_low" href="{{ url_for('views.sort', criteria = 'storey_low') }}">Floor (Low to High)</a>
+                        <a class="dropdown-item" name = "price_per_sqm_high" id="price_per_sqm_high" href="{{ url_for('views.sort', criteria = 'price_per_sqm_high') }}">Price per Square Metre (High to Low)</a>
+                        <a class="dropdown-item" name = "price_per_sqm_low" id="price_per_sqm_low" href="{{ url_for('views.sort', criteria = 'price_per_sqm_low') }}">Price per Square Metre (Low to High)</a>
                       </div>
                     </div> 
                   </span>
@@ -122,32 +124,32 @@
         </div>
     </div>
   </form>
-{% if session['street_name'] and session['towns'] and session['flat_types'] and session['amenities'] %}
-<h3 align="center">You searched for: {{session['street_name']}}</h3>
+{% if session['address'] and session['towns'] and session['flat_types'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
 <h3 align="center">Filtered by {{session['towns']}}, {{session['flat_types']}}, {{session['amenities']}}</h3>
 
-{% elif session['street_name'] and session['towns'] and session['flat_types'] %}
-<h3 align="center">You searched for: {{session['street_name']}}</h3>
+{% elif session['address'] and session['towns'] and session['flat_types'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
 <h3 align="center">Filtered by {{session['towns']}}, {{session['flat_types']}}</h3>
 
-{% elif session['street_name'] and session['towns'] and session['amenities'] %}
-<h3 align="center">You searched for: {{session['street_name']}}</h3>
+{% elif session['address'] and session['towns'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
 <h3 align="center">Filtered by {{session['towns']}}, {{session['amenities']}}</h3>
 
-{% elif session['street_name'] and session['flat_types'] and session['amenities'] %}
-<h3 align="center">You searched for: {{session['street_name']}}</h3>
+{% elif session['address'] and session['flat_types'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
 <h3 align="center">Filtered by {{session['flat_types']}}, {{session['amenities']}}</h3>
 
-{% elif session['street_name'] and session['towns'] %}
-<h3 align="center">You searched for: {{session['street_name']}}</h3>
+{% elif session['address'] and session['towns'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
 <h3 align="center">Filtered by {{session['towns']}}</h3>
 
-{% elif session['street_name'] and session['flat_types'] %}
-<h3 align="center">You searched for: {{session['street_name']}}</h3>
+{% elif session['address'] and session['flat_types'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
 <h3 align="center">Filtered by {{session['flat_types']}}</h3>
 
-{% elif session['street_name'] and session['amenities'] %}
-<h3 align="center">You searched for: {{session['street_name']}}</h3>
+{% elif session['address'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
 <h3 align="center">Filtered by {{session['amenities']}}</h3>
 
 {% elif session['towns'] and session['flat_types'] and session['amenities'] %}
@@ -171,8 +173,8 @@
 {% elif session['amenities'] %}
 <h3 align="center">Filtered by {{session['amenities']}}</h3>
 
-{% elif session['street_name'] %}
-<h3 align="center">You searched for: {{session['street_name']}}</h3>
+{% elif session['address'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
 {% endif %}
 
 
@@ -188,7 +190,7 @@
       {% for flat in flats %}
         <div class="card mb-3">
           <div class="card-header">
-            <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.street_name}}</strong></a>
+            <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.address}}</strong></a>
           </div>
           <div class="card-body">
             <div class="row">
@@ -223,7 +225,7 @@
       
       if (current_y + window_height  == document_height) {
         downloadContent(index, limit);
-        index += 10
+        index += 20
       }
     });
   

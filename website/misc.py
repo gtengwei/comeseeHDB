@@ -1,12 +1,16 @@
 ## Helper functions for website
 ## To organise the code
 from website import mail
-from flask import flash, url_for
-from flask_mail import Message as MailMessage
+from flask import flash, url_for, render_template, session, jsonify, request
+from flask_mail import Message
+from flask_login import current_user
 from random import randint
-from .models import User
+from .models import Flat
 from . import db
 from datetime import datetime
+import json
+
+INDEX = 20
 
 def checkPassword(password1, password2):
     if password1 != password2:
@@ -62,3 +66,313 @@ def calculate_time_difference(current_datetime, datetime_to_compare):
     time_difference = current_datetime - datetime_to_compare
     return time_difference.days
 
+def sorting_criteria(criteria, flats = []):
+    if criteria == 'price_high':
+        flats.sort(key=lambda x: int(x.resale_price), reverse=True)
+        session['criteria'] = criteria
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+    elif criteria == 'price_low':
+        flats.sort(key=lambda x: x.resale_price,reverse=False)
+        session['criteria'] = criteria
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+    elif criteria == 'remaining_lease_high':
+        flats.sort(key=lambda x: x.remaining_lease, reverse=True)
+        session['criteria'] = criteria
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+    elif criteria == 'remaining_lease_low':
+        flats.sort(key=lambda x: x.remaining_lease, reverse=False)
+        session['criteria'] = criteria
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+    elif criteria == 'storey_high':
+        flats.sort(key=lambda x: x.storey_range, reverse=True)
+        session['criteria'] = criteria
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+    elif criteria == 'storey_low':
+        flats.sort(key=lambda x: x.storey_range, reverse=False)
+        session['criteria'] = criteria
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+    elif criteria == 'price_per_sqm_high':
+        flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
+        session['criteria'] = criteria
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+    elif criteria == 'price_per_sqm_low':
+        flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
+        session['criteria'] = criteria
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+    elif flats == []:
+        if criteria == 'price_high':
+                flats = Flat.query.order_by(Flat.resale_price.desc()).all()
+                session['criteria'] = criteria
+                return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+        elif criteria == 'price_low':
+            flats = Flat.query.order_by(Flat.resale_price.asc()).all()
+            session['criteria'] = criteria
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+        elif criteria == 'remaining_lease_high':
+            flats = Flat.query.order_by(Flat.remaining_lease.desc()).all()
+            session['criteria'] = criteria
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+        elif criteria == 'remaining_lease_low':
+            flats = Flat.query.order_by(Flat.remaining_lease.asc()).all()
+            session['criteria'] = criteria
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+        elif criteria == 'storey_high':
+            flats.sort(key=lambda x: x.storey_range, reverse=True)
+            session['criteria'] = criteria
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+        elif criteria == 'storey_low':
+            flats.sort(key=lambda x: x.storey_range, reverse=False)
+            session['criteria'] = criteria
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+        elif criteria == 'price_per_sqm_high':
+            flats.sort(
+                key=lambda x: x.price_per_sqm, reverse=True)
+            session['criteria'] = criteria
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+
+        elif criteria == 'price_per_sqm_low':
+            flats.sort(
+                key=lambda x: x.price_per_sqm, reverse=False)
+            session['criteria'] = criteria
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+    
+    return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+    
+
+
+
+def sorting_criteria_load(criteria, flats = []):
+    data = []
+    if criteria == 'price_high':
+        flats.sort(key=lambda x: x.resale_price, reverse=True)
+        for flat in flats:
+            data.append(tuple(
+                [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+            # print(data[0][0])
+        if request.args:
+            index = int(request.args.get('index'))
+            limit = int(request.args.get('limit'))
+
+            return jsonify({'data': data[index:limit + index]})
+        else:
+            return jsonify({'data': data})
+
+    elif criteria == 'price_low':
+        flats.sort(key=lambda x: x.resale_price, reverse=False)
+        for flat in flats:
+            data.append(tuple(
+                [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+        if request.args:
+            index = int(request.args.get('index'))
+            limit = int(request.args.get('limit'))
+
+            return jsonify({'data': data[index:limit + index]})
+        else:
+            return jsonify({'data': data})
+
+    elif criteria == 'remaining_lease_high':
+        flats.sort(
+            key=lambda x: x.remaining_lease, reverse=True)
+        for flat in flats:
+            data.append(tuple(
+                [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+        if request.args:
+            index = int(request.args.get('index'))
+            limit = int(request.args.get('limit'))
+
+            return jsonify({'data': data[index:limit + index]})
+        else:
+            return jsonify({'data': data})
+
+    elif criteria == 'remaining_lease_low':
+        flats.sort(key=lambda x: x.remaining_lease,
+                    reverse=False)
+        for flat in flats:
+            data.append(tuple(
+                [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+        if request.args:
+            index = int(request.args.get('index'))
+            limit = int(request.args.get('limit'))
+
+            return jsonify({'data': data[index:limit + index]})
+        else:
+            return jsonify({'data': data})
+    elif criteria == 'storey_high':
+        flats.sort(key=lambda x: x.storey_range, reverse=True)
+        for flat in flats:
+            data.append(tuple(
+                [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+        if request.args:
+            index = int(request.args.get('index'))
+            limit = int(request.args.get('limit'))
+
+            return jsonify({'data': data[index:limit + index]})
+        else:
+            return jsonify({'data': data})
+
+    elif criteria == 'storey_low':
+        flats.sort(key=lambda x: x.storey_range, reverse=False)
+        for flat in flats:
+            data.append(tuple(
+                [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+        if request.args:
+            index = int(request.args.get('index'))
+            limit = int(request.args.get('limit'))
+
+            return jsonify({'data': data[index:limit + index]})
+        else:
+            return jsonify({'data': data})
+    
+    elif criteria == 'price_per_sqm_high':
+        flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
+        for flat in flats:
+            data.append(tuple(
+                [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+        if request.args:
+            index = int(request.args.get('index'))
+            limit = int(request.args.get('limit'))
+
+            return jsonify({'data': data[index:limit + index]})
+        else:
+            return jsonify({'data': data})
+    
+    elif criteria == 'price_per_sqm_low':
+        flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
+        for flat in flats:
+            data.append(tuple(
+                [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+        if request.args:
+            index = int(request.args.get('index'))
+            limit = int(request.args.get('limit'))
+
+            return jsonify({'data': data[index:limit + index]})
+        else:
+            return jsonify({'data': data})
+
+    
+    elif flats == []:
+        if criteria == 'price_high':
+            flats = Flat.query.order_by(Flat.resale_price.desc()).all()
+            for flat in flats:
+                data.append(tuple(
+                    [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+                # print(data[0][0])
+            if request.args:
+                index = int(request.args.get('index'))
+                limit = int(request.args.get('limit'))
+
+                return jsonify({'data': data[index:limit + index]})
+            else:
+                return jsonify({'data': data})
+
+        elif criteria == 'price_low':
+            flats = Flat.query.order_by(Flat.resale_price.asc()).all()
+            for flat in flats:
+                data.append(tuple(
+                    [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+            if request.args:
+                index = int(request.args.get('index'))
+                limit = int(request.args.get('limit'))
+
+                return jsonify({'data': data[index:limit + index]})
+            else:
+                return jsonify({'data': data})
+
+        elif criteria == 'remaining_lease_high':
+            flats = Flat.query.order_by(Flat.remaining_lease.desc()).all()
+            for flat in flats:
+                data.append(tuple(
+                    [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+            if request.args:
+                index = int(request.args.get('index'))
+                limit = int(request.args.get('limit'))
+
+                return jsonify({'data': data[index:limit + index]})
+            else:
+                return jsonify({'data': data})
+        elif criteria == 'remaining_lease_low':
+            flats = Flat.query.order_by(Flat.remaining_lease.asc()).all()
+            flats.sort(key=lambda x: x.remaining_lease, reverse=False)
+            for flat in flats:
+                data.append(tuple(
+                    [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+            if request.args:
+                index = int(request.args.get('index'))
+                limit = int(request.args.get('limit'))
+
+                return jsonify({'data': data[index:limit + index]})
+            else:
+                return jsonify({'data': data})
+        elif criteria == 'storey_high':
+            flats = Flat.query.order_by(Flat.storey_range.desc()).all()
+            flats.sort(key=lambda x: x.storey_range, reverse=True)
+            for flat in flats:
+                data.append(tuple(
+                    [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+            if request.args:
+                index = int(request.args.get('index'))
+                limit = int(request.args.get('limit'))
+
+                return jsonify({'data': data[index:limit + index]})
+            else:
+                return jsonify({'data': data})
+
+        elif criteria == 'storey_low':
+            flats = Flat.query.order_by(Flat.storey_range.asc()).all()
+            flats.sort(key=lambda x: x.storey_range, reverse=False)
+            for flat in flats:
+                data.append(tuple(
+                    [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+            if request.args:
+                index = int(request.args.get('index'))
+                limit = int(request.args.get('limit'))
+
+                return jsonify({'data': data[index:limit + index]})
+            else:
+                return jsonify({'data': data})
+
+        elif criteria == 'price_per_sqm_high':
+            flats = Flat.query.order_by(Flat.price_per_sqm.desc()).all()
+            flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
+            for flat in flats:
+                data.append(tuple(
+                    [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+            if request.args:
+                index = int(request.args.get('index'))
+                limit = int(request.args.get('limit'))
+
+                return jsonify({'data': data[index:limit + index]})
+            else:
+                return jsonify({'data': data})
+        
+        elif criteria == 'price_per_sqm_low':
+            flats = Flat.query.order_by(Flat.price_per_sqm.asc()).all()
+            flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
+            for flat in flats:
+                data.append(tuple(
+                    [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+            if request.args:
+                index = int(request.args.get('index'))
+                limit = int(request.args.get('limit'))
+
+                return jsonify({'data': data[index:limit + index]})
+            else:
+                return jsonify({'data': data})
+
+    return jsonify({})
+    
+    
