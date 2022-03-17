@@ -137,8 +137,8 @@ def home():
 def unfavourite():
     favourite = json.loads(request.data)
     flatID = favourite['favouriteID']
-    for favourite in Favourites.query.all():
-        if favourite.user_id == current_user.id and favourite.flat_id == flatID:
+    for favourite in current_user.favourites:
+        if favourite.flat_id == flatID:
             db.session.delete(favourite)
             db.session.commit()
     return jsonify({})
