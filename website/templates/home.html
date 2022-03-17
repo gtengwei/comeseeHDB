@@ -151,20 +151,15 @@
       <div class="card mb-3">
         <div class="card-header">
           <strong><a href ="{{ url_for('views.flat_details', flatId=flat[0]) }}" target = "_blank">{{flat[1]}}</strong></a>
+          
+          {% if flat[0] in user.favourites|map(attribute="flat_id")|list %}
+          <button class="favourite_button" id ="favourite_button{{flat[0]}}" type="button" onClick="unfavourite({{ flat[0] }})">
+            <span id ="favourite_button_id{{flat[0]}}"><i class="fa-solid fa-heart"></i></span>
+          </button>
+          {% else %}
           <button class="favourite_button" id ="favourite_button{{flat[0]}}" type="button" onClick="favourite({{ flat[0] }})">
             <span id ="favourite_button_id{{flat[0]}}"><i class="fa-regular fa-heart"></i></span>
           </button>
-          {% if flat[0] in user.favourites|map(attribute="flat_id")|list %}
-          <script type="text/javascript">
-            var x = "{{flat[0]|tojson}}";
-            document.getElementById("favourite_button_id" + x.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
-            document.getElementById("favourite_button" + x.toString()).setAttribute( 'onClick', ("unfavourite(" +   x.toString()  + ")")); 
-          </script>
-          {% else %}
-          <script type="text/javascript">
-            var x = "{{flat[0]|tojson}}";
-            document.getElementById("favourite_button_id" + x.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
-          </script>
           {% endif %}
 
         </div>
