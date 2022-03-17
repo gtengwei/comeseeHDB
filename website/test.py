@@ -30,17 +30,6 @@ class HDB_Flats(Base):
     resale_price = Column(Float)
 
 
-def create_HDB_Flats_table(engine):
-    # This will create the table in the database
-    engine = create_engine('sqlite:///website/database.db')
-    Base.metadata.create_all(engine)
-    file_name = 'test.csv'
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
-    df = pd.read_csv('test.csv')
-    df.to_sql(con=engine, index_label='id',
-              name=HDB_Flats.__tablename__, if_exists='replace')
-
-
 def main():
     os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
     df = pd.read_csv('test.csv')
@@ -51,6 +40,7 @@ def main():
     df['block'].astype(str)
     df['street_name'].astype(str)
     df['address'] = df['street_name'] + ' BLK ' + df['block']
+    df['numOfFavourites'] = 0
     # print(df['address'])
     # writing into the file
     #df.drop('price_per_square_metre', axis=1, inplace=True)
@@ -88,6 +78,6 @@ def print_database():
         print(row)
         
 if __name__ == "__main__":
-    #main()
+    main()
     #create_database()
-    create_flat_csv()
+    #create_flat_csv()

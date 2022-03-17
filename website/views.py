@@ -49,7 +49,30 @@ def flat_details(flatId):
             db.session.commit()
             flash('Review added!', category='success')
     return render_template("flat_details.html", user=current_user, flat=flat)
+    
+@views.route('/unfavourite', methods=['POST'])
+def unfavourite():
+    favourite = json.loads(request.data)
+    flatID = favourite['favouriteID']
+    for favourite in Favourites.query.all():
+        if favourite.user_id == current_user.id and favourite.flat_id == flatID:
+            db.session.delete(favourite)
+            flat = Flat.query.filter_by(id=flatID).first_or_404()
+            flat.numOfFavourites -= 1
+            db.session.commit()
+    return jsonify({})
 
+@views.route('/favourite', methods=['POST'])
+def favourite():
+    print("i am here")
+    flat = json.loads(request.data)
+    flatID = flat['flatID']
+    new_favourites = Favourites(user_id = current_user.id , flat_id = flatID)
+    db.session.add(new_favourites)
+    flat = Flat.query.filter_by(id=flatID).first_or_404()
+    flat.numOfFavourites += 1
+    db.session.commit()
+    return jsonify({})
 
 # Route for Home Page
 @views.route('/', methods=['GET', 'POST'])
@@ -129,29 +152,11 @@ def home():
             return render_template("search.html", user=current_user, address=address)
 
     session.clear()
-    return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = current_user.favourites)
+    return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
 
 
 
-@views.route('/unfavourite', methods=['POST'])
-def unfavourite():
-    favourite = json.loads(request.data)
-    flatID = favourite['favouriteID']
-    for favourite in Favourites.query.all():
-        if favourite.user_id == current_user.id and favourite.flat_id == flatID:
-            db.session.delete(favourite)
-            db.session.commit()
-    return jsonify({})
 
-@views.route('/favourite', methods=['POST'])
-def favourite():
-    print("i am here")
-    flat = json.loads(request.data)
-    flatID = flat['flatID']
-    new_favourites = Favourites(user_id = current_user.id , flat_id = flatID)
-    db.session.add(new_favourites)
-    db.session.commit()
-    return jsonify({})
 
     
 # Infinite Scrolling for Home Page
@@ -260,6 +265,32 @@ def load_home():
                 return jsonify({'data': data[index:limit + index]})
             else:
                 return jsonify({'data': data})
+        
+        elif criteria == 'favourites_high':
+            myquery = (
+            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
+            c.execute(myquery)
+            data = list(c.fetchall())
+            if request.args:
+                index = int(request.args.get('index'))
+                limit = int(request.args.get('limit'))
+
+                return jsonify({'data': data[index:limit + index]})
+            else:
+                return jsonify({'data': data})
+        elif criteria == 'favourites_low':
+            myquery = (
+            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
+            c.execute(myquery)
+            data = list(c.fetchall())
+            if request.args:
+                index = int(request.args.get('index'))
+                limit = int(request.args.get('limit'))
+
+                return jsonify({'data': data[index:limit + index]})
+            else:
+                return jsonify({'data': data})
+
     else:
         myquery = (
             "SELECT id, address, resale_price,flat_type, storey_range FROM Flat;")
@@ -655,6 +686,21 @@ def sort(criteria):
             elif criteria == 'price_per_sqm_low':
                 myquery = (
                 "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm;")
+                c.execute(myquery)
+                data = list(c.fetchall())
+                session['criteria'] = criteria
+                return render_template('home.html', user=current_user, flats=data[:INDEX])
+
+            elif criteria == 'favourites_high':
+                myquery = (
+                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
+                c.execute(myquery)
+                data = list(c.fetchall())
+                session['criteria'] = criteria
+                return render_template('home.html', user=current_user, flats=data[:INDEX])
+            elif criteria == 'favourites_low':
+                myquery = (
+                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
                 c.execute(myquery)
                 data = list(c.fetchall())
                 session['criteria'] = criteria

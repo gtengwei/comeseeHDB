@@ -103,8 +103,7 @@ def change_postal_code(username):
 @login_required
 def favourites(username):
     fav_list = []
-    for x in Favourites.query.all():
-        if x.user_id == current_user.id:
+    for x in current_user.favourites:
             fav_list.append(x.flat_id)
     return render_template("favourites.html", user=current_user, flats = [Flat.query.get(x) for x in fav_list])
 

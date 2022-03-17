@@ -129,24 +129,32 @@ def sorting_criteria(criteria, flats = []):
             return render_template('sort.html', user=current_user, flats=flats[:INDEX])
 
         elif criteria == 'storey_high':
-            flats.sort(key=lambda x: x.storey_range, reverse=True)
+            flats = Flat.query.order_by(Flat.storey_range.desc()).all()
             session['criteria'] = criteria
             return render_template('sort.html', user=current_user, flats=flats[:INDEX])
 
         elif criteria == 'storey_low':
-            flats.sort(key=lambda x: x.storey_range, reverse=False)
+            flats = Flat.query.order_by(Flat.storey_range.asc()).all()
             session['criteria'] = criteria
             return render_template('sort.html', user=current_user, flats=flats[:INDEX])
 
         elif criteria == 'price_per_sqm_high':
-            flats.sort(
-                key=lambda x: x.price_per_sqm, reverse=True)
+            flats = Flat.query.order_by(Flat.price_per_sqm.desc()).all()
             session['criteria'] = criteria
             return render_template('sort.html', user=current_user, flats=flats[:INDEX])
 
         elif criteria == 'price_per_sqm_low':
-            flats.sort(
-                key=lambda x: x.price_per_sqm, reverse=False)
+            flats = Flat.query.order_by(Flat.price_per_sqm.asc()).all()
+            session['criteria'] = criteria
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+        
+        elif criteria == 'favourites_high':
+            flats = Flat.query.order_by(Flat.numOfFavourites.desc()).all()
+            session['criteria'] = criteria
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX])
+        
+        elif criteria == 'favourites_low':
+            flats = Flat.query.order_by(Flat.numOfFavourites.asc()).all()
             session['criteria'] = criteria
             return render_template('sort.html', user=current_user, flats=flats[:INDEX])
     
@@ -262,6 +270,32 @@ def sorting_criteria_load(criteria, flats = []):
             return jsonify({'data': data[index:limit + index]})
         else:
             return jsonify({'data': data})
+    
+    elif criteria == 'favourites_high':
+        flats.sort(key=lambda x: x.numOfFavourites, reverse=True)
+        for flat in flats:
+            data.append(tuple(
+                [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+        if request.args:
+            index = int(request.args.get('index'))
+            limit = int(request.args.get('limit'))
+
+            return jsonify({'data': data[index:limit + index]})
+        else:
+            return jsonify({'data': data})
+    
+    elif criteria == 'favourites_low':
+        flats.sort(key=lambda x: x.numOfFavourites, reverse=False)
+        for flat in flats:
+            data.append(tuple(
+                [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+        if request.args:
+            index = int(request.args.get('index'))
+            limit = int(request.args.get('limit'))
+
+            return jsonify({'data': data[index:limit + index]})
+        else:
+            return jsonify({'data': data})
 
     
     elif flats == []:
@@ -362,6 +396,34 @@ def sorting_criteria_load(criteria, flats = []):
         elif criteria == 'price_per_sqm_low':
             flats = Flat.query.order_by(Flat.price_per_sqm.asc()).all()
             flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
+            for flat in flats:
+                data.append(tuple(
+                    [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+            if request.args:
+                index = int(request.args.get('index'))
+                limit = int(request.args.get('limit'))
+
+                return jsonify({'data': data[index:limit + index]})
+            else:
+                return jsonify({'data': data})
+            
+        elif criteria == 'favourites_high':
+            flats = Flat.query.order_by(Flat.numOfFavourites.desc()).all()
+            flats.sort(key=lambda x: x.numOfFavourites, reverse=True)
+            for flat in flats:
+                data.append(tuple(
+                    [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
+            if request.args:
+                index = int(request.args.get('index'))
+                limit = int(request.args.get('limit'))
+
+                return jsonify({'data': data[index:limit + index]})
+            else:
+                return jsonify({'data': data})
+        
+        elif criteria == 'favourites_low':
+            flats = Flat.query.order_by(Flat.numOfFavourites.asc()).all()
+            flats.sort(key=lambda x: x.numOfFavourites, reverse=False)
             for flat in flats:
                 data.append(tuple(
                     [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
