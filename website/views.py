@@ -86,6 +86,7 @@ def home():
     myquery = ('SELECT id, address, resale_price,flat_type, storey_range FROM flat;')
     c.execute(myquery)
     data = list(c.fetchall())
+    print(data)
     # random.shuffle(data)
     
     # Search for flats from homepage
@@ -164,7 +165,7 @@ def load_home():
     # conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     myquery = (
-        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat;")
+        "SELECT id, address, resale_price,flat_type, storey_range FROM flat;")
     c.execute(myquery)
     data = list(c.fetchall())
     # random.shuffle(data)

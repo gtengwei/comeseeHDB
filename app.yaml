@@ -1,8 +1,11 @@
 runtime: python38
 
 handlers:
+- url: /static/logo\.png
+  static_files: logo.PNG
+  upload: logo\.PNG
 - url: /static
-  static_dir: website/static/logo.png
+  static_dir: website/static
 - url: /.*
   script: main.app
 
