@@ -31,7 +31,6 @@ def delete_review():
 # Route for every flat
 
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
-@login_required
 def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
     if request.method == 'POST':
