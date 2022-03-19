@@ -15,7 +15,10 @@
       border:none;
       outline:none;
       color: red;
+      align-self: flex-start;
     }
+
+    
   </style>
 </head>
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -78,6 +81,7 @@ map.src = adsURL;
     <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
   </button>
   {% endif %}
+  <span id="favourite_count{{flat.id}}" class="favourite_count">{{flat.favourites|length}}</span>
   </script>
 </div>
 
