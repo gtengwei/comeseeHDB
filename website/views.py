@@ -627,56 +627,88 @@ def sort(criteria):
                 c.execute(myquery)
                 data = list(c.fetchall())
                 session['criteria'] = criteria
-                return render_template('home.html', user=current_user, flats=data[:INDEX])
+                list_x = []
+                for x in range(INDEX):
+                    flat_id = data[x][0]
+                    list_x.append(flat_id)
+                return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
             elif criteria == 'price_low':
                 myquery = (
                 "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price;")
                 c.execute(myquery)
                 data = list(c.fetchall())
                 session['criteria'] = criteria
-                return render_template('home.html', user=current_user, flats=data[:INDEX])
+                list_x = []
+                for x in range(INDEX):
+                    flat_id = data[x][0]
+                    list_x.append(flat_id)
+                return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
             elif criteria == 'remaining_lease_high':
                 myquery = (
                 "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease DESC;")
                 c.execute(myquery)
                 data = list(c.fetchall())
                 session['criteria'] = criteria
-                return render_template('home.html', user=current_user, flats=data[:INDEX])
+                list_x = []
+                for x in range(INDEX):
+                    flat_id = data[x][0]
+                    list_x.append(flat_id)
+                return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
             elif criteria == 'remaining_lease_low':
                 myquery = (
                 "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease;")
                 c.execute(myquery)
                 data = list(c.fetchall())
                 session['criteria'] = criteria
-                return render_template('home.html', user=current_user, flats=data[:INDEX])
+                list_x = []
+                for x in range(INDEX):
+                    flat_id = data[x][0]
+                    list_x.append(flat_id)
+                return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
             elif criteria == 'storey_high':
                 myquery = (
                 "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range DESC;")
                 c.execute(myquery)
                 data = list(c.fetchall())
                 session['criteria'] = criteria
-                return render_template('home.html', user=current_user, flats=data[:INDEX])
+                list_x = []
+                for x in range(INDEX):
+                    flat_id = data[x][0]
+                    list_x.append(flat_id)
+                return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
             elif criteria == 'storey_low':
                 myquery = (
                 "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range;")
                 c.execute(myquery)
                 data = list(c.fetchall())
                 session['criteria'] = criteria
-                return render_template('home.html', user=current_user, flats=data[:INDEX])
+                list_x = []
+                for x in range(INDEX):
+                    flat_id = data[x][0]
+                    list_x.append(flat_id)
+                return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
             elif criteria == 'price_per_sqm_high':
                 myquery = (
                 "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm DESC;")
                 c.execute(myquery)
                 data = list(c.fetchall())
                 session['criteria'] = criteria
-                return render_template('home.html', user=current_user, flats=data[:INDEX])
+                list_x = []
+                for x in range(INDEX):
+                    flat_id = data[x][0]
+                    list_x.append(flat_id)
+                return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
             elif criteria == 'price_per_sqm_low':
                 myquery = (
                 "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm;")
                 c.execute(myquery)
                 data = list(c.fetchall())
                 session['criteria'] = criteria
-                return render_template('home.html', user=current_user, flats=data[:INDEX])
+                list_x = []
+                for x in range(INDEX):
+                    flat_id = data[x][0]
+                    list_x.append(flat_id)
+                return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
             
     return render_template('sort.html', user=current_user)
 
