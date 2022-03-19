@@ -127,31 +127,40 @@ def home():
             flash(
                 'No results found! Please ensure you typed in the correct format of address.', category='error')
             return render_template("search.html", user=current_user, address=address)
-
     session.clear()
-    return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = current_user.favourites)
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites = current_user.favourites)
 
 
 
 @views.route('/unfavourite', methods=['POST'])
+@login_required
 def unfavourite():
     favourite = json.loads(request.data)
     flatID = favourite['favouriteID']
+    flat = Flat.query.get(flatID)
     for favourite in current_user.favourites:
         if favourite.flat_id == flatID:
             db.session.delete(favourite)
             db.session.commit()
-    return jsonify({})
+    return jsonify({"favourite_count": len(flat.favourites)})
 
 @views.route('/favourite', methods=['POST'])
+@login_required
 def favourite():
-    print("i am here")
     flat = json.loads(request.data)
     flatID = flat['flatID']
+    flat = Flat.query.get(flatID)
     new_favourites = Favourites(user_id = current_user.id , flat_id = flatID)
     db.session.add(new_favourites)
     db.session.commit()
-    return jsonify({})
+    return jsonify({"favourite_count": len(flat.favourites)})
+
+@views.route('/favourite_count', methods=['POST'])
+def favourite_count():
+    flat = json.loads(request.data)
+    flatID = flat['flatID']
+    flat = Flat.query.get(flatID)
+    return jsonify({"favourite_count": len(flat.favourites)})
 
     
 # Infinite Scrolling for Home Page
@@ -270,8 +279,16 @@ def load_home():
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
+            data = data[index:limit + index]
+            for x in range(len(data)):
+                tuple_x = data[x]
+                list_x = list(tuple_x)
+                list_x.append(len(Flat.query.get(x+index).favourites))
+                tuple_x = tuple(list_x)
+                data[x] = tuple_x
+            print(data)
 
-            return jsonify({'data': data[index:limit + index]})
+            return jsonify({'data': data})
         else:
             return jsonify({'data': data})
 
