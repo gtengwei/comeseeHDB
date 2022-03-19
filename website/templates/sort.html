@@ -4,20 +4,36 @@
 {% block content %}
 <head>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
       <style>
         /* Modify the background color */
         
-        .card {
-            background-color: white;
-        }
-        .card-header {
-            background-color: pink;
-    
-        }
-        .card-body {
-            background-color: white;
-    
-        }
+      .card {
+          background-color: white;
+      }
+      .card-header {
+          background-color: pink;
+          display: inline-flex;
+  
+      }
+      .card-body {
+          background-color: white;
+  
+      }
+      
+      button[class^="favourite_button"] {
+          background-color: pink;
+          border:none;
+          outline:none;
+          color: red;
+      }
+
+      .unfavourite_button {
+          background-color: pink;
+          border:none;
+          outline:none;
+          color: red;
+      }
       </style>
   </head> 
 
@@ -189,6 +205,16 @@
         <div class="card mb-3">
           <div class="card-header">
             <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.address}}</strong></a>
+            {% if flat.id in user.favourites|map(attribute="flat_id")|list %}
+            <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="unfavourite({{ flat.id }})">
+              <span id ="favourite_button_id{{flat.id}}"><i class="fa-solid fa-heart"></i></span>
+            </button>
+            {% else %}
+            <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="favourite({{ flat.id }})">
+              <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
+            </button>
+            {% endif %}
+            <span id="favourite_count{{flat.id}}">{{flat.favourites|length}}</span>
           </div>
           <div class="card-body">
             <div class="row">
@@ -208,6 +234,7 @@
         </div>
       {% endfor %}
     </div>
+    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}">
           
   
     
@@ -229,30 +256,58 @@
   
   
     function downloadContent(index, limit) {
-      $.get('/load_sort?index=' + index + '&limit=' + limit, (data) => {
-        for (var index = 0; index < data.data.length; index++) {
-          var entry = "/flat-details/" + data.data[index][0];   
-          var page = `
-            <div class="card mb-3">
-              <div class="card-header">
-                <strong>` +`<a href="${entry}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-              </div> 
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <img src="` + data.data[index].image + `" class="img-thumbnail">
-                  </div>
-                  <div class="col">
-                    <p><strong>Price: </strong>` +`$`+ data.data[index][2] + `</p>
-                    <br/>
-                    <p><strong>Flat Type: </strong>` + data.data[index][3] + `</p>
-                    <br/>
-                    <p><strong>Floor: </strong>` + data.data[index][4] + `</p>
-                  </div>
+    $.get('/load_home?index=' + index + '&limit=' + limit, (data) => {
+      for (var index = 0; index < data.data.length; index++) {
+        var favourite = $('#my-data').data().f;
+        var flat = "/flat-details/" + data.data[index][0]; 
+
+        if (favourite.includes(data.data[index][0])) {
+        var page2 = `
+        <div class="card mb-3">
+
+        <div class="card-header">
+          <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
+          <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="unfavourite(`+data.data[index][0]+`)">
+            <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
+          </button>
+          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][5]+`</span>
+        </div>
+          `
+        }
+        else {
+        var page2 = `
+        <div class="card mb-3">
+
+        <div class="card-header">
+        <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
+          <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="favourite(`+data.data[index][0]+`)">
+            <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
+          </button>
+          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][5]+`</span>
+        </div>
+          `
+        }    
+        $('#sortProperties').append(page2)
+        
+
+        var page =
+            `
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <img src="` + data.data[index].image + `" class="img-thumbnail">
+                </div>
+                <div class="col">
+                  <p><strong>Price: </strong>` +`$`+ data.data[index][2] + `</p>
+                  <br/>
+                  <p><strong>Flat Type: </strong>` + data.data[index][3] + `</p>
+                  <br/>
+                  <p><strong>Floor: </strong>` + data.data[index][4] + `</p>
                 </div>
               </div>
             </div>
-          `
+          </div>
+        `
   
           $('#sortProperties').append(page)
         }
