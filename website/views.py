@@ -283,7 +283,8 @@ def load_home():
             for x in range(len(data)):
                 tuple_x = data[x]
                 list_x = list(tuple_x)
-                list_x.append(len(Flat.query.get(x+index).favourites))
+                flat_id = list_x[0]
+                list_x.append(len(Flat.query.get(flat_id).favourites))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
             print(data)
