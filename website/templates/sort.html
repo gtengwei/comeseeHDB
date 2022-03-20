@@ -164,8 +164,59 @@
     </div>
   </form>
 
+{% if session['price'] and session['address'] and session['towns'] and session['flat_types'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}, {{session['flat_types']}}, {{session['amenities']}}</h3>
 
-{% if session['address'] and session['towns'] and session['flat_types'] and session['amenities'] %}
+{% elif session['price'] and session['address'] and session['towns'] and session['flat_types'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}, {{session['flat_types']}}</h3>
+
+{% elif session['price'] and session['address'] and session['towns'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}, {{session['amenities']}}</h3>
+
+{% elif session['price'] and session['address'] and session['towns'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}</h3>
+
+{% elif session['price'] and session['address'] and session['flat_types'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['flat_types']}}, {{session['amenities']}}</h3>
+
+{% elif session['price'] and session['address'] and session['flat_types'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['flat_types']}}</h3>
+
+{% elif session['price'] and session['address'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['amenities']}}</h3>
+
+{% elif session['price'] and session['towns'] and session['flat_types'] and session['amenities'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}, {{session['flat_types']}}, {{session['amenities']}}</h3>
+
+{% elif session['price'] and session['towns'] and session['flat_types'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}, {{session['flat_types']}}</h3>
+
+{% elif session['price'] and session['towns'] and session['amenities'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}, {{session['amenities']}}</h3>
+
+{% elif session['price'] and session['towns'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}</h3>
+
+{% elif session['price'] and session['flat_types'] and session['amenities'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['flat_types']}}, {{session['amenities']}}</h3>
+
+{% elif session['price'] and session['flat_types'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['flat_types']}}</h3>
+
+{% elif session['price'] and session['amenities'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['amenities']}}</h3>
+
+{% elif session['price'] %}
+<h3 align="center">Filtered by {{session['price']}}</h3>}}
+
+{% elif session['address'] and session['towns'] and session['flat_types'] and session['amenities'] %}
 <h3 align="center">You searched for: {{session['address']}}</h3>
 <h3 align="center">Filtered by {{session['towns']}}, {{session['flat_types']}}, {{session['amenities']}}</h3>
 
