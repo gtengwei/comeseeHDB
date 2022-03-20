@@ -99,6 +99,7 @@ def home():
     
     # Search for flats from homepage
     if request.method == 'POST':
+        price = request.form.getlist('price')
         towns = request.form.getlist('town')
         flat_types = request.form.getlist('flat_type')
         amenities = request.form.getlist('amenity')
@@ -317,7 +318,7 @@ def load_home():
                 list_x.append(len(Flat.query.get(flat_id).favourites))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
-            print(data)
+            #print(data)
 
             return jsonify({'data': data})
         else:
