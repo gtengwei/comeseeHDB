@@ -15,7 +15,10 @@
       border:none;
       outline:none;
       color: red;
+      align-self: flex-start;
     }
+
+    
   </style>
 </head>
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -66,46 +69,19 @@ console.log(adsURL);
 map.src = adsURL;
 </script>
 
-<br>
 
 <div class="street_name">
   <h1>{{flat.address}}</h1>
-  <button class="favourite_button" type="button" onClick="favourite({{ flat.id }})">
-    <span id ="favourite_button_id"><i class="fa-regular fa-heart"></i></span>
+  {% if flat.id in user.favourites|map(attribute="flat_id")|list %}
+  <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="unfavourite({{ flat.id }})">
+    <span id ="favourite_button_id{{flat.id}}"><i class="fa-solid fa-heart"></i></span>
   </button>
-  <script type="text/javascript">
-    var x = "{{flat.id|tojson}}";
-    window['click' + x.toString()] = false;
-  </script>
-  {% for favourite in user.favourites %}
-    {% if flat.id == favourite.flat_id %}
-      <script type="text/javascript">
-        var x = "{{flat.id|tojson}}";
-        window['click' + x.toString()] = true;
-      </script>
-    {% endif %}               
-  {% endfor %}
-  <script type="text/javascript">
-    var x = "{{flat.id|tojson}}";
-    console.log(window['click' + x.toString()]);
-    if (window['click' + x.toString()]) {
-      document.querySelector("#favourite_button_id").innerHTML = '<i class="fa-solid fa-heart"></i>';
-      document.querySelector(".favourite_button").setAttribute( 'onClick', ("unfavourite(" +   x.toString()  + ")"));
-    }else{
-      document.querySelector("#favourite_button_id").innerHTML = '<i class="fa-regular fa-heart"></i>';
-    };
-    document.querySelector(".favourite_button").addEventListener("click", () => {
-      var x =  "{{flat.id|tojson}}";
-      if (window['click' + x.toString()]) {
-        window['click' + x.toString()] = false;
-        document.querySelector("#favourite_button_id").innerHTML = '<i class="fa-regular fa-heart"></i>';
-        document.querySelector(".favourite_button").setAttribute( 'onClick', ("favourite(" +   x.toString()  + ")"));
-      }else{
-        window['click' + x.toString()] = true;
-        document.querySelector("#favourite_button_id").innerHTML = '<i class="fa-solid fa-heart"></i>';
-        document.querySelector(".favourite_button").setAttribute( 'onClick', ("unfavourite(" +   x.toString()  + ")"));
-      }
-   });
+  {% else %}
+  <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="favourite({{ flat.id }})">
+    <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
+  </button>
+  {% endif %}
+  <span id="favourite_count{{flat.id}}" class="favourite_count">{{flat.favourites|length}}</span>
   </script>
 </div>
 

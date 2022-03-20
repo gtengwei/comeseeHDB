@@ -7,8 +7,6 @@ import mysql.connector
 import csv
 import pymysql
 from pathlib import Path
-from werkzeug.security import generate_password_hash
-#from .models import *
 
 Base = declarative_base()
 
@@ -49,7 +47,6 @@ def main():
     df.to_csv("test.csv", index=False)
 
 def create_flat_csv(): 
-
     engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
     #Base.metadata.create_all(engine)
     cwd = Path(__file__).parent.absolute()
@@ -93,6 +90,35 @@ def add_test_data():
     db.session.commit()
 
 
+    engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
+    #Base.metadata.create_all(engine)
+    cwd = Path(__file__).parent.absolute()
+    os.chdir(cwd)
+    df = pd.read_csv('test.csv')    
+    df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
+
+
+def create_mysql_database():
+    database = pymysql.connect(
+        host="localhost",
+        user="root",
+        passwd="Clutch123!"
+    )
+    cursor = database.cursor()
+    cursor.execute("CREATE DATABASE IF NOT EXISTS mysql_database")
+
+
+def print_database():
+    database = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd="Clutch123!"
+    )
+    cursor = database.cursor()
+    cursor.execute("SELECT * FROM flat")
+    for row in cursor.fetchall():
+        print(row)
+        
 if __name__ == "__main__":
     main()
     #create_database()

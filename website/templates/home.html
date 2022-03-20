@@ -152,22 +152,18 @@
     {% for flat in flats %}
       <div class="card mb-3">
         <div class="card-header">
-          <strong><a href ="{{ url_for('views.flat_details', flatId=flat[0]) }}" target = "_blank">{{flat[1]}}</strong></a>
-          <button class="favourite_button" id ="favourite_button{{flat[0]}}" type="button" onClick="favourite({{ flat[0] }})">
-            <span id ="favourite_button_id{{flat[0]}}"><i class="fa-regular fa-heart"></i></span>
+          <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.address}}</strong></a>
+          
+          {% if flat.id in user.favourites|map(attribute="flat_id")|list %}
+          <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="unfavourite({{ flat.id }})">
+            <span id ="favourite_button_id{{flat.id}}"><i class="fa-solid fa-heart"></i></span>
           </button>
-          {% if flat[0] in user.favourites|map(attribute="flat_id")|list %}
-          <script type="text/javascript">
-            var x = "{{flat[0]|tojson}}";
-            document.getElementById("favourite_button_id" + x.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
-            document.getElementById("favourite_button" + x.toString()).setAttribute( 'onClick', ("unfavourite(" +   x.toString()  + ")")); 
-          </script>
           {% else %}
-          <script type="text/javascript">
-            var x = "{{flat[0]|tojson}}";
-            document.getElementById("favourite_button_id" + x.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
-          </script>
+          <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="favourite({{ flat.id }})">
+            <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
+          </button>
           {% endif %}
+          <span id="favourite_count{{flat.id}}">{{flat.favourites|length}}</span>
 
         </div>
         <div class="card-body">
@@ -176,11 +172,11 @@
               <img src="{{flat['image']}}" class="img-thumbnail">
             </div>
             <div class="col">
-              <p><strong>Price: </strong>${{flat[2]}}</p>
+              <p><strong>Price: </strong>${{flat.resale_price}}</p>
               <br/>
-              <p><strong>Flat Type: </strong>{{flat[3]}}</p>
+              <p><strong>Flat Type: </strong>{{flat.flat_type}}</p>
               <br/>
-              <p><strong>Floor: </strong>{{flat[4]}}</p>
+              <p><strong>Floor: </strong>{{flat.storey_range}}</p>
               
             </div>
           </div>
@@ -222,40 +218,39 @@
     $.get('/load_home?index=' + index + '&limit=' + limit, (data) => {
       for (var index = 0; index < data.data.length; index++) {
         var favourite = $('#my-data').data().f;
-        var flat = "/flat-details/" + data.data[index][0];  
-        var page = `
-          <div class="card mb-3">
+        var flat = "/flat-details/" + data.data[index][0]; 
 
-            <div class="card-header">
-              <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-            <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="favourite(`+ data.data[index][0] +`)">
-              <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
-            </button> 
-            `
-        $('#properties').append(page)
-
-        var script = document.createElement("script");
-        script.type = "text/javascript";
         if (favourite.includes(data.data[index][0])) {
-        script.innerHTML = `
-            var x = "`+data.data[index][0]+`";
-            document.getElementById("favourite_button_id" + x.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
-            document.getElementById("favourite_button" + x.toString()).setAttribute( 'onClick', ("unfavourite(" +   x.toString()  + ")")); 
-        `
+        var page2 = `
+        <div class="card mb-3">
+
+        <div class="card-header">
+          <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
+          <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="unfavourite(`+data.data[index][0]+`)">
+            <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
+          </button>
+          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][5]+`</span>
+        </div>
+          `
         }
         else {
-        script.innerHTML = `
-            var x = "`+data.data[index][0]+`";
-            document.getElementById("favourite_button_id" + x.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
-        `
+        var page2 = `
+        <div class="card mb-3">
+
+        <div class="card-header">
+        <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
+          <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="favourite(`+data.data[index][0]+`)">
+            <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
+          </button>
+          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][5]+`</span>
+        </div>
+          `
         }    
-        document.body.appendChild(script);
+        $('#properties').append(page2)
         
 
         var page =
-            `</div>
-            
-            
+            `
             <div class="card-body">
               <div class="row">
                 <div class="col">
