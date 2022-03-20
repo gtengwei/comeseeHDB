@@ -7,6 +7,8 @@ import mysql.connector
 import csv
 import pymysql
 from pathlib import Path
+from werkzeug.security import generate_password_hash
+#from .models import *
 
 Base = declarative_base()
 
@@ -77,7 +79,22 @@ def print_database():
     for row in cursor.fetchall():
         print(row)
         
+def add_test_data():
+    email = "testUnit@gmail.com"
+    username = 'testUnit'
+    password1 = 'testUnit'
+    postal_code = '12'
+    new_user = User(email=email, username = username, postal_code = postal_code,
+                password=generate_password_hash(password1, method='sha256'), email_verified = True)
+    db.session.add(new_user)
+
+    flat = Flat.query.filter_by(id=114503).first()
+    flat.numOfFavourites = 56
+    db.session.commit()
+
+
 if __name__ == "__main__":
     main()
     #create_database()
     #create_flat_csv()
+    #add_test_data()

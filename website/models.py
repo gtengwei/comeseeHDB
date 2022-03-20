@@ -5,7 +5,6 @@ from sqlalchemy.sql import func
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from hashlib import md5
-from test import *
 from sqlalchemy import Column, Integer, Float, Date, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
