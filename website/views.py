@@ -822,8 +822,9 @@ def view_image(flatId):
 
     #find the name of the flat to find the place id
     flat = Flat.query.filter_by(id=flatId).first_or_404()
-    blk = request.args.get("block")
-    street = request.args.get("street_name")
+    flat = Flat.query.get(flatId)
+    blk = flat.block
+    street = flat.street_name
 
     name = blk + street
 
