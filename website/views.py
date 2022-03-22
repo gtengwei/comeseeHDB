@@ -181,8 +181,16 @@ def load_home():
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
+                data = data[index:limit + index]
+                for x in range(len(data)):
+                    tuple_x = data[x]
+                    list_x = list(tuple_x)
+                    flat_id = list_x[0]
+                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    tuple_x = tuple(list_x)
+                    data[x] = tuple_x
 
-                return jsonify({'data': data[index:limit + index]})
+                return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
         elif criteria == 'price_low':
@@ -193,8 +201,16 @@ def load_home():
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
+                data = data[index:limit + index]
+                for x in range(len(data)):
+                    tuple_x = data[x]
+                    list_x = list(tuple_x)
+                    flat_id = list_x[0]
+                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    tuple_x = tuple(list_x)
+                    data[x] = tuple_x
 
-                return jsonify({'data': data[index:limit + index]})
+                return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
         elif criteria == 'remaining_lease_high':
@@ -205,8 +221,16 @@ def load_home():
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
+                data = data[index:limit + index]
+                for x in range(len(data)):
+                    tuple_x = data[x]
+                    list_x = list(tuple_x)
+                    flat_id = list_x[0]
+                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    tuple_x = tuple(list_x)
+                    data[x] = tuple_x
 
-                return jsonify({'data': data[index:limit + index]})
+                return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
         elif criteria == 'remaining_lease_low':
@@ -217,8 +241,16 @@ def load_home():
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
+                data = data[index:limit + index]
+                for x in range(len(data)):
+                    tuple_x = data[x]
+                    list_x = list(tuple_x)
+                    flat_id = list_x[0]
+                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    tuple_x = tuple(list_x)
+                    data[x] = tuple_x
 
-                return jsonify({'data': data[index:limit + index]})
+                return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
         elif criteria == 'storey_high':
@@ -229,8 +261,16 @@ def load_home():
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
+                data = data[index:limit + index]
+                for x in range(len(data)):
+                    tuple_x = data[x]
+                    list_x = list(tuple_x)
+                    flat_id = list_x[0]
+                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    tuple_x = tuple(list_x)
+                    data[x] = tuple_x
 
-                return jsonify({'data': data[index:limit + index]})
+                return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
         elif criteria == 'storey_low':
@@ -241,8 +281,16 @@ def load_home():
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
+                data = data[index:limit + index]
+                for x in range(len(data)):
+                    tuple_x = data[x]
+                    list_x = list(tuple_x)
+                    flat_id = list_x[0]
+                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    tuple_x = tuple(list_x)
+                    data[x] = tuple_x
 
-                return jsonify({'data': data[index:limit + index]})
+                return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
         elif criteria == 'price_per_sqm_high':
@@ -253,8 +301,16 @@ def load_home():
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
+                data = data[index:limit + index]
+                for x in range(len(data)):
+                    tuple_x = data[x]
+                    list_x = list(tuple_x)
+                    flat_id = list_x[0]
+                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    tuple_x = tuple(list_x)
+                    data[x] = tuple_x
 
-                return jsonify({'data': data[index:limit + index]})
+                return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
         elif criteria == 'price_per_sqm_low':
@@ -265,8 +321,16 @@ def load_home():
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
+                data = data[index:limit + index]
+                for x in range(len(data)):
+                    tuple_x = data[x]
+                    list_x = list(tuple_x)
+                    flat_id = list_x[0]
+                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    tuple_x = tuple(list_x)
+                    data[x] = tuple_x
 
-                return jsonify({'data': data[index:limit + index]})
+                return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
     else:
@@ -287,7 +351,6 @@ def load_home():
                 list_x.append(len(Flat.query.get(flat_id).favourites))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
-            print(data)
 
             return jsonify({'data': data})
         else:
