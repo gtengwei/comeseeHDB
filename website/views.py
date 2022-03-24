@@ -36,20 +36,21 @@ def delete_review():
 def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
     photo = view_image(flatId)
-    if photo != None:
-        url1 = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference="
-        url2 = "&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
-        length = len(photo)
-        cur = 0
-        url = []
-        while (cur < length):
+
+    url1 = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference="
+    url2 = "&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+    length = len(photo)
+    cur = 0
+    url = []
+    while (cur < length):
+        if photo[cur] == 0:
+            url.append("\static\comeseeHDB logo.png")
+        else:
             temp = url1 + photo[cur] + url2
             url.append(temp)
             cur = cur + 1
-    else:
-        url[0] = 0
-        url[1] = 0
-        url[2] = 0   
+
+    
     if request.method == 'POST':
         review = request.form.get('review')
 
@@ -1504,17 +1505,22 @@ def view_image(flatId):
 
     response = requests.request("GET", url, headers=headers, data=payload).json()
     res = response['result']
-    if 'photos' not in res:
-        return None
-    photos = res['photos']
-    noOfPhotos = len(photos) #max number of photo references is 10
     photoRef = []
     cur = 0
+    if 'photos' not in res:
+        while (cur < 3):
+            photoRef.append(0)
+    photos = res['photos']
+    noOfPhotos = len(photos) #max number of photo references is 10
     while (cur < noOfPhotos):
         temp1 = photos[cur]
         temp2 = temp1['photo_reference']
         photoRef.append(temp2)
         cur = cur + 1
+    if len(photoRef) < 3:
+        add = 3-len(photoRef)
+        for i in range(add):
+            photoRef.append(0)
 
     return photoRef
     #by right should return an array of photo references only, and use these references to get the photo
