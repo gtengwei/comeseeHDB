@@ -44,13 +44,12 @@ def flat_details(flatId):
     url = []
     while (cur < length):
         if photo[cur] == 0:
-            url.append("\static\comeseeHDB logo.png")
+            url.append("\static\logo.png")
         else:
             temp = url1 + photo[cur] + url2
             url.append(temp)
-            cur = cur + 1
+        cur = cur + 1
 
-    
     if request.method == 'POST':
         review = request.form.get('review')
 
