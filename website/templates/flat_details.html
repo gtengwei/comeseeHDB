@@ -3,8 +3,6 @@
 {% block title %}Flat Details{% endblock %}
     
 {% block content %}
-<<<<<<< Updated upstream
-=======
 <head>
   <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
   <style>
@@ -17,12 +15,12 @@
       border:none;
       outline:none;
       color: red;
+      align-self: flex-start;
     }
+
+    
   </style>
 </head>
-
-<!--photos-->
->>>>>>> Stashed changes
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -51,30 +49,48 @@
     </a>
   </div>
 
-
-<html>
   <iframe
-      id="map"
-      width="600"
-      height="450"
-      style="border:0"
-      loading="lazy"
-      allowfullscreen
-      src="">
+  id="map"
+  width="600"
+  height="450"
+  style="border:0"
+  loading="lazy"
+  allowfullscreen
+  src="">
 </iframe>
 <script>
-    let myIframe = document.getElementById("map");
-    let url_string = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBAwQozORKPVVJNGL-wd46qlbn7QLNW1u0&q=";
-    let blk = '{{ flat.block }}'
-    let street = '{{ flat.street_name }}'
+let myIframe = document.getElementById("map");
+let url_string = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBAwQozORKPVVJNGL-wd46qlbn7QLNW1u0&q=";
+let blk = '{{ flat.block }}'
+let street = '{{ flat.street_name }}'
 
-    let adsURL = url_string+ blk + "+" + street
-    console.log(adsURL);
-    map.src = adsURL;
+let adsURL = url_string + blk + "+" + street
+console.log(adsURL);
+map.src = adsURL;
 </script>
-</html>
 
-<h1>{{flat.street_name}}</h1>
+<br>
+
+<div class="street_name">
+  <h1>{{flat.address}}</h1>
+  {% if flat.id in user.favourites|map(attribute="flat_id")|list %}
+  <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="unfavourite({{ flat.id }})">
+    <span id ="favourite_button_id{{flat.id}}"><i class="fa-solid fa-heart"></i></span>
+  </button>
+  {% else %}
+  <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="favourite({{ flat.id }})">
+    <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
+  </button>
+  {% endif %}
+  <span id="favourite_count{{flat.id}}" class="favourite_count">{{flat.favourites|length}}</span>
+  </script>
+</div>
+
+
+
+
+
+
 <div class="row"> 
 <div class="col-sm-3">
     <p class="mb-0">Price</p>
@@ -83,7 +99,9 @@
     <p class="text-muted mb-0">${{flat.resale_price}}</p>
 </div>
 </div>
+
 <hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Flat Type</p>
@@ -92,7 +110,9 @@
     <p class="text-muted mb-0">{{flat.flat_type}}</p>
 </div>
 </div>
+
 <hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Storey Range</p>
@@ -101,7 +121,9 @@
     <p class="text-muted mb-0">{{flat.storey_range}}</p>
 </div>
 </div>
+
 <hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Sold Date</p>
@@ -110,7 +132,9 @@
     <p class="text-muted mb-0">{{flat.month}}</p>
 </div>
 </div>
+
 <hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Town</p>
@@ -119,7 +143,9 @@
     <p class="text-muted mb-0">{{flat.town}}</p>
 </div>
 </div>
+
 <hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Block</p>
@@ -128,7 +154,9 @@
     <p class="text-muted mb-0">{{flat.block}}</p>
 </div>
 </div>
+
 <hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Floor Area (Metre Square)</p>
@@ -137,7 +165,20 @@
     <p class="text-muted mb-0">{{flat.floor_area_sqm}}</p>
 </div>
 </div>
+
 <hr>
+
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Price per Square Metre</p>
+</div>
+<div class="col-sm-9">
+    <p class="text-muted mb-0">${{flat.price_per_sqm}}</p>
+</div>
+</div>
+
+<hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Flat Model</p>
@@ -146,7 +187,9 @@
     <p class="text-muted mb-0">{{flat.flat_model}}</p>
 </div>
 </div>
+
 <hr>
+
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Remaining Lease</p>
@@ -165,7 +208,7 @@
     <div align="center">
       {% if user.is_authenticated %}
       <button type="submit" class="btn btn-primary btn-sm">Add Review</button>
-    ``{% else %}
+      {% else %}
       <a href="/login" class="btn btn-primary btn-sm">Login to add review</a>
     {% endif %}
     
@@ -180,7 +223,7 @@
 {% if flat.reviews|length == 0 %}
   <h3 class="text-muted mb-0" align="center">No reviews yet!</h3>
 {% else %}
-  <h3 class="text-muted mb-0" align="right">{{flat.reviews|length}} Reviews Posted</h3>
+  <h3 class="text-muted mb-0" align="right">{{flat.reviews|length}} Review(s) Posted</h3>
 {% endif %}
 
 <ul class="list-group list-group-flush" id="reviews">
