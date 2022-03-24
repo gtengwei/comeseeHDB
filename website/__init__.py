@@ -19,10 +19,10 @@ DB_NAME = "database.db"
 
 def create_database(app):
 
-    #if not path.exists('website/' + DB_NAME):
-    #    create_Flat_table()
-    #    db.create_all(app=app)
-    #    print('Created Database!')
+    if not path.exists('website/' + DB_NAME):
+        create_Flat_table()
+        db.create_all(app=app)
+        print('Created Database!')
 
     # create_mysql_database()
     conn = open_connection()
@@ -69,7 +69,6 @@ from .models import *
 
 
 create_database(app)
-#os.chdir("website")
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
