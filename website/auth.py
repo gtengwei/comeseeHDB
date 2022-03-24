@@ -81,9 +81,7 @@ def sign_up():
                 password=generate_password_hash(password1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
-            send_mail_verify(new_user)
-            login_user(new_user, remember=True)
-            
+            send_mail_verify(new_user)       
             flash('Account created! Please verify your email before logging in.', category='success')
 
             return redirect(url_for('auth.login'))
