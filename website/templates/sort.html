@@ -72,7 +72,28 @@
                       <div class="border-bottom pb-2 ml-2">
                           <h4 id="burgundy">Filter</h4>
                       </div>
-  
+                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa fa-building pl-1"></h6></span></button>
+                      <div class="collapse" id="price">
+                          <div class="py-2 border-bottom ml-3">
+                              <div style="color: pink"><span class="fa fa-minus"></span></div>
+                                  <div class="form-group"> <input type="checkbox" id="200000" name="price" value ="100000-200000"> <label for="200000">$100000 - $200000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="300000" name="price" value ="200000-300000"> <label for="300000">$200000 - $300000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="400000" name="price" value ="300000-400000"> <label for="400000">$300000 - $400000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="500000" name="price" value ="400000-500000"> <label for="500000">$400000 - $500000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="600000" name="price" value ="500000-600000"> <label for="600000">$500000 - $600000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="700000" name="price" value ="600000-700000"> <label for="700000">$600000 - $700000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="800000" name="price" value ="700000-800000"> <label for="800000">$700000 - $800000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="900000" name="price" value ="800000-900000"> <label for="900000">$800000 - $900000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="1000000" name="price" value ="900000-1000000"> <label for="1000000">$900000 - $1000000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="1100000" name="price" value ="1000000-1100000"> <label for="1100000">$1000000 - $1100000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="1200000" name="price" value ="1100000-1200000"> <label for="1200000">$1100000 - $1200000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="1300000" name="price" value ="1200000-1300000"> <label for="1300000">$1200000 - $1300000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="1400000" name="price" value ="1300000-1400000"> <label for="1400000">$1300000 - $1400000</label> </div>
+                                  
+                          </div>
+                      </div>
+
+                      <br>
                       <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#town" aria-expanded="false" aria-controls="town"><h6 class="font-weight-bold">Towns<span class="fa fa-building pl-1"></h6></span></button>
                       <div class="collapse" id="town">
                           <div class="py-2 border-bottom ml-3">
@@ -143,8 +164,59 @@
     </div>
   </form>
 
+{% if session['price'] and session['address'] and session['towns'] and session['flat_types'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}, {{session['flat_types']}}, {{session['amenities']}}</h3>
 
-{% if session['address'] and session['towns'] and session['flat_types'] and session['amenities'] %}
+{% elif session['price'] and session['address'] and session['towns'] and session['flat_types'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}, {{session['flat_types']}}</h3>
+
+{% elif session['price'] and session['address'] and session['towns'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}, {{session['amenities']}}</h3>
+
+{% elif session['price'] and session['address'] and session['towns'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}</h3>
+
+{% elif session['price'] and session['address'] and session['flat_types'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['flat_types']}}, {{session['amenities']}}</h3>
+
+{% elif session['price'] and session['address'] and session['flat_types'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['flat_types']}}</h3>
+
+{% elif session['price'] and session['address'] and session['amenities'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['amenities']}}</h3>
+
+{% elif session['price'] and session['towns'] and session['flat_types'] and session['amenities'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}, {{session['flat_types']}}, {{session['amenities']}}</h3>
+
+{% elif session['price'] and session['towns'] and session['flat_types'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}, {{session['flat_types']}}</h3>
+
+{% elif session['price'] and session['towns'] and session['amenities'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}, {{session['amenities']}}</h3>
+
+{% elif session['price'] and session['towns'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}</h3>
+
+{% elif session['price'] and session['flat_types'] and session['amenities'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['flat_types']}}, {{session['amenities']}}</h3>
+
+{% elif session['price'] and session['flat_types'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['flat_types']}}</h3>
+
+{% elif session['price'] and session['amenities'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['amenities']}}</h3>
+
+{% elif session['price'] %}
+<h3 align="center">Filtered by {{session['price']}}</h3>}}
+
+{% elif session['address'] and session['towns'] and session['flat_types'] and session['amenities'] %}
 <h3 align="center">You searched for: {{session['address']}}</h3>
 <h3 align="center">Filtered by {{session['towns']}}, {{session['flat_types']}}, {{session['amenities']}}</h3>
 
@@ -258,7 +330,7 @@
   
   
     function downloadContent(index, limit) {
-    $.get('/load_home?index=' + index + '&limit=' + limit, (data) => {
+    $.get('/load_sort?index=' + index + '&limit=' + limit, (data) => {
       for (var index = 0; index < data.data.length; index++) {
         var favourite = $('#my-data').data().f;
         var flat = "/flat-details/" + data.data[index][0]; 
@@ -317,6 +389,10 @@
     }
     
 </script>
+
+  <div class="fa-3x d-flex justify-content-center">
+    <i class="fas fa-circle-notch fa-spin"></i>
+  </div>
   
 </body>
     
