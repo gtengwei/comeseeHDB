@@ -52,9 +52,25 @@
                 <a <button type="button" class="btn btn-outline-primary ms-1" href="{{ url_for('user.profile', username=current_user.username) }}">Personal Information</button></a> 
                 <a <button type="button" class="btn btn-primary" href="{{ url_for('user.favourites', username=current_user.username) }}">Favourites</button></a>
               </div>
+            </div> 
+          </div>
+          <form method="POST">
+          <div class="card mb-4 mb-lg-0">
+            <div class="card-body p-0">
+                <div class="input-group">
+                  <input class="form-control py-2 border-right-0 border" name="searchFavourites" id="searchFavourites" placeholder = "Search here to find your favourites!">
+                  <span class="input-group-append ">
+                  <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" >
+                        <i class="fa fa-search"></i>
+                      </button>
+                  </span>
+                </div>
             </div>
-          </div>          
-        </div>
+          </div>
+        </form>
+        </div>          
+        
+        
 
         <div class="col-lg-5">
           <div class="card mb-4">
@@ -86,9 +102,8 @@
             {% endfor %}
           </div>
         </div> 
-
       </div>
-        
+    </div>   
         
     
   </section>

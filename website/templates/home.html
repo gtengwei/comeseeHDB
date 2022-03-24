@@ -55,7 +55,7 @@
                       Sort
                     </button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" name= "price_high" id = "price_high" href="{{ url_for('views.sort',  criteria = 'price_high') }}">Price (High to Low)</a>
+                      <a class="dropdown-item" name= "price_high" id = "price_high" href="{{ url_for('views.sort', criteria = 'price_high') }}">Price (High to Low)</a>
                       <a class="dropdown-item" name = "price_low" id="price_low" href="{{ url_for('views.sort', criteria = 'price_low') }}">Price (Low to High)</a>
                       <a class="dropdown-item" name = "remaining_lease_high" id="remaining_lease_high" href="{{ url_for('views.sort', criteria = 'remaining_lease_high') }}">Remaining Lease (High to Low)</a>
                       <a class="dropdown-item" name = "remaining_lease_low" id="remaining_lease_low" href="{{ url_for('views.sort', criteria = 'remaining_lease_low') }}">Remaining Lease (Low to High)</a>
@@ -63,6 +63,8 @@
                       <a class="dropdown-item" name = "storey_low" id="storey_low" href="{{ url_for('views.sort', criteria = 'storey_low') }}">Floor (Low to High)</a>
                       <a class="dropdown-item" name = "price_per_sqm_high" id="price_per_sqm_high" href="{{ url_for('views.sort', criteria = 'price_per_sqm_high') }}">Price per Square Metre (High to Low)</a>
                       <a class="dropdown-item" name = "price_per_sqm_low" id="price_per_sqm_low" href="{{ url_for('views.sort', criteria = 'price_per_sqm_low') }}">Price per Square Metre (Low to High)</a>
+                      <a class="dropdown-item" name = "favourites_high" id="favourites_high" href="{{ url_for('views.sort', criteria = 'favourites_high') }}">Favourites (High to Low)</a>
+                      <a class="dropdown-item" name = "favourites_low" id="favourites_low" href="{{ url_for('views.sort', criteria = 'favourites_low') }}">Favourites (Low to High)</a>
                     </div>
                   </div> 
                 </span>
@@ -72,6 +74,17 @@
                     <div class="border-bottom pb-2 ml-2">
                         <h4 id="burgundy">Filter</h4>
                     </div>
+                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa fa-building pl-1"></h6></span></button>
+                    <div class="collapse" id="price">
+                        <div class="py-2 border-bottom ml-3">
+                            <div style="color: pink"><span class="fa fa-minus"></span></div>
+                                <div class="form-group"> <input type="checkbox" id="200000" name="price" value ="100000-200000"> <label for="200000">$100000 - $200000</label> </div>
+
+
+                        </div>
+                    </div>
+
+                    <br>
 
                     <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#town" aria-expanded="false" aria-controls="town"><h6 class="font-weight-bold">Towns<span class="fa fa-building pl-1"></h6></span></button>
                     <div class="collapse" id="town">

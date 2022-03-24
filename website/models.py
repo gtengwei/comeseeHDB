@@ -5,7 +5,6 @@ from sqlalchemy.sql import func
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from hashlib import md5
-from test import *
 from sqlalchemy import Column, Integer, Float, Date, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
@@ -16,20 +15,26 @@ from sqlalchemy.dialects.mysql import BIGINT
 
 ## To migrate database
 class Review(db.Model):
-    id = db.Column(BIGINT, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    #id = db.Column(BIGINT, primary_key=True, nullable=False) # for mysql
     data = db.Column(db.String(500), nullable=False)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
-    user_id = db.Column(BIGINT, db.ForeignKey('user.id'), nullable=False)
-    flat_id = db.Column(BIGINT, db.ForeignKey('flat.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'), nullable=False)
+    #user_id = db.Column(BIGINT, db.ForeignKey('user.id'), nullable=False) # for mysql
+    #flat_id = db.Column(BIGINT, db.ForeignKey('flat.id'), nullable=False) # for mysql
 
 class Favourites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'))
+    #user_id = db.Column(BIGINT, db.ForeignKey('user.id')) # for mysql
+    #flat_id = db.Column(BIGINT, db.ForeignKey('flat.id')) # for mysql
 
 # Table for User entity
 class User(db.Model, UserMixin):
-    id = db.Column(BIGINT, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    #id = db.Column(BIGINT, primary_key=True, nullable=False) # for mysql
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     username = db.Column(db.String(150))
@@ -65,11 +70,9 @@ class User(db.Model, UserMixin):
 
 #Base = declarative_base()
 class Flat(db.Model):
-    #Tell SQLAlchemy what the table name is and if there's any table-specific arguments it should know about
-    #__tablename__ = 'HDB_Flats'
-    #__table_args__ = {'sqlite_autoincrement': True}
     #tell SQLAlchemy the name of column and its attributes:
-    id = db.Column(BIGINT, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    #id = db.Column(BIGINT, primary_key=True, nullable=False) # for mysql
     month = db.Column(db.String(150)) 
     town = db.Column(db.String(150))
     flat_type = db.Column(db.String(150))
@@ -80,21 +83,24 @@ class Flat(db.Model):
     flat_model = db.Column(db.String(150))
     lease_commence_date = db.Column(db.String(150))
     remaining_lease = db.Column(db.String(150))
+    resale_price = db.Column(db.Integer) 
     price_per_sqm = db.Column(db.Integer)
     address = db.Column(db.String(150))
     reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
     resale_price = db.Column(Float)
     favourites = db.relationship('Favourites', backref = 'flat', passive_deletes=True)   
+    numOfFavourites = db.Column(db.Integer, default=0)
 
 def create_Flat_table():
     #To create the table in the database (SQLite)
-    #engine = create_engine('sqlite:///website/database.db')
-    #db.Model.metadata.create_all(engine)
-    #cwd = Path(__file__).parent.absolute()
-    #os.chdir(cwd)
-    #df = pd.read_csv('test.csv')
-    #df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
+    engine = create_engine('sqlite:///website/database.db')
+    db.Model.metadata.create_all(engine)
+    cwd = Path(__file__).parent.absolute()
+    os.chdir(cwd)
+    df = pd.read_csv('test.csv')
+    df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
 
+    '''
     # To create the table in the database (MySQL)
     engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
     db.Model.metadata.create_all(engine)
@@ -102,12 +108,7 @@ def create_Flat_table():
     os.chdir(cwd)    
     df = pd.read_csv('test.csv')    
     df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
+    '''
     
 
-def create_Flat_table():
-    #This will create the table in the database
-    engine = create_engine('sqlite:///website/database.db')
-    db.Model.metadata.create_all(engine)
-    os.chdir("/Users/nanshiyuan/Documents/github/website")
-    df = pd.read_csv('test.csv')
-    df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
+
