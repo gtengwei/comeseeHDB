@@ -79,14 +79,14 @@ def home():
     print(cwd)
     os.chdir(cwd)
     #print(os.getcwd())
-    #conn = sqlite3.connect("database.db")
+    # conn = sqlite3.connect("database.db")
     conn = open_connection()
     # conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     myquery = ('SELECT id, address, resale_price,flat_type, storey_range FROM flat;')
     c.execute(myquery)
     data = list(c.fetchall())
-    print(data)
+    # print(data)
     # random.shuffle(data)
     
     # Search for flats from homepage
@@ -255,10 +255,10 @@ def load_search():
     towns = session.get('towns')
     flat_types = session.get('flat_types')
     amenities = session.get('amenities')
-    print(address)
-    print(towns)
-    print(flat_types)
-    print(amenities)
+    # print(address)
+    # print(towns)
+    # print(flat_types)
+    # print(amenities)
     address = "%{}%".format(address)
     if towns:
         if flat_types:
@@ -893,10 +893,10 @@ def sort(criteria):
         towns = session.get('towns')
         flat_types = session.get('flat_types')
         amenities = session.get('amenities')
-        print(address)
-        print(towns)
-        print(flat_types)
-        print(amenities)
+        # print(address)
+        # print(towns)
+        # print(flat_types)
+        # print(amenities)
 
         if address:
             address = "%{}%".format(address)

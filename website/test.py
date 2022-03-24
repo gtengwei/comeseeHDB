@@ -5,6 +5,7 @@ import pandas as pd
 import os
 import csv
 import pymysql
+from pathlib import Path
 
 Base = declarative_base()
 
@@ -58,7 +59,7 @@ def create_flat_csv():
     
     engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
     # Base.metadata.create_all(engine)
-    # os.chdir("C:/Users/Hannah V/Documents/GitHub/comeseeHDB/website")
+    os.chdir("C:/Users/Hannah V/Documents/GitHub/comeseeHDB/website")
     df = pd.read_csv('test.csv')    
     df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
 

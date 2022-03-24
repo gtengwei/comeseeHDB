@@ -39,18 +39,6 @@ def create_database(app):
     if not cursor.execute("SHOW TABLES LIKE 'review'"):
         db.create_all(app=app)
         print('Created Database!')
-def create_flat_csv(): 
-    
-    engine = create_engine('mysql+pymysql://root:Clutch123!@/mysql_database?unix_socket=/cloudsql/comesee-hdb:asia-southeast1:comeseehdb-database')
-    # engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
-    # Base.metadata.create_all(engine)
-    # os.chdir("C:/Users/Hannah V/Documents/GitHub/comeseeHDB/website")
-    os.chdir("/srv/website")
-    df = pd.read_csv('test.csv')  
-    conn = open_connection()
-    df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
-
-
 #def create_app():
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
@@ -79,7 +67,7 @@ app.register_blueprint(user, url_prefix='/')
 
 from .models import *
 
-# create_flat_csv()
+
 create_database(app)
 #os.chdir("website")
 login_manager = LoginManager()
