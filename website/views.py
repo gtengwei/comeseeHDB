@@ -8,6 +8,8 @@ import sqlite3
 import os
 import random
 from pathlib import Path
+import googlemaps
+import pandas as pd
 views = Blueprint('views', __name__)
 
 
@@ -74,7 +76,7 @@ def home():
     cwd = Path(__file__).parent.absolute()
     print(cwd)
     os.chdir(cwd)
-    #print(os.getcwd())
+    # print(os.getcwd())
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     myquery = (
@@ -82,7 +84,7 @@ def home():
     c.execute(myquery)
     data = list(c.fetchall())
     # random.shuffle(data)
-    
+
     # Search for flats from homepage
     if request.method == 'POST':
         towns = request.form.getlist('town')
@@ -153,7 +155,7 @@ def home():
 @views.route('/load_home', methods=['GET', 'POST'])
 def load_home():
     #os.chdir(os.getcwd() + "/website")
-    #print(os.getcwd())
+    # print(os.getcwd())
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     myquery = (
@@ -1441,7 +1443,7 @@ def sort(criteria):
                             key=lambda x: x.price_per_sqm, reverse=False)
                         session['criteria'] = criteria
                         return render_template('sort.html', user=current_user, flats=flats[:15])
-                
+
                 else:
                     # flat_types
                     flats = Flat.query.filter(
@@ -1517,7 +1519,7 @@ def sort(criteria):
                     flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
                     session['criteria'] = criteria
                     return render_template('sort.html', user=current_user, flats=flats[:15])
-        
+
         else:
             # no sort or filter or search
             if criteria == 'price_high':
@@ -1652,7 +1654,7 @@ def load_sort():
                             return jsonify({'data': data[index:limit + index]})
                         else:
                             return jsonify({'data': data})
-                    
+
                     elif criteria == 'price_per_sqm_high':
                         flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
                         for flat in flats:
@@ -1665,9 +1667,10 @@ def load_sort():
                             return jsonify({'data': data[index:limit + index]})
                         else:
                             return jsonify({'data': data})
-                    
+
                     elif criteria == 'price_per_sqm_low':
-                        flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
+                        flats.sort(key=lambda x: x.price_per_sqm,
+                                   reverse=False)
                         for flat in flats:
                             data.append(tuple(
                                 [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
@@ -1761,7 +1764,7 @@ def load_sort():
                             return jsonify({'data': data[index:limit + index]})
                         else:
                             return jsonify({'data': data})
-                    
+
                     elif criteria == 'price_per_sqm_high':
                         flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
                         for flat in flats:
@@ -1774,9 +1777,10 @@ def load_sort():
                             return jsonify({'data': data[index:limit + index]})
                         else:
                             return jsonify({'data': data})
-                    
+
                     elif criteria == 'price_per_sqm_low':
-                        flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
+                        flats.sort(key=lambda x: x.price_per_sqm,
+                                   reverse=False)
                         for flat in flats:
                             data.append(tuple(
                                 [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
@@ -1871,7 +1875,7 @@ def load_sort():
                             return jsonify({'data': data[index:limit + index]})
                         else:
                             return jsonify({'data': data})
-                    
+
                     elif criteria == 'price_per_sqm_high':
                         flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
                         for flat in flats:
@@ -1884,9 +1888,10 @@ def load_sort():
                             return jsonify({'data': data[index:limit + index]})
                         else:
                             return jsonify({'data': data})
-                    
+
                     elif criteria == 'price_per_sqm_low':
-                        flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
+                        flats.sort(key=lambda x: x.price_per_sqm,
+                                   reverse=False)
                         for flat in flats:
                             data.append(tuple(
                                 [flat.id, flat.address, flat.resale_price, flat.flat_type, flat.storey_range]))
@@ -2024,7 +2029,7 @@ def load_sort():
                         return jsonify({'data': data[index:limit + index]})
                     else:
                         return jsonify({'data': data})
-                
+
                 elif criteria == 'price_per_sqm_high':
                     flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
                     for flat in flats:
@@ -2037,7 +2042,7 @@ def load_sort():
                         return jsonify({'data': data[index:limit + index]})
                     else:
                         return jsonify({'data': data})
-                
+
                 elif criteria == 'price_per_sqm_low':
                     flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
                     for flat in flats:
@@ -2131,7 +2136,7 @@ def load_sort():
                         return jsonify({'data': data[index:limit + index]})
                     else:
                         return jsonify({'data': data})
-                
+
                 elif criteria == 'price_per_sqm_high':
                     flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
                     for flat in flats:
@@ -2144,7 +2149,7 @@ def load_sort():
                         return jsonify({'data': data[index:limit + index]})
                     else:
                         return jsonify({'data': data})
-                
+
                 elif criteria == 'price_per_sqm_low':
                     flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
                     for flat in flats:
@@ -2238,7 +2243,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_high':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
                 for flat in flats:
@@ -2332,7 +2337,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_high':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
                 for flat in flats:
@@ -2345,7 +2350,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_low':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
                 for flat in flats:
@@ -2441,7 +2446,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_high':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
                 for flat in flats:
@@ -2454,7 +2459,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_low':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
                 for flat in flats:
@@ -2549,7 +2554,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_high':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
                 for flat in flats:
@@ -2562,7 +2567,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_low':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
                 for flat in flats:
@@ -2653,7 +2658,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_high':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
                 for flat in flats:
@@ -2666,7 +2671,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_low':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
                 for flat in flats:
@@ -2679,7 +2684,6 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-                
 
         # towns
         elif towns:
@@ -2756,7 +2760,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_high':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
                 for flat in flats:
@@ -2769,7 +2773,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_low':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
                 for flat in flats:
@@ -2863,7 +2867,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_high':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
                 for flat in flats:
@@ -2876,7 +2880,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_low':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
                 for flat in flats:
@@ -2932,7 +2936,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'remaining_lease_low':
                 flats.sort(key=lambda x: x.remaining_lease, reverse=False)
                 for flat in flats:
@@ -2945,7 +2949,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'storey_high':
                 flats.sort(key=lambda x: x.storey_range, reverse=True)
                 for flat in flats:
@@ -2958,7 +2962,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'storey_low':
                 flats.sort(key=lambda x: x.storey_range, reverse=False)
                 for flat in flats:
@@ -2971,7 +2975,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_high':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
                 for flat in flats:
@@ -2984,7 +2988,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_low':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
                 for flat in flats:
@@ -3053,7 +3057,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'storey_high':
                 flats.sort(key=lambda x: x.storey_range, reverse=True)
                 for flat in flats:
@@ -3066,7 +3070,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'storey_low':
                 flats.sort(key=lambda x: x.storey_range, reverse=False)
                 for flat in flats:
@@ -3079,7 +3083,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_high':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
                 for flat in flats:
@@ -3092,7 +3096,7 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
+
             elif criteria == 'price_per_sqm_low':
                 flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
                 for flat in flats:
@@ -3105,7 +3109,6 @@ def load_sort():
                     return jsonify({'data': data[index:limit + index]})
                 else:
                     return jsonify({'data': data})
-            
 
     # no search or filter
     else:
@@ -3202,7 +3205,7 @@ def load_sort():
                 return jsonify({'data': data[index:limit + index]})
             else:
                 return jsonify({'data': data})
-        
+
         elif criteria == 'price_per_sqm_low':
             flats = Flat.query.order_by(Flat.price_per_sqm.asc()).all()
             flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
@@ -3218,7 +3221,6 @@ def load_sort():
                 return jsonify({'data': data})
 
         return jsonify({})
-    
 
 
 @views.route('/filter', methods=['GET', 'POST'])
