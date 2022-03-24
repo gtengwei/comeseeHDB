@@ -35,6 +35,21 @@ def delete_review():
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
 def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
+    photo = view_image(flatId)
+    if photo != None:
+        url1 = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference="
+        url2 = "&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+        length = len(photo)
+        cur = 0
+        url = []
+        while (cur < length):
+            temp = url1 + photo[cur] + url2
+            url.append(temp)
+            cur = cur + 1
+    else:
+        url[0] = 0
+        url[1] = 0
+        url[2] = 0   
     if request.method == 'POST':
         review = request.form.get('review')
 
@@ -49,7 +64,7 @@ def flat_details(flatId):
             db.session.add(new_review)
             db.session.commit()
             flash('Review added!', category='success')
-    return render_template("flat_details.html", user=current_user, flat=flat)
+    return render_template("flat_details.html", user=current_user, flat=flat, image = url)
     
 @views.route('/unfavourite', methods=['POST'])
 @login_required
@@ -269,7 +284,7 @@ def home():
 
     session.clear()
     #return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
-    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites = current_user.favourites)
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites = Favourites.query.all)
 
 
 
@@ -1455,10 +1470,8 @@ def filter():
 
     return render_template('filter.html', user=current_user)
 
-    
 ## TESTING
 ## getting image (in flat details only)
-@views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
 def view_image(flatId):
     import requests
     import json
@@ -1489,6 +1502,19 @@ def view_image(flatId):
     payload={}
     headers = {}
 
-    response = requests.request("GET", url, headers=headers, data=payload)
-    
-    #by right should return an array
+    response = requests.request("GET", url, headers=headers, data=payload).json()
+    res = response['result']
+    if 'photos' not in res:
+        return None
+    photos = res['photos']
+    noOfPhotos = len(photos) #max number of photo references is 10
+    photoRef = []
+    cur = 0
+    while (cur < noOfPhotos):
+        temp1 = photos[cur]
+        temp2 = temp1['photo_reference']
+        photoRef.append(temp2)
+        cur = cur + 1
+
+    return photoRef
+    #by right should return an array of photo references only, and use these references to get the photo
