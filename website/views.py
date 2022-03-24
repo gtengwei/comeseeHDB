@@ -113,7 +113,7 @@ def home():
     c.execute(myquery)
     data = list(c.fetchall())
     # random.shuffle(data)
-    
+
     # Search for flats from homepage
     if request.method == 'POST':
         price = request.form.getlist('price')
@@ -1482,7 +1482,7 @@ def view_image(flatId):
     blk = flat.block
     street = flat.street_name
 
-    name = blk + street
+    name = blk + street + "hdb"
 
     while(name.find(' ') != -1):
         name = name.replace(' ', '%20')
