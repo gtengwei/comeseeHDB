@@ -4,6 +4,7 @@
 {% block content %}
 <head>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
       <style>
         /* Modify the background color */
         
@@ -18,6 +19,19 @@
             background-color: white;
     
         }
+        button[class^="favourite_button"] {
+            background-color: pink;
+            border:none;
+            outline:none;
+            color: red;
+        }
+
+        .unfavourite_button {
+            background-color: pink;
+            border:none;
+            outline:none;
+            color: red;
+        }
       </style>
   </head> 
 
@@ -31,7 +45,7 @@
                     <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" >
                       <i class="fa fa-search"></i>
                     </button>
-                    <a href= "filter" <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" ></button> </a>
+                    
                     <div class="btn-group">
                       <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Sort
@@ -191,6 +205,22 @@
         <div class="card mb-3">
           <div class="card-header">
             <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.address}}</strong></a>
+            <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="favourite({{ flat.id }})">
+              <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
+            </button>
+            {% if flat.id in user.favourites|map(attribute="flat_id")|list %}
+            <script type="text/javascript">
+              var x = "{{flat.id|tojson}}";
+              document.getElementById("favourite_button_id" + x.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
+              document.getElementById("favourite_button" + x.toString()).setAttribute( 'onClick', ("unfavourite(" +   x.toString()  + ")")); 
+            </script>
+            {% else %}
+            <script type="text/javascript">
+              var x = "{{flat.id|tojson}}";
+              document.getElementById("favourite_button_id" + x.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
+            </script>
+            {% endif %}
+  
           </div>
           <div class="card-body">
             <div class="row">
@@ -213,7 +243,7 @@
           
   
     
-  
+    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}">
 <script type="text/javascript">
     var index = 20;
     var limit = 20;
@@ -233,12 +263,40 @@
     function downloadContent(index, limit) {
       $.get('/load_search?index=' + index + '&limit=' + limit, (data) => {
         for (var index = 0; index < data.data.length; index++) {
+          var favourite = $('#my-data').data().f;
           var entry = "/flat-details/" + data.data[index][0];   
           var page = `
             <div class="card mb-3">
               <div class="card-header">
                 <strong>` +`<a href="${entry}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-              </div> 
+                <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="favourite(`+ data.data[index][0] +`)">
+                  <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
+                </button> 
+                `
+  
+          $('#searchProperties').append(page)
+
+          var script = document.createElement("script");
+          script.type = "text/javascript";
+          if (favourite.includes(data.data[index][0])) {
+          script.innerHTML = `
+              var x = "`+data.data[index][0]+`";
+              document.getElementById("favourite_button_id" + x.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
+              document.getElementById("favourite_button" + x.toString()).setAttribute( 'onClick', ("unfavourite(" +   x.toString()  + ")")); 
+          `
+          }
+          else {
+          script.innerHTML = `
+              var x = "`+data.data[index][0]+`";
+              document.getElementById("favourite_button_id" + x.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
+          `
+          }    
+          document.body.appendChild(script);
+
+          var page =
+            `</div>
+              
+              
               <div class="card-body">
                 <div class="row">
                   <div class="col">
@@ -255,8 +313,8 @@
               </div>
             </div>
           `
-  
-          $('#searchProperties').append(page)
+
+          $('#SearchProperties').append(page)
         }
       });
     }

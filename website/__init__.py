@@ -10,8 +10,6 @@ from flask_moment import Moment
 import mysql.connector
 import pymysql
 
-from website.test import create_mysql_database
-
 app = Flask(__name__)
 db = SQLAlchemy()
 DB_NAME = "database.db"

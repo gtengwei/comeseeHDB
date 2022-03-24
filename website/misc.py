@@ -39,7 +39,7 @@ def checkSpecialSymbol(password):
 
 def send_mail_password(user):
     token = user.get_token()
-    msg = MailMessage("Password Reset Request",recipients = [user.email], sender = 'noreply@comeseeHDB.com')
+    msg = Message("Password Reset Request",recipients = [user.email], sender = 'noreply@comeseeHDB.com')
 
     msg.body = f'''
     To reset your password, visit the following link:
@@ -52,7 +52,7 @@ def send_mail_password(user):
 
 def send_mail_verify(user):
     token = user.get_token()
-    msg = MailMessage("Verify your email",recipients = [user.email], sender = 'noreply@comeseeHDB.com')
+    msg = Message("Verify your email",recipients = [user.email], sender = 'noreply@comeseeHDB.com')
 
     msg.body = f'''
     To verify your email, visit the following link:
