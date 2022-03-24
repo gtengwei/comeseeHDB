@@ -1454,3 +1454,41 @@ def filter():
         # return render_template('sort.html', user=current_user, flats=flat)
 
     return render_template('filter.html', user=current_user)
+
+    
+## TESTING
+## getting image (in flat details only)
+@views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
+def view_image(flatId):
+    import requests
+    import json
+
+    #find the name of the flat to find the place id
+    flat = Flat.query.filter_by(id=flatId).first_or_404()
+    flat = Flat.query.get(flatId)
+    blk = flat.block
+    street = flat.street_name
+
+    name = blk + street
+
+    while(name.find(' ') != -1):
+        name = name.replace(' ', '%20')
+
+    url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + name + "&inputtype=textquery&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+
+    payload={}
+    headers = {}
+
+    response = requests.request("GET", url, headers=headers, data=payload).json()
+    primary = response['candidates'][0]
+    id = primary['place_id']
+
+    #finding photo reference
+    url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + id +"&fields=photos&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+
+    payload={}
+    headers = {}
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+    
+    #by right should return an array
