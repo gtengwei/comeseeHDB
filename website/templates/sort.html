@@ -47,7 +47,7 @@
                     <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" >
                       <i class="fa fa-search"></i>
                     </button>
-                    <a href= "filter" <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" ></button> </a>
+                    <a href= "{{ url_for('views.flat_details', flatId = random) }}" title="Click here for a random flat!"<button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" ></button> </a>
                     <div class="btn-group">
                       <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Sort
@@ -272,6 +272,11 @@
 {% if flats|length == 0 %}
   <h3 class="text-muted mb-0" align="center">No flats found!</h3>
 {% endif %}
+
+{% if flats %}
+<h4 class = "text-muted" align="center">  {{data_length}} flats found  </h4>
+{% endif %}
+
 <body class="bg">
     
     <div id="sortProperties" class="card-body mx-auto bg-pink" style="width: 30rem;">
@@ -387,6 +392,7 @@
           var flat_length = $('#my-data').data().flat_length;
           if (flat_length == index) {
           document.getElementById("end_page").innerHTML = '<h3>You Have Reach The End of Your Search Results</h3>';
+          }
       
           }
       });

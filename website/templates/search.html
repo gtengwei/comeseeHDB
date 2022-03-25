@@ -47,7 +47,7 @@
                     <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" >
                       <i class="fa fa-search"></i>
                     </button>
-                    <a href= "filter" <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" ></button> </a>
+                    <a href= "{{ url_for('views.flat_details', flatId = random) }}" title="Click here for a random flat!"<button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" ></button> </a>
                     <div class="btn-group">
                       <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Sort
@@ -270,7 +270,9 @@
 <h3 align="center">You searched for: {{session['address']}}</h3>
 {% endif %}
 
-
+{% if flats %}
+<h4 class = "text-muted" align="center">  {{data_length}} flats found  </h4>
+{% endif %}
 
 
 {% if flats|length == 0 %}
@@ -313,7 +315,7 @@
         </div>
       {% endfor %}
     </div>
-    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{flat|length}}">
+    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">
           
   
     
@@ -389,16 +391,17 @@
         `
   
           $('#searchProperties').append(page)
-        var flat_length = $('#my-data').data().flat_length;
-        if (flat_length == index) {
-          document.getElementById("end_page").innerHTML = '<h3>You Have Reach The End of Your Search Results</h3>';
+        
         }
+        var flat_length = $('#my-data').data().flat_length;
+        if (flat_length < (index + 20)) {
+          document.getElementById("end_page").innerHTML = '<h3>You Have Reach The End of Your Search Results</h3>';
         }
       });
     }
     
 </script>
-{% if flats|length < 20 %}
+{% if 0 < flats|length < 20 %}
 <div class="fa-3x d-flex justify-content-center" id = "end_page" >
   <h3>You Have Reach The End of Your Search Results</h3>
 </div>
