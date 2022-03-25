@@ -11,5 +11,6 @@ Werkzeug==2.0.3
 datetime
 pymysql
 cryptography
-mysql-connector-python
+gunicorn
+
 

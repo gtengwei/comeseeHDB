@@ -46,7 +46,7 @@ def main():
     df.to_csv("test.csv", index=False)
 
 def create_flat_csv(): 
-    engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
+    engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
     #Base.metadata.create_all(engine)
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
@@ -89,7 +89,7 @@ def add_test_data():
     db.session.commit()
 
 
-    engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
+    engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
     #Base.metadata.create_all(engine)
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
@@ -119,7 +119,7 @@ def print_database():
         print(row)
         
 if __name__ == "__main__":
-    main()
+    # main()
     #create_database()
-    #create_flat_csv()
-    #add_test_data()
+    create_flat_csv()
+    # add_test_data()

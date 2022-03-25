@@ -12,6 +12,7 @@ from pathlib import Path
 import mysql.connector
 import pymysql
 from .misc import *
+from db import open_connection
 import itertools
 
 views = Blueprint('views', __name__)
@@ -291,10 +292,8 @@ def home():
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
 
     session.clear()
-    #return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
-    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites = current_user.favourites)
-
-
+    # return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites = Flat.query.all())
 
 
 
@@ -1157,8 +1156,8 @@ def sort(criteria):
                 # no sort or filter or search
                 cwd = Path(__file__).parent.absolute()
                 os.chdir(cwd)
-                conn = sqlite3.connect("database.db")
-                #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
+                # conn = sqlite3.connect("database.db")
+                conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
                 c = conn.cursor()
                 print(criteria)
 

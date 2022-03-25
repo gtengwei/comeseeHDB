@@ -19,10 +19,10 @@ DB_NAME = "database.db"
 
 def create_database(app):
 
-    if not path.exists('website/' + DB_NAME):
-        create_Flat_table()
-        db.create_all(app=app)
-        print('Created Database!')
+    # if not path.exists('website/' + DB_NAME):
+    #     create_Flat_table()
+    #     db.create_all(app=app)
+    #     print('Created Database!')
 
     # create_mysql_database()
     conn = open_connection()

@@ -15,14 +15,14 @@ from sqlalchemy.dialects.mysql import BIGINT
 
 ## To migrate database
 class Review(db.Model):
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    #id = db.Column(BIGINT, primary_key=True, nullable=False) # for mysql
+    # id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(BIGINT, primary_key=True, nullable=False) # for mysql
     data = db.Column(db.String(500), nullable=False)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'), nullable=False)
-    #user_id = db.Column(BIGINT, db.ForeignKey('user.id'), nullable=False) # for mysql
-    #flat_id = db.Column(BIGINT, db.ForeignKey('flat.id'), nullable=False) # for mysql
+    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    # flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'), nullable=False)
+    user_id = db.Column(BIGINT, db.ForeignKey('user.id'), nullable=False) # for mysql
+    flat_id = db.Column(BIGINT, db.ForeignKey('flat.id'), nullable=False) # for mysql
 
 class Favourites(db.Model):
     id = db.Column(BIGINT, primary_key=True)
@@ -31,8 +31,8 @@ class Favourites(db.Model):
 
 # Table for User entity
 class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    #id = db.Column(BIGINT, primary_key=True, nullable=False) # for mysql
+    # id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(BIGINT, primary_key=True, nullable=False) # for mysql
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     username = db.Column(db.String(150))
@@ -69,8 +69,8 @@ class User(db.Model, UserMixin):
 #Base = declarative_base()
 class Flat(db.Model):
     #tell SQLAlchemy the name of column and its attributes:
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    #id = db.Column(BIGINT, primary_key=True, nullable=False) # for mysql
+    # id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(BIGINT, primary_key=True, nullable=False) # for mysql
     month = db.Column(db.String(150)) 
     town = db.Column(db.String(150))
     flat_type = db.Column(db.String(150))
@@ -91,7 +91,7 @@ class Flat(db.Model):
 
 def create_Flat_table():
     #To create the table in the database (SQLite)
-    engine = create_engine('sqlite:///website/database.db')
+    engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8')
     db.Model.metadata.create_all(engine)
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)

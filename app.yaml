@@ -1,4 +1,6 @@
 runtime: python38
+instance_class: F4_HIGHMEM
+entrypoint: gunicorn -b :$PORT -w 8 main:app.server --timeout 120
 
 handlers:
 - url: /static/logo\.png
