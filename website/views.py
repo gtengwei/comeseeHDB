@@ -266,6 +266,8 @@ def home():
             elif amenities:
                 searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
+            else:
+                return render_template('search.html', user=current_user, flats = [])
 
     session.clear()
     #return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
@@ -845,12 +847,20 @@ def load_search():
         for flat in searchedFlats:
             data.append(tuple([flat.id, flat.address,
                         flat.resale_price, flat.flat_type, flat.storey_range]))
-    # print(data[0][0])
+    print(data[0][0])
     if request.args:
         index = int(request.args.get('index'))
         limit = int(request.args.get('limit'))
+        data = data[index:limit + index]
+        for x in range(len(data)):
+            tuple_x = data[x]
+            list_x = list(tuple_x)
+            flat_id = list_x[0]
+            list_x.append(len(Flat.query.get(flat_id).favourites))
+            tuple_x = tuple(list_x)
+            data[x] = tuple_x
 
-        return jsonify({'data': data[index:limit + index]})
+        return jsonify({'data': data})
     else:
         return jsonify({'data': data})
 
@@ -1022,7 +1032,8 @@ def sort(criteria):
             
             elif amenities:
                 searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
-
+            else:
+                searchedFlats = []
             return sorting_criteria(criteria, searchedFlats)
 
     # User did not search or filter from sort page, hence we will use the session information to sort

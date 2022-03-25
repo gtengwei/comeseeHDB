@@ -308,7 +308,7 @@
         </div>
       {% endfor %}
     </div>
-    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}">
+    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{flat|length}}">
           
   
     
@@ -384,15 +384,27 @@
         `
   
           $('#sortProperties').append(page)
-        }
+          var flat_length = $('#my-data').data().flat_length;
+          if (flat_length == index) {
+          document.getElementById("end_page").innerHTML = '<h3>You Have Reach The End of Your Search Results</h3>';
+      
+          }
       });
     }
     
 </script>
 
-  <div class="fa-3x d-flex justify-content-center">
-    <i class="fas fa-circle-notch fa-spin"></i>
+{% if flats|length < 20 %}
+  <div class="fa-3x d-flex justify-content-center" id = "end_page" >
+    <h3>You Have Reach The End of Your Search Results</h3>
   </div>
+  
+  {% else %}
+  
+    <div class="fa-3x d-flex justify-content-center" id ="end_page">
+      <i class="fas fa-circle-notch fa-spin"></i>
+    </div>
+  {% endif %}
   
 </body>
     

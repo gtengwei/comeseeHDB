@@ -67,6 +67,7 @@ def calculate_time_difference(current_datetime, datetime_to_compare):
     return time_difference.days
 
 def sorting_criteria(criteria, flats = []):
+
     if criteria == 'price_high':
         flats.sort(key=lambda x: int(x.resale_price), reverse=True)
         session['criteria'] = criteria
