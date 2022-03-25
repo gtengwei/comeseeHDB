@@ -5,6 +5,13 @@
 <head>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(function(){
+          $('.favourite_button').click(function(){
+            $("#changePostalCodeModal").modal('show');
+          }); 
+      });
+  </script>
       <style>
         /* Modify the background color */
         
@@ -286,6 +293,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.address}}</strong></a>
+            {% if user.is_authenticated %}
             {% if flat.id in user.favourites|map(attribute="flat_id")|list %}
             <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="unfavourite({{ flat.id }})">
               <span id ="favourite_button_id{{flat.id}}"><i class="fa-solid fa-heart"></i></span>
@@ -294,6 +302,33 @@
             <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="favourite({{ flat.id }})">
               <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
+            {% endif %}
+          {% else %}
+            <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick = "guest_error()">
+              <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
+            </button>
+            <div class = "guest_error">
+              <div class="modal fade" id="changePostalCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header text-center">
+                      <h4 class="modal-title w-100 font-weight-bold">Login Feature</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+          
+                    <div class="modal-body mx-3">
+                      <div class="md-form mb-5">
+                          <h5> Create an account to use this feature!</h5> 
+                      </div>
+          
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
           {% endif %}
           <span id="favourite_count{{flat.id}}">{{flat.favourites|length}}</span>
           </div>

@@ -271,7 +271,7 @@ def home():
 
     session.clear()
     #return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
-    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites = current_user.favourites, random = RANDOM)
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites = Favourites.query.all(), random = RANDOM)
 
 
 
@@ -1559,3 +1559,7 @@ def view_image(flatId):
     response = requests.request("GET", url, headers=headers, data=payload)
     
     #by right should return an array
+
+@views.route("/guest-error")
+def guest_error():
+    return render_template('guest_error.html', user=current_user)

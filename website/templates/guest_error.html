@@ -1,0 +1,34 @@
+{% include "home.html" %}
+{% block content %}
+
+<script>
+    $(document).ready(function(){
+        $('.guest_error').click(function(){
+            $('.guest_error').hide();
+        });
+        $("#changePostalCodeModal").modal('show');
+    });
+</script>
+<div class = "guest_error">
+    <div class="modal fade" id="changePostalCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h4 class="modal-title w-100 font-weight-bold">Change Postal Code</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body mx-3">
+            <div class="md-form mb-5">
+                <h5> Create an account to use this feature!</h5> 
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
