@@ -35,6 +35,21 @@ def delete_review():
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
 def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
+    photo = view_image(flatId)
+
+    url1 = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference="
+    url2 = "&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+    length = len(photo)
+    cur = 0
+    url = []
+    while (cur < length):
+        if photo[cur] == 0:
+            url.append("\static\logo.png")
+        else:
+            temp = url1 + photo[cur] + url2
+            url.append(temp)
+        cur = cur + 1
+
     if request.method == 'POST':
         review = request.form.get('review')
 
@@ -49,7 +64,7 @@ def flat_details(flatId):
             db.session.add(new_review)
             db.session.commit()
             flash('Review added!', category='success')
-    return render_template("flat_details.html", user=current_user, flat=flat)
+    return render_template("flat_details.html", user=current_user, flat=flat, image = url)
     
 @views.route('/unfavourite', methods=['POST'])
 @login_required
@@ -1522,10 +1537,8 @@ def filter():
 
     return render_template('filter.html', user=current_user)
 
-
 ## TESTING
 ## getting image (in flat details only)
-@views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
 def view_image(flatId):
     import requests
     import json
@@ -1536,7 +1549,7 @@ def view_image(flatId):
     blk = flat.block
     street = flat.street_name
 
-    name = blk + street
+    name = blk + street + "hdb"
 
     while(name.find(' ') != -1):
         name = name.replace(' ', '%20')
@@ -1556,10 +1569,24 @@ def view_image(flatId):
     payload={}
     headers = {}
 
-    response = requests.request("GET", url, headers=headers, data=payload)
-    
-    #by right should return an array
+    response = requests.request("GET", url, headers=headers, data=payload).json()
+    res = response['result']
+    photoRef = []
+    cur = 0
+    if 'photos' not in res:
+        while (cur < 3):
+            photoRef.append(0)
+    photos = res['photos']
+    noOfPhotos = len(photos) #max number of photo references is 10
+    while (cur < noOfPhotos):
+        temp1 = photos[cur]
+        temp2 = temp1['photo_reference']
+        photoRef.append(temp2)
+        cur = cur + 1
+    if len(photoRef) < 3:
+        add = 3-len(photoRef)
+        for i in range(add):
+            photoRef.append(0)
 
-@views.route("/guest-error")
-def guest_error():
-    return render_template('guest_error.html', user=current_user)
+    return photoRef
+    #by right should return an array of photo references only, and use these references to get the photo
