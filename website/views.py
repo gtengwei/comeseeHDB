@@ -1522,7 +1522,7 @@ def filter():
 
     return render_template('filter.html', user=current_user)
 
-    
+
 ## TESTING
 ## getting image (in flat details only)
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
