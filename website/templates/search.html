@@ -282,9 +282,7 @@
 {% endif %}
 
 
-{% if flats|length == 0 %}
-  <h3 class="text-muted mb-0" align="center">No flats found!</h3>
-{% endif %}
+
 
 <body class="bg">
     
@@ -436,13 +434,15 @@
     }
     
 </script>
-{% if 0 < flats|length < 20 %}
+{% if flats|length == 0 %}
+  <h3 class="text-muted mb-0" align="center">No flats found!</h3>
+
+{% elif 0 < flats|length < 20 %}
 <div class="fa-3x d-flex justify-content-center" id = "end_page" >
   <h3>You Have Reach The End of Your Search Results</h3>
 </div>
 
 {% else %}
-
   <div class="fa-3x d-flex justify-content-center" id ="end_page">
     <i class="fas fa-circle-notch fa-spin"></i>
   </div>

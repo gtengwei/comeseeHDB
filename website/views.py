@@ -39,17 +39,19 @@ def flat_details(flatId):
 
     url1 = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference="
     url2 = "&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
-    length = len(photo)
-    cur = 0
-    url = []
-    while (cur < length):
-        if photo[cur] == 0:
-            url.append("\static\logo.png")
-        else:
-            temp = url1 + photo[cur] + url2
-            url.append(temp)
-        cur = cur + 1
-
+    if photo:
+        length = len(photo)
+        cur = 0
+        url = []
+        while (cur < length):
+            if photo[cur] == 0:
+                url.append("\static\logo.png")
+            else:
+                temp = url1 + photo[cur] + url2
+                url.append(temp)
+            cur = cur + 1
+    else:
+        url = ["\static\logo.png", "\static\logo.png", "\static\logo.png"]
     if request.method == 'POST':
         review = request.form.get('review')
 
@@ -58,6 +60,8 @@ def flat_details(flatId):
         elif len(review) > 500:
             flash(
                 'Review is too long! Maximum length for a review is 500 characters', category='error')
+        elif current_user.postal_code != flat.postal_sector:
+            flash('You cannot review this flat! You can only review flats in your own postal district!', category='error')
         else:
             new_review = Review(
                 data=review, user_id=current_user.id, flat_id=flatId)
@@ -1560,33 +1564,36 @@ def view_image(flatId):
     headers = {}
 
     response = requests.request("GET", url, headers=headers, data=payload).json()
-    primary = response['candidates'][0]
-    id = primary['place_id']
+    if response['status'] != 'OK':
+        return None
+    else:
+        primary = response['candidates'][0]
+        id = primary['place_id']
 
-    #finding photo reference
-    url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + id +"&fields=photos&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+        #finding photo reference
+        url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + id +"&fields=photos&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
 
-    payload={}
-    headers = {}
+        payload={}
+        headers = {}
 
-    response = requests.request("GET", url, headers=headers, data=payload).json()
-    res = response['result']
-    photoRef = []
-    cur = 0
-    if 'photos' not in res:
-        while (cur < 3):
-            photoRef.append(0)
-    photos = res['photos']
-    noOfPhotos = len(photos) #max number of photo references is 10
-    while (cur < noOfPhotos):
-        temp1 = photos[cur]
-        temp2 = temp1['photo_reference']
-        photoRef.append(temp2)
-        cur = cur + 1
-    if len(photoRef) < 3:
-        add = 3-len(photoRef)
-        for i in range(add):
-            photoRef.append(0)
+        response = requests.request("GET", url, headers=headers, data=payload).json()
+        res = response['result']
+        photoRef = []
+        cur = 0
+        if 'photos' not in res:
+            while (cur < 3):
+                photoRef.append(0)
+        photos = res['photos']
+        noOfPhotos = len(photos) #max number of photo references is 10
+        while (cur < noOfPhotos):
+            temp1 = photos[cur]
+            temp2 = temp1['photo_reference']
+            photoRef.append(temp2)
+            cur = cur + 1
+        if len(photoRef) < 3:
+            add = 3-len(photoRef)
+            for i in range(add):
+                photoRef.append(0)
 
-    return photoRef
-    #by right should return an array of photo references only, and use these references to get the photo
+        return photoRef
+        #by right should return an array of photo references only, and use these references to get the photo
