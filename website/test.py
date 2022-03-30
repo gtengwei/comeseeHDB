@@ -3,6 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 import pandas as pd
 import os
+import mysql.connector
 import csv
 import pymysql
 from pathlib import Path
@@ -17,21 +18,21 @@ class HDB_Flats(Base):
     # tell SQLAlchemy the name of column and its attributes:
     id = Column(Integer, primary_key=True, nullable=False)
     month = Column(Integer)
-    town = Column(String(150))
-    flat_type = Column(String(150))
-    block = Column(String(150))
-    street_name = Column(String(150))
-    storey_range = Column(String(150))
+    town = Column(String)
+    flat_type = Column(String)
+    block = Column(String)
+    street_name = Column(String)
+    storey_range = Column(String)
     floor_area_sqm = Column(Float)
-    flat_model = Column(String(150))
+    flat_model = Column(String)
     lease_commence_date = Column(Date)
     remaining_lease = Column(Float)
     resale_price = Column(Float)
 
 
 def main():
-    # os.chdir("C:/Users/Hannah V/Documents/GitHub/comeseeHDB/website")
-    df = pd.read_csv('test.csv')
+    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
+    df = pd.read_csv('merged.csv')
     # print(df.dtypes)
     df['price_per_sqm'] = round(
         df['resale_price'] / df['floor_area_sqm'])
@@ -43,10 +44,11 @@ def main():
     # print(df['address'])
     # writing into the file
     #df.drop('price_per_square_metre', axis=1, inplace=True)
-    df.to_csv("test.csv", index=False)
+    df.sort_values(by=['address'], ascending=True, inplace=True)
+    df.to_csv("merged.csv", index=False)
 
 def create_flat_csv(): 
-    engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
+    engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
     #Base.metadata.create_all(engine)
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
@@ -63,63 +65,9 @@ def create_mysql_database():
     cursor = database.cursor()
     cursor.execute("CREATE DATABASE IF NOT EXISTS mysql_database")
 
-
-def print_database():
-    database = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        passwd="Clutch123!"
-    )
-    cursor = database.cursor()
-    cursor.execute("SELECT * FROM flat")
-    for row in cursor.fetchall():
-        print(row)
-        
-def add_test_data():
-    email = "testUnit@gmail.com"
-    username = 'testUnit'
-    password1 = 'testUnit'
-    postal_code = '12'
-    new_user = User(email=email, username = username, postal_code = postal_code,
-                password=generate_password_hash(password1, method='sha256'), email_verified = True)
-    db.session.add(new_user)
-
-    flat = Flat.query.filter_by(id=114503).first()
-    flat.numOfFavourites = 56
-    db.session.commit()
-
-
-    engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
-    #Base.metadata.create_all(engine)
-    cwd = Path(__file__).parent.absolute()
-    os.chdir(cwd)
-    df = pd.read_csv('test.csv')    
-    df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
-
-
-def create_mysql_database():
-    database = pymysql.connect(
-        host="localhost",
-        user="root",
-        passwd="Clutch123!"
-    )
-    cursor = database.cursor()
-    cursor.execute("CREATE DATABASE IF NOT EXISTS mysql_database")
-
-
-def print_database():
-    database = pymysql.connect(
-        host="localhost",
-        user="root",
-        passwd="Clutch123!"
-    )
-    cursor = database.cursor()
-    cursor.execute("SELECT * FROM flat")
-    for row in cursor.fetchall():
-        print(row)
         
 if __name__ == "__main__":
-    # main()
+    main()
     #create_database()
-    create_flat_csv()
-    # add_test_data()
+    #create_flat_csv()
+    #add_test_data()
