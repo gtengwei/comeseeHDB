@@ -244,7 +244,7 @@
   </div>
         
     
-  <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{flat|length}}">
+  <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">
 <script type="text/javascript">
 
   var index = 20;
@@ -257,7 +257,7 @@
 
     
     
-    if (current_y + window_height == document_height) {
+    if (current_y + window_height >= (document_height-1)) {
       downloadContent(index, limit);
       index += 20
     }
