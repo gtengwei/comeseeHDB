@@ -36,8 +36,30 @@ def create_HDB_Flats_table(engine):
     Base.metadata.create_all(engine)
     file_name = 'test.csv'
     os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
-    df = pd.read_csv('test.csv')
-    df.to_sql(con=engine, index_label='id',
-              name=HDB_Flats.__tablename__, if_exists='replace')
+    df = pd.read_csv('merged.csv')
+    # print(df.dtypes)
+    df['price_per_sqm'] = round(
+        df['resale_price'] / df['floor_area_sqm'])
+    # print(df['price_per_square_metre'])
+    df['block'].astype(str)
+    df['street_name'].astype(str)
+    df['address'] = df['street_name'] + ' BLK ' + df['block']
+    df['numOfFavourites'] = 0
+    # print(df['address'])
+    # writing into the file
+    #df.drop('price_per_square_metre', axis=1, inplace=True)
+    df.sort_values(by=['address'], ascending=True, inplace=True)
+    df.to_csv("merged.csv", index=False)
+
+
+
+def create_mysql_database():
+    database = pymysql.connect(
+        host="localhost",
+        user="root",
+        passwd="Clutch123!"
+    )
+    cursor = database.cursor()
+    cursor.execute("CREATE DATABASE IF NOT EXISTS mysql_database")
 
 

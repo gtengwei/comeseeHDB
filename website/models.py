@@ -89,10 +89,14 @@ class Flat(db.Model):
     resale_price = db.Column(db.Integer) 
     price_per_sqm = db.Column(db.Integer)
     address = db.Column(db.String(150))
-    reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
     resale_price = db.Column(Float)
-    favourites = db.relationship('Favourites', backref = 'flat', passive_deletes=True)   
     numOfFavourites = db.Column(db.Integer, default=0)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
+    postal_code = db.Column(db.Integer)
+    postal_sector = db.Column(db.Integer)
+    reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
+    favourites = db.relationship('Favourites', backref = 'flat', passive_deletes=True)   
 
 def create_Flat_table():
     #To create the table in the database (SQLite)
@@ -100,7 +104,7 @@ def create_Flat_table():
     db.Model.metadata.create_all(engine)
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
-    df = pd.read_csv('test.csv')
+    df = pd.read_csv('merged.csv')
     df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
 
     '''
