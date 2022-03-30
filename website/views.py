@@ -36,6 +36,8 @@ def delete_review():
 def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
     photo = view_image(flatId)
+    #try
+    am1, am2 = amenities(flatId)
 
     url1 = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference="
     url2 = "&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
@@ -68,7 +70,8 @@ def flat_details(flatId):
             db.session.add(new_review)
             db.session.commit()
             flash('Review added!', category='success')
-    return render_template("flat_details.html", user=current_user, flat=flat, image = url)
+    print(am1, am2)
+    return render_template("flat_details.html", user=current_user, flat=flat, image = url, am1 = am1, am2 = am2)
     
 @views.route('/unfavourite', methods=['POST'])
 @login_required
@@ -1599,3 +1602,33 @@ def view_image(flatId):
 
         return photoRef
         #by right should return an array of photo references only, and use these references to get the photo
+
+def amenities(flatId):
+    import requests
+ 
+    flat = Flat.query.filter_by(id=flatId).first_or_404()
+    flat = Flat.query.get(flatId)
+    lat = Flat.query.get(latitude) 
+    lon = Flat.query.get(longitude)
+
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "%2C" + lon + "&radius=500&type=restaurant&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+
+    payload={}
+    headers = {}
+
+    response = requests.request("GET", url, headers=headers, data=payload).json()
+    res = response['results']
+    if len(res) = 0:
+        return None
+    else:
+        name = []
+        vicinity = []
+        noOfAm = len(res)
+        for i in range(noOfAm):
+            temp = res[i]
+            temp1 = temp['name']
+            temp2 = temp['vicinity']
+            name.append(temp1)
+            vicinity.append(temp2)
+    
+    return name, vicinity
