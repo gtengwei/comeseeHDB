@@ -142,7 +142,7 @@ def home():
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
-                    data = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
+                    data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
                     #print(searchedFlats)
             #print(data[0])                
             #return render_template("search.html", user=current_user, flats=data[:INDEX])
@@ -221,9 +221,9 @@ def home():
                 searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM)
-            
             else:
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM)
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM)    
+
 
         else:
             if address and flat_types and amenities and towns:
@@ -327,6 +327,7 @@ def load_home():
                 return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
+
         elif criteria == 'price_low':
             myquery = (
             "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price;")
@@ -546,7 +547,7 @@ def search(address):
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
-                    data = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
+                    data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
                     #print(searchedFlats)
             #print(data[0])                
             #return render_template("search.html", user=current_user, flats=data[:INDEX])
@@ -720,7 +721,7 @@ def load_search():
         for i in range(len(price_range)):
             price_range[i] = int(price_range[i])
             if i%2 == 0:
-                data_price = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
+                data_price = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
                 #print(searchedFlats)
         #print(data_price[0])                
         #return render_template("search.html", user=current_user, flats=data_price[:INDEX])
@@ -914,7 +915,7 @@ def sort(criteria):
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
-                    data = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
+                    data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
                     #print(searchedFlats)
             #print(data[0])                
             #return render_template("search.html", user=current_user, flats=data[:INDEX])
@@ -1072,7 +1073,7 @@ def sort(criteria):
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
-                    data = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
+                    data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
                     #print(searchedFlats)
             #print(data[0])                
             #return render_template("search.html", user=current_user, flats=data[:INDEX])
