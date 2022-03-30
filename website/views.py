@@ -9,7 +9,6 @@ import sqlite3
 import os
 import random
 from pathlib import Path
-import mysql.connector
 import pymysql
 from .misc import *
 from db import open_connection
@@ -147,7 +146,7 @@ def home():
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
-                    data = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
+                    data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
                     #print(searchedFlats)
             #print(data[0])                
             #return render_template("search.html", user=current_user, flats=data[:INDEX])
