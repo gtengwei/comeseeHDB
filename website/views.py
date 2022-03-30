@@ -104,7 +104,6 @@ def favourite_count():
 
 # Route for Home Page
 @views.route('/', methods=['GET', 'POST'])
-@login_required
 def home():
     cwd = Path(__file__).parent.absolute()
     print(cwd)

@@ -1,6 +1,7 @@
 ## To start the app
 #from website import create_app
 from website import create_app
+from website.models import *
 
 #
 if __name__ == '__main__':
