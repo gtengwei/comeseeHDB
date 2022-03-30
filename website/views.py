@@ -16,9 +16,10 @@ import itertools
 
 views = Blueprint('views', __name__)
 
-INDEX = 20 # Number of items to show on homepage
+INDEX = 20  # Number of items to show on homepage
 
-@views.route('/delete-review', methods=['GET','POST'])
+
+@views.route('/delete-review', methods=['GET', 'POST'])
 def delete_review():
     review = json.loads(request.data)
     reviewId = review['reviewId']
@@ -31,6 +32,7 @@ def delete_review():
     return jsonify({})
 
 # Route for every flat
+
 
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
 def flat_details(flatId):
@@ -64,8 +66,9 @@ def flat_details(flatId):
             db.session.add(new_review)
             db.session.commit()
             flash('Review added!', category='success')
-    return render_template("flat_details.html", user=current_user, flat=flat, image = url)
-    
+    return render_template("flat_details.html", user=current_user, flat=flat, image=url)
+
+
 @views.route('/unfavourite', methods=['POST'])
 @login_required
 def unfavourite():
@@ -79,18 +82,20 @@ def unfavourite():
             db.session.commit()
     return jsonify({"favourite_count": len(flat.favourites)})
 
+
 @views.route('/favourite', methods=['POST'])
 @login_required
 def favourite():
     flat = json.loads(request.data)
     flatID = flat['flatID']
     flat = Flat.query.get(flatID)
-    new_favourites = Favourites(user_id = current_user.id , flat_id = flatID)
+    new_favourites = Favourites(user_id=current_user.id, flat_id=flatID)
     db.session.add(new_favourites)
     flat.numOfFavourites += 1
     db.session.commit()
     return jsonify({"favourite_count": len(flat.favourites)})
-    
+
+
 @views.route('/favourite_count', methods=['POST'])
 def favourite_count():
     flat = json.loads(request.data)
@@ -99,12 +104,14 @@ def favourite_count():
     return jsonify({"favourite_count": len(flat.favourites)})
 
 # Route for Home Page
+
+
 @views.route('/', methods=['GET', 'POST'])
 def home():
     cwd = Path(__file__).parent.absolute()
     print(cwd)
     os.chdir(cwd)
-    #print(os.getcwd())
+    # print(os.getcwd())
     conn = sqlite3.connect("database.db")
     #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
@@ -132,170 +139,195 @@ def home():
 
         if price:
             #minPrice = int(price[0])
-            #maxPrice = minPrice + 100000 
+            #maxPrice = minPrice + 100000
             price_range = [word for line in price for word in line.split('-')]
             print(price_range)
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
-                if i%2 == 0:
-                    data = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
-                    #print(searchedFlats)
-            #print(data[0])                
-            #return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+                if i % 2 == 0:
+                    data = list(itertools.chain(Flat.query.filter(
+                        Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
+                    # print(searchedFlats)
+            # print(data[0])
+            # return render_template("search.html", user=current_user, flats=data[:INDEX])
+
             if address and flat_types and amenities and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif address and towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif address and towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif address and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif address and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif address and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif address and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif address:
-                searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif towns and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             elif towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif towns:
                 searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif flat_types:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif amenities:
-                searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             else:
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
 
         else:
             if address and flat_types and amenities and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif address and towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif address and towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif address and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address), Flat.town.in_(towns)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif address and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif address and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif address and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif address:
-                searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif towns and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.flat_type.in_(flat_types)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
 
             elif towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif towns:
                 searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif flat_types:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.flat_type.in_(flat_types)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif amenities:
-                searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
 
     session.clear()
-    #return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
-    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites = Favourites.query.all)
+    # return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites=Favourites.query.all)
 
 
-
-
-
-    
 # Infinite Scrolling for Home Page
 @views.route('/load_home', methods=['GET', 'POST'])
 def load_home():
 
-    ## In order to load sorted flats faster
+    # In order to load sorted flats faster
     conn = sqlite3.connect("database.db")
     #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
@@ -303,7 +335,7 @@ def load_home():
     if criteria:
         if criteria == 'price_high':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price DESC;")
+                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -315,7 +347,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'price_low':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price;")
+                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -327,7 +359,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'remaining_lease_high':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease DESC;")
+                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -339,7 +371,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'remaining_lease_low':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease;")
+                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -351,7 +383,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'storey_high':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range DESC;")
+                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -363,7 +395,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'storey_low':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range;")
+                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -375,7 +407,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'price_per_sqm_high':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm DESC;")
+                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -387,7 +419,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'price_per_sqm_low':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm;")
+                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -397,10 +429,10 @@ def load_home():
                 return jsonify({'data': data[index:limit + index]})
             else:
                 return jsonify({'data': data})
-        
+
         elif criteria == 'favourites_high':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
+                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -412,7 +444,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'favourites_low':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
+                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -442,7 +474,7 @@ def load_home():
                 list_x.append(len(Flat.query.get(flat_id).favourites))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
-            #print(data)
+            # print(data)
 
             return jsonify({'data': data})
         else:
@@ -474,149 +506,178 @@ def search(address):
             print(price_range)
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
-                if i%2 == 0:
-                    data = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
-                    #print(searchedFlats)
-            #print(data[0])                
-            #return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+                if i % 2 == 0:
+                    data = list(itertools.chain(Flat.query.filter(
+                        Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
+                    # print(searchedFlats)
+            # print(data[0])
+            # return render_template("search.html", user=current_user, flats=data[:INDEX])
+
             if address and flat_types and amenities and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif address and towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif address and towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif address and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif address and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif address and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif address and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif address:
-                searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif towns and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             elif towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif towns:
                 searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif flat_types:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             elif amenities:
-                searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
-            
+
             else:
                 return render_template("search.html", user=current_user, flats=data[:INDEX])
 
         else:
             if address and flat_types and amenities and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif address and towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif address and towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif address and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address), Flat.town.in_(towns)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif address and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif address and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif address and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif address:
-                searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif towns and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.flat_type.in_(flat_types)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
 
             elif towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif towns:
                 searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif flat_types:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.flat_type.in_(flat_types)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
-            
+
             elif amenities:
-                searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.amenities.in_(amenities)).all()
                 return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX])
 
     return render_template('search.html', user=current_user, address=address)
@@ -642,156 +703,154 @@ def load_search():
 
     if price:
         #minPrice = int(price[0])
-        #maxPrice = minPrice + 100000 
+        #maxPrice = minPrice + 100000
         price_range = [word for line in price for word in line.split('-')]
         print(price_range)
         for i in range(len(price_range)):
             price_range[i] = int(price_range[i])
-            if i%2 == 0:
-                data_price = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
-                #print(searchedFlats)
-        #print(data_price[0])                
-        #return render_template("search.html", user=current_user, flats=data_price[:INDEX])
-             
+            if i % 2 == 0:
+                data_price = list(itertools.chain(Flat.query.filter(
+                    Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
+                # print(searchedFlats)
+        # print(data_price[0])
+        # return render_template("search.html", user=current_user, flats=data_price[:INDEX])
+
         if address and flat_types and amenities and towns:
-            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
+            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
+                flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
-        
+
         elif address and towns and flat_types:
-            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
-        
+
         elif address and towns and amenities:
-            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
-        
+
         elif address and towns:
-            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns)).all()
+            searchedFlats = Flat.query.filter(
+                Flat.address.like(address), Flat.town.in_(towns)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
-        
+
         elif address and flat_types and amenities:
-            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
-        
+
         elif address and flat_types:
-            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types)).all()
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.flat_type.in_(flat_types)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
-        
+
         elif address and amenities:
-            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.amenities.in_(amenities)).all()
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.amenities.in_(amenities)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
-        
+
         elif address:
             searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
-        
+
         elif towns and flat_types and amenities:
-            searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+            searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
+                flat_types), Flat.amenities.in_(amenities)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
-        
+
         elif towns and flat_types:
-            searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types)).all()
+            searchedFlats = Flat.query.filter(Flat.town.in_(
+                towns), Flat.flat_type.in_(flat_types)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
 
         elif towns and amenities:
-            searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+            searchedFlats = Flat.query.filter(Flat.town.in_(
+                towns), Flat.amenities.in_(amenities)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
-        
+
         elif towns:
             searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
-        
+
         elif flat_types and amenities:
-            searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+            searchedFlats = Flat.query.filter(Flat.flat_type.in_(
+                flat_types), Flat.amenities.in_(amenities)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
-        
+
         elif flat_types:
-            searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
+            searchedFlats = Flat.query.filter(
+                Flat.flat_type.in_(flat_types)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
-        
+
         elif amenities:
-            searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
+            searchedFlats = Flat.query.filter(
+                Flat.amenities.in_(amenities)).all()
             data_price = [flat for flat in data_price if flat in searchedFlats]
-            
-            
 
     else:
         if address and flat_types and amenities and towns:
-            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
-        
+            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
+                flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
+
         elif address and towns and flat_types:
-            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
-            
-        
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
+
         elif address and towns and amenities:
-            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
-            
-        
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+
         elif address and towns:
-            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns)).all()
-            
-        
+            searchedFlats = Flat.query.filter(
+                Flat.address.like(address), Flat.town.in_(towns)).all()
+
         elif address and flat_types and amenities:
-            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
-            
-        
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+
         elif address and flat_types:
-            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types)).all()
-            
-        
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.flat_type.in_(flat_types)).all()
+
         elif address and amenities:
-            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.amenities.in_(amenities)).all()
-            
-        
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.amenities.in_(amenities)).all()
+
         elif address:
             searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
-            
-        
+
         elif towns and flat_types and amenities:
-            searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
-            
-        
+            searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
+                flat_types), Flat.amenities.in_(amenities)).all()
+
         elif towns and flat_types:
-            searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types)).all()
-            
+            searchedFlats = Flat.query.filter(Flat.town.in_(
+                towns), Flat.flat_type.in_(flat_types)).all()
 
         elif towns and amenities:
-            searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
-            
-        
+            searchedFlats = Flat.query.filter(Flat.town.in_(
+                towns), Flat.amenities.in_(amenities)).all()
+
         elif towns:
             searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
-            
-        
+
         elif flat_types and amenities:
-            searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
-            
-        
+            searchedFlats = Flat.query.filter(Flat.flat_type.in_(
+                flat_types), Flat.amenities.in_(amenities)).all()
+
         elif flat_types:
-            searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
-            
-        
+            searchedFlats = Flat.query.filter(
+                Flat.flat_type.in_(flat_types)).all()
+
         elif amenities:
-            searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
-            
+            searchedFlats = Flat.query.filter(
+                Flat.amenities.in_(amenities)).all()
+
     if data_price:
         for flat in data_price:
             data.append(tuple([flat.id, flat.address,
-                    flat.resale_price, flat.flat_type, flat.storey_range]))
+                               flat.resale_price, flat.flat_type, flat.storey_range]))
     else:
         for flat in searchedFlats:
             data.append(tuple([flat.id, flat.address,
@@ -832,147 +891,158 @@ def sort(criteria):
             print(price_range)
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
-                if i%2 == 0:
-                    data = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
-                    #print(searchedFlats)
-            #print(data[0])                
-            #return render_template("search.html", user=current_user, flats=data[:INDEX])
-         
+                if i % 2 == 0:
+                    data = list(itertools.chain(Flat.query.filter(
+                        Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
+                    # print(searchedFlats)
+            # print(data[0])
+            # return render_template("search.html", user=current_user, flats=data[:INDEX])
+
             if address and flat_types and amenities and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif address and towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif address and towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif address and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif address and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif address and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif address and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif address:
-                searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif towns and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
 
             elif towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                
-            
+
             elif towns:
                 searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                
-            
+
             elif flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                
-            
+
             elif flat_types:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                
-            
+
             elif amenities:
-                searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-            
+
             return sorting_criteria(criteria, data)
 
         elif not price:
             if address and flat_types and amenities and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
-                
-            
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
+
             elif address and towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
-                
-            
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
+
             elif address and towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
-                
-            
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+
             elif address and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns)).all()
-                
-            
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address), Flat.town.in_(towns)).all()
+
             elif address and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
-                
-            
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+
             elif address and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types)).all()
-                
-            
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types)).all()
+
             elif address and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.amenities.in_(amenities)).all()
-                
-            
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.amenities.in_(amenities)).all()
+
             elif address:
-                searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
-                
-            
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address)).all()
+
             elif towns and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
-                
-            
+                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
+
             elif towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types)).all()
-                
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.flat_type.in_(flat_types)).all()
 
             elif towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
-                
-            
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.amenities.in_(amenities)).all()
+
             elif towns:
                 searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
-                
-            
+
             elif flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
-                
-            
+                searchedFlats = Flat.query.filter(Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
+
             elif flat_types:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
-                
-            
+                searchedFlats = Flat.query.filter(
+                    Flat.flat_type.in_(flat_types)).all()
+
             elif amenities:
-                searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.amenities.in_(amenities)).all()
 
             return sorting_criteria(criteria, searchedFlats)
 
@@ -994,155 +1064,180 @@ def sort(criteria):
         if price:
             #minPrice = int(price[0])
             #maxPrice = minPrice + 100000
-            
+
             price_range = [word for line in price for word in line.split('-')]
             print(price_range)
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
-                if i%2 == 0:
-                    data = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
-                    #print(searchedFlats)
-            #print(data[0])                
-            #return render_template("search.html", user=current_user, flats=data[:INDEX])
+                if i % 2 == 0:
+                    data = list(itertools.chain(Flat.query.filter(
+                        Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
+                    # print(searchedFlats)
+            # print(data[0])
+            # return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             if address and flat_types and amenities and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif address and towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif address and towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif address and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif address and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif address and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif address and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif address:
-                searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif towns and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
-            
+
             elif towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return sorting_criteria(criteria, data)
 
             elif towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                
-            
+
             elif towns:
                 searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                
-            
+
             elif flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                
-            
+
             elif flat_types:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                
-            
+
             elif amenities:
-                searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-            
+
             return sorting_criteria(criteria, data)
 
         elif not price:
             print(criteria)
             if address and flat_types and amenities and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
                 return sorting_criteria(criteria, searchedFlats)
-            
+
             elif address and towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
                 return sorting_criteria(criteria, searchedFlats)
-            
+
             elif address and towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
                 return sorting_criteria(criteria, searchedFlats)
-            
+
             elif address and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address), Flat.town.in_(towns)).all()
                 return sorting_criteria(criteria, searchedFlats)
-            
+
             elif address and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
                 return sorting_criteria(criteria, searchedFlats)
-            
+
             elif address and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.flat_type.in_(flat_types)).all()
                 return sorting_criteria(criteria, searchedFlats)
-            
+
             elif address and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.address.like(
+                    address), Flat.amenities.in_(amenities)).all()
                 return sorting_criteria(criteria, searchedFlats)
-            
+
             elif address:
-                searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.address.like(address)).all()
                 return sorting_criteria(criteria, searchedFlats)
-            
+
             elif towns and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
                 return sorting_criteria(criteria, searchedFlats)
-            
+
             elif towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.flat_type.in_(flat_types)).all()
                 return sorting_criteria(criteria, searchedFlats)
 
             elif towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.town.in_(
+                    towns), Flat.amenities.in_(amenities)).all()
                 return sorting_criteria(criteria, searchedFlats)
-            
+
             elif towns:
                 searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
                 return sorting_criteria(criteria, searchedFlats)
-            
+
             elif flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(Flat.flat_type.in_(
+                    flat_types), Flat.amenities.in_(amenities)).all()
                 return sorting_criteria(criteria, searchedFlats)
-            
+
             elif flat_types:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.flat_type.in_(flat_types)).all()
                 return sorting_criteria(criteria, searchedFlats)
-            
+
             elif amenities:
-                searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
+                searchedFlats = Flat.query.filter(
+                    Flat.amenities.in_(amenities)).all()
                 return sorting_criteria(criteria, searchedFlats)
-            
+
             elif not address and not towns and not flat_types and not amenities:
                 # no sort or filter or search
                 cwd = Path(__file__).parent.absolute()
@@ -1154,7 +1249,7 @@ def sort(criteria):
 
                 if criteria == 'price_high':
                     myquery = (
-                    "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price DESC;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price DESC;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1165,7 +1260,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
                 elif criteria == 'price_low':
                     myquery = (
-                    "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1176,7 +1271,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
                 elif criteria == 'remaining_lease_high':
                     myquery = (
-                    "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease DESC;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease DESC;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1187,7 +1282,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
                 elif criteria == 'remaining_lease_low':
                     myquery = (
-                    "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1198,7 +1293,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
                 elif criteria == 'storey_high':
                     myquery = (
-                    "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range DESC;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range DESC;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1209,7 +1304,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
                 elif criteria == 'storey_low':
                     myquery = (
-                    "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1220,7 +1315,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
                 elif criteria == 'price_per_sqm_high':
                     myquery = (
-                    "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm DESC;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm DESC;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1231,7 +1326,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
                 elif criteria == 'price_per_sqm_low':
                     myquery = (
-                    "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1242,7 +1337,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
                 elif criteria == 'favourites_high':
                     myquery = (
-                    "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1253,7 +1348,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
                 elif criteria == 'favourites_low':
                     myquery = (
-                    "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1262,7 +1357,7 @@ def sort(criteria):
                         flat_id = data[x][0]
                         list_x.append(flat_id)
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
-        
+
     return render_template('sort.html', user=current_user)
 
 
@@ -1280,158 +1375,159 @@ def load_sort():
         address = '%{}%'.format(address)
 
     if price:
-            #minPrice = int(price[0])
-            #maxPrice = minPrice + 100000
-            data = []
-            price_range = [word for line in price for word in line.split('-')]
-            print(price_range)
-            for i in range(len(price_range)):
-                price_range[i] = int(price_range[i])
-                if i%2 == 0:
-                    data.extend(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
-                    #print(searchedFlats)
-            #print(data[0])                
-            #return render_template("search.html", user=current_user, flats=data[:INDEX])
-            if flat_types:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-            
-            if address and flat_types and amenities and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-            
-            elif address and towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-                
-            
-            elif address and towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-                
-            
-            elif address and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-                
-            
-            elif address and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-                
-            
-            elif address and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-                
-            
-            elif address and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.amenities.in_(amenities)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-                
-            
-            elif address:
-                searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-                
-            
-            elif towns and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-                
-            
-            elif towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-                
+        #minPrice = int(price[0])
+        #maxPrice = minPrice + 100000
+        data = []
+        price_range = [word for line in price for word in line.split('-')]
+        print(price_range)
+        for i in range(len(price_range)):
+            price_range[i] = int(price_range[i])
+            if i % 2 == 0:
+                data.extend(Flat.query.filter(Flat.resale_price.between(
+                    price_range[i], price_range[i+1])).all())
+                # print(searchedFlats)
+        # print(data[0])
+        # return render_template("search.html", user=current_user, flats=data[:INDEX])
+        if flat_types:
+            searchedFlats = Flat.query.filter(
+                Flat.flat_type.in_(flat_types)).all()
+            data = [flat for flat in data if flat in searchedFlats]
 
-            elif towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-                
-            
-            elif towns:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-                
-            
-            elif flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-                
-            
-            elif flat_types:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-                
-            
-            elif amenities:
-                searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
-                data = [flat for flat in data if flat in searchedFlats]
-            
-            return sorting_criteria_load(criteria, data)
+        if address and flat_types and amenities and towns:
+            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
+                flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        elif address and towns and flat_types:
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        elif address and towns and amenities:
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        elif address and towns:
+            searchedFlats = Flat.query.filter(
+                Flat.address.like(address), Flat.town.in_(towns)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        elif address and flat_types and amenities:
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        elif address and flat_types:
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.flat_type.in_(flat_types)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        elif address and amenities:
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.amenities.in_(amenities)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        elif address:
+            searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        elif towns and flat_types and amenities:
+            searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
+                flat_types), Flat.amenities.in_(amenities)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        elif towns and flat_types:
+            searchedFlats = Flat.query.filter(Flat.town.in_(
+                towns), Flat.flat_type.in_(flat_types)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        elif towns and amenities:
+            searchedFlats = Flat.query.filter(Flat.town.in_(
+                towns), Flat.amenities.in_(amenities)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        elif towns:
+            searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        elif flat_types and amenities:
+            searchedFlats = Flat.query.filter(Flat.flat_type.in_(
+                flat_types), Flat.amenities.in_(amenities)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        elif flat_types:
+            searchedFlats = Flat.query.filter(
+                Flat.flat_type.in_(flat_types)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        elif amenities:
+            searchedFlats = Flat.query.filter(
+                Flat.amenities.in_(amenities)).all()
+            data = [flat for flat in data if flat in searchedFlats]
+
+        return sorting_criteria_load(criteria, data)
 
     else:
-            if address and flat_types and amenities and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
-                
-            
-            elif address and towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
-                
-            
-            elif address and towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
-                
-            
-            elif address and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns)).all()
-                
-            
-            elif address and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
-                
-            
-            elif address and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types)).all()
-                
-            
-            elif address and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.amenities.in_(amenities)).all()
-                
-            
-            elif address:
-                searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
-                
-            
-            elif towns and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
-                
-            
-            elif towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types)).all()
-                
+        if address and flat_types and amenities and towns:
+            searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
+                flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
 
-            elif towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
-                
-            
-            elif towns:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
-                
-            
-            elif flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
-                
-            
-            elif flat_types:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
-                
-            
-            elif amenities:
-                searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
-            
-            return sorting_criteria_load(criteria, searchedFlats)   
+        elif address and towns and flat_types:
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
+
+        elif address and towns and amenities:
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+
+        elif address and towns:
+            searchedFlats = Flat.query.filter(
+                Flat.address.like(address), Flat.town.in_(towns)).all()
+
+        elif address and flat_types and amenities:
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+
+        elif address and flat_types:
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.flat_type.in_(flat_types)).all()
+
+        elif address and amenities:
+            searchedFlats = Flat.query.filter(Flat.address.like(
+                address), Flat.amenities.in_(amenities)).all()
+
+        elif address:
+            searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
+
+        elif towns and flat_types and amenities:
+            searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
+                flat_types), Flat.amenities.in_(amenities)).all()
+
+        elif towns and flat_types:
+            searchedFlats = Flat.query.filter(Flat.town.in_(
+                towns), Flat.flat_type.in_(flat_types)).all()
+
+        elif towns and amenities:
+            searchedFlats = Flat.query.filter(Flat.town.in_(
+                towns), Flat.amenities.in_(amenities)).all()
+
+        elif towns:
+            searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
+
+        elif flat_types and amenities:
+            searchedFlats = Flat.query.filter(Flat.flat_type.in_(
+                flat_types), Flat.amenities.in_(amenities)).all()
+
+        elif flat_types:
+            searchedFlats = Flat.query.filter(
+                Flat.flat_type.in_(flat_types)).all()
+
+        elif amenities:
+            searchedFlats = Flat.query.filter(
+                Flat.amenities.in_(amenities)).all()
+
+        return sorting_criteria_load(criteria, searchedFlats)
 
 
 @views.route('/filter', methods=['GET', 'POST'])
@@ -1470,13 +1566,15 @@ def filter():
 
     return render_template('filter.html', user=current_user)
 
-## TESTING
-## getting image (in flat details only)
+# TESTING
+# getting image (in flat details only)
+
+
 def view_image(flatId):
     import requests
     import json
 
-    #find the name of the flat to find the place id
+    # find the name of the flat to find the place id
     flat = Flat.query.filter_by(id=flatId).first_or_404()
     flat = Flat.query.get(flatId)
     blk = flat.block
@@ -1487,22 +1585,26 @@ def view_image(flatId):
     while(name.find(' ') != -1):
         name = name.replace(' ', '%20')
 
-    url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + name + "&inputtype=textquery&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+    url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + \
+        name + "&inputtype=textquery&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
 
-    payload={}
+    payload = {}
     headers = {}
 
-    response = requests.request("GET", url, headers=headers, data=payload).json()
+    response = requests.request(
+        "GET", url, headers=headers, data=payload).json()
     primary = response['candidates'][0]
     id = primary['place_id']
 
-    #finding photo reference
-    url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + id +"&fields=photos&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+    # finding photo reference
+    url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + \
+        id + "&fields=photos&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
 
-    payload={}
+    payload = {}
     headers = {}
 
-    response = requests.request("GET", url, headers=headers, data=payload).json()
+    response = requests.request(
+        "GET", url, headers=headers, data=payload).json()
     res = response['result']
     photoRef = []
     cur = 0
@@ -1510,7 +1612,7 @@ def view_image(flatId):
         while (cur < 3):
             photoRef.append(0)
     photos = res['photos']
-    noOfPhotos = len(photos) #max number of photo references is 10
+    noOfPhotos = len(photos)  # max number of photo references is 10
     while (cur < noOfPhotos):
         temp1 = photos[cur]
         temp2 = temp1['photo_reference']
@@ -1522,4 +1624,4 @@ def view_image(flatId):
             photoRef.append(0)
 
     return photoRef
-    #by right should return an array of photo references only, and use these references to get the photo
+    # by right should return an array of photo references only, and use these references to get the photo
