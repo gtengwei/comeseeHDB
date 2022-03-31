@@ -32,7 +32,7 @@ class HDB_Flats(Base):
 
 def main():
     os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
-    df = pd.read_csv('test.csv')
+    df = pd.read_csv('merged.csv')
     # print(df.dtypes)
     df['price_per_sqm'] = round(
         df['resale_price'] / df['floor_area_sqm'])
@@ -44,7 +44,8 @@ def main():
     # print(df['address'])
     # writing into the file
     #df.drop('price_per_square_metre', axis=1, inplace=True)
-    df.to_csv("test.csv", index=False)
+    df.sort_values(by=['address'], ascending=True, inplace=True)
+    df.to_csv("merged.csv", index=False)
 
 def create_flat_csv(): 
     engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
@@ -64,60 +65,6 @@ def create_mysql_database():
     cursor = database.cursor()
     cursor.execute("CREATE DATABASE IF NOT EXISTS mysql_database")
 
-
-def print_database():
-    database = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        passwd="Clutch123!"
-    )
-    cursor = database.cursor()
-    cursor.execute("SELECT * FROM flat")
-    for row in cursor.fetchall():
-        print(row)
-        
-def add_test_data():
-    email = "testUnit@gmail.com"
-    username = 'testUnit'
-    password1 = 'testUnit'
-    postal_code = '12'
-    new_user = User(email=email, username = username, postal_code = postal_code,
-                password=generate_password_hash(password1, method='sha256'), email_verified = True)
-    db.session.add(new_user)
-
-    flat = Flat.query.filter_by(id=114503).first()
-    flat.numOfFavourites = 56
-    db.session.commit()
-
-
-    engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
-    #Base.metadata.create_all(engine)
-    cwd = Path(__file__).parent.absolute()
-    os.chdir(cwd)
-    df = pd.read_csv('test.csv')    
-    df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
-
-
-def create_mysql_database():
-    database = pymysql.connect(
-        host="localhost",
-        user="root",
-        passwd="Clutch123!"
-    )
-    cursor = database.cursor()
-    cursor.execute("CREATE DATABASE IF NOT EXISTS mysql_database")
-
-
-def print_database():
-    database = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        passwd="Clutch123!"
-    )
-    cursor = database.cursor()
-    cursor.execute("SELECT * FROM flat")
-    for row in cursor.fetchall():
-        print(row)
         
 if __name__ == "__main__":
     main()

@@ -27,9 +27,6 @@
         color: rgb(0, 0, 0);
       }
 
-      .btn-primary{
-        background-color: #fe7f9c;
-      }
     </style>
 
     <title>{% block title %}{% endblock %}</title>
@@ -58,7 +55,8 @@
             class="nav-item nav-link"
             id="profile"
             href="{{ url_for('user.profile', username=current_user.username) }}"
-          >Profile</a>
+            >Profile</a
+          >
           <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
           {% else %}
           <a class="nav-item nav-link" id="home" href="/">Home</a>
@@ -69,9 +67,10 @@
       </div>
     </nav>
 
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %} {% for category, message in messages %} {% if category ==
-    'error' %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %} 
+    {% for category, message in messages %} 
+    {% if category == 'error' %}
     <div class="alert alert-danger alter-dismissable fade show" role="alert">
       {{ message }}
       <button type="button" class="close" data-dismiss="alert">
@@ -93,7 +92,7 @@
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
       crossorigin="anonymous"
     ></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -110,6 +109,8 @@
       type="text/javascript"
       src="{{ url_for('static', filename='index.js') }}"
     ></script>
-    <script {{ moment.include_moment() }}></script>
+    <script 
+    {{ moment.include_moment() }}
+    ></script> 
   </body>
 </html>
