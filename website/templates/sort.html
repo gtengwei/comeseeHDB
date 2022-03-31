@@ -352,7 +352,7 @@
         </div>
       {% endfor %}
     </div>
-    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{flat|length}}">
+    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">
           
   
     
@@ -432,24 +432,26 @@
           }
       });
       var flat_length = $('#my-data').data().flat_length;
-      if (flat_length <= (index + 20)) {
+      if (flat_length <= (index)) {
         document.getElementById("end_page").innerHTML = '<h3>You Have Reach The End of Your Search Results</h3>';
       }
     }
     
 </script>
 
-{% if flats|length < 20 %}
-  <div class="fa-3x d-flex justify-content-center" id = "end_page" >
-    <h3>You Have Reach The End of Your Search Results</h3>
+{% if flats|length == 0 %}
+  <h3 class="text-muted mb-0" align="center">No flats found!</h3>
+
+{% elif 0 < flats|length < 20 %}
+<div class="fa-3x d-flex justify-content-center" id = "end_page" >
+  <h3>You Have Reach The End of Your Search Results</h3>
+</div>
+
+{% else %}
+  <div class="fa-3x d-flex justify-content-center" id = "end_page">
+    <i class="fas fa-circle-notch fa-spin"></i>
   </div>
-  
-  {% else %}
-  
-    <div class="fa-3x d-flex justify-content-center" id ="end_page">
-      <i class="fas fa-circle-notch fa-spin"></i>
-    </div>
-  {% endif %}
+{% endif %}
   
 </body>
     
