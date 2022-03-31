@@ -20,6 +20,7 @@ import importlib
 import io
 import os
 import sys
+import warnings
 from glob import iglob
 from configparser import ConfigParser
 from importlib.machinery import ModuleSpec
@@ -124,16 +125,23 @@ def read_files(filepaths: Union[str, bytes, Iterable[_Path]], root_dir=None) -> 
 
     (By default ``root_dir`` is the current directory).
     """
-    if isinstance(filepaths, (str, bytes)):
-        filepaths = [filepaths]  # type: ignore
+    from setuptools.extern.more_itertools import always_iterable
 
     root_dir = os.path.abspath(root_dir or os.getcwd())
-    _filepaths = (os.path.join(root_dir, path) for path in filepaths)
+    _filepaths = (os.path.join(root_dir, path) for path in always_iterable(filepaths))
     return '\n'.join(
         _read_file(path)
-        for path in _filepaths
-        if _assert_local(path, root_dir) and os.path.isfile(path)
+        for path in _filter_existing_files(_filepaths)
+        if _assert_local(path, root_dir)
     )
+
+
+def _filter_existing_files(filepaths: Iterable[_Path]) -> Iterator[_Path]:
+    for path in filepaths:
+        if os.path.isfile(path):
+            yield path
+        else:
+            warnings.warn(f"File {path!r} cannot be found")
 
 
 def _read_file(filepath: Union[bytes, _Path]) -> str:
@@ -292,8 +300,8 @@ def find_packages(
 
     :rtype: list
     """
-
-    from setuptools.discovery import remove_nested_packages
+    from setuptools.discovery import construct_package_dir
+    from setuptools.extern.more_itertools import unique_everseen, always_iterable
 
     if namespaces:
         from setuptools.discovery import PEP420PackageFinder as PackageFinder
@@ -302,18 +310,18 @@ def find_packages(
 
     root_dir = root_dir or os.curdir
     where = kwargs.pop('where', ['.'])
-    if isinstance(where, str):
-        where = [where]
-
-    packages = []
+    packages: List[str] = []
     fill_package_dir = {} if fill_package_dir is None else fill_package_dir
-    for path in where:
-        pkgs = PackageFinder.find(_nest_path(root_dir, path), **kwargs)
+
+    for path in unique_everseen(always_iterable(where)):
+        package_path = _nest_path(root_dir, path)
+        pkgs = PackageFinder.find(package_path, **kwargs)
         packages.extend(pkgs)
-        if fill_package_dir.get("") != path:
-            parent_pkgs = remove_nested_packages(pkgs)
-            parent = {pkg: "/".join([path, *pkg.split(".")]) for pkg in parent_pkgs}
-            fill_package_dir.update(parent)
+        if pkgs and not (
+            fill_package_dir.get("") == path
+            or os.path.samefile(package_path, root_dir)
+        ):
+            fill_package_dir.update(construct_package_dir(pkgs, path))
 
     return packages
 

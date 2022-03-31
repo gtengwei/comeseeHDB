@@ -3,7 +3,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 import pandas as pd
 import os
-import mysql.connector
 import csv
 import pymysql
 from pathlib import Path
@@ -18,20 +17,20 @@ class HDB_Flats(Base):
     # tell SQLAlchemy the name of column and its attributes:
     id = Column(Integer, primary_key=True, nullable=False)
     month = Column(Integer)
-    town = Column(String)
-    flat_type = Column(String)
-    block = Column(String)
-    street_name = Column(String)
-    storey_range = Column(String)
+    town = Column(String(150))
+    flat_type = Column(String(150))
+    block = Column(String(150))
+    street_name = Column(String(150))
+    storey_range = Column(String(150))
     floor_area_sqm = Column(Float)
-    flat_model = Column(String)
+    flat_model = Column(String(150))
     lease_commence_date = Column(Date)
     remaining_lease = Column(Float)
     resale_price = Column(Float)
 
 
 def main():
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
+    os.chdir("C:/Users/Hannah V/Documents/github/comeseeHDB/website")
     df = pd.read_csv('merged.csv')
     # print(df.dtypes)
     df['price_per_sqm'] = round(
@@ -48,11 +47,11 @@ def main():
     df.to_csv("merged.csv", index=False)
 
 def create_flat_csv(): 
-    engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
+    engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
     #Base.metadata.create_all(engine)
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
-    df = pd.read_csv('test.csv')    
+    df = pd.read_csv('merged.csv')    
     df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
 
 
@@ -67,7 +66,7 @@ def create_mysql_database():
 
         
 if __name__ == "__main__":
-    main()
+    # main()
     #create_database()
-    #create_flat_csv()
-    #add_test_data()
+    create_flat_csv()
+    # add_test_data()

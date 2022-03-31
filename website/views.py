@@ -1244,7 +1244,8 @@ def sort(criteria):
                 cwd = Path(__file__).parent.absolute()
                 os.chdir(cwd)
                 # conn = sqlite3.connect("database.db")
-                conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
+                conn = open_connection()
+                # conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
                 c = conn.cursor()
                 print(criteria)
 

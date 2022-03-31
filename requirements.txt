@@ -11,6 +11,6 @@ Werkzeug==2.0.3
 datetime
 pymysql
 cryptography
-gunicorn3
+requests
 
 

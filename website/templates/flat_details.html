@@ -87,18 +87,59 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
-
 <div class = "map">
+{% if flat.town == 'BISHAN' %}
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script src="//www.squarefoot.com.sg/js/iframeresizer.min.js"></script>
+<!-- Replace j93b541us62ngpax78dqefm0rzocythi in the following line with token issued for your domain -->
+<script src="//www.squarefoot.com.sg/component/sqftapi?token=dwfop10tyxer6c4aszn3qilkj87hb2vm&task=js"></script>
+<script>
+    $(document).ready(function(){
+        squarefoot.load("sqftmain",{
+            task: "project", name: "Bishan Loft", type: "r", map: "1", amenities: "1"
+        });
+        $("#sqftmain").iFrameResize();
+    });
+</script>
+<iframe id="sqftmain" style="background-color:#fcfcfc" frameborder="0" width="500" height = "500" ></iframe>
+{% elif flat.town == 'CHOA CHU KANG' %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script src="//www.squarefoot.com.sg/js/iframeresizer.min.js"></script>
+<!-- Replace j93b541us62ngpax78dqefm0rzocythi in the following line with token issued for your domain -->
+<script src="//www.squarefoot.com.sg/component/sqftapi?token=dwfop10tyxer6c4aszn3qilkj87hb2vm&task=js"></script>
+<script>
+    $(document).ready(function(){
+        squarefoot.load("sqftmain",{
+            task: "project", name: "The Rainforest", type: "r", map: "1", amenities: "1"
+        });
+        $("#sqftmain").iFrameResize();
+    });
+</script>
+<iframe id="sqftmain" style="background-color:#fcfcfc" frameborder="0" width="500" height = "500" ></iframe>
+{% elif flat.town == 'CLEMENTI' %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script src="//www.squarefoot.com.sg/js/iframeresizer.min.js"></script>
+<!-- Replace j93b541us62ngpax78dqefm0rzocythi in the following line with token issued for your domain -->
+<script src="//www.squarefoot.com.sg/component/sqftapi?token=dwfop10tyxer6c4aszn3qilkj87hb2vm&task=js"></script>
+<script>
+    $(document).ready(function(){
+        squarefoot.load("sqftmain",{
+            task: "project", name: "Twin Vew", type: "r", map: "1", amenities: "1"
+        });
+        $("#sqftmain").iFrameResize();
+    });
+</script>
+<iframe id="sqftmain" style="background-color:#fcfcfc" frameborder="0" width="500" height = "500" ></iframe>
+{% else %}
   <iframe
-    id="map"
-    width="450"
-    height="450"
-    style="border:0"
-    loading="lazy"
+    id="map" 
+    width="500" 
+    height="500" 
+    style="border:0" 
+    loading="lazy" 
     allowfullscreen
     src="">
   </iframe>
-
   <script>
   let myIframe = document.getElementById("map");
   let url_string = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBAwQozORKPVVJNGL-wd46qlbn7QLNW1u0&q=";
@@ -109,8 +150,8 @@
   console.log(adsURL);
   map.src = adsURL;
   </script>
+{% endif %}
 </div>
-
 <style>
   .carousel{
     width: 50%;
