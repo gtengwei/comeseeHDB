@@ -18,6 +18,7 @@
       
       .card {
           background-color: white;
+          margin-left: 53%;
           
       }
       .card-header {
@@ -38,11 +39,38 @@
           color: red;
       }
 
+      
+      #sort_btn{
+        border:none;
+        outline:none;
+        border-radius: none;
+      }
+      #btn_random {
+        border:none;
+        outline:none;
+      }      
+      #search_icon{
+        color:grey;
+      }
+
+      #question_icon{
+        color:grey;
+      }
+
+      #search{
+        width: 120%;
+      }
+
+      #search_bar{
+        width: 35%;
+        margin-top: 1%;
+      }
+
       .unfavourite_button {
-          background-color: pink;
-          border:none;
-          outline:none;
-          color: red;
+        background-color: pink;
+        border:none;
+        outline:none;
+        color: red;
       }
       .img-thumbnail{
         border-radius: 25px;
@@ -61,18 +89,18 @@
 <form method="POST">
   <div class="container py-2 ">
       <div class="row justify-content-center">
-          <div class="input-group col-md-4" >
+          <div class="input-group" id="search_bar">
               <input class="form-control py-2 border-right-0 border" name="search" id="search" placeholder = "Search here!">
-              <span class="input-group-append ">
-                  <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" >
+              <span class="input-group-append">
+                  <button class="btn btn-outline-primary border-left-0 border" id="search_icon" type="submit" type="button" >
                     <i class="fa fa-search"></i>
                   </button>
                   <a href= "{{ url_for('views.flat_details', flatId = random) }}" title="Click here for a random flat!"
-                  <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" >
-                    <i class="fa-solid fa-question"></i>
+                  <button class="btn btn-outline-primary border-left-0 border" id="question_icon" type="submit" type="button" >
+                    <i class="fa-solid fa-dice"></i>
                   </button> </a>
                   <div class="btn-group">
-                    <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn_sort btn-outline-primary dropdown-toggle border-left-0 border" id="sort_btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Sort
                     </button>
                     <div class="dropdown-menu">
@@ -89,7 +117,7 @@
                     </div>
                   </div> 
                 </span>
-
+                
                 <button class="btn btn-outline-primary ms-1" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="filter">Filters<span class="fa fa-filter pl-1"></span></button>
                 <div class="collapse" id="filter">
                     <div class="border-bottom pb-2 ml-2">
@@ -191,7 +219,7 @@
 
 <body class="bg">
   
-  <div id="properties" class="card-body mx-auto bg-pink" style="width: 30rem;">
+  <div id="properties" class="card-body bg-pink" style="width: 30rem;">
     {% for flat in flats %}
       <div class="card mb-3">
         <div class="card-header">
@@ -322,7 +350,7 @@
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <img src="` + data.data[index].image + `" class="img-thumbnail">
+                  <img src="{{image[0]}}"  class="img-thumbnail">
                 </div>
                 <div class="col">
                   <p><strong>Price: </strong>` +`$`+ data.data[index][2] + `</p>
