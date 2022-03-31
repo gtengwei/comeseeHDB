@@ -3,7 +3,7 @@
 
 {% block content %}
 <head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
     <script>
       $(document).ready(function(){
@@ -352,7 +352,7 @@
         </div>
       {% endfor %}
     </div>
-    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{flat|length}}">
+    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">
           
   
     
@@ -365,8 +365,8 @@
       var current_y = $(window).scrollTop();
       var window_height = $(window).height();
       var document_height = $(document).height();
-      
-      if (current_y + window_height  == document_height) {
+
+      if (current_y + window_height  >= (document_height-1)) {
         downloadContent(index, limit);
         index += 20
       }
@@ -428,15 +428,13 @@
         `
   
           $('#sortProperties').append(page)
-          /*
-          var flat_length = $('#my-data').data().flat_length;
-          if (flat_length == index) {
-          document.getElementById("end_page").innerHTML = '<h3>You Have Reach The End of Your Search Results</h3>';
-          }
-          */
-      
+  
           }
       });
+      var flat_length = $('#my-data').data().flat_length;
+      if (flat_length <= (index)) {
+        document.getElementById("end_page").innerHTML = '<h3>You Have Reach The End of Your Search Results</h3>';
+      }
     }
     
 </script>

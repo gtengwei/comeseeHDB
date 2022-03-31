@@ -127,8 +127,8 @@ def favourite_count():
 # Route for Home Page
 @views.route('/', methods=['GET', 'POST'])
 def home():
+    url = ["\static\hdb_image.jpg"]
     cwd = Path(__file__).parent.absolute()
-    print(cwd)
     os.chdir(cwd)
     #print(os.getcwd())
     # conn = sqlite3.connect("database.db")
@@ -161,7 +161,6 @@ def home():
             #minPrice = int(price[0])
             #maxPrice = minPrice + 100000 
             price_range = [word for line in price for word in line.split('-')]
-            print(price_range)
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
@@ -244,9 +243,9 @@ def home():
                 searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
                 return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM)
-            
             else:
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM)
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM)    
+
 
         else:
             if address and flat_types and amenities and towns:
@@ -313,7 +312,7 @@ def home():
 
     session.clear()
     #return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
-    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites = Favourites.query.all(), random = RANDOM)
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites = Favourites.query.all(), random = RANDOM, image =url)
 
 
 
@@ -351,6 +350,7 @@ def load_home():
                 return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
+
         elif criteria == 'price_low':
             myquery = (
                 "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price;")
@@ -536,7 +536,6 @@ def load_home():
                 list_x.append(len(Flat.query.get(flat_id).favourites))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
-            # print(data)
 
             return jsonify({'data': data})
         else:
@@ -566,11 +565,10 @@ def search(address):
             #maxPrice = minPrice + 100000
             data = []
             price_range = [word for line in price for word in line.split('-')]
-            print(price_range)
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
-                    data = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
+                    data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
                     #print(searchedFlats)
             #print(data[0])                
             #return render_template("search.html", user=current_user, flats=data[:INDEX])
@@ -729,10 +727,6 @@ def load_search():
     towns = session.get('towns')
     flat_types = session.get('flat_types')
     amenities = session.get('amenities')
-    print(address)
-    print(towns)
-    print(flat_types)
-    print(amenities)
     if address:
         address = "%{}%".format(address)
 
@@ -740,11 +734,10 @@ def load_search():
         #minPrice = int(price[0])
         #maxPrice = minPrice + 100000 
         price_range = [word for line in price for word in line.split('-')]
-        print(price_range)
         for i in range(len(price_range)):
             price_range[i] = int(price_range[i])
             if i%2 == 0:
-                data_price = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
+                data_price = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
                 #print(searchedFlats)
         #print(data_price[0])                
         #return render_template("search.html", user=current_user, flats=data_price[:INDEX])
@@ -892,7 +885,6 @@ def load_search():
         for flat in searchedFlats:
             data.append(tuple([flat.id, flat.address,
                         flat.resale_price, flat.flat_type, flat.storey_range]))
-    print(data[0][0])
     if request.args:
         index = int(request.args.get('index'))
         limit = int(request.args.get('limit'))
@@ -934,11 +926,10 @@ def sort(criteria):
             #minPrice = int(price[0])
             #maxPrice = minPrice + 100000
             price_range = [word for line in price for word in line.split('-')]
-            print(price_range)
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
-                    data = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
+                    data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
                     #print(searchedFlats)
             #print(data[0])                
             #return render_template("search.html", user=current_user, flats=data[:INDEX])
@@ -1079,10 +1070,6 @@ def sort(criteria):
         towns = session.get('towns')
         flat_types = session.get('flat_types')
         amenities = session.get('amenities')
-        # print(address)
-        # print(towns)
-        # print(flat_types)
-        # print(amenities)
 
         if address:
             address = "%{}%".format(address)
@@ -1092,11 +1079,10 @@ def sort(criteria):
             #maxPrice = minPrice + 100000
             
             price_range = [word for line in price for word in line.split('-')]
-            print(price_range)
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
-                    data = itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
+                    data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
                     #print(searchedFlats)
             #print(data[0])                
             #return render_template("search.html", user=current_user, flats=data[:INDEX])
@@ -1178,7 +1164,6 @@ def sort(criteria):
             return sorting_criteria(criteria, data)
 
         elif not price:
-            print(criteria)
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
                 return sorting_criteria(criteria, searchedFlats)
@@ -1247,7 +1232,6 @@ def sort(criteria):
                 conn = open_connection()
                 # conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
                 c = conn.cursor()
-                print(criteria)
 
                 if criteria == 'price_high':
                     myquery = (
@@ -1381,13 +1365,10 @@ def load_sort():
             #maxPrice = minPrice + 100000
             data = []
             price_range = [word for line in price for word in line.split('-')]
-            print(price_range)
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
                     data.extend(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
-                    #print(searchedFlats)
-            #print(data[0])                
             #return render_template("search.html", user=current_user, flats=data[:INDEX])
             if flat_types:
                 searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
@@ -1561,8 +1542,7 @@ def filter():
         elif amenities:
             flat = Flat.query.filter(Flat.amenity.in_(amenities)).all()
 
-        # print(flat)
-        return render_template('filter.html', user=current_user, flats=flat[:15])
+        return render_template('filter.html', user=current_user, flats=flat[:INDEX])
         # return render_template('sort.html', user=current_user, flats=flat)
 
     return render_template('filter.html', user=current_user)
