@@ -352,7 +352,7 @@
         </div>
       {% endfor %}
     </div>
-    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{flat|length}}">
+    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">
           
   
     
@@ -432,7 +432,7 @@
           }
       });
       var flat_length = $('#my-data').data().flat_length;
-      if (flat_length <= (index + 20)) {
+      if (flat_length <= (index)) {
         document.getElementById("end_page").innerHTML = '<h3>You Have Reach The End of Your Search Results</h3>';
       }
     }

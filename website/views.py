@@ -105,6 +105,7 @@ def favourite_count():
 # Route for Home Page
 @views.route('/', methods=['GET', 'POST'])
 def home():
+    url = ["\static\hdb_image.jpg"]
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
     #print(os.getcwd())
@@ -288,7 +289,7 @@ def home():
 
     session.clear()
     #return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
-    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites = Favourites.query.all(), random = RANDOM)
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites = Favourites.query.all(), random = RANDOM, image =url)
 
 
 
