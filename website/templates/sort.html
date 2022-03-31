@@ -428,15 +428,13 @@
         `
   
           $('#sortProperties').append(page)
-          
-          var flat_length = $('#my-data').data().flat_length;
-          if (flat_length <= (index + 20)) {
-          document.getElementById("end_page").innerHTML = '<h3>You Have Reach The End of Your Search Results</h3>';
-        }
-          
-      
+  
           }
       });
+      var flat_length = $('#my-data').data().flat_length;
+      if (flat_length <= (index + 20)) {
+        document.getElementById("end_page").innerHTML = '<h3>You Have Reach The End of Your Search Results</h3>';
+      }
     }
     
 </script>
