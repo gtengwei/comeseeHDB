@@ -34,6 +34,18 @@
       color: red;
       align-self: flex-start;
     }
+    .carousel{
+      width: 50%;
+      float: left;
+    }
+    .map{
+      width: 48%;
+      margin-left: 0.5cm;
+      float: right;
+    }
+    .clearfix{
+      clear:both
+    }
 
     
   </style>
@@ -86,47 +98,32 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="sr-only">Next</span>
     </a>
-  </div>
+</div>
 
-  <div class = "map">
-    <iframe
-      id="map"
-      width="450"
-      height="450"
-      style="border:0"
-      loading="lazy"
-      allowfullscreen
-      src="">
-    </iframe>
-  
-    <script>
-    let myIframe = document.getElementById("map");
-    let url_string = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBAwQozORKPVVJNGL-wd46qlbn7QLNW1u0&q=";
-    let blk = '{{ flat.block }}'
-    let street = '{{ flat.street_name }}'
-  
-    let adsURL = url_string + blk + "+" + street
-    console.log(adsURL);
-    map.src = adsURL;
-    </script>
-    </div>
+<div class = "map">
+  <iframe
+    id="map"
+    width="500"
+    height="500"
+    style="border:0"
+    loading="lazy"
+    allowfullscreen
+    src="">
+  </iframe>
 
-<style>
-  .carousel{
-    width: 50%;
-    float: left;
-  }
-  .map{
-    width: 48%;
-    margin-left: 0.5cm;
-    float: right;
-  }
-  .clearfix{
-    clear:both
-}
-</style>
+  <script>
+  let myIframe = document.getElementById("map");
+  let url_string = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBAwQozORKPVVJNGL-wd46qlbn7QLNW1u0&q=";
+  let blk = '{{ flat.block }}'
+  let street = '{{ flat.street_name }}'
 
-<br>
+  let adsURL = url_string + blk + "+" + street
+  console.log(adsURL);
+  map.src = adsURL;
+  </script>
+</div>
+
+
 
 <div class="street_name">
   <h1>{{flat.address}}</h1>
@@ -173,27 +170,36 @@
 
 
 
-
-
-
 <div class="row"> 
-<div class="col-sm-3">
-    <p class="mb-0">Price</p>
-</div>
-<div class="col-sm-9">
-    <p class="text-muted mb-0">${{flat.resale_price}}</p>
-</div>
+  <div class="col-sm-3">
+      <p class="mb-0">Price</p>
+  </div>
+  <div class="col-sm-3 border-right">
+      <p class="text-muted mb-0">${{flat.resale_price}}</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="mb-0">Block</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="text-muted mb-0">{{flat.block}}</p>
+  </div>
 </div>
 
 <hr>
 
 <div class="row">
-<div class="col-sm-3">
-    <p class="mb-0">Flat Type</p>
-</div>
-<div class="col-sm-9">
-    <p class="text-muted mb-0">{{flat.flat_type}}</p>
-</div>
+  <div class="col-sm-3">
+      <p class="mb-0">Flat Type</p>
+  </div>
+  <div class="col-sm-3 border-right">
+      <p class="text-muted mb-0">{{flat.flat_type}}</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="mb-0">Floor Area(Metre Square)</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="text-muted mb-0">{{flat.floor_area_sqm}}</p>
+  </div>
 </div>
 
 <hr>
@@ -202,8 +208,14 @@
 <div class="col-sm-3">
     <p class="mb-0">Storey Range</p>
 </div>
-<div class="col-sm-9">
+<div class="col-sm-3 border-right">
     <p class="text-muted mb-0">{{flat.storey_range}}</p>
+</div>
+<div class="col-sm-3">
+    <p class="mb-0">Price per Square Metre</p>
+</div>
+<div class="col-sm-3">
+    <p class="text-muted mb-0">${{flat.price_per_sqm}}</p>
 </div>
 </div>
 
@@ -213,8 +225,14 @@
 <div class="col-sm-3">
     <p class="mb-0">Sold Date</p>
 </div>
-<div class="col-sm-9">
+<div class="col-sm-3 border-right">
     <p class="text-muted mb-0">{{flat.month}}</p>
+</div>
+<div class="col-sm-3">
+    <p class="mb-0">Flat Model</p>
+</div>
+<div class="col-sm-3">
+    <p class="text-muted mb-0">{{flat.flat_model}}</p>
 </div>
 </div>
 
@@ -224,62 +242,13 @@
 <div class="col-sm-3">
     <p class="mb-0">Town</p>
 </div>
-<div class="col-sm-9">
+<div class="col-sm-3 border-right">
     <p class="text-muted mb-0">{{flat.town}}</p>
 </div>
-</div>
-
-<hr>
-
-<div class="row">
-<div class="col-sm-3">
-    <p class="mb-0">Block</p>
-</div>
-<div class="col-sm-9">
-    <p class="text-muted mb-0">{{flat.block}}</p>
-</div>
-</div>
-
-<hr>
-
-<div class="row">
-<div class="col-sm-3">
-    <p class="mb-0">Floor Area (Metre Square)</p>
-</div>
-<div class="col-sm-9">
-    <p class="text-muted mb-0">{{flat.floor_area_sqm}}</p>
-</div>
-</div>
-
-<hr>
-
-<div class="row">
-<div class="col-sm-3">
-    <p class="mb-0">Price per Square Metre</p>
-</div>
-<div class="col-sm-9">
-    <p class="text-muted mb-0">${{flat.price_per_sqm}}</p>
-</div>
-</div>
-
-<hr>
-
-<div class="row">
-<div class="col-sm-3">
-    <p class="mb-0">Flat Model</p>
-</div>
-<div class="col-sm-9">
-    <p class="text-muted mb-0">{{flat.flat_model}}</p>
-</div>
-</div>
-
-<hr>
-
-<div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Remaining Lease</p>
 </div>
-<div class="col-sm-9">
+<div class="col-sm-3">
     <p class="text-muted mb-0">{{flat.remaining_lease}}</p>
 </div>
 </div>
@@ -290,10 +259,52 @@
 <div class="col-sm-3">
     <p class="mb-0">Postal District</p>
 </div>
-<div class="col-sm-9">
+<div class="col-sm-3 border-right">
     <p class="text-muted mb-0">{{flat.postal_sector}}</p>
 </div>
+<div class="col-sm-3">
+    <p class="mb-0">Postal Code</p>
 </div>
+<div class="col-sm-3">
+    <p class="text-muted mb-0">{{flat.postal_code}}</p>
+</div>
+</div>
+
+<br>
+<h3> Amenities </h3>
+<hr>
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Bus Interchange
+    <i class="fa-solid fa-bus"></i>
+    </p>
+</div>
+<div class="col-sm-3 border-right">
+    <p class="text-muted mb-0">{{flat.bus_interchange}}</p>
+</div>
+<div class="col-sm-3">
+    <p class="mb-0"> School
+      <i class="fa-solid fa-school"></i>    
+    </p>
+</div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-sm-3">
+      <p class="mb-0">Food
+        <i class="fa-solid fa-utensils"></i>
+      </p>
+  </div>
+  <div class="col-sm-3 border-right">
+      <p class="text-muted mb-0">{{flat.restaurant}}</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="mb-0">Clinic
+        <i class="fa-solid fa-clinic-medical"></i>    
+      </p>
+      </div>
+  </div>
+
 <br>
 {% if user.is_authenticated %}
 <form method="POST">

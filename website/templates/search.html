@@ -3,7 +3,7 @@
 
 {% block content %}
 <head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
     <script>
       $(document).ready(function(){
@@ -224,7 +224,7 @@
 <h3 align="center">Filtered by {{session['price']}}, {{session['amenities']}}</h3>
 
 {% elif session['price'] %}
-<h3 align="center">Filtered by {{session['price']}}</h3>}}
+<h3 align="center">Filtered by {{session['price']}}</h3>
 
 
 {% elif session['address'] and session['towns'] and session['flat_types'] and session['amenities'] %}
@@ -364,8 +364,8 @@
       var current_y = $(window).scrollTop();
       var window_height = $(window).height();
       var document_height = $(document).height();
-      
-      if (current_y + window_height  == document_height) {
+
+      if (current_y + window_height  >= (document_height-1)) {
         downloadContent(index, limit);
         index += 20
       }
@@ -429,13 +429,11 @@
           $('#searchProperties').append(page)
         
         }
-        /*
-        var flat_length = $('#my-data').data().flat_length;
-        if (flat_length < (index + 20)) {
-          document.getElementById("end_page").innerHTML = '<h3>You Have Reach The End of Your Search Results</h3>';
-        }
-        */
       });
+      var flat_length = $('#my-data').data().flat_length;
+      if (flat_length <= (index)) {
+        document.getElementById("end_page").innerHTML = '<h3>You Have Reach The End of Your Search Results</h3>';
+      }
     }
     
 </script>

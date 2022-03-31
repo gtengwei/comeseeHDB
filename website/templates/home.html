@@ -3,7 +3,7 @@
 
 {% block content %}
 <head>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
   <script>
     $(document).ready(function(){
@@ -18,6 +18,7 @@
       
       .card {
           background-color: white;
+          
       }
       .card-header {
           background-color: pink;
@@ -26,6 +27,7 @@
       }
       .card-body {
           background-color: white;
+          font-size: larger;
   
       }
       
@@ -41,6 +43,16 @@
           border:none;
           outline:none;
           color: red;
+      }
+      .img-thumbnail{
+        border-radius: 25px;
+        width: 100%;
+        height: 100%;
+      }
+      .card{
+        border-radius: 30%;
+        width: 600px;
+        height: 100%;
       }
     </style>
 
@@ -227,7 +239,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <img src="{{flat['image']}}" class="img-thumbnail">
+              <img src="{{image[0]}}" class="img-thumbnail">
             </div>
             <div class="col">
               <p><strong>Price: </strong>${{flat.resale_price}}</p>
@@ -244,7 +256,7 @@
   </div>
         
     
-  <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{flat|length}}">
+  <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">
 <script type="text/javascript">
 
   var index = 20;
@@ -254,10 +266,8 @@
     var current_y = $(window).scrollTop();
     var window_height = $(window).height();
     var document_height = $(document).height();
-
     
-    
-    if (current_y + window_height == document_height) {
+    if (current_y + window_height >= (document_height-1)) {
       downloadContent(index, limit);
       index += 20
     }
