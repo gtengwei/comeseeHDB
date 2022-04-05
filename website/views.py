@@ -15,11 +15,13 @@ from .misc import *
 import itertools
 
 views = Blueprint('views', __name__)
-
-url = ["\static\hdb_image.jpg"]
+url = generate_flat_image()
 #url = url_for('static', filename='images/' + str(random.randint(1,10)) + '.jpg')
 INDEX = 20 # Number of items to show on homepage
 
+@views.route('/static')
+def static():
+    return render_template('static.html')
 @views.route('/delete-review', methods=['GET','POST'])
 def delete_review():
     review = json.loads(request.data)
@@ -107,7 +109,6 @@ def favourite_count():
 # Route for Home Page
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
     #print(os.getcwd())

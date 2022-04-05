@@ -3,40 +3,9 @@
 
 {% block content %}
 <head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
-  
-
-    <style>
-      /* Modify the background color */
-      
-      .card {
-          background-color: white;
-      }
-      .card-header {
-          background-color: #ffcad4;
-          display: inline-flex;
-  
-      }
-      .card-body {
-          background-color: white;
-  
-      }
-      
-      button[class^="favourite_button"] {
-          background-color: #ffcad4;
-          border:none;
-          outline:none;
-          color: red;
-      }
-
-      .unfavourite_button {
-          background-color: #ffcad4;
-          border:none;
-          outline:none;
-          color: red;
-      }
-    </style>
 
 </head>
 <h1 align="center">Favourites</h1>
@@ -86,7 +55,7 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <img src="{{flat['image']}}" class="img-thumbnail">
+                    <img src="{{image[0]}}" class="img-thumbnail">
                   </div>
                   <div class="col">
                     <p><strong>Price: </strong>${{flat.resale_price}}</p>

@@ -106,6 +106,7 @@ def change_postal_code(username):
 @user.route('/favourites/<username>', methods=['GET', 'POST']) 
 @login_required
 def favourites(username):
+    url = generate_flat_image()
     fav_list = []
     for x in current_user.favourites:
             fav_list.append(x.flat_id)
@@ -122,7 +123,7 @@ def favourites(username):
             flash('No results found.', category='error')
             return render_template("favourites.html", user=current_user, flats=[])
             
-    return render_template("favourites.html", user=current_user, flats = [Flat.query.get(x) for x in fav_list])
+    return render_template("favourites.html", user=current_user, flats = [Flat.query.get(x) for x in fav_list], image=url)
 
 
 

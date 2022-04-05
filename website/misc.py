@@ -70,8 +70,12 @@ def generate_random_flat():
     flat = randint(1, Flat.query.count())
     return flat
 
-def sorting_criteria(criteria, flats = []):
+def generate_flat_image():
     url = ["\static\hdb_image.jpg"]
+    return url
+
+def sorting_criteria(criteria, flats = []):
+    url = generate_flat_image()
     RANDOM = generate_random_flat()
     if criteria == 'price_high':
         flats.sort(key=lambda x: int(x.resale_price), reverse=True)
@@ -122,7 +126,7 @@ def sorting_criteria(criteria, flats = []):
         flats.sort(key=lambda x: x.favourites, reverse=False)
         session['criteria'] = criteria
         return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
-        
+
     elif flats == []:
         if criteria == 'price_high':
                 flats = Flat.query.order_by(Flat.resale_price.desc()).all()
