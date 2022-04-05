@@ -908,7 +908,7 @@ def sort(criteria):
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
-                    data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
+                    data = data.extend(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
                     #print(searchedFlats)
             #print(data[0])                
             #return render_template("search.html", user=current_user, flats=data[:INDEX])
@@ -1049,6 +1049,8 @@ def sort(criteria):
         towns = session.get('towns')
         flat_types = session.get('flat_types')
         amenities = session.get('amenities')
+        print(price)
+
 
         if address:
             address = "%{}%".format(address)
@@ -1061,9 +1063,9 @@ def sort(criteria):
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
-                    data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
+                    data.extend(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
                     #print(searchedFlats)
-            #print(data[0])                
+            print('test' + str(data[:5]))                
             #return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             if address and flat_types and amenities and towns:
@@ -1139,6 +1141,11 @@ def sort(criteria):
             elif amenities:
                 searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
+            
+            else:
+                print(data[:5])
+                return sorting_criteria(criteria, data)
+
             
             return sorting_criteria(criteria, data)
 

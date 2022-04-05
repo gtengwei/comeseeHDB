@@ -67,8 +67,8 @@ def calculate_time_difference(current_datetime, datetime_to_compare):
     return time_difference.days
 
 def generate_random_flat():
-    flat = randint(1, Flat.query.count())
-    return flat
+    random_num = randint(1, Flat.query.count())
+    return random_num
 
 def generate_flat_image():
     url = ["\static\hdb_image.jpg"]
@@ -79,11 +79,14 @@ def sorting_criteria(criteria, flats = []):
     RANDOM = generate_random_flat()
     if criteria == 'price_high':
         flats.sort(key=lambda x: int(x.resale_price), reverse=True)
+        print(flats[:5])
         session['criteria'] = criteria
         return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
     elif criteria == 'price_low':
+        print(flats[:5])
         flats.sort(key=lambda x: x.resale_price,reverse=False)
+        print(flats[:5])
         session['criteria'] = criteria
         return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
@@ -223,7 +226,6 @@ def sorting_criteria_load(criteria, flats = []):
                 list_x.append(len(Flat.query.get(flat_id).favourites))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
-
             return jsonify({'data': data})
         else:
             return jsonify({'data': data})
