@@ -86,6 +86,10 @@ def change_postal_code(username):
                 elif (calculate_time_difference(datetime.now(), user.postal_code_change)) < 90 :
                     flash('You can only change your postal code 3 months after your last change.', category='error')
                     flash('You can change your postal code again in ' + str(90 - calculate_time_difference(datetime.now(), user.postal_code_change)) + ' days.', category='error')
+               
+                elif postal_code == user.postal_code:
+                    flash('Postal code must be different from current postal code.', category='error')
+
                 else:
                     user.postal_code = postal_code
                     user.postal_code_change = datetime.now()
