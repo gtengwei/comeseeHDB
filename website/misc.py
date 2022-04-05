@@ -69,100 +69,112 @@ def calculate_time_difference(current_datetime, datetime_to_compare):
 def generate_random_flat():
     flat = randint(1, Flat.query.count())
     return flat
+
 def sorting_criteria(criteria, flats = []):
-    RANDOM =   generate_random_flat()
+    url = ["\static\hdb_image.jpg"]
+    RANDOM = generate_random_flat()
     if criteria == 'price_high':
         flats.sort(key=lambda x: int(x.resale_price), reverse=True)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
     elif criteria == 'price_low':
         flats.sort(key=lambda x: x.resale_price,reverse=False)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
     elif criteria == 'remaining_lease_high':
         flats.sort(key=lambda x: x.remaining_lease, reverse=True)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
     elif criteria == 'remaining_lease_low':
         flats.sort(key=lambda x: x.remaining_lease, reverse=False)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
     elif criteria == 'storey_high':
         flats.sort(key=lambda x: x.storey_range, reverse=True)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
     elif criteria == 'storey_low':
         flats.sort(key=lambda x: x.storey_range, reverse=False)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
     elif criteria == 'price_per_sqm_high':
         flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
     elif criteria == 'price_per_sqm_low':
         flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+    
+    elif criteria == 'favourites_high':
+        flats.sort(key=lambda x: x.favourites, reverse=True)
+        session['criteria'] = criteria
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
+    elif criteria == 'favourites_low':
+        flats.sort(key=lambda x: x.favourites, reverse=False)
+        session['criteria'] = criteria
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+        
     elif flats == []:
         if criteria == 'price_high':
                 flats = Flat.query.order_by(Flat.resale_price.desc()).all()
                 session['criteria'] = criteria
-                return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+                return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
         elif criteria == 'price_low':
             flats = Flat.query.order_by(Flat.resale_price.asc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
         elif criteria == 'remaining_lease_high':
             flats = Flat.query.order_by(Flat.remaining_lease.desc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
         elif criteria == 'remaining_lease_low':
             flats = Flat.query.order_by(Flat.remaining_lease.asc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
         elif criteria == 'storey_high':
             flats = Flat.query.order_by(Flat.storey_range.desc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
         elif criteria == 'storey_low':
             flats = Flat.query.order_by(Flat.storey_range.asc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
         elif criteria == 'price_per_sqm_high':
             flats = Flat.query.order_by(Flat.price_per_sqm.desc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
         elif criteria == 'price_per_sqm_low':
             flats = Flat.query.order_by(Flat.price_per_sqm.asc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
         
         elif criteria == 'favourites_high':
             flats = Flat.query.order_by(Flat.numOfFavourites.desc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
         
         elif criteria == 'favourites_low':
             flats = Flat.query.order_by(Flat.numOfFavourites.asc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
     
-    return render_template('sort.html', user=current_user, flats=flats[:INDEX], random = RANDOM)
+    return render_template('sort.html', user=current_user, flats=flats[:INDEX], random = RANDOM, image = url)
     
 
 

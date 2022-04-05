@@ -41,6 +41,11 @@
           outline:none;
           color: red;
       }
+      .img-thumbnail{
+        border-radius: 25px;
+        width: 100%;
+        height: 100%;
+      }
       </style>
   </head> 
 
@@ -224,7 +229,7 @@
 <h3 align="center">Filtered by {{session['price']}}, {{session['amenities']}}</h3>
 
 {% elif session['price'] %}
-<h3 align="center">Filtered by {{session['price']}}</h3>}}
+<h3 align="center">Filtered by {{session['price']}}</h3>
 
 {% elif session['address'] and session['towns'] and session['flat_types'] and session['amenities'] %}
 <h3 align="center">You searched for: {{session['address']}}</h3>
@@ -337,7 +342,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col">
-                <img src="{{flat['image']}}" class="img-thumbnail">
+                <img src="{{image[0]}}" class="img-thumbnail">
               </div>
               <div class="col">
                 <p><strong>Price: </strong>${{flat.resale_price}}</p>
@@ -352,7 +357,7 @@
         </div>
       {% endfor %}
     </div>
-    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">
+    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}" data-image="{{image[0]}}">
           
   
     
@@ -376,6 +381,7 @@
     function downloadContent(index, limit) {
     $.get('/load_sort?index=' + index + '&limit=' + limit, (data) => {
       for (var index = 0; index < data.data.length; index++) {
+        var image = $('#my-data').data().image;
         var favourite = $('#my-data').data().f;
         var flat = "/flat-details/" + data.data[index][0]; 
 
@@ -413,7 +419,7 @@
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <img src="` + data.data[index].image + `" class="img-thumbnail">
+                  <img src="` + image + `" class="img-thumbnail">
                 </div>
                 <div class="col">
                   <p><strong>Price: </strong>` +`$`+ data.data[index][2] + `</p>
