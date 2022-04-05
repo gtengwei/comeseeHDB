@@ -83,9 +83,7 @@ def sorting_criteria(criteria, flats = []):
         return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 
     elif criteria == 'price_low':
-        print(flats[:5])
         flats.sort(key=lambda x: x.resale_price,reverse=False)
-        print(flats[:5])
         session['criteria'] = criteria
         return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
 

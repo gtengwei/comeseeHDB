@@ -1,18 +1,18 @@
 # For creation of stuff that can be viewed on homepage
 from cgi import print_exception
-from flask import Blueprint, render_template, request, flash, jsonify, session, redirect, url_for
+from flask import Blueprint, render_template, request, flash, jsonify, session
 from flask_login import login_required, current_user
 from .models import *
 from . import db
 import json
 import sqlite3
 import os
-import random
 from pathlib import Path
 import mysql.connector
 import pymysql
 from .misc import *
 import itertools
+import requests
 
 views = Blueprint('views', __name__)
 url = generate_flat_image()
@@ -1534,8 +1534,6 @@ def filter():
 ## TESTING
 ## getting image (in flat details only)
 def view_image(flatId):
-    import requests
-    import json
 
     #find the name of the flat to find the place id
     flat = Flat.query.filter_by(id=flatId).first_or_404()
