@@ -31,8 +31,4 @@ button[class^="favourite_button"] {
     height: 100%;
   }
 
-  a:link {
-    color: blue;
-    background-color: transparent;
-    text-decoration: none;
-  } 
+  

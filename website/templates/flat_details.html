@@ -126,7 +126,7 @@
 
 
 <div class="street_name">
-  <h1>{{flat.address}}</h1>
+  <h1>{{flat.address_no_postal_code}}</h1>
   {% if user.is_authenticated %}
         {% if flat.id in user.favourites|map(attribute="flat_id")|list %}
         <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="unfavourite({{ flat.id }})">

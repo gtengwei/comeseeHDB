@@ -39,11 +39,13 @@ def main():
     # print(df['price_per_square_metre'])
     df['block'].astype(str)
     df['street_name'].astype(str)
-    df['address'] = df['street_name'] + ' BLK ' + df['block']
+    df['postal_code'] = df['postal_code'].astype(str)
+    df['address'] = df['street_name'] + ' BLK ' + df['block'] + ' ' + df['postal_code']
+    df['address_no_postal_code'] = df['street_name'] + ' BLK ' + df['block']
     df['numOfFavourites'] = 0
     # print(df['address'])
     # writing into the file
-    #df.drop('price_per_square_metre', axis=1, inplace=True)
+    #df.drop('address2', axis=1, inplace=True)
     df.sort_values(by=['address'], ascending=True, inplace=True)
     df.to_csv("merged.csv", index=False)
 

@@ -46,7 +46,7 @@
             {% for flat in flats%}
             <div class="card mb-3">
               <div class="card-header">
-                <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.address}}</strong></a>
+                <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.address_no_postal_code}}</strong></a>
                 <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="unfavourite({{ flat.id }})">
                   <span id ="favourite_button_id{{flat.id}}"><i class="fa-solid fa-heart"></i></span>
                 </button>
