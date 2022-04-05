@@ -311,7 +311,7 @@ def load_home():
     if criteria:
         if criteria == 'price_high':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price DESC;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -332,7 +332,7 @@ def load_home():
 
         elif criteria == 'price_low':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -352,7 +352,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'remaining_lease_high':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease DESC;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -372,7 +372,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'remaining_lease_low':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -392,7 +392,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'storey_high':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range DESC;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -412,7 +412,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'storey_low':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -432,7 +432,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'price_per_sqm_high':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm DESC;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -452,7 +452,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'price_per_sqm_low':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -473,32 +473,50 @@ def load_home():
         
         elif criteria == 'favourites_high':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
 
-                return jsonify({'data': data[index:limit + index]})
+                data = data[index:limit + index]
+                for x in range(len(data)):
+                    tuple_x = data[x]
+                    list_x = list(tuple_x)
+                    flat_id = list_x[0]
+                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    tuple_x = tuple(list_x)
+                    data[x] = tuple_x
+
+                return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
         elif criteria == 'favourites_low':
             myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
 
-                return jsonify({'data': data[index:limit + index]})
+                data = data[index:limit + index]
+                for x in range(len(data)):
+                    tuple_x = data[x]
+                    list_x = list(tuple_x)
+                    flat_id = list_x[0]
+                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    tuple_x = tuple(list_x)
+                    data[x] = tuple_x
+
+                return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
 
     else:
         myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat;")
         c.execute(myquery)
         data = list(c.fetchall())
         # random.shuffle(data)
@@ -858,11 +876,11 @@ def load_search():
             
     if data_price:
         for flat in data_price:
-            data.append(tuple([flat.id, flat.address,
+            data.append(tuple([flat.id, flat.address_no_postal_code,
                     flat.resale_price, flat.flat_type, flat.storey_range]))
     else:
         for flat in searchedFlats:
-            data.append(tuple([flat.id, flat.address,
+            data.append(tuple([flat.id, flat.address_no_postal_code,
                         flat.resale_price, flat.flat_type, flat.storey_range]))
     if request.args:
         index = int(request.args.get('index'))

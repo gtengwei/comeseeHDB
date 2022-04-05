@@ -27,7 +27,7 @@
                     </button>
                     <a href= "{{ url_for('views.flat_details', flatId = random) }}" title="Click here for a random flat!"
                     <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" >
-                      <i class="fa-solid fa-question"></i>
+                      <i class="fa-solid fa-dice"></i>
                     </button> </a>
                     <div class="btn-group">
                       <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,7 +53,7 @@
                       <div class="border-bottom pb-2 ml-2">
                           <h4 id="burgundy">Filter</h4>
                       </div>
-                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa fa-building pl-1"></h6></span></button>
+                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa-solid fa-dollar-sign"></h6></span></button>
                       <div class="collapse" id="price">
                           <div class="py-2 border-bottom ml-3">
                               <div style="color: pink"><span class="fa fa-minus"></span></div>
@@ -82,6 +82,7 @@
                               
                                   <div class="form-group"> <input type="checkbox" id="ang mo kio" name="town" value="ANG MO KIO"> <label for="ang mo kio">Ang Mo Kio</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bedok" name="town" value ="BEDOK"> <label for="bedok">Bedok</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="bishan" name="town" value ="BISHAN"> <label for="bishan">Bishan</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bukit batok" name="town" value = "BISHAN"> <label for="bukit batok">Bukit Batok</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bukit merah" name="town" value = "BUKIT MERAH"> <label for="bukit merah">Bukit Merah</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bukit panjang" name="town" value = "BUKIT PANJANG"> <label for="bukit panjang">Bukit Panjang</label> </div>
