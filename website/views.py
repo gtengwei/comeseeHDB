@@ -1143,7 +1143,6 @@ def sort(criteria):
                 data = [flat for flat in data if flat in searchedFlats]
             
             else:
-                print(data[:5])
                 return sorting_criteria(criteria, data)
 
             
