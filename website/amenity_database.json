@@ -872,5 +872,165 @@
                 15
             ]
         }
+    },
+    "BEACH RD BLK 1 190001": {
+        "bus_station": {
+            "Lavender Stn Exit A/ICA": [
+                1143,
+                14
+            ],
+            "Golden Mile Cplx": [
+                429,
+                5
+            ],
+            "Blk 461": [
+                1280,
+                15
+            ],
+            "Bef Crawford Bridge": [
+                1917,
+                23
+            ],
+            "Lavender Stn Exit B": [
+                1705,
+                20
+            ]
+        },
+        "subway_station": {
+            "Nicoll Highway": [
+                1237,
+                15
+            ],
+            "Lavender": [
+                962,
+                11
+            ]
+        },
+        "school": {
+            "Bethany School Of Missions (s)": [
+                434,
+                5
+            ],
+            "Dennis Austin Language School": [
+                547,
+                6
+            ]
+        },
+        "restaurant": {
+            "Subway": [
+                1344,
+                16
+            ],
+            "Golden Mile Food Centre": [
+                52,
+                1
+            ],
+            "The Fabulous Baker Boy": [
+                1298,
+                15
+            ],
+            "Billy Bombers Licensing Pte Ltd": [
+                1333,
+                16
+            ],
+            "Bugis (Longhouse) Lim Kee Beef Noodles": [
+                120,
+                1
+            ],
+            "Haji Kadir Food Chains": [
+                55,
+                1
+            ],
+            "Y Cube Mookata Buffet": [
+                429,
+                5
+            ],
+            "Dee Tongue Thai By RUNG MAMA": [
+                506,
+                6
+            ],
+            "Cheese Story Mookata": [
+                1183,
+                14
+            ],
+            "Nana Original Thai Food (Golden Mile Complex)": [
+                1178,
+                14
+            ],
+            "Siam Square Mookata - Best Mookata in Singapore": [
+                961,
+                11
+            ],
+            "Hoe Hokkien Mee": [
+                668,
+                8
+            ],
+            "Super Ngon Vietnamese Noodle Cafe": [
+                906,
+                11
+            ],
+            "Hill Street Tai Hwa Pork Noodle": [
+                912,
+                11
+            ],
+            "Host Creation": [
+                1147,
+                14
+            ],
+            "Geylang Claypot Rice \u82bd\u7b3c\u7802\u7172\u996d": [
+                1536,
+                18
+            ],
+            "M.A Deen Biasa PTE LTD": [
+                1033,
+                12
+            ],
+            "Tosh Restaurant": [
+                1462,
+                17
+            ],
+            "WitBier": [
+                1402,
+                17
+            ],
+            "Sari Ratu Padang Indonesian restaurant": [
+                1398,
+                17
+            ]
+        },
+        "doctor": {
+            "Insomnia Cure Singapore": [
+                918,
+                11
+            ],
+            "The Listening Lab - Hearing Centre in North Bridge Road": [
+                1006,
+                12
+            ],
+            "Golden Mile Clinic": [
+                476,
+                6
+            ],
+            "Li Ming Chinese physician pte ltd": [
+                821,
+                10
+            ],
+            "Kanji Physical Japan": [
+                1351,
+                16
+            ],
+            "Bao Er Arsthetic": [
+                1344,
+                16
+            ],
+            "Industrial Health Services": [
+                1320,
+                16
+            ],
+            "Celest Skin Solutions": [
+                1403,
+                17
+            ]
+        }
     }
 }

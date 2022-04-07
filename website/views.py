@@ -66,7 +66,7 @@ def flat_details(flatId):
         elif len(review) > 500:
             flash(
                 'Review is too long! Maximum length for a review is 500 characters', category='error')
-        elif current_user.postal_code != flat.postal_code:
+        elif current_user.postal_code != flat.postal_sector:
             flash('You cannot review this flat! You can only review flats in your own postal district!', category='error')
         else:
             new_review = Review(

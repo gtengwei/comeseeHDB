@@ -24,7 +24,7 @@ def test_valid_register(client, captured_templates):
 
         # session is still accessible
         assert rv.status_code == 200
-        assert b"Account created! Please verify your email before logging in." in rv.data
+        assert b"Account created! Please verify your email before logging in." in rv.data, "ensure email entered is not registered"
         assert len(captured_templates) == 1
         template, context = captured_templates[0]
         assert template.name == "login.html"

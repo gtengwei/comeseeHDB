@@ -30,12 +30,13 @@ class HDB_Flats(Base):
     resale_price = Column(Float)
 
 
-def create_HDB_Flats_table(engine):
+def create_HDB_Flats_table():
     # This will create the table in the database
     engine = create_engine('sqlite:///website/database.db')
     Base.metadata.create_all(engine)
     file_name = 'test.csv'
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
+    cwd = Path(__file__).parent.absolute()
+    os.chdir(cwd)
     df = pd.read_csv('merged.csv')
     # print(df.dtypes)
     df['price_per_sqm'] = round(
