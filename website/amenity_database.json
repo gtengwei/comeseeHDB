@@ -1,0 +1,876 @@
+{
+    "ADMIRALTY DR BLK 353A": {
+        "bus_station": {
+            "Sembawang Int": [
+                1497,
+                18
+            ],
+            "Sembawang Interchange": [
+                1211,
+                14
+            ]
+        },
+        "subway_station": {
+            "Sembawang": [
+                929,
+                11
+            ]
+        },
+        "school": {
+            "ChangChun Language School - Sembawang Branch": [
+                1191,
+                14
+            ],
+            "Canberra Primary School": [
+                1686,
+                20
+            ],
+            "Joy Montessori Schoolhouse": [
+                1019,
+                12
+            ]
+        },
+        "restaurant": {
+            "Sushi Express @ Sun Plaza": [
+                1150,
+                14
+            ],
+            "White Restaurant": [
+                1150,
+                14
+            ],
+            "Pizza Hut Sun Plaza": [
+                1150,
+                14
+            ],
+            "Pot Addiction Sun Plaza": [
+                1259,
+                15
+            ],
+            "Swensen's": [
+                1185,
+                14
+            ],
+            "Broadway Food Centre": [
+                1295,
+                15
+            ],
+            "Chang Cheng - Canberra Link": [
+                952,
+                11
+            ],
+            "Char-Grill Bar @ Canberra Link": [
+                952,
+                11
+            ],
+            "Ezan Satay": [
+                948,
+                11
+            ],
+            "KFC": [
+                1153,
+                14
+            ],
+            "McDonald's": [
+                1150,
+                14
+            ],
+            "Ya Kun Kaya Toast": [
+                1150,
+                14
+            ],
+            "Eight Immortals (Ba Xian) Vegetarian": [
+                987,
+                12
+            ],
+            "Eight Immortals Vegetarian@Sembawang": [
+                1141,
+                14
+            ],
+            "Yu Kee Duck Rice": [
+                1154,
+                14
+            ],
+            "Danzai Noodles": [
+                1140,
+                14
+            ],
+            "Wok Story": [
+                1148,
+                14
+            ],
+            "Wen Jia Bao \u6e29\u5bb6\u9971": [
+                1148,
+                14
+            ],
+            "Kawan Station": [
+                1142,
+                14
+            ],
+            "Restoran Al-Laris": [
+                793,
+                9
+            ]
+        },
+        "doctor": {
+            "Q & M Dental Surgery (Sembawang MRT)": [
+                1148,
+                14
+            ],
+            "Thomson Women\u2019s Clinic": [
+                1150,
+                14
+            ],
+            "Temasek Medical Centre Sembawang": [
+                1296,
+                15
+            ]
+        }
+    },
+    "ANG MO KIO AVE 1 BLK 205": {
+        "bus_station": {
+            "Blk 209": [
+                339,
+                4
+            ],
+            "Blk 324": [
+                1244,
+                15
+            ],
+            "Opp Blk 315": [
+                2354,
+                28
+            ],
+            "Blk 322": [
+                1177,
+                14
+            ]
+        },
+        "school": {
+            "Ang Mo Kio Secondary School": [
+                319,
+                4
+            ],
+            "Kits4Kids Special School": [
+                286,
+                3
+            ],
+            "Ang Mo Kio Primary School": [
+                788,
+                9
+            ]
+        },
+        "restaurant": {
+            "Kam Jia Zhuang Seafood": [
+                227,
+                3
+            ],
+            "Chye Kee Hainanese Chicken Rice": [
+                451,
+                5
+            ],
+            "KFC": [
+                835,
+                10
+            ],
+            "Goodbargains Estore": [
+                1009,
+                12
+            ],
+            "Takagi Ramen - Ang Mo Kio": [
+                628,
+                7
+            ],
+            "Chicken Rice Special": [
+                280,
+                3
+            ],
+            "Jin Sheng Chicken Rice \u9326\u80dc\u9e21\u996d": [
+                199,
+                2
+            ],
+            "Soon Soon Carrot Cake \u9806\u9806\u83dc\u982d\u7cbf": [
+                206,
+                2
+            ],
+            "Noodle Doodle AMKSS": [
+                301,
+                4
+            ],
+            "Nasi Padang and Mediterranean Stall": [
+                298,
+                4
+            ],
+            "\u95fb\u8bb0\u4e91\u541e\u9762 Wen Ji Wanton Noodle": [
+                227,
+                3
+            ],
+            "Snack and Go AMKSS": [
+                278,
+                3
+            ],
+            "Cooling Station AMKSS": [
+                285,
+                3
+            ],
+            "Ban Mian": [
+                244,
+                3
+            ],
+            "Hock Siang Leong Restaurant Pte Ltd": [
+                229,
+                3
+            ],
+            "Huay Kwang Thai Wanton Mee": [
+                282,
+                3
+            ],
+            "Kimly Mixed Rice \u91d1\u5473\u98ef\u838a (Blk 202 Ang Mo Kio Ave 3)": [
+                282,
+                3
+            ],
+            "Tong Xing": [
+                294,
+                4
+            ],
+            "Mufiz Restaurant Pte Ltd (Halal Food)": [
+                308,
+                4
+            ],
+            "Little Totful Chefs": [
+                323,
+                4
+            ]
+        },
+        "doctor": {
+            "Ci Yuan TCM Physician & Acupuncturist": [
+                995,
+                12
+            ],
+            "Family Chiropractic Singapore": [
+                492,
+                6
+            ],
+            "Clarion Medical Clinic - Ang Mo Kio": [
+                282,
+                3
+            ],
+            "Sian Chay Medical Institution (Yio Chu Kang Branch)": [
+                323,
+                4
+            ],
+            "\u8bb8\u767c\u5987\u79d1\u4e13\u79d1\u95e8\u8bca": [
+                384,
+                5
+            ],
+            "PanCare Medical Clinic (Ang Mo Kio)": [
+                604,
+                7
+            ],
+            "Chee Seng Tong AMK Medical Hall": [
+                674,
+                8
+            ],
+            "\u7f18\u9053\u517b\u751f\u9986Yuan Dao TCM Clinic": [
+                677,
+                8
+            ]
+        }
+    },
+    "BEDOK CTRL BLK 219A": {
+        "bus_station": {
+            "Blk 27": [
+                542,
+                6
+            ],
+            "Bedok Stn Exit B": [
+                1258,
+                15
+            ],
+            "Bedok Int": [
+                1723,
+                20
+            ]
+        },
+        "subway_station": {
+            "Bedok": [
+                1107,
+                13
+            ]
+        },
+        "school": {
+            "Changchun Language School - Bedok Branch": [
+                228,
+                3
+            ],
+            "Smart Kids Children School": [
+                1351,
+                16
+            ],
+            "The Rock School - Bedok CC": [
+                2510,
+                30
+            ],
+            "Harriet Education School": [
+                52,
+                1
+            ]
+        },
+        "restaurant": {
+            "Chicken Hotpot (Bedok Point)": [
+                166,
+                2
+            ],
+            "Saizeriya": [
+                166,
+                2
+            ],
+            "JP Pepperdine": [
+                157,
+                2
+            ],
+            "Tuk Tuk Cha Bistro @ Bedok Point": [
+                488,
+                6
+            ],
+            "Prawn & Mee": [
+                815,
+                10
+            ],
+            "Common Grill\u00ae by COLLIN'S\u00ae @ 217 Bedok": [
+                424,
+                5
+            ],
+            "Ho Kee Pau - Bedok North": [
+                1910,
+                23
+            ],
+            "Inspirasi": [
+                1336,
+                16
+            ],
+            "Sushi Express": [
+                237,
+                3
+            ],
+            "Burger King": [
+                733,
+                9
+            ],
+            "Buddy Hoagies Steak & Grill": [
+                1912,
+                23
+            ],
+            "Kopitiam": [
+                1912,
+                23
+            ],
+            "Bedok Nana Curry": [
+                1912,
+                23
+            ],
+            "Fatt Soon Kueh": [
+                1348,
+                16
+            ],
+            "Crab Kingdom": [
+                816,
+                10
+            ],
+            "Spicy Thai-Thai Cafe": [
+                381,
+                5
+            ],
+            "Jia Minced Meat Noodle (Bedok North)": [
+                1907,
+                23
+            ],
+            "Domino's Pizza Bedok": [
+                411,
+                5
+            ],
+            "Bedok Interchange Hawker Centre": [
+                1350,
+                16
+            ],
+            "Subway": [
+                1340,
+                16
+            ]
+        },
+        "doctor": {
+            "Central 24-HR Clinic (Bedok)": [
+                183,
+                2
+            ],
+            "Q & M Dental Surgery (Bedok Central)": [
+                77,
+                1
+            ],
+            "T32 Dental Pearl @ Bedok": [
+                1350,
+                16
+            ],
+            "Q & M Dental Surgery (Bedok Mall)": [
+                1733,
+                21
+            ],
+            "AcuMed Medical (Bedok)": [
+                181,
+                2
+            ],
+            "Kidslink Children's Clinic": [
+                679,
+                8
+            ],
+            "Bedok Central Clinic": [
+                179,
+                2
+            ],
+            "Noble Dental Surgery @ Bedok - KEYHOLE IMPLANT SURGERY & NOBLE SMILE ALIGNER CENTRE": [
+                160,
+                2
+            ],
+            "Ma Kuang Chinese Medical & Research Centre": [
+                405,
+                5
+            ],
+            "TCM Bedok": [
+                760,
+                9
+            ],
+            "Dermatology clinic": [
+                772,
+                9
+            ],
+            "SNEC Eye Clinic @ Bedok": [
+                1912,
+                23
+            ],
+            "Healthway Medical (Bedok North)": [
+                523,
+                6
+            ],
+            "OneCare Medical Clinic Bedok MRT": [
+                1038,
+                12
+            ]
+        }
+    },
+    "BT BATOK CTRL BLK 103": {
+        "bus_station": {
+            "Blk 102": [
+                729,
+                9
+            ],
+            "Opp Blk 120": [
+                567,
+                7
+            ],
+            "Blk 109": [
+                468,
+                6
+            ],
+            "Aft Bt Batok Stn/Blk 628": [
+                1187,
+                14
+            ],
+            "Blk 644": [
+                700,
+                8
+            ]
+        },
+        "subway_station": {
+            "Bukit Batok": [
+                683,
+                8
+            ]
+        },
+        "school": {
+            "Asia Pacific School Of Sports And Business": [
+                1238,
+                15
+            ],
+            "Swim To Survive Swim School": [
+                1143,
+                14
+            ]
+        },
+        "restaurant": {
+            "Subway": [
+                1275,
+                15
+            ],
+            "Men Men Don Don": [
+                1311,
+                16
+            ],
+            "Gao Ji F & B Pte Ltd": [
+                1288,
+                15
+            ],
+            "Eastern Rice Dumpling": [
+                596,
+                7
+            ],
+            "Chang Cheng - West Mall": [
+                663,
+                8
+            ],
+            "Cheung Wong Roasted Delights": [
+                850,
+                10
+            ],
+            "Lam's Kitchen @ West Mall": [
+                1284,
+                15
+            ],
+            "Spice Corner": [
+                1288,
+                15
+            ],
+            "Delifrance": [
+                596,
+                7
+            ],
+            "Ming Kitchen Live Seafood \u540d\u53a8\u6d3b\u6d77\u9c9c - Bukit Batok": [
+                360,
+                4
+            ],
+            "Encik Tan": [
+                1325,
+                16
+            ],
+            "Srisun Express Bukit Batok": [
+                611,
+                7
+            ],
+            "Soo San Na Catering Services": [
+                1238,
+                15
+            ],
+            "8th Degree @ NTU Alumni Clubhouse": [
+                1238,
+                15
+            ],
+            "All-Big Trading Co": [
+                1238,
+                15
+            ],
+            "Banquet - Parkway Parade": [
+                1238,
+                15
+            ],
+            "Lee Quan (Hai Zhong Bao) Pte. Ltd.": [
+                1238,
+                15
+            ],
+            "Sedap Corner Nasi Ayam Hainan by Jew Kit": [
+                998,
+                12
+            ],
+            "Teochew Cuisine Restaurant": [
+                636,
+                8
+            ],
+            "McDonald's": [
+                1182,
+                14
+            ]
+        },
+        "doctor": {
+            "Northeast Medical Group (Bukit Batok)": [
+                1216,
+                14
+            ],
+            "OneCare Medical Clinic Bukit Batok": [
+                1259,
+                15
+            ],
+            "Q & M Dental Surgery (Bt Batok Central)": [
+                997,
+                12
+            ],
+            "Health Partners Family Clinic": [
+                1300,
+                15
+            ],
+            "Stephen Chew Centre for Kidney Disease & Hypertension": [
+                1004,
+                12
+            ],
+            "Chua Medical Clinic and Surgery": [
+                1087,
+                13
+            ],
+            "The Baby and Child Clinic": [
+                687,
+                8
+            ],
+            "Q & M Dental Surgery (Bukit Batok)": [
+                741,
+                9
+            ],
+            "Hock Lam Heng Medical Hall": [
+                711,
+                8
+            ],
+            "E Medical Clinic and Surgery (Bukit Batok)": [
+                1010,
+                12
+            ],
+            "T K Wong Clinic & Surgery": [
+                772,
+                9
+            ]
+        }
+    },
+    "BT PANJANG RING RD BLK 234": {
+        "bus_station": {
+            "Opp Greenridge Sec Sch": [
+                481,
+                6
+            ],
+            "Greenridge Sec Sch": [
+                1432,
+                17
+            ]
+        },
+        "subway_station": {
+            "Bangkit": [
+                810,
+                10
+            ],
+            "Pending": [
+                563,
+                7
+            ]
+        },
+        "school": {
+            "Zhenghua Primary School": [
+                2171,
+                26
+            ],
+            "Greenridge Secondary School": [
+                725,
+                9
+            ]
+        },
+        "restaurant": {
+            "Kim San Leng Food Centre Bukit Panjang": [
+                605,
+                7
+            ],
+            "Peking Vision-Care Pte Ltd": [
+                725,
+                9
+            ],
+            "Ding Ji": [
+                1415,
+                17
+            ],
+            "Bukit panjang Father & Son Carrotcake": [
+                351,
+                4
+            ],
+            "Hai Nan Hometown Curry": [
+                416,
+                5
+            ],
+            "Tong Fong Fatt Hainanese Chicken Rice": [
+                362,
+                4
+            ],
+            "You Xiang Teochew Noodles": [
+                368,
+                4
+            ],
+            "\u518d\u6765 Chye Lye Lor Mee": [
+                424,
+                5
+            ],
+            "Yew Lee WanTon Noodle": [
+                425,
+                5
+            ],
+            "Saamsudeen": [
+                429,
+                5
+            ],
+            "Korean Japanese Cuisine": [
+                433,
+                5
+            ],
+            "Old Times": [
+                433,
+                5
+            ],
+            "\u6771\u9806\u7d20\u98df": [
+                433,
+                5
+            ],
+            "\u4e91\u541e\u9eb5": [
+                433,
+                5
+            ],
+            "\u518d\u4f86\u5364\u9762": [
+                433,
+                5
+            ],
+            "Chong Panh Huat": [
+                433,
+                5
+            ],
+            "Liang Hao Ji": [
+                433,
+                5
+            ],
+            "Habib Sahra Pte Ltd.": [
+                433,
+                5
+            ],
+            "Ayu & Nasi Padang": [
+                433,
+                5
+            ],
+            "Xin Ban Mian": [
+                433,
+                5
+            ]
+        },
+        "doctor": {
+            "Q & M Dental Surgery (Bukit Panjang)": [
+                331,
+                4
+            ]
+        }
+    },
+    "ADMIRALTY DR BLK 353A 751353": {
+        "bus_station": {
+            "Sembawang Int": [
+                1497,
+                18
+            ],
+            "Sembawang Interchange": [
+                1211,
+                14
+            ]
+        },
+        "subway_station": {
+            "Sembawang": [
+                929,
+                11
+            ]
+        },
+        "school": {
+            "ChangChun Language School - Sembawang Branch": [
+                1191,
+                14
+            ],
+            "Canberra Primary School": [
+                1686,
+                20
+            ],
+            "Joy Montessori Schoolhouse": [
+                1019,
+                12
+            ]
+        },
+        "restaurant": {
+            "Sushi Express @ Sun Plaza": [
+                1150,
+                14
+            ],
+            "White Restaurant": [
+                1150,
+                14
+            ],
+            "Pizza Hut Sun Plaza": [
+                1150,
+                14
+            ],
+            "Pot Addiction Sun Plaza": [
+                1259,
+                15
+            ],
+            "Swensen's": [
+                1185,
+                14
+            ],
+            "Broadway Food Centre": [
+                1295,
+                15
+            ],
+            "Chang Cheng - Canberra Link": [
+                952,
+                11
+            ],
+            "Char-Grill Bar @ Canberra Link": [
+                952,
+                11
+            ],
+            "Ezan Satay": [
+                948,
+                11
+            ],
+            "KFC": [
+                1153,
+                14
+            ],
+            "McDonald's": [
+                1150,
+                14
+            ],
+            "Ya Kun Kaya Toast": [
+                1150,
+                14
+            ],
+            "Eight Immortals (Ba Xian) Vegetarian": [
+                987,
+                12
+            ],
+            "Eight Immortals Vegetarian@Sembawang": [
+                1141,
+                14
+            ],
+            "Yu Kee Duck Rice": [
+                1154,
+                14
+            ],
+            "Danzai Noodles": [
+                1140,
+                14
+            ],
+            "Wok Story": [
+                1148,
+                14
+            ],
+            "Wen Jia Bao \u6e29\u5bb6\u9971": [
+                1148,
+                14
+            ],
+            "Kawan Station": [
+                1142,
+                14
+            ],
+            "Restoran Al-Laris": [
+                793,
+                9
+            ]
+        },
+        "doctor": {
+            "Q & M Dental Surgery (Sembawang MRT)": [
+                1148,
+                14
+            ],
+            "Thomson Women\u2019s Clinic": [
+                1150,
+                14
+            ],
+            "Temasek Medical Centre Sembawang": [
+                1296,
+                15
+            ]
+        }
+    }
+}

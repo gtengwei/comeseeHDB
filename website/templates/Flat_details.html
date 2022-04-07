@@ -34,6 +34,18 @@
       color: red;
       align-self: flex-start;
     }
+    .carousel{
+      width: 50%;
+      float: left;
+    }
+    .map{
+      width: 48%;
+      margin-left: 0.5cm;
+      float: right;
+    }
+    .clearfix{
+      clear:both
+    }
 
     
   </style>
@@ -86,13 +98,13 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="sr-only">Next</span>
     </a>
-  </div>
+</div>
 
 <div class = "map">
   <iframe
     id="map"
-    width="450"
-    height="450"
+    width="500"
+    height="500"
     style="border:0"
     loading="lazy"
     allowfullscreen
@@ -111,22 +123,7 @@
   </script>
 </div>
 
-<style>
-  .carousel{
-    width: 50%;
-    float: left;
-  }
-  .map{
-    width: 48%;
-    margin-left: 0.5cm;
-    float: right;
-  }
-  .clearfix{
-    clear:both
-}
-</style>
 
-<br>
 
 <div class="street_name">
   <h1>{{flat.address}}</h1>
@@ -173,33 +170,48 @@
 
 
 
-
-
-
 <div class="row"> 
-<div class="col-sm-3">
-    <p class="mb-0">Price</p>
-</div>
-<div class="col-sm-9">
-    <p class="text-muted mb-0">${{flat.resale_price}}</p>
-</div>
+  <div class="col-sm-3">
+      <p class="mb-0">Price</p>
+  </div>
+  <div class="col-sm-3 border-right">
+      <p class="text-muted mb-0">${{flat.resale_price}}</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="mb-0">Block</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="text-muted mb-0">{{flat.block}}</p>
+  </div>
 </div>
 <hr>
 <div class="row">
-<div class="col-sm-3">
-    <p class="mb-0">Flat Type</p>
-</div>
-<div class="col-sm-9">
-    <p class="text-muted mb-0">{{flat.flat_type}}</p>
-</div>
+  <div class="col-sm-3">
+      <p class="mb-0">Flat Type</p>
+  </div>
+  <div class="col-sm-3 border-right">
+      <p class="text-muted mb-0">{{flat.flat_type}}</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="mb-0">Floor Area(Metre Square)</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="text-muted mb-0">{{flat.floor_area_sqm}}</p>
+  </div>
 </div>
 <hr>
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Storey Range</p>
 </div>
-<div class="col-sm-9">
+<div class="col-sm-3 border-right">
     <p class="text-muted mb-0">{{flat.storey_range}}</p>
+</div>
+<div class="col-sm-3">
+    <p class="mb-0">Price per Square Metre</p>
+</div>
+<div class="col-sm-3">
+    <p class="text-muted mb-0">${{flat.price_per_sqm}}</p>
 </div>
 </div>
 <hr>
@@ -207,8 +219,14 @@
 <div class="col-sm-3">
     <p class="mb-0">Sold Date</p>
 </div>
-<div class="col-sm-9">
+<div class="col-sm-3 border-right">
     <p class="text-muted mb-0">{{flat.month}}</p>
+</div>
+<div class="col-sm-3">
+    <p class="mb-0">Flat Model</p>
+</div>
+<div class="col-sm-3">
+    <p class="text-muted mb-0">{{flat.flat_model}}</p>
 </div>
 </div>
 <hr>
@@ -216,57 +234,223 @@
 <div class="col-sm-3">
     <p class="mb-0">Town</p>
 </div>
-<div class="col-sm-9">
+<div class="col-sm-3 border-right">
     <p class="text-muted mb-0">{{flat.town}}</p>
 </div>
-</div>
-<hr>
-<div class="row">
-<div class="col-sm-3">
-    <p class="mb-0">Block</p>
-</div>
-<div class="col-sm-9">
-    <p class="text-muted mb-0">{{flat.block}}</p>
-</div>
-</div>
-<hr>
-<div class="row">
-<div class="col-sm-3">
-    <p class="mb-0">Floor Area (Metre Square)</p>
-</div>
-<div class="col-sm-9">
-    <p class="text-muted mb-0">{{flat.floor_area_sqm}}</p>
-</div>
-</div>
-<hr>
-<div class="row">
-<div class="col-sm-3">
-    <p class="mb-0">Flat Model</p>
-</div>
-<div class="col-sm-9">
-    <p class="text-muted mb-0">{{flat.flat_model}}</p>
-</div>
-</div>
-<hr>
-<div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Remaining Lease</p>
 </div>
-<div class="col-sm-9">
+<div class="col-sm-3">
     <p class="text-muted mb-0">{{flat.remaining_lease}}</p>
 </div>
 </div>
-
 <hr>
-
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Postal District</p>
 </div>
-<div class="col-sm-9">
+<div class="col-sm-3 border-right">
     <p class="text-muted mb-0">{{flat.postal_sector}}</p>
 </div>
+<div class="col-sm-3">
+    <p class="mb-0">Postal Code</p>
 </div>
+<div class="col-sm-3">
+    <p class="text-muted mb-0">{{flat.postal_code}}</p>
+</div>
+</div>
+
+<br>
+<h3> Amenities </h3>
+<hr>
+<style>
+  button[class^="amenities_btn"] {
+      color:black;
+      background-color: pink;
+      border-color:black;
+      border-width: 1px;
+      outline:none;
+      border-radius: 5px;
+    }
+</style>
+
+<div class="row">
+<div class="col-sm-4">
+  <div class="row">
+  <button class="amenities_btn" type="button" disabled>
+    <p class="mb-0">Bus Stop 
+    <i class="fa-solid fa-bus"></i>
+    </p>
+  </button>
+  &nbsp;
+  <button class="amenities_btn" type="button" disabled>
+    <p class="mb-0">Train Station 
+      <i class="fa-solid fa-train-subway"></i>
+    </p>
+  </button>
+  </div>
+  <br>
+  {%if amenities['bus_station']|length != 0 %}
+  {%for key1,value1 in amenities["bus_station"].items()%}
+  <p class="text-muted mb-0">
+  {{key1}} 
+  </p>
+  {% endfor %}
+  {%endif%}
+  {%if amenities['subway_station']|length !=0 %}
+  {%for key1,value1 in amenities["subway_station"].items()%}
+  <p class="text-muted mb-0">
+  {{key1}} Station
+  </p>
+  {% endfor %}
+  {%endif%}
+
+</div>
+
+<div class="col-sm-2 border-right" id="right">
+  <br>
+  <br>
+  <div class = "row">
+    <div class = "col-sm-4" >
+      {%if amenities['bus_station']|length !=0 %}
+  {%for key1,value1 in amenities["bus_station"].items()%}
+      <p  class = "text-muted mb-0" >
+        {{value1[0]}}m 
+      </p>
+      {% endfor%}
+      {%endif%}
+      {%if amenities['subway_station']|length !=0 %}
+      {%for key1,value1 in amenities["subway_station"].items()%}
+      <p  class = "text-muted mb-0" >
+        {{value1[0]}}m 
+      </p>
+      {% endfor%}
+      {%endif%}
+     </div>
+     
+     <div class = "col-sm-2 border-none" >
+      {%if amenities['bus_station']|length !=0 %}
+    {%for key1,value1 in amenities["bus_station"].items()%}
+    <p class = "text-muted mb-0">
+    {{value1[1]}}min
+     </p>
+     {% endfor%}
+     {%endif%}
+     {%if amenities['subway_station']|length !=0 %}
+     {%for key1,value1 in amenities["subway_station"].items()%}
+    <p class = "text-muted mb-0">
+    {{value1[1]}}min
+     </p>
+     {% endfor%}
+     {%endif%}
+    </div>
+    
+    </div>
+</div>
+
+
+<div class="col-sm-4">
+  <button class="amenities_btn" type="button" disabled>
+    <p class="mb-0"> School
+      <i class="fa-solid fa-school"></i>    
+    </p>
+  </button>
+  <br>
+  <br>
+  {%if amenities['school']|length !=0 %}
+  {%for key1,value1 in amenities["school"].items()%}
+  <p class = "text-muted mb-0">{{key1}}</p>
+  {% endfor %}
+</div>
+<div class="col-sm-2 border-none">
+  <br>
+  <br>
+  <div class = "row">
+  <div class = 'col-sm-4'>
+  {%for key1,value1 in amenities["school"].items()%}
+  <p class = "text-muted mb-0">{{value1[0]}}m</p>
+    {% endfor %}
+    </div>
+  <div class = "col-sm-2 border-none">
+    {%for key1,value1 in amenities["school"].items()%}
+    <p class = "text-muted mb-0">{{value1[1]}}min</p>
+    {% endfor %}
+  </div>
+  {%endif%}
+</div>
+</div>
+
+</div>
+<hr>
+<div class="row">
+  <div class="col-sm-4">
+    <button class="amenities_btn" type="button" disabled>
+      <p class="mb-0">Food
+        <i class="fa-solid fa-utensils"></i>
+      </p>
+    </button>
+    <br>
+    <br>
+    {%if amenities['restaurant']|length !=0 %}
+    {%for key1,value1 in amenities["restaurant"].items()%}
+  <p class="text-muted mb-0">
+  {{key1}} 
+  </p>
+  {% endfor %}
+  </div>
+  <div class="col-sm-2 border-right">
+    <br>
+    <br>
+    <div class ="row">
+    <div class = "col-sm-4">
+    {%for key1,value1 in amenities["restaurant"].items()%}
+    <p class = "text-muted mb-0">{{value1[0]}}m</p>
+      {% endfor %}
+  </div>
+  <div class = "col-sm-2 border-none">
+    {%for key1,value1 in amenities["restaurant"].items()%}
+    <p class = "text-muted mb-0">{{value1[1]}}min</p>
+      {% endfor %}
+      {%endif%}
+  </div>
+  </div>
+  </div>
+  <div class="col-sm-4">
+    <button class="amenities_btn " type="button" disabled>
+      <p class="mb-0">Clinic
+        <i class="fa-solid fa-clinic-medical"></i>    
+      </p>
+    </button>
+    <br>
+    <br>
+    {%if amenities['doctor']|length !=0 %}
+    {%for key1,value1 in amenities["doctor"].items()%}
+  <p class="text-muted mb-0">
+  {{key1}} 
+  </p>
+  {% endfor %}
+      </div>
+
+      <div class="col-sm-2 border-none">
+        <br>
+        <br>
+        <div class = "row">
+          <div class = "col-sm-4">
+        {%for key1,value1 in amenities["doctor"].items()%}
+        <p class = "text-muted mb-0">{{value1[0]}}m </p>
+          {% endfor %}
+      </div>
+      <div class = "col-sm-2 border-none">
+      {%for key1,value1 in amenities["doctor"].items()%}
+        <p class = "text-muted mb-0">{{value1[1]}}min</p>
+          {% endfor %}
+          {%endif%}
+          </div>
+          </div>
+        </div>
+
+  </div>
+
 <br>
 {% if user.is_authenticated %}
 <form method="POST">
@@ -274,12 +458,7 @@
     <textarea name="review" id="review" class="form-control" style ="height: 50px" placeholder="Write your review here!"></textarea>
     <br />
     <div align="center">
-      <button type="submit" class="btn btn-primary btn-sm">Add Review</button>
-      
-      
-      
-      
-    
+      <button type="submit" class="btn btn-primary btn-sm">Add Review</button>  
     </div>
   </span>
 </form>
