@@ -63,6 +63,7 @@
                         Sort
                       </button>
                       <div class="dropdown-menu">
+                        <a class="dropdown-item" name = "favourites_high" id="favourites_high" href="{{ url_for('views.sort', criteria = 'favourites_high') }}">Most Favourites</a>
                         <a class="dropdown-item" name= "price_high" id = "price_high" href="{{ url_for('views.sort',  criteria = 'price_high') }}">Price (High to Low)</a>
                         <a class="dropdown-item" name = "price_low" id="price_low" href="{{ url_for('views.sort', criteria = 'price_low') }}">Price (Low to High)</a>
                         <a class="dropdown-item" name = "remaining_lease_high" id="remaining_lease_high" href="{{ url_for('views.sort', criteria = 'remaining_lease_high') }}">Remaining Lease (High to Low)</a>
@@ -71,8 +72,6 @@
                         <a class="dropdown-item" name = "storey_low" id="storey_low" href="{{ url_for('views.sort', criteria = 'storey_low') }}">Floor (Low to High)</a>
                         <a class="dropdown-item" name = "price_per_sqm_high" id="price_per_sqm_high" href="{{ url_for('views.sort', criteria = 'price_per_sqm_high') }}">Price per Square Metre (High to Low)</a>
                         <a class="dropdown-item" name = "price_per_sqm_low" id="price_per_sqm_low" href="{{ url_for('views.sort', criteria = 'price_per_sqm_low') }}">Price per Square Metre (Low to High)</a>
-                        <a class="dropdown-item" name = "favourites_high" id="favourites_high" href="{{ url_for('views.sort', criteria = 'favourites_high') }}">Favourites (High to Low)</a>
-                        <a class="dropdown-item" name = "favourites_low" id="favourites_low" href="{{ url_for('views.sort', criteria = 'favourites_low') }}">Favourites (Low to High)</a>
                       </div>
                     </div> 
                   </span>
@@ -111,7 +110,8 @@
                               
                                   <div class="form-group"> <input type="checkbox" id="ang mo kio" name="town" value="ANG MO KIO"> <label for="ang mo kio">Ang Mo Kio</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bedok" name="town" value ="BEDOK"> <label for="bedok">Bedok</label> </div>
-                                  <div class="form-group"> <input type="checkbox" id="bukit batok" name="town" value = "BISHAN"> <label for="bukit batok">Bukit Batok</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="bishan" name="town" value = "BISHAN"> <label for="bishan">Bishan</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="bukit batok" name="town" value = "BUKIT BATOK"> <label for="bukit batok">Bukit Batok</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bukit merah" name="town" value = "BUKIT MERAH"> <label for="bukit merah">Bukit Merah</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bukit panjang" name="town" value = "BUKIT PANJANG"> <label for="bukit panjang">Bukit Panjang</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bukit timah" name="town" value = "BUKIT TIMAH"> <label for="bukit timah">Bukit Timah</label> </div>
@@ -224,7 +224,7 @@
 <h3 align="center">Filtered by {{session['price']}}, {{session['amenities']}}</h3>
 
 {% elif session['price'] %}
-<h3 align="center">Filtered by {{session['price']}}</h3>}}
+<h3 align="center">Filtered by {{session['price']}}</h3>
 
 {% elif session['address'] and session['towns'] and session['flat_types'] and session['amenities'] %}
 <h3 align="center">You searched for: {{session['address']}}</h3>

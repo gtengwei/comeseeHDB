@@ -76,6 +76,7 @@
                       Sort
                     </button>
                     <div class="dropdown-menu">
+                      <a class="dropdown-item" name = "favourites_high" id="favourites_high" href="{{ url_for('views.sort', criteria = 'favourites_high') }}">Most Favourites</a>
                       <a class="dropdown-item" name= "price_high" id = "price_high" href="{{ url_for('views.sort', criteria = 'price_high') }}">Price (High to Low)</a>
                       <a class="dropdown-item" name = "price_low" id="price_low" href="{{ url_for('views.sort', criteria = 'price_low') }}">Price (Low to High)</a>
                       <a class="dropdown-item" name = "remaining_lease_high" id="remaining_lease_high" href="{{ url_for('views.sort', criteria = 'remaining_lease_high') }}">Remaining Lease (High to Low)</a>
@@ -83,9 +84,7 @@
                       <a class="dropdown-item" name = "storey_high" id="storey_high" href="{{ url_for('views.sort', criteria = 'storey_high') }}">Floor (High to Low)</a>
                       <a class="dropdown-item" name = "storey_low" id="storey_low" href="{{ url_for('views.sort', criteria = 'storey_low') }}">Floor (Low to High)</a>
                       <a class="dropdown-item" name = "price_per_sqm_high" id="price_per_sqm_high" href="{{ url_for('views.sort', criteria = 'price_per_sqm_high') }}">Price per Square Metre (High to Low)</a>
-                      <a class="dropdown-item" name = "price_per_sqm_low" id="price_per_sqm_low" href="{{ url_for('views.sort', criteria = 'price_per_sqm_low') }}">Price per Square Metre (Low to High)</a>
-                      <a class="dropdown-item" name = "favourites_high" id="favourites_high" href="{{ url_for('views.sort', criteria = 'favourites_high') }}">Favourites (High to Low)</a>
-                      <a class="dropdown-item" name = "favourites_low" id="favourites_low" href="{{ url_for('views.sort', criteria = 'favourites_low') }}">Favourites (Low to High)</a>
+                      <a class="dropdown-item" name = "price_per_sqm_low" id="price_per_sqm_low" href="{{ url_for('views.sort', criteria = 'price_per_sqm_low') }}">Price per Square Metre (Low to High)</a>      
                     </div>
                   </div> 
                 </span>
@@ -95,7 +94,7 @@
                     <div class="border-bottom pb-2 ml-2">
                         <h4 id="burgundy">Filter</h4>
                     </div>
-                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa fa-building pl-1"></h6></span></button>
+                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa fa-money pl-1"></h6></span></button>
                     <div class="collapse" id="price">
                         <div class="py-2 border-bottom ml-3">
                             <div style="color: pink"><span class="fa fa-minus"></span></div>
@@ -122,10 +121,10 @@
                     <div class="collapse" id="town">
                         <div class="py-2 border-bottom ml-3">
                             <div style="color: pink"><span class="fa fa-minus"></span></div>
-                            
                                 <div class="form-group"> <input type="checkbox" id="ang mo kio" name="town" value="ANG MO KIO"> <label for="ang mo kio">Ang Mo Kio</label> </div>
                                 <div class="form-group"> <input type="checkbox" id="bedok" name="town" value ="BEDOK"> <label for="bedok">Bedok</label> </div>
-                                <div class="form-group"> <input type="checkbox" id="bukit batok" name="town" value = "BISHAN"> <label for="bukit batok">Bukit Batok</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="bishan" name="town" value = "BISHAN"> <label for="bishan">Bishan</label> </div>
+                                <div class="form-group"> <input type="checkbox" id="bukit batok" name="town" value = "BUKIT BATOK"> <label for="bukit batok">Bukit Batok</label> </div>
                                 <div class="form-group"> <input type="checkbox" id="bukit merah" name="town" value = "BUKIT MERAH"> <label for="bukit merah">Bukit Merah</label> </div>
                                 <div class="form-group"> <input type="checkbox" id="bukit panjang" name="town" value = "BUKIT PANJANG"> <label for="bukit panjang">Bukit Panjang</label> </div>
                                 <div class="form-group"> <input type="checkbox" id="bukit timah" name="town" value = "BUKIT TIMAH"> <label for="bukit timah">Bukit Timah</label> </div>
@@ -147,8 +146,6 @@
                                 <div class="form-group"> <input type="checkbox" id="toa payoh" name="town" value = "TOA PAYOH"> <label for="toa payoh">Toa Payoh</label> </div>
                                 <div class="form-group"> <input type="checkbox" id="woodlands" name="town" value = "WOODLANDS"> <label for="woodlands">Woodlands</label> </div>
                                 <div class="form-group"> <input type="checkbox" id="yishun" name="town" value = "YISHUN"> <label for="yishun">Yishun</label> </div>
-
-
                         </div>
                     </div>
 
@@ -267,7 +264,7 @@
     var window_height = $(window).height();
     var document_height = $(document).height();
     
-    if (current_y + window_height >= (document_height-1)) {
+    if (current_y + window_height >= (document_height-10)) {
       downloadContent(index, limit);
       index += 20
     }
