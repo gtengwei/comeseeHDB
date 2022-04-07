@@ -3,6 +3,7 @@
 
 {% block content %}
 <head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
     <script>
@@ -11,37 +12,7 @@
             $("#changePostalCodeModal").modal('show');
           }); 
       });
-  </script>
-      <style>
-        /* Modify the background color */
-        
-      .card {
-          background-color: white;
-      }
-      .card-header {
-          background-color: pink;
-          display: inline-flex;
-  
-      }
-      .card-body {
-          background-color: white;
-  
-      }
-      
-      button[class^="favourite_button"] {
-          background-color: pink;
-          border:none;
-          outline:none;
-          color: red;
-      }
-
-      .unfavourite_button {
-          background-color: pink;
-          border:none;
-          outline:none;
-          color: red;
-      }
-      </style>
+    </script>
   </head> 
 
 
@@ -56,13 +27,15 @@
                     </button>
                     <a href= "{{ url_for('views.flat_details', flatId = random) }}" title="Click here for a random flat!"
                     <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" >
-                      <i class="fa-solid fa-question"></i>
+                      <i class="fa-solid fa-dice"></i>
                     </button> </a>
                     <div class="btn-group">
                       <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Sort
                       </button>
                       <div class="dropdown-menu">
+                        <a class="dropdown-item" name = "favourites_high" id="favourites_high" href="{{ url_for('views.sort', criteria = 'favourites_high') }}">Favourites (High to Low)</a>
+                        <a class="dropdown-item" name = "favourites_low" id="favourites_low" href="{{ url_for('views.sort', criteria = 'favourites_low') }}">Favourites (Low to High)</a>
                         <a class="dropdown-item" name= "price_high" id = "price_high" href="{{ url_for('views.sort',  criteria = 'price_high') }}">Price (High to Low)</a>
                         <a class="dropdown-item" name = "price_low" id="price_low" href="{{ url_for('views.sort', criteria = 'price_low') }}">Price (Low to High)</a>
                         <a class="dropdown-item" name = "remaining_lease_high" id="remaining_lease_high" href="{{ url_for('views.sort', criteria = 'remaining_lease_high') }}">Remaining Lease (High to Low)</a>
@@ -71,8 +44,7 @@
                         <a class="dropdown-item" name = "storey_low" id="storey_low" href="{{ url_for('views.sort', criteria = 'storey_low') }}">Floor (Low to High)</a>
                         <a class="dropdown-item" name = "price_per_sqm_high" id="price_per_sqm_high" href="{{ url_for('views.sort', criteria = 'price_per_sqm_high') }}">Price per Square Metre (High to Low)</a>
                         <a class="dropdown-item" name = "price_per_sqm_low" id="price_per_sqm_low" href="{{ url_for('views.sort', criteria = 'price_per_sqm_low') }}">Price per Square Metre (Low to High)</a>
-                        <a class="dropdown-item" name = "favourites_high" id="favourites_high" href="{{ url_for('views.sort', criteria = 'favourites_high') }}">Favourites (High to Low)</a>
-                        <a class="dropdown-item" name = "favourites_low" id="favourites_low" href="{{ url_for('views.sort', criteria = 'favourites_low') }}">Favourites (Low to High)</a>
+                        
                       </div>
                     </div> 
                   </span>
@@ -82,7 +54,7 @@
                       <div class="border-bottom pb-2 ml-2">
                           <h4 id="burgundy">Filter</h4>
                       </div>
-                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa fa-building pl-1"></h6></span></button>
+                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa-solid fa-dollar-sign"></h6></span></button>
                       <div class="collapse" id="price">
                           <div class="py-2 border-bottom ml-3">
                               <div style="color: pink"><span class="fa fa-minus"></span></div>
@@ -111,6 +83,7 @@
                               
                                   <div class="form-group"> <input type="checkbox" id="ang mo kio" name="town" value="ANG MO KIO"> <label for="ang mo kio">Ang Mo Kio</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bedok" name="town" value ="BEDOK"> <label for="bedok">Bedok</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="bishan" name="town" value ="BISHAN"> <label for="bishan">Bishan</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bukit batok" name="town" value = "BISHAN"> <label for="bukit batok">Bukit Batok</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bukit merah" name="town" value = "BUKIT MERAH"> <label for="bukit merah">Bukit Merah</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bukit panjang" name="town" value = "BUKIT PANJANG"> <label for="bukit panjang">Bukit Panjang</label> </div>
@@ -293,7 +266,7 @@
       {% for flat in flats %}
         <div class="card mb-3">
           <div class="card-header">
-            <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.address}}</strong></a>
+            <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.address_no_postal_code}}</strong></a>
             {% if user.is_authenticated %}
             {% if flat.id in user.favourites|map(attribute="flat_id")|list %}
             <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="unfavourite({{ flat.id }})">
@@ -336,7 +309,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col">
-                <img src="{{flat['image']}}" class="img-thumbnail">
+                <img src="{{image[0]}}" class="img-thumbnail">
               </div>
               <div class="col">
                 <p><strong>Price: </strong>${{flat.resale_price}}</p>
@@ -351,7 +324,7 @@
         </div>
       {% endfor %}
     </div>
-    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">
+    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}" data-image="{{image[0]}}">
           
   
     
@@ -375,6 +348,7 @@
     function downloadContent(index, limit) {
     $.get('/load_search?index=' + index + '&limit=' + limit, (data) => {
       for (var index = 0; index < data.data.length; index++) {
+        var image = $('#my-data').data().image;
         var favourite = $('#my-data').data().f;
         var flat = "/flat-details/" + data.data[index][0]; 
 
@@ -412,7 +386,7 @@
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <img src="` + data.data[index].image + `" class="img-thumbnail">
+                  <img src="` + image + `" class="img-thumbnail">
                 </div>
                 <div class="col">
                   <p><strong>Price: </strong>` +`$`+ data.data[index][2] + `</p>

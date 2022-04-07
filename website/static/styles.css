@@ -1,0 +1,34 @@
+.card {
+    background-color: white;
+
+}
+.card-header {
+    background-color: #ffcad4;
+    display: inline-flex;
+
+}
+.card-body {
+    background-color: white;  
+}
+
+button[class^="favourite_button"] {
+    background-color: #ffcad4;
+    border:none;
+    outline:none;
+    color: red;
+}
+
+.unfavourite_button {
+    background-color: #ffcad4;
+    border:none;
+    outline:none;
+    color: red;
+}
+
+.img-thumbnail{
+    border-radius: 25px;
+    width: 100%;
+    height: 100%;
+  }
+
+  
