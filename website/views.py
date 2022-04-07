@@ -126,9 +126,13 @@ def home():
     conn = sqlite3.connect("database.db")
     #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
-    myquery = (
-        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat;")
+    myquery = ("SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
     c.execute(myquery)
+    data = list(c.fetchall())
+    list_x = []
+    for x in range(INDEX):
+        flat_id = data[x][0]
+        list_x.append(flat_id)
     data = list(c.fetchall())
     # random.shuffle(data)
     RANDOM = generate_random_flat()
@@ -318,7 +322,7 @@ def home():
 
     session.clear()
     #return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
-    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites = Favourites.query.all(), random = RANDOM, image = image)
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], favourites = Favourites.query.all(), random = RANDOM, image = image)
 
 
 
