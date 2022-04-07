@@ -188,6 +188,126 @@ map.src = adsURL;
 </div>
 </div>
 
+<br>
+<h3> Amenities </h3>
+<style>
+  button[class^="amenities_btn"] {
+      color:black;
+      background-color: pink;
+      border-color:black;
+      border-width: 1px;
+      outline:none;
+      border-radius: 5px;
+    }
+</style>
+
+<div class="row">
+<div class="col-sm-4">
+  <div class="row">
+  <button class="amenities_btn" type="button" disabled>
+    <p class="mb-0">Bus Stop 
+    <i class="fa-solid fa-bus"></i>
+    </p>
+  </button>
+  &nbsp;
+  <button class="amenities_btn" type="button" disabled>
+    <p class="mb-0">Train Station 
+      <i class="fa-solid fa-train-subway"></i>
+    </p>
+  </button>
+  </div>
+  <br>
+  {%if amenities['bus_station']|length != 0 %}
+  {%for key1,value1 in amenities["bus_station"].items()%}
+  <p class="text-muted mb-0">
+  {{key1}} 
+  </p>
+  {% endfor %}
+  {%endif%}
+  {%if amenities['subway_station']|length !=0 %}
+  {%for key1,value1 in amenities["subway_station"].items()%}
+  <p class="text-muted mb-0">
+  {{key1}} Station
+  </p>
+  {% endfor %}
+  {%endif%}
+
+</div>
+
+<div class="col-sm-2 border-right" id="right">
+  <br>
+  <br>
+  <div class = "row">
+    <div class = "col-sm-4" >
+      {%if amenities['bus_station']|length !=0 %}
+  {%for key1,value1 in amenities["bus_station"].items()%}
+      <p  class = "text-muted mb-0" >
+        {{value1[0]}}m 
+      </p>
+      {% endfor%}
+      {%endif%}
+      {%if amenities['subway_station']|length !=0 %}
+      {%for key1,value1 in amenities["subway_station"].items()%}
+      <p  class = "text-muted mb-0" >
+        {{value1[0]}}m 
+      </p>
+      {% endfor%}
+      {%endif%}
+     </div>
+     
+     <div class = "col-sm-2 border-none" >
+      {%if amenities['bus_station']|length !=0 %}
+    {%for key1,value1 in amenities["bus_station"].items()%}
+    <p class = "text-muted mb-0">
+    {{value1[1]}}min
+     </p>
+     {% endfor%}
+     {%endif%}
+     {%if amenities['subway_station']|length !=0 %}
+     {%for key1,value1 in amenities["subway_station"].items()%}
+    <p class = "text-muted mb-0">
+    {{value1[1]}}min
+     </p>
+     {% endfor%}
+     {%endif%}
+    </div>
+    
+    </div>
+</div>
+
+
+<div class="col-sm-4">
+  <button class="amenities_btn" type="button" disabled>
+    <p class="mb-0"> School
+      <i class="fa-solid fa-school"></i>    
+    </p>
+  </button>
+  <br>
+  <br>
+  {%if amenities['school']|length !=0 %}
+  {%for key1,value1 in amenities["school"].items()%}
+  <p class = "text-muted mb-0">{{key1}}</p>
+  {% endfor %}
+</div>
+<div class="col-sm-2 border-none">
+  <br>
+  <br>
+  <div class = "row">
+  <div class = 'col-sm-4'>
+  {%for key1,value1 in amenities["school"].items()%}
+  <p class = "text-muted mb-0">{{value1[0]}}m</p>
+    {% endfor %}
+    </div>
+  <div class = "col-sm-2 border-none">
+    {%for key1,value1 in amenities["school"].items()%}
+    <p class = "text-muted mb-0">{{value1[1]}}min</p>
+    {% endfor %}
+  </div>
+  {%endif%}
+</div>
+</div>
+
+</div>
 <hr>
 
 <div class="row">
@@ -198,6 +318,73 @@ map.src = adsURL;
     <p class="text-muted mb-0">{{flat.remaining_lease}}</p>
 </div>
 </div>
+  <div class="col-sm-4">
+    <button class="amenities_btn" type="button" disabled>
+      <p class="mb-0">Food
+        <i class="fa-solid fa-utensils"></i>
+      </p>
+    </button>
+    <br>
+    <br>
+    {%if amenities['restaurant']|length !=0 %}
+    {%for key1,value1 in amenities["restaurant"].items()%}
+  <p class="text-muted mb-0">
+  {{key1}} 
+  </p>
+  {% endfor %}
+  </div>
+  <div class="col-sm-2 border-right">
+    <br>
+    <br>
+    <div class ="row">
+    <div class = "col-sm-4">
+    {%for key1,value1 in amenities["restaurant"].items()%}
+    <p class = "text-muted mb-0">{{value1[0]}}m</p>
+      {% endfor %}
+  </div>
+  <div class = "col-sm-2 border-none">
+    {%for key1,value1 in amenities["restaurant"].items()%}
+    <p class = "text-muted mb-0">{{value1[1]}}min</p>
+      {% endfor %}
+      {%endif%}
+  </div>
+  </div>
+  </div>
+  <div class="col-sm-4">
+    <button class="amenities_btn " type="button" disabled>
+      <p class="mb-0">Clinic
+        <i class="fa-solid fa-clinic-medical"></i>    
+      </p>
+    </button>
+    <br>
+    <br>
+    {%if amenities['doctor']|length !=0 %}
+    {%for key1,value1 in amenities["doctor"].items()%}
+  <p class="text-muted mb-0">
+  {{key1}} 
+  </p>
+  {% endfor %}
+      </div>
+
+      <div class="col-sm-2 border-none">
+        <br>
+        <br>
+        <div class = "row">
+          <div class = "col-sm-4">
+        {%for key1,value1 in amenities["doctor"].items()%}
+        <p class = "text-muted mb-0">{{value1[0]}}m </p>
+          {% endfor %}
+      </div>
+      <div class = "col-sm-2 border-none">
+      {%for key1,value1 in amenities["doctor"].items()%}
+        <p class = "text-muted mb-0">{{value1[1]}}min</p>
+          {% endfor %}
+          {%endif%}
+          </div>
+          </div>
+        </div>
+
+  </div>
 
 <br>
 
