@@ -116,11 +116,13 @@ def home():
     #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     myquery = (
-        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat;")
+        "SELECT id FROM Flat ORDER BY numOfFavourites DESC;")
     c.execute(myquery)
     data = list(c.fetchall())
     # random.shuffle(data)
     RANDOM = generate_random_flat()
+    data = data[:INDEX]
+
     # Search for flats from homepage
     if request.method == 'POST':
         price = request.form.getlist('price')
@@ -292,7 +294,7 @@ def home():
 
     session.clear()
     #return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
-    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites = Favourites.query.all(), random = RANDOM, image = image)
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in data], favourites = Favourites.query.all(), random = RANDOM, image = image)
 
 
 
@@ -516,7 +518,7 @@ def load_home():
 
     else:
         myquery = (
-            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
         c.execute(myquery)
         data = list(c.fetchall())
         # random.shuffle(data)
