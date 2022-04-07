@@ -2,6 +2,7 @@
 from cgi import print_exception
 from flask import Blueprint, render_template, request, flash, jsonify, session, redirect, url_for
 from flask_login import login_required, current_user
+from regex import P
 from .models import *
 from . import db
 import json
@@ -1615,48 +1616,42 @@ def view_image(flatId):
     import requests
     import json
 
-    # find the name of the flat to find the place id
+    #find the name of the flat to find the place id
     flat = Flat.query.filter_by(id=flatId).first_or_404()
     flat = Flat.query.get(flatId)
     blk = flat.block
     street = flat.street_name
-
     name = blk + street + "hdb"
 
     while(name.find(' ') != -1):
         name = name.replace(' ', '%20')
 
-    url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + \
-        name + "&inputtype=textquery&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+    url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + name + "&inputtype=textquery&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
 
-    payload = {}
+    payload={}
     headers = {}
-
-    response = requests.request(
-        "GET", url, headers=headers, data=payload).json()
+    response = requests.request("GET", url, headers=headers, data=payload).json()
     if response['status'] != 'OK':
         return None
     else:
         primary = response['candidates'][0]
         id = primary['place_id']
 
-        # finding photo reference
-        url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + \
-            id + "&fields=photos&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+        #finding photo reference
+        url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + id +"&fields=photos&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
 
-        payload = {}
+        payload={}
         headers = {}
 
-        response = requests.request(
-            "GET", url, headers=headers, data=payload).json()
+        response = requests.request("GET", url, headers=headers, data=payload).json()
         res = response['result']
         photoRef = []
         cur = 0
         if 'photos' not in res:
-            while (cur < 3):
-                photoRef.append(0)
+            return photoRef
         photos = res['photos']
-        noOfPhotos = len(photos)  # max number of photo references is 10
+        noOfPhotos = len(photos) #max number of photo references is 10
+        cur = 0
         while (cur < noOfPhotos):
             temp1 = photos[cur]
             temp2 = temp1['photo_reference']
@@ -1668,7 +1663,6 @@ def view_image(flatId):
                 photoRef.append(0)
 
         return photoRef
-        # by right should return an array of photo references only, and use these references to get the photo
 def get_amenity(flatId):
     import json
     import pandas as pd
@@ -1715,6 +1709,8 @@ def get_amenity(flatId):
                 length = response1["results"]
                 for i in range(len(length)):
                     name = response1["results"][i]['name']
+                    if len(name) > 30:
+                        continue
                     if (amenity == 'school') and ('School' not in name):
                         continue
                     lat_of_nearby = response1['results'][i]['geometry']['location']['lat']
