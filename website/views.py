@@ -36,6 +36,7 @@ def delete_review():
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
 def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
+    '''
     photo = view_image(flatId)
 
     url1 = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference="
@@ -52,7 +53,8 @@ def flat_details(flatId):
                 url.append(temp)
             cur = cur + 1
     else:
-        url = ["\static\logo.png", "\static\logo.png", "\static\logo.png"]
+    '''
+    url = ["\static\logo.png", "\static\logo.png", "\static\logo.png"]
         
     if request.method == 'POST':
         review = request.form.get('review')
@@ -1546,6 +1548,7 @@ def filter():
         # return render_template('sort.html', user=current_user, flats=flat)
 
     return render_template('filter.html', user=current_user)
+
 
 ## TESTING
 ## getting image (in flat details only)
