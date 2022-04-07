@@ -2,7 +2,7 @@
 
 from flask_login import UserMixin
 from sqlalchemy.sql import func
-from itsdangerous.serializer import Serializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from hashlib import md5
 from sqlalchemy import Column, Integer, Float, Date, String
@@ -118,10 +118,10 @@ def create_Flat_table():
     '''
     
 
-def create_Flat_table():
+'''def create_Flat_table():
     #This will create the table in the database
     engine = create_engine('sqlite:///website/database.db')
     db.Model.metadata.create_all(engine)
     os.chdir('C:/Users/Yap Xuan Ying/Documents/WORK!!!/comeseeHDB/website')
     df = pd.read_csv('merged.csv')
-    df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
+    df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')'''

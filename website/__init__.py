@@ -52,9 +52,7 @@ def create_app():
     app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8'
-    login_manager.init_app(app)
-    db.init_app(app)
-    mail.init_app(app)
+    
     # To send reset password email to user
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 587
@@ -63,7 +61,10 @@ def create_app():
     app.config['MAIL_PASSWORD'] = 'Clutch123!'
 
     moment = Moment(app)
-
+    login_manager.init_app(app)
+    db.init_app(app)
+    mail.init_app(app)
+    
     # Insert Blueprint here
     from .views import views
     from .auth import auth
