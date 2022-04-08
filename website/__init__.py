@@ -25,15 +25,15 @@ def create_database(app):
     #     print('Created Database!')
 
     # create_mysql_database()
-    conn = open_connection()
-    # conn = pymysql.connect(
-    #     host="localhost",
-    #     user="root",
-    #     passwd="Clutch123!",
-    #     database = "mysql_database"
-    # )
+    # conn = open_connection()
+    conn = pymysql.connect(
+        host="localhost",
+        user="root",
+        passwd="Clutch123!",
+        database = "mysql_database"
+    )
     cursor = conn.cursor()
-    cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
+    cursor.execute("SET GLOBAL FOREIGN_KEY_CHECKS = 0")
     ## MUST CREATE FLAT TABLE FIRST BEFORE OTHER TABLES
     ## IF NOT WILL RESULT IN ERRORS
     if not cursor.execute("SHOW TABLES LIKE 'review'"):
@@ -43,8 +43,8 @@ def create_database(app):
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
 #app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Clutch123!@/mysql_database?unix_socket=/cloudsql/comesee-hdb:asia-southeast1:comeseehdb-database'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Clutch123!@/mysql_database?unix_socket=/cloudsql/comesee-hdb:asia-southeast1:comeseehdb-database'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8'
 
 # To send reset password email to user
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
