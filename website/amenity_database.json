@@ -2584,5 +2584,109 @@
                 8
             ]
         }
+    },
+    "BISHAN ST 11 BLK 145 570145": {
+        "bus_station": {
+            "Blk 131": [
+                1006,
+                12
+            ],
+            "Opp Blk 125": [
+                1682,
+                20
+            ],
+            "Aft Muhajirin Mque": [
+                1797,
+                21
+            ]
+        },
+        "school": {
+            "Beatty Secondary School": [
+                2441,
+                29
+            ],
+            "PCF Hampton Pre-School": [
+                985,
+                12
+            ],
+            "Guangyang Secondary School": [
+                1126,
+                13
+            ]
+        },
+        "restaurant": {
+            "Cuisine Xpress Pte Ltd": [
+                1894,
+                23
+            ],
+            "Qiangji Chicken Rice": [
+                78,
+                1
+            ],
+            "\u81ea\u5728\u9f4b Zi Zai Vegetarian - Bishan": [
+                128,
+                2
+            ],
+            "Al-Aisa Prata House": [
+                502,
+                6
+            ],
+            "Zichar": [
+                164,
+                2
+            ],
+            "M3 Makan Project Western": [
+                164,
+                2
+            ],
+            "Tai Zi (Bishan Branch)": [
+                164,
+                2
+            ],
+            "Rui Tian Cheng": [
+                183,
+                2
+            ],
+            "Serangoon Nasi Padang": [
+                185,
+                2
+            ],
+            "Tai Heng Handmade Dim Sum": [
+                185,
+                2
+            ],
+            "Home Eatery": [
+                239,
+                3
+            ],
+            "Wei Ji Porridge \u5049\u8bb0\u7ca5": [
+                242,
+                3
+            ],
+            "Pure Heart Vegetarian": [
+                239,
+                3
+            ],
+            "Jiu Fu Prawn Noodles": [
+                297,
+                4
+            ],
+            "Old honkong": [
+                934,
+                11
+            ],
+            "Yam Cheong Nam Kee": [
+                939,
+                11
+            ],
+            "Khoon Kee Fishball Noodles": [
+                290,
+                3
+            ],
+            "Prata Talk": [
+                306,
+                4
+            ]
+        }
     }
 }
