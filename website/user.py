@@ -118,7 +118,7 @@ def favourites(username):
         .filter(Favourites.user_id == current_user.id)\
         .filter(Flat.address.like(address)).all()
         if flats:
-            return render_template("favourites.html", user=current_user, flats=flats)
+            return render_template("favourites.html", user=current_user, flats=flats, image=url)
         else:
             flash('No results found.', category='error')
             return render_template("favourites.html", user=current_user, flats=[])

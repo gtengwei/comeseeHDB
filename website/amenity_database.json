@@ -2688,5 +2688,269 @@
                 4
             ]
         }
+    },
+    "ANG MO KIO ST 52 BLK 588A 561588": {
+        "bus_station": {
+            "Opp Blk 522": [
+                488,
+                6
+            ],
+            "Blk 522": [
+                556,
+                7
+            ],
+            "Opp Ang Mo Kio Stn": [
+                1192,
+                14
+            ],
+            "Bef Ang Mo Kio Stn Exit B": [
+                1907,
+                23
+            ]
+        },
+        "subway_station": {
+            "Ang Mo Kio": [
+                2084,
+                25
+            ]
+        },
+        "school": {
+            "Anderson Secondary School": [
+                800,
+                10
+            ],
+            "Jing Shan Primary School": [
+                625,
+                7
+            ]
+        },
+        "restaurant": {
+            "Ying Yi Kway Chap Braised Duck": [
+                434,
+                5
+            ],
+            "Delisnacks": [
+                641,
+                8
+            ],
+            "Elaine's Happy Rojak": [
+                720,
+                9
+            ],
+            "Castel Pte. Ltd.": [
+                1096,
+                13
+            ],
+            "S-11 AMK 450": [
+                839,
+                10
+            ],
+            "The Castel Cafe": [
+                1133,
+                13
+            ],
+            "Haji Karim Prata Palace": [
+                498,
+                6
+            ],
+            "Fu Hua Soya Bean": [
+                12,
+                0
+            ],
+            "Vegetarian Pancake": [
+                435,
+                5
+            ],
+            "\u5bf6\u83ef\u8336\u5ba4": [
+                435,
+                5
+            ],
+            "Tian Tian Lai Fish Soup": [
+                435,
+                5
+            ],
+            "Wantom Stall Food": [
+                435,
+                5
+            ],
+            "Nian Nian Fa Dim Sum #01-21": [
+                435,
+                5
+            ],
+            "Ann Hoo Teochew Porridge": [
+                435,
+                5
+            ],
+            "#01-79 Hawker Stall": [
+                440,
+                5
+            ]
+        },
+        "doctor": {
+            "Peace Clinic": [
+                728,
+                9
+            ],
+            "Ci Kang TCM": [
+                728,
+                9
+            ],
+            "Zou Yumin TCM": [
+                1065,
+                13
+            ],
+            "Meenara Clinic": [
+                1312,
+                16
+            ],
+            "Tan Yang Khai": [
+                937,
+                11
+            ],
+            "Pacific Mah Medical": [
+                947,
+                11
+            ]
+        }
+    },
+    "JLN MEMBINA BLK 20 164020": {
+        "bus_station": {
+            "Blk 25b": [
+                982,
+                12
+            ],
+            "Blk 129": [
+                2246,
+                27
+            ],
+            "Opp Blk 48": [
+                1049,
+                12
+            ]
+        },
+        "subway_station": {
+            "Tiong Bahru": [
+                495,
+                6
+            ]
+        },
+        "school": {
+            "The Etiquette School Singapore": [
+                641,
+                8
+            ],
+            "Zhangde Primary School": [
+                296,
+                4
+            ],
+            "Hampton Pre-School": [
+                1015,
+                12
+            ]
+        },
+        "restaurant": {
+            "Long John Silver's": [
+                801,
+                10
+            ],
+            "The Soup Spoon": [
+                583,
+                7
+            ],
+            "Shihlin Taiwan Street Snacks": [
+                1913,
+                23
+            ],
+            "KFC": [
+                849,
+                10
+            ],
+            "MOS Burger": [
+                855,
+                10
+            ],
+            "4Fingers Crispy Chicken": [
+                854,
+                10
+            ],
+            "Pezzo": [
+                854,
+                10
+            ],
+            "SUSHI TEI": [
+                854,
+                10
+            ],
+            "Subway": [
+                591,
+                7
+            ],
+            "Xi De Li": [
+                2126,
+                25
+            ],
+            "Ding Ji Membina": [
+                660,
+                8
+            ],
+            "Happy Oven Bakery": [
+                2054,
+                24
+            ],
+            "Hong Kong Best Soup": [
+                2010,
+                24
+            ],
+            "McDonald's Tiong Bahru Plaza": [
+                844,
+                10
+            ],
+            "Coq & Balls@Tiong Bahru": [
+                859,
+                10
+            ],
+            "Beo Crescent Market": [
+                2064,
+                25
+            ]
+        },
+        "doctor": {
+            "Thomson Women's Clinic": [
+                560,
+                7
+            ],
+            "Babes & Tots Clinic": [
+                1025,
+                12
+            ],
+            "TEETH @ Tiong Bahru": [
+                772,
+                9
+            ],
+            "Family Clinic": [
+                569,
+                7
+            ],
+            "Yim Clinic & Surgery": [
+                690,
+                8
+            ],
+            "Liu TCM clinic": [
+                648,
+                8
+            ],
+            "Chou Chung Shih Dr": [
+                2037,
+                24
+            ],
+            "Herbal-Basic Tcm Clinic": [
+                2023,
+                24
+            ],
+            "First Health Clinic & Surgery": [
+                903,
+                11
+            ]
+        }
     }
 }
