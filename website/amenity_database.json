@@ -2219,130 +2219,6 @@
             ]
         }
     },
-    "FAJAR RD BLK 437": {
-        "bus_station": {
-            "Fajar Stn": [
-                361,
-                4
-            ],
-            "Opp Greenridge Sec Sch": [
-                992,
-                12
-            ],
-            "Greenridge Sec Sch": [
-                987,
-                12
-            ],
-            "Opp Blk 451": [
-                674,
-                8
-            ],
-            "Opp Blk 171": [
-                2029,
-                24
-            ]
-        },
-        "subway_station": {
-            "Fajar": [
-                325,
-                4
-            ],
-            "Bangkit": [
-                1011,
-                12
-            ]
-        },
-        "school": {
-            "Zhenghua Primary School": [
-                2431,
-                29
-            ],
-            "Greenridge Secondary School": [
-                1236,
-                15
-            ],
-            "Greenridge Primary School": [
-                1271,
-                15
-            ]
-        },
-        "restaurant": {
-            "McDonald's": [
-                304,
-                4
-            ],
-            "Chang Cheng": [
-                441,
-                5
-            ],
-            "Subway": [
-                948,
-                11
-            ],
-            "KFC": [
-                1040,
-                12
-            ],
-            "\u8d22\u5e08\u5085\u6e2f\u5f0f\u70e7\u814a": [
-                304,
-                4
-            ],
-            "Kim San Seafood": [
-                304,
-                4
-            ],
-            "Wanton Mee": [
-                441,
-                5
-            ],
-            "138 Duck rice": [
-                441,
-                5
-            ],
-            "Jin Shan": [
-                441,
-                5
-            ],
-            "HK Roasted Duck": [
-                441,
-                5
-            ],
-            "Golden Rooster": [
-                441,
-                5
-            ],
-            "Chao Zhoou": [
-                441,
-                5
-            ],
-            "Vegeterian Food": [
-                441,
-                5
-            ],
-            "Snacks": [
-                441,
-                5
-            ],
-            "Fajar Noodle & Fish Soup": [
-                441,
-                5
-            ],
-            "Siang Garden Fajar": [
-                441,
-                5
-            ],
-            "Tanaka Vegetarian Food": [
-                441,
-                5
-            ]
-        },
-        "doctor": {
-            "Wan Siang Chinese Medical Hall": [
-                441,
-                5
-            ]
-        }
-    },
     "ADMIRALTY DR BLK 353A 751353": {
         "bus_station": {
             "Sembawang Int": [
@@ -2468,6 +2344,612 @@
             "Temasek Medical Centre Sembawang": [
                 1296,
                 15
+            ]
+        }
+    },
+    "CHOA CHU KANG CRES BLK 674 680674": {
+        "subway_station": {
+            "Yew Tee": [
+                1722,
+                20
+            ]
+        },
+        "school": {
+            "Unity Primary School": [
+                675,
+                8
+            ],
+            "Chreston School Of Commerce": [
+                1471,
+                18
+            ],
+            "Unity Secondary School": [
+                1446,
+                17
+            ]
+        },
+        "restaurant": {
+            "Subway": [
+                1673,
+                20
+            ],
+            "Ming Kitchen Live Seafood \u540d\u53a8\u6d3b\u6d77\u9c9c - Yew Tee Square": [
+                1195,
+                14
+            ],
+            "Eighteen Chefs Yew Tee Point": [
+                1674,
+                20
+            ],
+            "Chang Cheng Food Paradise Pte Ltd": [
+                1690,
+                20
+            ],
+            "Encik Tan": [
+                1672,
+                20
+            ],
+            "Power Nasi Nemak": [
+                1676,
+                20
+            ],
+            "McDonald's": [
+                1658,
+                20
+            ],
+            "Kimly Seafood \u91d1\u5473\u6d77\u9c9c (673B Choa Chu Kang)": [
+                119,
+                1
+            ],
+            "Mixed Rice": [
+                119,
+                1
+            ],
+            "The Chef's Place": [
+                952,
+                11
+            ],
+            "Qing Xiang Ji": [
+                952,
+                11
+            ],
+            "Nasi Padang": [
+                952,
+                11
+            ],
+            "Loyang Way Big Prawn Noodles \u5927\u867e\u9762": [
+                398,
+                5
+            ],
+            "678A Wanton Mee": [
+                398,
+                5
+            ],
+            "Yen Sen Seafood": [
+                980,
+                12
+            ],
+            "Ah Boy Chicken Rice (Mentor Eric Teo)": [
+                398,
+                5
+            ],
+            "No. 1 Indian Makan": [
+                398,
+                5
+            ],
+            "Chuan Wei Mala Hot Pot": [
+                973,
+                12
+            ],
+            "Seafood Soup": [
+                973,
+                12
+            ],
+            "Fusion Express": [
+                962,
+                11
+            ]
+        },
+        "doctor": {
+            "Q & M Dental Surgery (Yew Tee Point)": [
+                1679,
+                20
+            ],
+            "Greenlife Clinic & Surgery Pte Ltd": [
+                1195,
+                14
+            ]
+        }
+    },
+    "CHOA CHU KANG CTRL BLK 205 680205": {
+        "bus_station": {
+            "Cck Polyclinic": [
+                468,
+                6
+            ]
+        },
+        "subway_station": {
+            "Keat Hong": [
+                662,
+                8
+            ],
+            "South View": [
+                1401,
+                17
+            ]
+        },
+        "school": {
+            "Chua Chu Kang Secondary School": [
+                589,
+                7
+            ],
+            "South View Primary School": [
+                275,
+                3
+            ]
+        },
+        "restaurant": {
+            "McDonald's": [
+                1054,
+                13
+            ],
+            "Taste of CCK": [
+                61,
+                1
+            ],
+            "NKS Restaurant": [
+                537,
+                6
+            ],
+            "Maruhachi - Donburi & Curry": [
+                1059,
+                13
+            ],
+            "Rong Kee Roasted Delights": [
+                1046,
+                12
+            ],
+            "Ding Ji Teochew Noodle": [
+                1048,
+                12
+            ],
+            "Ming Kitchen Seafood \u540d\u53a8\u6d77\u9c9c - Keat Hong": [
+                694,
+                8
+            ],
+            "Yu Pan Fish Soup": [
+                586,
+                7
+            ],
+            "Fu Fa Fish Soup": [
+                596,
+                7
+            ],
+            "Chai Shu Kway Chap": [
+                611,
+                7
+            ],
+            "Millicent Pte Ltd": [
+                611,
+                7
+            ],
+            "Hao You Ji \u597d\u53cb\u8bb0 roast meat": [
+                1282,
+                15
+            ],
+            "(Fu Chan) Hong Kong Ah Chun Roasted Delights": [
+                1272,
+                15
+            ],
+            "(Yummy Court) Aneka Selera": [
+                1272,
+                15
+            ],
+            "(Yummy Court) Porridge": [
+                1272,
+                15
+            ],
+            "(Fu Chan) Xian Mei": [
+                1272,
+                15
+            ],
+            "(Fu Chan) Harummanis Muslim Food": [
+                1272,
+                15
+            ],
+            "(yummy Court) Xiang Wang Rojak": [
+                1272,
+                15
+            ],
+            "(Fu Chan) Xiang Ji": [
+                1272,
+                15
+            ]
+        },
+        "doctor": {
+            "Exersise Place": [
+                143,
+                2
+            ],
+            "OneCare Medical Clinic Keat Hong": [
+                694,
+                8
+            ],
+            "Royal Care Medical": [
+                1062,
+                13
+            ],
+            "House of Tui-Na - Teck Whye Lane": [
+                641,
+                8
+            ]
+        }
+    },
+    "BISHAN ST 11 BLK 145 570145": {
+        "bus_station": {
+            "Blk 131": [
+                1006,
+                12
+            ],
+            "Opp Blk 125": [
+                1682,
+                20
+            ],
+            "Aft Muhajirin Mque": [
+                1797,
+                21
+            ]
+        },
+        "school": {
+            "Beatty Secondary School": [
+                2441,
+                29
+            ],
+            "PCF Hampton Pre-School": [
+                985,
+                12
+            ],
+            "Guangyang Secondary School": [
+                1126,
+                13
+            ]
+        },
+        "restaurant": {
+            "Cuisine Xpress Pte Ltd": [
+                1894,
+                23
+            ],
+            "Qiangji Chicken Rice": [
+                78,
+                1
+            ],
+            "\u81ea\u5728\u9f4b Zi Zai Vegetarian - Bishan": [
+                128,
+                2
+            ],
+            "Al-Aisa Prata House": [
+                502,
+                6
+            ],
+            "Zichar": [
+                164,
+                2
+            ],
+            "M3 Makan Project Western": [
+                164,
+                2
+            ],
+            "Tai Zi (Bishan Branch)": [
+                164,
+                2
+            ],
+            "Rui Tian Cheng": [
+                183,
+                2
+            ],
+            "Serangoon Nasi Padang": [
+                185,
+                2
+            ],
+            "Tai Heng Handmade Dim Sum": [
+                185,
+                2
+            ],
+            "Home Eatery": [
+                239,
+                3
+            ],
+            "Wei Ji Porridge \u5049\u8bb0\u7ca5": [
+                242,
+                3
+            ],
+            "Pure Heart Vegetarian": [
+                239,
+                3
+            ],
+            "Jiu Fu Prawn Noodles": [
+                297,
+                4
+            ],
+            "Old honkong": [
+                934,
+                11
+            ],
+            "Yam Cheong Nam Kee": [
+                939,
+                11
+            ],
+            "Khoon Kee Fishball Noodles": [
+                290,
+                3
+            ],
+            "Prata Talk": [
+                306,
+                4
+            ]
+        }
+    },
+    "ANG MO KIO ST 52 BLK 588A 561588": {
+        "bus_station": {
+            "Opp Blk 522": [
+                488,
+                6
+            ],
+            "Blk 522": [
+                556,
+                7
+            ],
+            "Opp Ang Mo Kio Stn": [
+                1192,
+                14
+            ],
+            "Bef Ang Mo Kio Stn Exit B": [
+                1907,
+                23
+            ]
+        },
+        "subway_station": {
+            "Ang Mo Kio": [
+                2084,
+                25
+            ]
+        },
+        "school": {
+            "Anderson Secondary School": [
+                800,
+                10
+            ],
+            "Jing Shan Primary School": [
+                625,
+                7
+            ]
+        },
+        "restaurant": {
+            "Ying Yi Kway Chap Braised Duck": [
+                434,
+                5
+            ],
+            "Delisnacks": [
+                641,
+                8
+            ],
+            "Elaine's Happy Rojak": [
+                720,
+                9
+            ],
+            "Castel Pte. Ltd.": [
+                1096,
+                13
+            ],
+            "S-11 AMK 450": [
+                839,
+                10
+            ],
+            "The Castel Cafe": [
+                1133,
+                13
+            ],
+            "Haji Karim Prata Palace": [
+                498,
+                6
+            ],
+            "Fu Hua Soya Bean": [
+                12,
+                0
+            ],
+            "Vegetarian Pancake": [
+                435,
+                5
+            ],
+            "\u5bf6\u83ef\u8336\u5ba4": [
+                435,
+                5
+            ],
+            "Tian Tian Lai Fish Soup": [
+                435,
+                5
+            ],
+            "Wantom Stall Food": [
+                435,
+                5
+            ],
+            "Nian Nian Fa Dim Sum #01-21": [
+                435,
+                5
+            ],
+            "Ann Hoo Teochew Porridge": [
+                435,
+                5
+            ],
+            "#01-79 Hawker Stall": [
+                440,
+                5
+            ]
+        },
+        "doctor": {
+            "Peace Clinic": [
+                728,
+                9
+            ],
+            "Ci Kang TCM": [
+                728,
+                9
+            ],
+            "Zou Yumin TCM": [
+                1065,
+                13
+            ],
+            "Meenara Clinic": [
+                1312,
+                16
+            ],
+            "Tan Yang Khai": [
+                937,
+                11
+            ],
+            "Pacific Mah Medical": [
+                947,
+                11
+            ]
+        }
+    },
+    "JLN MEMBINA BLK 20 164020": {
+        "bus_station": {
+            "Blk 25b": [
+                982,
+                12
+            ],
+            "Blk 129": [
+                2246,
+                27
+            ],
+            "Opp Blk 48": [
+                1049,
+                12
+            ]
+        },
+        "subway_station": {
+            "Tiong Bahru": [
+                495,
+                6
+            ]
+        },
+        "school": {
+            "The Etiquette School Singapore": [
+                641,
+                8
+            ],
+            "Zhangde Primary School": [
+                296,
+                4
+            ],
+            "Hampton Pre-School": [
+                1015,
+                12
+            ]
+        },
+        "restaurant": {
+            "Long John Silver's": [
+                801,
+                10
+            ],
+            "The Soup Spoon": [
+                583,
+                7
+            ],
+            "Shihlin Taiwan Street Snacks": [
+                1913,
+                23
+            ],
+            "KFC": [
+                849,
+                10
+            ],
+            "MOS Burger": [
+                855,
+                10
+            ],
+            "4Fingers Crispy Chicken": [
+                854,
+                10
+            ],
+            "Pezzo": [
+                854,
+                10
+            ],
+            "SUSHI TEI": [
+                854,
+                10
+            ],
+            "Subway": [
+                591,
+                7
+            ],
+            "Xi De Li": [
+                2126,
+                25
+            ],
+            "Ding Ji Membina": [
+                660,
+                8
+            ],
+            "Happy Oven Bakery": [
+                2054,
+                24
+            ],
+            "Hong Kong Best Soup": [
+                2010,
+                24
+            ],
+            "McDonald's Tiong Bahru Plaza": [
+                844,
+                10
+            ],
+            "Coq & Balls@Tiong Bahru": [
+                859,
+                10
+            ],
+            "Beo Crescent Market": [
+                2064,
+                25
+            ]
+        },
+        "doctor": {
+            "Thomson Women's Clinic": [
+                560,
+                7
+            ],
+            "Babes & Tots Clinic": [
+                1025,
+                12
+            ],
+            "TEETH @ Tiong Bahru": [
+                772,
+                9
+            ],
+            "Family Clinic": [
+                569,
+                7
+            ],
+            "Yim Clinic & Surgery": [
+                690,
+                8
+            ],
+            "Liu TCM clinic": [
+                648,
+                8
+            ],
+            "Chou Chung Shih Dr": [
+                2037,
+                24
+            ],
+            "Herbal-Basic Tcm Clinic": [
+                2023,
+                24
+            ],
+            "First Health Clinic & Surgery": [
+                903,
+                11
             ]
         }
     }

@@ -2,6 +2,7 @@
 from cgi import print_exception
 from flask import Blueprint, render_template, request, flash, jsonify, session
 from flask_login import login_required, current_user
+from regex import P
 from .models import *
 from . import db
 import json
@@ -14,8 +15,8 @@ from .misc import *
 import itertools
 import requests
 
-views = Blueprint('views', __name__)
 image = generate_flat_image()
+views = Blueprint('views', __name__)
 #url = url_for('static', filename='images/' + str(random.randint(1,10)) + '.jpg')
 INDEX = 20 # Number of items to show on homepage
 
@@ -27,8 +28,8 @@ def delete_review():
     review = Review.query.get(reviewId)
     if review:
         if review.user_id == current_user.id:
+            flatId = review.flat_id
             db.session.delete(review)
-            flash('Review deleted!', category='success')
             db.session.commit()
     return jsonify({})
 
@@ -38,11 +39,15 @@ def delete_review():
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
 def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
-    '''
+    
     photo = view_image(flatId)
+
+    latitude = str(flat.latitude)
+    longitude = str(flat.longitude)
 
     url1 = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference="
     url2 = "&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+    
     if photo:
         length = len(photo)
         cur = 0
@@ -54,9 +59,10 @@ def flat_details(flatId):
                 temp = url1 + photo[cur] + url2
                 url.append(temp)
             cur = cur + 1
+            
     else:
-    '''
-    url = ["\static\logo.png", "\static\logo.png", "\static\logo.png"]
+        url_staticimage = "https://maps.googleapis.com/maps/api/streetview?size=300x200&location="+latitude+","+longitude+"&fov=80&heading=70&pitch=0&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+        url = [url_staticimage,url_staticimage,url_staticimage]
         
     if request.method == 'POST':
         review = request.form.get('review')
@@ -78,7 +84,7 @@ def flat_details(flatId):
     # f = open('testing.json') #FOR TESTING CAUSE EXPENSIVE
     # amenity = json.load(f)
     # amenity = amenity
-    return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity)
+    return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity,url_staticimage = url_staticimage)
 
 
 @views.route('/unfavourite', methods=['POST'])
@@ -126,16 +132,14 @@ def home():
     conn = sqlite3.connect("database.db")
     #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
-    myquery = ("SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
+    myquery = (
+        "SELECT id FROM Flat ORDER BY numOfFavourites DESC;")
     c.execute(myquery)
-    data = list(c.fetchall())
-    list_x = []
-    for x in range(INDEX):
-        flat_id = data[x][0]
-        list_x.append(flat_id)
     data = list(c.fetchall())
     # random.shuffle(data)
     RANDOM = generate_random_flat()
+    data = data[:INDEX]
+
     # Search for flats from homepage
     if request.method == 'POST':
         price = request.form.getlist('price')
@@ -158,13 +162,12 @@ def home():
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
-                if i % 2 == 0:
-                    data = list(itertools.chain(Flat.query.filter(
-                        Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
-                    # print(searchedFlats)
-            # print(data[0])
-            # return render_template("search.html", user=current_user, flats=data[:INDEX])
-
+                if i%2 == 0:
+                    data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
+                    #print(searchedFlats)
+            #print(data[0])                
+            #return render_template("search.html", user=current_user, flats=data[:INDEX])
+            
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
                     flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
@@ -321,8 +324,11 @@ def home():
                 return render_template('search.html', user=current_user, flats = [], random = RANDOM, image = image)
 
     session.clear()
-    #return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
-    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], favourites = Favourites.query.all(), random = RANDOM, image = image)
+    print(image)
+    image_id = random.randint(0,(len(image)-1))
+    print(image_id)
+    #return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], favourites = Favourites.query.all(), random = RANDOM, image = image, image_id = image_id)
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in data], favourites = Favourites.query.all(), random = RANDOM, image = image, image_id = image_id)
 
 
 
@@ -330,7 +336,7 @@ def home():
 # Infinite Scrolling for Home Page
 @views.route('/load_home', methods=['GET', 'POST'])
 def load_home():
-
+    image_id = random.randint(0,(len(image)-1))
     # In order to load sorted flats faster
     conn = sqlite3.connect("database.db")
     #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
@@ -544,7 +550,7 @@ def load_home():
 
     else:
         myquery = (
-            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
         c.execute(myquery)
         data = list(c.fetchall())
         # random.shuffle(data)
@@ -953,7 +959,7 @@ def sort(criteria):
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
-                    data = data.extend(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
+                    data.extend(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
                     #print(searchedFlats)
             #print(data[0])                
             #return render_template("search.html", user=current_user, flats=data[:INDEX])
@@ -1031,6 +1037,9 @@ def sort(criteria):
                 searchedFlats = Flat.query.filter(
                     Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
+            
+            else:
+                print(data)
 
             return sorting_criteria(criteria, data)
 
@@ -1616,48 +1625,43 @@ def filter():
 ## getting image (in flat details only)
 def view_image(flatId):
 
-    # find the name of the flat to find the place id
+    #find the name of the flat to find the place id
     flat = Flat.query.filter_by(id=flatId).first_or_404()
     flat = Flat.query.get(flatId)
     blk = flat.block
     street = flat.street_name
-
+    
     name = blk + street + "hdb"
 
     while(name.find(' ') != -1):
         name = name.replace(' ', '%20')
 
-    url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + \
-        name + "&inputtype=textquery&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+    url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + name + "&inputtype=textquery&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
 
-    payload = {}
+    payload={}
     headers = {}
-
-    response = requests.request(
-        "GET", url, headers=headers, data=payload).json()
+    response = requests.request("GET", url, headers=headers, data=payload).json()
     if response['status'] != 'OK':
         return None
     else:
         primary = response['candidates'][0]
         id = primary['place_id']
 
-        # finding photo reference
-        url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + \
-            id + "&fields=photos&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+        #finding photo reference
+        url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + id +"&fields=photos&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
 
-        payload = {}
+        payload={}
         headers = {}
 
-        response = requests.request(
-            "GET", url, headers=headers, data=payload).json()
+        response = requests.request("GET", url, headers=headers, data=payload).json()
         res = response['result']
         photoRef = []
         cur = 0
         if 'photos' not in res:
-            while (cur < 3):
-                photoRef.append(0)
+            return photoRef
         photos = res['photos']
-        noOfPhotos = len(photos)  # max number of photo references is 10
+        noOfPhotos = len(photos) #max number of photo references is 10
+        cur = 0
         while (cur < noOfPhotos):
             temp1 = photos[cur]
             temp2 = temp1['photo_reference']
@@ -1669,12 +1673,8 @@ def view_image(flatId):
                 photoRef.append(0)
 
         return photoRef
-        # by right should return an array of photo references only, and use these references to get the photo
-
 
 def get_amenity(flatId):
-
-
     cwd = Path(__file__).parent.absolute()
     print(cwd)
     os.chdir(cwd)
@@ -1714,6 +1714,8 @@ def get_amenity(flatId):
                 length = response1["results"]
                 for i in range(len(length)):
                     name = response1["results"][i]['name']
+                    if len(name) > 30:
+                        continue
                     if (amenity == 'school') and ('School' not in name):
                         continue
                     lat_of_nearby = response1['results'][i]['geometry']['location']['lat']

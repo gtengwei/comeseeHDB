@@ -127,7 +127,7 @@
 
 
 <div class="street_name">
-  <h1>{{flat.address}}</h1>
+  <h1>{{flat.address_no_postal_code}}</h1>
   {% if user.is_authenticated %}
         {% if flat.id in user.favourites|map(attribute="flat_id")|list %}
         <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="unfavourite({{ flat.id }})">
@@ -185,9 +185,7 @@
       <p class="text-muted mb-0">{{flat.block}}</p>
   </div>
 </div>
-
 <hr>
-
 <div class="row">
   <div class="col-sm-3">
       <p class="mb-0">Flat Type</p>
@@ -202,9 +200,7 @@
       <p class="text-muted mb-0">{{flat.floor_area_sqm}}</p>
   </div>
 </div>
-
 <hr>
-
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Storey Range</p>
@@ -219,9 +215,7 @@
     <p class="text-muted mb-0">${{flat.price_per_sqm}}</p>
 </div>
 </div>
-
 <hr>
-
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Sold Date</p>
@@ -236,9 +230,7 @@
     <p class="text-muted mb-0">{{flat.flat_model}}</p>
 </div>
 </div>
-
 <hr>
-
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Town</p>
@@ -253,9 +245,7 @@
     <p class="text-muted mb-0">{{flat.remaining_lease}}</p>
 </div>
 </div>
-
 <hr>
-
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Postal District</p>
@@ -373,26 +363,29 @@
   <p class = "text-muted mb-0">{{key1}}</p>
   {% endfor %}
 </div>
+
 <div class="col-sm-2 border-none">
   <br>
   <br>
   <div class = "row">
-  <div class = 'col-sm-4'>
-  {%for key1,value1 in amenities["school"].items()%}
-  <p class = "text-muted mb-0">{{value1[0]}}m</p>
-    {% endfor %}
-    </div>
-  <div class = "col-sm-2 border-none">
+    <div class = 'col-sm-4'>
     {%for key1,value1 in amenities["school"].items()%}
-    <p class = "text-muted mb-0">{{value1[1]}}min</p>
-    {% endfor %}
-  </div>
+    <p class = "text-muted mb-0">{{value1[0]}}m</p>
+      {% endfor %}
+    </div>
+    <div class = "col-sm-2 border-none">
+      {%for key1,value1 in amenities["school"].items()%}
+      <p class = "text-muted mb-0">{{value1[1]}}min</p>
+      {% endfor %}
+    </div>
   {%endif%}
-</div>
+  </div>
 </div>
 
 </div>
+
 <hr>
+
 <div class="row">
   <div class="col-sm-4">
     <button class="amenities_btn" type="button" disabled>
@@ -494,7 +487,7 @@
 {% if flat.reviews|length == 0 %}
   <h3 class="text-muted mb-0" align="center">No reviews yet!</h3>
 {% else %}
-  <h3 class="text-muted mb-0" align="right">{{flat.reviews|length}} Review(s) Posted</h3>
+  <h3 class="text-muted mb-0" align="right">{{flat.reviews|length}} Reviews Posted</h3>
 {% endif %}
 
 <ul class="list-group list-group-flush" id="reviews">
