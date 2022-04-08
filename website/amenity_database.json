@@ -2952,5 +2952,97 @@
                 11
             ]
         }
+    },
+    "ALJUNIED CRES BLK 96 380096": {
+        "bus_station": {
+            "Geylang Polyclinic": [
+                487,
+                6
+            ],
+            "Opp Geylang Meth Sec Sch": [
+                2162,
+                26
+            ],
+            "Blk 125": [
+                2371,
+                28
+            ]
+        },
+        "restaurant": {
+            "CCK 190 Wanton Noodles": [
+                2589,
+                31
+            ],
+            "Cheng Mun Kee Pig's Organ Soup": [
+                2763,
+                33
+            ],
+            "Lucky Specialties": [
+                758,
+                9
+            ],
+            "E & D co (#01-65)": [
+                534,
+                6
+            ],
+            "Happy Chicken RIce": [
+                544,
+                6
+            ],
+            "Ma Kee Homemade Paus": [
+                536,
+                6
+            ],
+            "YONG LI COFFEE STATION": [
+                531,
+                6
+            ],
+            "\u5c0f\u996d\u4e2d\u5fc3\uff08\u9c7c\u6c64\u5c0f\u644a\uff09\u597d\u5403": [
+                119,
+                1
+            ],
+            "Su Shi Jia Xiang Wei": [
+                2714,
+                32
+            ],
+            "Kungfu Mala Hot Pot": [
+                529,
+                6
+            ],
+            "Casuarina Curry (Aljunied)": [
+                529,
+                6
+            ],
+            "Joyful Seafood": [
+                529,
+                6
+            ],
+            "Soupreme Seafood Aljunied": [
+                529,
+                6
+            ],
+            "Joyful Seafood 116": [
+                529,
+                6
+            ]
+        },
+        "doctor": {
+            "The Women's Specialist": [
+                278,
+                3
+            ],
+            "Ling Xin TCM Center": [
+                429,
+                5
+            ],
+            "Guang Yi Tang TCM Centre LLP": [
+                1013,
+                12
+            ],
+            "THK Senior Group Home @ Pipit": [
+                2342,
+                28
+            ]
+        }
     }
 }

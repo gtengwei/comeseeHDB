@@ -60,3 +60,10 @@ button[class^="favourite_button"] {
     font-size: 20px;
     line-height: 1.33;
 }
+
+.fixed-bottom{
+    padding: 10px 10px
+}
+
+  
+

@@ -65,4 +65,3 @@ def create_mysql_database():
     cursor = database.cursor()
     cursor.execute("CREATE DATABASE IF NOT EXISTS mysql_database")
 
-

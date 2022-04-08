@@ -46,3 +46,23 @@ function favourite_count(flatID) {
     console.log("onload print this");
   })
 }
+
+function initialize() {
+  const fenway = { lat: 1.45053763016096, lng: 103.819135455324 };
+  const map = new google.maps.Map(document.getElementById("map"), {
+    center: fenway,
+    zoom: 14,
+  });
+  const panorama = new google.maps.StreetViewPanorama(
+    document.getElementById("pano"),
+    {
+      position: fenway,
+      pov: {
+        heading: 34,
+        pitch: 10,
+      },
+    }
+  );
+
+  map.setStreetView(panorama);
+}
