@@ -14,8 +14,8 @@ from .misc import *
 import itertools
 import requests
 
-views = Blueprint('views', __name__)
 image = generate_flat_image()
+views = Blueprint('views', __name__)
 #url = url_for('static', filename='images/' + str(random.randint(1,10)) + '.jpg')
 INDEX = 20 # Number of items to show on homepage
 
@@ -321,8 +321,11 @@ def home():
                 return render_template('search.html', user=current_user, flats = [], random = RANDOM, image = image)
 
     session.clear()
+    print(image)
+    image_id = random.randint(0,(len(image)-1))
+    print(image_id)
     #return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
-    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], favourites = Favourites.query.all(), random = RANDOM, image = image)
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], favourites = Favourites.query.all(), random = RANDOM, image = image, image_id = image_id)
 
 
 
@@ -330,7 +333,7 @@ def home():
 # Infinite Scrolling for Home Page
 @views.route('/load_home', methods=['GET', 'POST'])
 def load_home():
-
+    image_id = random.randint(0,(len(image)-1))
     # In order to load sorted flats faster
     conn = sqlite3.connect("database.db")
     #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")

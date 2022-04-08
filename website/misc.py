@@ -9,6 +9,7 @@ from .models import Flat
 from . import db
 from datetime import datetime
 import json
+import random
 
 INDEX = 20
 
@@ -71,7 +72,10 @@ def generate_random_flat():
     return random_num
 
 def generate_flat_image():
-    url = ["\static\hdb_image.jpg"]
+    url = ["\static\hdb_image1.jpg", "\static\hdb_image2.jpg", "\static\hdb_image3.jpg",
+    "\static\hdb_image4.jpg", "\static\hdb_image5.jpg"]
+    #url = url_for('static', filename='hdb_image/' + str(random.randint(1,10)) + '.jpg')
+    #url = ['\static\hdb_image1.jpg']
     return url
 
 def sorting_criteria(criteria, flats = []):

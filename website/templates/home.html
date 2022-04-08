@@ -199,7 +199,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <img src="{{image[0]}}" class="img-thumbnail">
+              <img src="{{image[image_id]}}" class="img-thumbnail">
             </div>
             <div class="col">
               <p><strong>Price: </strong>${{flat.resale_price}}</p>
@@ -216,7 +216,7 @@
   </div>
         
     
-  <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}" data-image="{{image[0]}}">
+  <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}" data-image="{{image[image_id%2]}}">
 <script type="text/javascript">
 
   var index = 20;
