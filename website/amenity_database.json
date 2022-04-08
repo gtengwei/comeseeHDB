@@ -2342,5 +2342,133 @@
                 5
             ]
         }
+    },
+    "ADMIRALTY DR BLK 353A 751353": {
+        "bus_station": {
+            "Sembawang Int": [
+                1497,
+                18
+            ],
+            "Sembawang Interchange": [
+                1211,
+                14
+            ]
+        },
+        "subway_station": {
+            "Sembawang": [
+                929,
+                11
+            ]
+        },
+        "school": {
+            "ChangChun Language School - Sembawang Branch": [
+                1191,
+                14
+            ],
+            "Canberra Primary School": [
+                1686,
+                20
+            ],
+            "Joy Montessori Schoolhouse": [
+                1019,
+                12
+            ]
+        },
+        "restaurant": {
+            "Sushi Express @ Sun Plaza": [
+                1150,
+                14
+            ],
+            "White Restaurant": [
+                1150,
+                14
+            ],
+            "Pizza Hut Sun Plaza": [
+                1150,
+                14
+            ],
+            "Pot Addiction Sun Plaza": [
+                1259,
+                15
+            ],
+            "Swensen's": [
+                1185,
+                14
+            ],
+            "Broadway Food Centre": [
+                1295,
+                15
+            ],
+            "Chang Cheng - Canberra Link": [
+                952,
+                11
+            ],
+            "Char-Grill Bar @ Canberra Link": [
+                952,
+                11
+            ],
+            "Ezan Satay": [
+                948,
+                11
+            ],
+            "KFC": [
+                1153,
+                14
+            ],
+            "McDonald's": [
+                1150,
+                14
+            ],
+            "Ya Kun Kaya Toast": [
+                1150,
+                14
+            ],
+            "Eight Immortals (Ba Xian) Vegetarian": [
+                987,
+                12
+            ],
+            "Eight Immortals Vegetarian@Sembawang": [
+                1141,
+                14
+            ],
+            "Yu Kee Duck Rice": [
+                1154,
+                14
+            ],
+            "Danzai Noodles": [
+                1140,
+                14
+            ],
+            "Wok Story": [
+                1148,
+                14
+            ],
+            "Wen Jia Bao \u6e29\u5bb6\u9971": [
+                1148,
+                14
+            ],
+            "Kawan Station": [
+                1142,
+                14
+            ],
+            "Restoran Al-Laris": [
+                793,
+                9
+            ]
+        },
+        "doctor": {
+            "Q & M Dental Surgery (Sembawang MRT)": [
+                1148,
+                14
+            ],
+            "Thomson Women\u2019s Clinic": [
+                1150,
+                14
+            ],
+            "Temasek Medical Centre Sembawang": [
+                1296,
+                15
+            ]
+        }
     }
 }

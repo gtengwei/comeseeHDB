@@ -1,23 +1,23 @@
 # For creation of stuff that can be viewed on homepage
 from cgi import print_exception
-from flask import Blueprint, render_template, request, flash, jsonify, session, redirect, url_for
+from flask import Blueprint, render_template, request, flash, jsonify, session
 from flask_login import login_required, current_user
-from regex import P
 from .models import *
 from . import db
 import json
 import sqlite3
 import os
-import random
 from pathlib import Path
 import mysql.connector
 import pymysql
 from .misc import *
 import itertools
+import requests
 
 views = Blueprint('views', __name__)
-
-INDEX = 20  # Number of items to show on homepage
+image = generate_flat_image()
+#url = url_for('static', filename='images/' + str(random.randint(1,10)) + '.jpg')
+INDEX = 20 # Number of items to show on homepage
 
 
 @views.route('/delete-review', methods=['GET', 'POST'])
@@ -38,14 +38,11 @@ def delete_review():
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
 def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
+    '''
     photo = view_image(flatId)
-
-    latitude = str(flat.latitude)
-    longitude = str(flat.longitude)
 
     url1 = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference="
     url2 = "&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
-    
     if photo:
         length = len(photo)
         cur = 0
@@ -58,8 +55,9 @@ def flat_details(flatId):
                 url.append(temp)
             cur = cur + 1
     else:
-        url_staticimage = "https://maps.googleapis.com/maps/api/streetview?size=300x200&location="+latitude+","+longitude+"&fov=80&heading=70&pitch=0&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
-        url = [url_staticimage,url_staticimage,url_staticimage]
+    '''
+    url = ["\static\logo.png", "\static\logo.png", "\static\logo.png"]
+        
     if request.method == 'POST':
         review = request.form.get('review')
 
@@ -80,7 +78,7 @@ def flat_details(flatId):
     # f = open('testing.json') #FOR TESTING CAUSE EXPENSIVE
     # amenity = json.load(f)
     # amenity = amenity
-    return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity,url_staticimage = url_staticimage)
+    return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity)
 
 
 @views.route('/unfavourite', methods=['POST'])
@@ -122,16 +120,19 @@ def favourite_count():
 
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    url = ["\static\hdb_image.jpg"]
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
     # print(os.getcwd())
     conn = sqlite3.connect("database.db")
     #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
-    myquery = (
-        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat;")
+    myquery = ("SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
     c.execute(myquery)
+    data = list(c.fetchall())
+    list_x = []
+    for x in range(INDEX):
+        flat_id = data[x][0]
+        list_x.append(flat_id)
     data = list(c.fetchall())
     # random.shuffle(data)
     RANDOM = generate_random_flat()
@@ -168,173 +169,162 @@ def home():
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
                     flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
+            
             elif address and towns and flat_types:
                 searchedFlats = Flat.query.filter(Flat.address.like(
                     address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
+            
             elif address and towns and amenities:
                 searchedFlats = Flat.query.filter(Flat.address.like(
                     address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
+            
             elif address and towns:
                 searchedFlats = Flat.query.filter(
                     Flat.address.like(address), Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
+            
             elif address and flat_types and amenities:
                 searchedFlats = Flat.query.filter(Flat.address.like(
                     address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
+            
             elif address and flat_types:
                 searchedFlats = Flat.query.filter(Flat.address.like(
                     address), Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
+            
             elif address and amenities:
                 searchedFlats = Flat.query.filter(Flat.address.like(
                     address), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
+            
             elif address:
                 searchedFlats = Flat.query.filter(
                     Flat.address.like(address)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
+            
             elif towns and flat_types and amenities:
                 searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
                     flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
+            
             elif towns and flat_types:
                 searchedFlats = Flat.query.filter(Flat.town.in_(
                     towns), Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
 
             elif towns and amenities:
                 searchedFlats = Flat.query.filter(Flat.town.in_(
                     towns), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
+            
             elif towns:
                 searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
+            
             elif flat_types and amenities:
                 searchedFlats = Flat.query.filter(Flat.flat_type.in_(
                     flat_types), Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
+            
             elif flat_types:
                 searchedFlats = Flat.query.filter(
                     Flat.flat_type.in_(flat_types)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
+            
             elif amenities:
                 searchedFlats = Flat.query.filter(
                     Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)
             else:
-                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data), random=RANDOM)
+                return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), random = RANDOM, image = image)    
+
 
         else:
             if address and flat_types and amenities and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
-                    flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
+            
             elif address and towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(
-                    address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
+            
             elif address and towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(
-                    address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
+            
             elif address and towns:
-                searchedFlats = Flat.query.filter(
-                    Flat.address.like(address), Flat.town.in_(towns)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
+            
             elif address and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(
-                    address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
+            
             elif address and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(
-                    address), Flat.flat_type.in_(flat_types)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
+            
             elif address and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(
-                    address), Flat.amenities.in_(amenities)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.amenities.in_(amenities)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
+            
             elif address:
-                searchedFlats = Flat.query.filter(
-                    Flat.address.like(address)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
+            
             elif towns and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
-                    flat_types), Flat.amenities.in_(amenities)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
+            
             elif towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.town.in_(
-                    towns), Flat.flat_type.in_(flat_types)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
+                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
 
             elif towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(
-                    towns), Flat.amenities.in_(amenities)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
+            
             elif towns:
                 searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
+            
             elif flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(
-                    flat_types), Flat.amenities.in_(amenities)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
+            
             elif flat_types:
-                searchedFlats = Flat.query.filter(
-                    Flat.flat_type.in_(flat_types)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
+            
             elif amenities:
-                searchedFlats = Flat.query.filter(
-                    Flat.amenities.in_(amenities)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
+                searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image = image)
             else:
-                return render_template('search.html', user=current_user, flats=[], random=RANDOM)
+                return render_template('search.html', user=current_user, flats = [], random = RANDOM, image = image)
 
     session.clear()
-    # return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
-    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in range(INDEX)], favourites=Favourites.query.all(), random=RANDOM, image=url)
+    #return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], favourites = Favourites.query.all(), random = RANDOM, image = image)
+
+
 
 
 # Infinite Scrolling for Home Page
@@ -349,7 +339,7 @@ def load_home():
     if criteria:
         if criteria == 'price_high':
             myquery = (
-                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price DESC;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -370,7 +360,7 @@ def load_home():
 
         elif criteria == 'price_low':
             myquery = (
-                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -390,7 +380,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'remaining_lease_high':
             myquery = (
-                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease DESC;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -410,7 +400,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'remaining_lease_low':
             myquery = (
-                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -430,7 +420,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'storey_high':
             myquery = (
-                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range DESC;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -450,7 +440,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'storey_low':
             myquery = (
-                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -470,7 +460,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'price_per_sqm_high':
             myquery = (
-                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm DESC;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -490,7 +480,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'price_per_sqm_low':
             myquery = (
-                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -511,32 +501,50 @@ def load_home():
 
         elif criteria == 'favourites_high':
             myquery = (
-                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
 
-                return jsonify({'data': data[index:limit + index]})
+                data = data[index:limit + index]
+                for x in range(len(data)):
+                    tuple_x = data[x]
+                    list_x = list(tuple_x)
+                    flat_id = list_x[0]
+                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    tuple_x = tuple(list_x)
+                    data[x] = tuple_x
+
+                return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
         elif criteria == 'favourites_low':
             myquery = (
-                "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
 
-                return jsonify({'data': data[index:limit + index]})
+                data = data[index:limit + index]
+                for x in range(len(data)):
+                    tuple_x = data[x]
+                    list_x = list(tuple_x)
+                    flat_id = list_x[0]
+                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    tuple_x = tuple(list_x)
+                    data[x] = tuple_x
+
+                return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
 
     else:
         myquery = (
-            "SELECT id, address, resale_price,flat_type, storey_range FROM Flat;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat;")
         c.execute(myquery)
         data = list(c.fetchall())
         # random.shuffle(data)
@@ -664,88 +672,74 @@ def search(address):
                 searchedFlats = Flat.query.filter(
                     Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-
-            return render_template("search.html", user=current_user, flats=data[:INDEX], data_length=len(data))
+            
+            return render_template("search.html", user=current_user, flats=data[:INDEX], data_length = len(data), image=image)
 
         else:
             if address and flat_types and amenities and towns:
-                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
-                    flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
+            
             elif address and towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(
-                    address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.town.in_(towns)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
+            
             elif address and towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(
-                    address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
+            
             elif address and towns:
-                searchedFlats = Flat.query.filter(
-                    Flat.address.like(address), Flat.town.in_(towns)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.town.in_(towns)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
+            
             elif address and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(
-                    address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
+            
             elif address and flat_types:
-                searchedFlats = Flat.query.filter(Flat.address.like(
-                    address), Flat.flat_type.in_(flat_types)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(flat_types)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
+            
             elif address and amenities:
-                searchedFlats = Flat.query.filter(Flat.address.like(
-                    address), Flat.amenities.in_(amenities)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.amenities.in_(amenities)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
+            
             elif address:
-                searchedFlats = Flat.query.filter(
-                    Flat.address.like(address)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.address.like(address)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
+            
             elif towns and flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(
-                    flat_types), Flat.amenities.in_(amenities)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
+            
             elif towns and flat_types:
-                searchedFlats = Flat.query.filter(Flat.town.in_(
-                    towns), Flat.flat_type.in_(flat_types)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
+                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.flat_type.in_(flat_types)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
 
             elif towns and amenities:
-                searchedFlats = Flat.query.filter(Flat.town.in_(
-                    towns), Flat.amenities.in_(amenities)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.town.in_(towns), Flat.amenities.in_(amenities)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
+            
             elif towns:
                 searchedFlats = Flat.query.filter(Flat.town.in_(towns)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
+            
             elif flat_types and amenities:
-                searchedFlats = Flat.query.filter(Flat.flat_type.in_(
-                    flat_types), Flat.amenities.in_(amenities)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types), Flat.amenities.in_(amenities)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
+            
             elif flat_types:
-                searchedFlats = Flat.query.filter(
-                    Flat.flat_type.in_(flat_types)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.flat_type.in_(flat_types)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
+            
             elif amenities:
-                searchedFlats = Flat.query.filter(
-                    Flat.amenities.in_(amenities)).all()
-                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length=len(searchedFlats), random=RANDOM)
-
+                searchedFlats = Flat.query.filter(Flat.amenities.in_(amenities)).all()
+                return render_template("search.html", user=current_user, flats=searchedFlats[:INDEX], data_length = len(searchedFlats), random = RANDOM, image=image)
+            
             else:
-                return render_template("search.html", user=current_user, flats=[], data_length=len(data))
+                return render_template("search.html", user=current_user, flats=[], data_length = len(data), image=image)
 
-    return render_template('search.html', user=current_user, address=address, random=RANDOM)
+    return render_template('search.html', user=current_user, address=address, random = RANDOM, image=image)
 
 # Infinite Scrolling for Search Page
 
@@ -909,11 +903,11 @@ def load_search():
 
     if data_price:
         for flat in data_price:
-            data.append(tuple([flat.id, flat.address,
-                               flat.resale_price, flat.flat_type, flat.storey_range]))
+            data.append(tuple([flat.id, flat.address_no_postal_code,
+                    flat.resale_price, flat.flat_type, flat.storey_range]))
     else:
         for flat in searchedFlats:
-            data.append(tuple([flat.id, flat.address,
+            data.append(tuple([flat.id, flat.address_no_postal_code,
                         flat.resale_price, flat.flat_type, flat.storey_range]))
     if request.args:
         index = int(request.args.get('index'))
@@ -958,13 +952,12 @@ def sort(criteria):
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
-                if i % 2 == 0:
-                    data = list(itertools.chain(Flat.query.filter(
-                        Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
-                    # print(searchedFlats)
-            # print(data[0])
-            # return render_template("search.html", user=current_user, flats=data[:INDEX])
-
+                if i%2 == 0:
+                    data = data.extend(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
+                    #print(searchedFlats)
+            #print(data[0])                
+            #return render_template("search.html", user=current_user, flats=data[:INDEX])
+         
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
                     flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
@@ -1111,6 +1104,8 @@ def sort(criteria):
         towns = session.get('towns')
         flat_types = session.get('flat_types')
         amenities = session.get('amenities')
+        print(price)
+
 
         if address:
             address = "%{}%".format(address)
@@ -1122,12 +1117,11 @@ def sort(criteria):
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
-                if i % 2 == 0:
-                    data = list(itertools.chain(Flat.query.filter(
-                        Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
-                    # print(searchedFlats)
-            # print(data[0])
-            # return render_template("search.html", user=current_user, flats=data[:INDEX])
+                if i%2 == 0:
+                    data.extend(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
+                    #print(searchedFlats)
+            print('test' + str(data[:5]))                
+            #return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -1212,7 +1206,11 @@ def sort(criteria):
                 searchedFlats = Flat.query.filter(
                     Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
+            
+            else:
+                return sorting_criteria(criteria, data)
 
+            
             return sorting_criteria(criteria, data)
 
         elif not price:
@@ -1308,7 +1306,7 @@ def sort(criteria):
                     for x in range(INDEX):
                         flat_id = data[x][0]
                         list_x.append(flat_id)
-                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
+                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random = RANDOM, image = image)
                 elif criteria == 'price_low':
                     myquery = (
                         "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price;")
@@ -1330,7 +1328,7 @@ def sort(criteria):
                     for x in range(INDEX):
                         flat_id = data[x][0]
                         list_x.append(flat_id)
-                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
+                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random = RANDOM, image = image)
                 elif criteria == 'remaining_lease_low':
                     myquery = (
                         "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease;")
@@ -1341,7 +1339,7 @@ def sort(criteria):
                     for x in range(INDEX):
                         flat_id = data[x][0]
                         list_x.append(flat_id)
-                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
+                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random = RANDOM, image = image)
                 elif criteria == 'storey_high':
                     myquery = (
                         "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range DESC;")
@@ -1352,7 +1350,7 @@ def sort(criteria):
                     for x in range(INDEX):
                         flat_id = data[x][0]
                         list_x.append(flat_id)
-                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
+                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random = RANDOM, image = image)
                 elif criteria == 'storey_low':
                     myquery = (
                         "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range;")
@@ -1363,7 +1361,7 @@ def sort(criteria):
                     for x in range(INDEX):
                         flat_id = data[x][0]
                         list_x.append(flat_id)
-                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
+                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random = RANDOM, image = image)
                 elif criteria == 'price_per_sqm_high':
                     myquery = (
                         "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm DESC;")
@@ -1374,7 +1372,7 @@ def sort(criteria):
                     for x in range(INDEX):
                         flat_id = data[x][0]
                         list_x.append(flat_id)
-                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
+                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random = RANDOM, image = image)
                 elif criteria == 'price_per_sqm_low':
                     myquery = (
                         "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm;")
@@ -1385,7 +1383,7 @@ def sort(criteria):
                     for x in range(INDEX):
                         flat_id = data[x][0]
                         list_x.append(flat_id)
-                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
+                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random = RANDOM, image = image)
                 elif criteria == 'favourites_high':
                     myquery = (
                         "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
@@ -1396,7 +1394,7 @@ def sort(criteria):
                     for x in range(INDEX):
                         flat_id = data[x][0]
                         list_x.append(flat_id)
-                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
+                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random = RANDOM, image = image)
                 elif criteria == 'favourites_low':
                     myquery = (
                         "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
@@ -1407,8 +1405,8 @@ def sort(criteria):
                     for x in range(INDEX):
                         flat_id = data[x][0]
                         list_x.append(flat_id)
-                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
-
+                    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random = RANDOM, image = image)
+        
     return render_template('sort.html', user=current_user)
 
 
@@ -1613,51 +1611,53 @@ def filter():
 
     return render_template('filter.html', user=current_user)
 
-# TESTING
-# getting image (in flat details only)
 
-
+## TESTING
+## getting image (in flat details only)
 def view_image(flatId):
-    import requests
-    import json
 
-    #find the name of the flat to find the place id
+    # find the name of the flat to find the place id
     flat = Flat.query.filter_by(id=flatId).first_or_404()
     flat = Flat.query.get(flatId)
     blk = flat.block
     street = flat.street_name
-    
+
     name = blk + street + "hdb"
 
     while(name.find(' ') != -1):
         name = name.replace(' ', '%20')
 
-    url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + name + "&inputtype=textquery&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+    url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + \
+        name + "&inputtype=textquery&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
 
-    payload={}
+    payload = {}
     headers = {}
-    response = requests.request("GET", url, headers=headers, data=payload).json()
+
+    response = requests.request(
+        "GET", url, headers=headers, data=payload).json()
     if response['status'] != 'OK':
         return None
     else:
         primary = response['candidates'][0]
         id = primary['place_id']
 
-        #finding photo reference
-        url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + id +"&fields=photos&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+        # finding photo reference
+        url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + \
+            id + "&fields=photos&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
 
-        payload={}
+        payload = {}
         headers = {}
 
-        response = requests.request("GET", url, headers=headers, data=payload).json()
+        response = requests.request(
+            "GET", url, headers=headers, data=payload).json()
         res = response['result']
         photoRef = []
         cur = 0
         if 'photos' not in res:
-            return photoRef
+            while (cur < 3):
+                photoRef.append(0)
         photos = res['photos']
-        noOfPhotos = len(photos) #max number of photo references is 10
-        cur = 0
+        noOfPhotos = len(photos)  # max number of photo references is 10
         while (cur < noOfPhotos):
             temp1 = photos[cur]
             temp2 = temp1['photo_reference']
@@ -1669,12 +1669,11 @@ def view_image(flatId):
                 photoRef.append(0)
 
         return photoRef
+        # by right should return an array of photo references only, and use these references to get the photo
+
+
 def get_amenity(flatId):
-    import json
-    import pandas as pd
-    from pathlib import Path
-    import os
-    import requests
+
 
     cwd = Path(__file__).parent.absolute()
     print(cwd)
@@ -1715,8 +1714,6 @@ def get_amenity(flatId):
                 length = response1["results"]
                 for i in range(len(length)):
                     name = response1["results"][i]['name']
-                    if len(name) > 30:
-                        continue
                     if (amenity == 'school') and ('School' not in name):
                         continue
                     lat_of_nearby = response1['results'][i]['geometry']['location']['lat']
