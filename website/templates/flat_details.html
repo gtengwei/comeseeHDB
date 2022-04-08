@@ -185,9 +185,7 @@
       <p class="text-muted mb-0">{{flat.block}}</p>
   </div>
 </div>
-
 <hr>
-
 <div class="row">
   <div class="col-sm-3">
       <p class="mb-0">Flat Type</p>
@@ -202,9 +200,7 @@
       <p class="text-muted mb-0">{{flat.floor_area_sqm}}</p>
   </div>
 </div>
-
 <hr>
-
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Storey Range</p>
@@ -219,9 +215,7 @@
     <p class="text-muted mb-0">${{flat.price_per_sqm}}</p>
 </div>
 </div>
-
 <hr>
-
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Sold Date</p>
@@ -236,9 +230,7 @@
     <p class="text-muted mb-0">{{flat.flat_model}}</p>
 </div>
 </div>
-
 <hr>
-
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Town</p>
@@ -253,9 +245,7 @@
     <p class="text-muted mb-0">{{flat.remaining_lease}}</p>
 </div>
 </div>
-
 <hr>
-
 <div class="row">
 <div class="col-sm-3">
     <p class="mb-0">Postal District</p>
@@ -497,7 +487,7 @@
 {% if flat.reviews|length == 0 %}
   <h3 class="text-muted mb-0" align="center">No reviews yet!</h3>
 {% else %}
-  <h3 class="text-muted mb-0" align="right">{{flat.reviews|length}} Review(s) Posted</h3>
+  <h3 class="text-muted mb-0" align="right">{{flat.reviews|length}} Reviews Posted</h3>
 {% endif %}
 
 <ul class="list-group list-group-flush" id="reviews">

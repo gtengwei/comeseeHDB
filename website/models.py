@@ -1,5 +1,5 @@
 ## To create relational schema and the attributes of the schema
-from . import db
+
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -12,6 +12,9 @@ import pandas as pd
 import os
 from pathlib import Path
 from sqlalchemy.dialects.mysql import BIGINT
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 ## To migrate database
 class Review(db.Model):
@@ -116,4 +119,10 @@ def create_Flat_table():
     '''
     
 
-
+'''def create_Flat_table():
+    #This will create the table in the database
+    engine = create_engine('sqlite:///website/database.db')
+    db.Model.metadata.create_all(engine)
+    os.chdir('C:/Users/Yap Xuan Ying/Documents/WORK!!!/comeseeHDB/website')
+    df = pd.read_csv('merged.csv')
+    df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')'''
