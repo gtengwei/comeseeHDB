@@ -13,6 +13,14 @@
           }); 
       });
   </script>
+
+  <script>
+    $(document).ready(function(){
+        $('.bottom-left').click(function(){
+          $("#helpModal").modal('show');
+        }); 
+    });
+  </script>
   </head> 
 
 
@@ -53,7 +61,7 @@
                       <div class="border-bottom pb-2 ml-2">
                           <h4 id="burgundy">Filter</h4>
                       </div>
-                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa-solid fa-dollar-sign"></h6></span></button>
+                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa-solid fa-money"></h6></span></button>
                       <div class="collapse" id="price">
                           <div class="py-2 border-bottom ml-3">
                               <div style="color: pink"><span class="fa fa-minus"></span></div>
@@ -324,11 +332,16 @@
         </div>
       {% endfor %}
     </div>
-    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}" data-image="{{image[0]}}">
-          
-  
-    
-  <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}">
+
+<div class = 'bottom-left'>
+  <div class = 'fixed-bottom'>
+    <button class="btn btn-primary btn-circle" type= "button" >
+      <i class="fa fa-question"></i>
+    </button>
+  </div>
+</div>
+
+<meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}" data-image="{{image[0]}}">   
 <script type="text/javascript">
     var index = 20;
     var limit = 20;
@@ -417,13 +430,73 @@
     <h3>You Have Reach The End of Your Search Results</h3>
   </div>
   
-  {% else %}
-  
-    <div class="fa-3x d-flex justify-content-center" id ="end_page">
-      <i class="fas fa-circle-notch fa-spin"></i>
+{% else %}
+
+  <div class="fa-3x d-flex justify-content-center" id ="end_page">
+    <i class="fas fa-circle-notch fa-spin"></i>
+  </div>
+{% endif %}
+
+
+<div class = "guest_error">
+  <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Help</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body mx-3">
+          <div class="md-form mb-5">
+            <h4> What is this website?</h4>
+            <p> This website is a search engine for resale HDB flats in Singapore. 
+              <br>
+              You can search for flats by <b>address</b> and/or <b>postal code</b>!
+              <br>
+              You can also sort flats by <b>Price</b>, <b>Floor</b>, <b>Price per sqm</b> and more simply by clicking on the sort button.
+
+              <h5> 1. How to search</h5>
+              <p>
+                You can search for flats by entering the postal code or the address.
+                <br>
+                The address can be entered in the following format:
+                <br/>
+                Street Name
+                <br/>
+                Street as <b>st</b>
+                <br/>
+                Block as <b>blk</b>
+                <br/>
+                e.g. "Ang Mo Kio st 5 blk 5" or "Ang Mo Kio st 5"
+              </p>
+              <h5> 2. How to favourite</h5>
+              <p>
+                You can favourite a flat by clicking on the heart icon at the side of the address.
+                <br>
+                You can only do this if you are logged in.
+              </p>
+              <h5> 3. How to sort</h5>
+              <p>
+                You can sort flats by clicking on the Sort button.
+                <br>
+                You can sort by <b>Price</b>, <b>Floor</b>, <b>Price per sqm</b> and more simply by clicking on the sort button.
+              </p>
+              <h5> 4. How to filter</h5>
+              <p>
+                You can filter flats by clicking on the Filter button.
+                <br>
+                You can filter by <b>Price Range</b>, <b>Town</b> or even a combination of these!
+              </p> 
+          </div>
+        </div>
+      </div>
     </div>
-  {% endif %}
-  
+  </div>
+</div>
 </body>
     
 
