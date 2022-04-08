@@ -2218,5 +2218,129 @@
                 14
             ]
         }
+    },
+    "FAJAR RD BLK 437": {
+        "bus_station": {
+            "Fajar Stn": [
+                361,
+                4
+            ],
+            "Opp Greenridge Sec Sch": [
+                992,
+                12
+            ],
+            "Greenridge Sec Sch": [
+                987,
+                12
+            ],
+            "Opp Blk 451": [
+                674,
+                8
+            ],
+            "Opp Blk 171": [
+                2029,
+                24
+            ]
+        },
+        "subway_station": {
+            "Fajar": [
+                325,
+                4
+            ],
+            "Bangkit": [
+                1011,
+                12
+            ]
+        },
+        "school": {
+            "Zhenghua Primary School": [
+                2431,
+                29
+            ],
+            "Greenridge Secondary School": [
+                1236,
+                15
+            ],
+            "Greenridge Primary School": [
+                1271,
+                15
+            ]
+        },
+        "restaurant": {
+            "McDonald's": [
+                304,
+                4
+            ],
+            "Chang Cheng": [
+                441,
+                5
+            ],
+            "Subway": [
+                948,
+                11
+            ],
+            "KFC": [
+                1040,
+                12
+            ],
+            "\u8d22\u5e08\u5085\u6e2f\u5f0f\u70e7\u814a": [
+                304,
+                4
+            ],
+            "Kim San Seafood": [
+                304,
+                4
+            ],
+            "Wanton Mee": [
+                441,
+                5
+            ],
+            "138 Duck rice": [
+                441,
+                5
+            ],
+            "Jin Shan": [
+                441,
+                5
+            ],
+            "HK Roasted Duck": [
+                441,
+                5
+            ],
+            "Golden Rooster": [
+                441,
+                5
+            ],
+            "Chao Zhoou": [
+                441,
+                5
+            ],
+            "Vegeterian Food": [
+                441,
+                5
+            ],
+            "Snacks": [
+                441,
+                5
+            ],
+            "Fajar Noodle & Fish Soup": [
+                441,
+                5
+            ],
+            "Siang Garden Fajar": [
+                441,
+                5
+            ],
+            "Tanaka Vegetarian Food": [
+                441,
+                5
+            ]
+        },
+        "doctor": {
+            "Wan Siang Chinese Medical Hall": [
+                441,
+                5
+            ]
+        }
     }
 }

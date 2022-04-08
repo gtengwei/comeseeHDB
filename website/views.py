@@ -40,8 +40,12 @@ def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
     photo = view_image(flatId)
 
+    latitude = str(flat.latitude)
+    longitude = str(flat.longitude)
+
     url1 = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference="
     url2 = "&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+    
     if photo:
         length = len(photo)
         cur = 0
@@ -54,7 +58,8 @@ def flat_details(flatId):
                 url.append(temp)
             cur = cur + 1
     else:
-        url = ["\static\logo.png", "\static\logo.png", "\static\logo.png"]
+        url_staticimage = "https://maps.googleapis.com/maps/api/streetview?size=300x200&location="+latitude+","+longitude+"&fov=80&heading=70&pitch=0&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+        url = [url_staticimage,url_staticimage,url_staticimage]
     if request.method == 'POST':
         review = request.form.get('review')
 
@@ -75,7 +80,7 @@ def flat_details(flatId):
     # f = open('testing.json') #FOR TESTING CAUSE EXPENSIVE
     # amenity = json.load(f)
     # amenity = amenity
-    return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity)
+    return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity,url_staticimage = url_staticimage)
 
 
 @views.route('/unfavourite', methods=['POST'])
@@ -1621,6 +1626,7 @@ def view_image(flatId):
     flat = Flat.query.get(flatId)
     blk = flat.block
     street = flat.street_name
+    
     name = blk + street + "hdb"
 
     while(name.find(' ') != -1):
