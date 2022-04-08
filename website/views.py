@@ -128,16 +128,14 @@ def home():
     conn = sqlite3.connect("database.db")
     #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
-    myquery = ("SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
+    myquery = (
+        "SELECT id FROM Flat ORDER BY numOfFavourites DESC;")
     c.execute(myquery)
-    data = list(c.fetchall())
-    list_x = []
-    for x in range(INDEX):
-        flat_id = data[x][0]
-        list_x.append(flat_id)
     data = list(c.fetchall())
     # random.shuffle(data)
     RANDOM = generate_random_flat()
+    data = data[:INDEX]
+
     # Search for flats from homepage
     if request.method == 'POST':
         price = request.form.getlist('price')
@@ -326,8 +324,8 @@ def home():
     print(image)
     image_id = random.randint(0,(len(image)-1))
     print(image_id)
-    #return render_template('home.html', user=current_user, flats=data[:INDEX], favourites = Favourites.query.all())
-    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], favourites = Favourites.query.all(), random = RANDOM, image = image, image_id = image_id)
+    #return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], favourites = Favourites.query.all(), random = RANDOM, image = image, image_id = image_id)
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in data], favourites = Favourites.query.all(), random = RANDOM, image = image, image_id = image_id)
 
 
 
@@ -549,7 +547,7 @@ def load_home():
 
     else:
         myquery = (
-            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
         c.execute(myquery)
         data = list(c.fetchall())
         # random.shuffle(data)
@@ -958,7 +956,7 @@ def sort(criteria):
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
-                    data = data.extend(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
+                    data.extend(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all())
                     #print(searchedFlats)
             #print(data[0])                
             #return render_template("search.html", user=current_user, flats=data[:INDEX])
@@ -1036,6 +1034,9 @@ def sort(criteria):
                 searchedFlats = Flat.query.filter(
                     Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
+            
+            else:
+                print(data)
 
             return sorting_criteria(criteria, data)
 
