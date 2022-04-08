@@ -3044,5 +3044,219 @@
                 28
             ]
         }
+    },
+    "JURONG WEST AVE 3 BLK 274D 644274": {
+        "school": {
+            "Westwood Secondary School": [
+                1882,
+                22
+            ],
+            "Corporation Primary School": [
+                718,
+                9
+            ]
+        },
+        "restaurant": {
+            "Western Food": [
+                379,
+                4
+            ],
+            "Kenny Cafe": [
+                379,
+                4
+            ],
+            "ken's kitchen (\u9648\u5bb6\u5e84)": [
+                379,
+                4
+            ],
+            "Lam Kim BBQ Seafood": [
+                379,
+                4
+            ],
+            "KJM Curry House": [
+                398,
+                5
+            ],
+            "Won Jia Yong Tau Foo": [
+                502,
+                6
+            ],
+            "Pu Tien Xiao Chi": [
+                534,
+                6
+            ],
+            "\u97d3\u56fd\u7cfb": [
+                540,
+                6
+            ],
+            "An's Mookata": [
+                543,
+                6
+            ],
+            "Joyful Paradise Mala Xiang Guo": [
+                543,
+                6
+            ],
+            "Hong Heng Duck Rice": [
+                543,
+                6
+            ],
+            "Kao Western": [
+                551,
+                7
+            ],
+            "Mala Hotpot\u9ebb\u8fa3\u9999\u9505": [
+                631,
+                8
+            ],
+            "BBQ House": [
+                623,
+                7
+            ],
+            "Al Afrida Restaurant": [
+                616,
+                7
+            ],
+            "Thai Cuisine": [
+                615,
+                7
+            ]
+        }
+    },
+    "BEDOK CTRL BLK 219A 461219": {
+        "bus_station": {
+            "Blk 27": [
+                542,
+                6
+            ],
+            "Bedok Stn Exit B": [
+                1258,
+                15
+            ],
+            "Bedok Int": [
+                1723,
+                20
+            ]
+        },
+        "subway_station": {
+            "Bedok": [
+                1107,
+                13
+            ]
+        },
+        "school": {
+            "Smart Kids Children School": [
+                1351,
+                16
+            ],
+            "The Rock School - Bedok CC": [
+                2510,
+                30
+            ],
+            "Harriet Education School": [
+                52,
+                1
+            ]
+        },
+        "restaurant": {
+            "Chicken Hotpot (Bedok Point)": [
+                166,
+                2
+            ],
+            "Saizeriya": [
+                166,
+                2
+            ],
+            "JP Pepperdine": [
+                157,
+                2
+            ],
+            "Prawn & Mee": [
+                815,
+                10
+            ],
+            "Ho Kee Pau - Bedok North": [
+                1910,
+                23
+            ],
+            "Inspirasi": [
+                1336,
+                16
+            ],
+            "Sushi Express": [
+                237,
+                3
+            ],
+            "Burger King": [
+                733,
+                9
+            ],
+            "Buddy Hoagies Steak & Grill": [
+                1912,
+                23
+            ],
+            "Kopitiam": [
+                1912,
+                23
+            ],
+            "Bedok Nana Curry": [
+                1912,
+                23
+            ],
+            "Fatt Soon Kueh": [
+                1348,
+                16
+            ],
+            "Crab Kingdom": [
+                816,
+                10
+            ],
+            "Spicy Thai-Thai Cafe": [
+                381,
+                5
+            ],
+            "Domino's Pizza Bedok": [
+                411,
+                5
+            ],
+            "Subway": [
+                1340,
+                16
+            ]
+        },
+        "doctor": {
+            "Central 24-HR Clinic (Bedok)": [
+                183,
+                2
+            ],
+            "T32 Dental Pearl @ Bedok": [
+                1350,
+                16
+            ],
+            "AcuMed Medical (Bedok)": [
+                181,
+                2
+            ],
+            "Kidslink Children's Clinic": [
+                679,
+                8
+            ],
+            "Bedok Central Clinic": [
+                179,
+                2
+            ],
+            "TCM Bedok": [
+                760,
+                9
+            ],
+            "Dermatology clinic": [
+                772,
+                9
+            ],
+            "SNEC Eye Clinic @ Bedok": [
+                1912,
+                23
+            ]
+        }
     }
 }
