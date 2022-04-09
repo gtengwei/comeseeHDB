@@ -12,5 +12,7 @@ df = pd.read_csv('merged.csv')
 df['image'] = None
 for i in range(len(df)):
     count = i % 6
-    df.at[i, 'image'] = 'website\static\hdb_image'+str(count)+'.jpg'
-df.to_csv('merged.csv')
+    df.at[i, 'image'] = 'hdb_image'+str(count)+'.jpg'
+
+#df.drop('Unnamed: 0', axis=1, inplace=True)
+df.to_csv('merged.csv', index=False)

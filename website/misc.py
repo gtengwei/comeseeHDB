@@ -84,105 +84,105 @@ def sorting_criteria(criteria, flats = []):
     if criteria == 'price_high':
         flats.sort(key=lambda x: int(x.resale_price), reverse=True)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
     elif criteria == 'price_low':
         flats.sort(key=lambda x: x.resale_price,reverse=False)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
     elif criteria == 'remaining_lease_high':
         flats.sort(key=lambda x: x.remaining_lease, reverse=True)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
     elif criteria == 'remaining_lease_low':
         flats.sort(key=lambda x: x.remaining_lease, reverse=False)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
     elif criteria == 'storey_high':
         flats.sort(key=lambda x: x.storey_range, reverse=True)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
     elif criteria == 'storey_low':
         flats.sort(key=lambda x: x.storey_range, reverse=False)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
     elif criteria == 'price_per_sqm_high':
         flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
     elif criteria == 'price_per_sqm_low':
         flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
     
     elif criteria == 'favourites_high':
         flats.sort(key=lambda x: x.numOfFavourites, reverse=True)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
     elif criteria == 'favourites_low':
         flats.sort(key=lambda x: x.numOfFavourites, reverse=False)
         session['criteria'] = criteria
-        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+        return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
     elif flats == []:
         if criteria == 'price_high':
                 flats = Flat.query.order_by(Flat.resale_price.desc()).all()
                 session['criteria'] = criteria
-                return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+                return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
         elif criteria == 'price_low':
             flats = Flat.query.order_by(Flat.resale_price.asc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
         elif criteria == 'remaining_lease_high':
             flats = Flat.query.order_by(Flat.remaining_lease.desc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
         elif criteria == 'remaining_lease_low':
             flats = Flat.query.order_by(Flat.remaining_lease.asc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
         elif criteria == 'storey_high':
             flats = Flat.query.order_by(Flat.storey_range.desc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
         elif criteria == 'storey_low':
             flats = Flat.query.order_by(Flat.storey_range.asc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
         elif criteria == 'price_per_sqm_high':
             flats = Flat.query.order_by(Flat.price_per_sqm.desc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
         elif criteria == 'price_per_sqm_low':
             flats = Flat.query.order_by(Flat.price_per_sqm.asc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
         
         elif criteria == 'favourites_high':
             flats = Flat.query.order_by(Flat.numOfFavourites.desc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
         
         elif criteria == 'favourites_low':
             flats = Flat.query.order_by(Flat.numOfFavourites.asc()).all()
             session['criteria'] = criteria
-            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM, image = url)
+            return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
     
-    return render_template('sort.html', user=current_user, flats=flats[:INDEX], random = RANDOM, image = url)
+    return render_template('sort.html', user=current_user, flats=flats[:INDEX], random = RANDOM)
     
 
 
@@ -193,7 +193,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.resale_price, reverse=True)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
             # print(data[0][0])
         if request.args:
             index = int(request.args.get('index'))
@@ -215,7 +215,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.resale_price, reverse=False)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -236,7 +236,7 @@ def sorting_criteria_load(criteria, flats = []):
             key=lambda x: x.remaining_lease, reverse=True)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -257,7 +257,7 @@ def sorting_criteria_load(criteria, flats = []):
                     reverse=False)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -277,7 +277,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.storey_range, reverse=True)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -298,7 +298,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.storey_range, reverse=False)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -319,7 +319,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -340,7 +340,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -361,7 +361,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.numOfFavourites, reverse=True)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -382,7 +382,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.numOfFavourites, reverse=False)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -405,7 +405,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats = Flat.query.order_by(Flat.resale_price.desc()).all()
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
                 # print(data[0][0])
             if request.args:
                 index = int(request.args.get('index'))
@@ -427,7 +427,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats = Flat.query.order_by(Flat.resale_price.asc()).all()
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -447,7 +447,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats = Flat.query.order_by(Flat.remaining_lease.desc()).all()
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -468,7 +468,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats.sort(key=lambda x: x.remaining_lease, reverse=False)
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -488,7 +488,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats.sort(key=lambda x: x.storey_range, reverse=True)
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -509,7 +509,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats.sort(key=lambda x: x.storey_range, reverse=False)
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -530,7 +530,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -551,7 +551,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -572,7 +572,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats.sort(key=lambda x: x.numOfFavourites, reverse=True)
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -593,7 +593,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats.sort(key=lambda x: x.numOfFavourites, reverse=False)
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))

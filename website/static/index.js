@@ -47,12 +47,12 @@ function favourite_count(flatID) {
   })
 }
 
-function initialize() {
-  var latitude = parseFloat(document.getElementById('latitude').innerHTML);
-  var longitude = parseFloat(document.getElementById('longitude').innerHTML);
+window.onload = function initialize() {
+  console.log(parseFloat(document.getElementById("latitude").innerHTML));
+  var latitude = parseFloat(document.getElementById("latitude").innerHTML);
+  var longitude = parseFloat(document.getElementById("longitude").innerHTML);
   console.log(latitude);
-  console.log(longitude);
-  const fenway = { lat: latitude, lng: longitude };
+  const fenway = { lat:latitude, lng:longitude };
   const map = new google.maps.Map(document.getElementById("map"), {
     center: fenway,
     zoom: 14,

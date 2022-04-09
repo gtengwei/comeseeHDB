@@ -208,7 +208,9 @@
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <img src="{{image[0]}}" class="img-thumbnail">
+              <div class="img">
+              <img src="{{ url_for('static', filename = flat.image)}}" class="img-thumbnail">
+            </div>
             </div>
             <div class="col">
               <p><strong>Price: </strong>${{flat.resale_price}}</p>
@@ -232,7 +234,8 @@
   </div>
 </div>      
     
-<meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}" data-image="{{image[0]}}">
+<meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">
+
 <script type="text/javascript">
 
   var index = 20;
@@ -261,9 +264,9 @@
   function downloadContent(index, limit) {
     $.get('/load_home?index=' + index + '&limit=' + limit, (data) => {
       for (var index = 0; index < data.data.length; index++) {
-        var image = $('#my-data').data().image;
         var favourite = $('#my-data').data().f;
         var flat = "/flat-details/" + data.data[index][0]; 
+        var image = "/static/" + data.data[index][5];
 
         if (favourite.includes(data.data[index][0])) {
         var page2 = `
@@ -274,7 +277,7 @@
           <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="unfavourite(`+data.data[index][0]+`)">
             <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
           </button>
-          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][5]+`</span>
+          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][6]+`</span>
         </div>
           `
         }
@@ -287,7 +290,7 @@
           <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="favourite(`+data.data[index][0]+`)">
             <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
           </button>
-          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][5]+`</span>
+          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][6]+`</span>
         </div>
           `
         }    
