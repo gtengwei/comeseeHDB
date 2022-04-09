@@ -3154,5 +3154,369 @@
                 8
             ]
         }
+    },
+    "BEDOK CTRL BLK 219A 461219": {
+        "bus_station": {
+            "Blk 27": [
+                542,
+                6
+            ],
+            "Bedok Stn Exit B": [
+                1258,
+                15
+            ],
+            "Bedok Int": [
+                1723,
+                20
+            ]
+        },
+        "subway_station": {
+            "Bedok": [
+                1107,
+                13
+            ]
+        },
+        "school": {
+            "Smart Kids Children School": [
+                1351,
+                16
+            ],
+            "The Rock School - Bedok CC": [
+                2510,
+                30
+            ],
+            "Harriet Education School": [
+                52,
+                1
+            ]
+        },
+        "restaurant": {
+            "Chicken Hotpot (Bedok Point)": [
+                166,
+                2
+            ],
+            "Saizeriya": [
+                166,
+                2
+            ],
+            "JP Pepperdine": [
+                157,
+                2
+            ],
+            "Prawn & Mee": [
+                815,
+                10
+            ],
+            "Ho Kee Pau - Bedok North": [
+                1910,
+                23
+            ],
+            "Inspirasi": [
+                1336,
+                16
+            ],
+            "Sushi Express": [
+                237,
+                3
+            ],
+            "Burger King": [
+                733,
+                9
+            ],
+            "Buddy Hoagies Steak & Grill": [
+                1912,
+                23
+            ],
+            "Kopitiam": [
+                1912,
+                23
+            ],
+            "Bedok Nana Curry": [
+                1912,
+                23
+            ],
+            "Fatt Soon Kueh": [
+                1348,
+                16
+            ],
+            "Crab Kingdom": [
+                816,
+                10
+            ],
+            "Spicy Thai-Thai Cafe": [
+                381,
+                5
+            ],
+            "Domino's Pizza Bedok": [
+                411,
+                5
+            ],
+            "Subway": [
+                1340,
+                16
+            ]
+        },
+        "doctor": {
+            "Central 24-HR Clinic (Bedok)": [
+                183,
+                2
+            ],
+            "T32 Dental Pearl @ Bedok": [
+                1350,
+                16
+            ],
+            "AcuMed Medical (Bedok)": [
+                181,
+                2
+            ],
+            "Kidslink Children's Clinic": [
+                679,
+                8
+            ],
+            "Bedok Central Clinic": [
+                179,
+                2
+            ],
+            "TCM Bedok": [
+                760,
+                9
+            ],
+            "Dermatology clinic": [
+                772,
+                9
+            ],
+            "SNEC Eye Clinic @ Bedok": [
+                1912,
+                23
+            ]
+        }
+    },
+    "CHOA CHU KANG AVE 1 BLK 130 680130": {
+        "bus_station": {
+            "Cck Polyclinic": [
+                617,
+                7
+            ]
+        },
+        "subway_station": {
+            "Keat Hong": [
+                404,
+                5
+            ]
+        },
+        "school": {
+            "Chua Chu Kang Secondary School": [
+                738,
+                9
+            ],
+            "South View Primary School": [
+                483,
+                6
+            ]
+        },
+        "restaurant": {
+            "McDonald's": [
+                663,
+                8
+            ],
+            "NKS Restaurant": [
+                288,
+                3
+            ],
+            "Yu Pan Fish Soup": [
+                965,
+                11
+            ],
+            "Fu Fa Fish Soup": [
+                975,
+                12
+            ],
+            "Hao You Ji \u597d\u53cb\u8bb0 roast meat": [
+                910,
+                11
+            ],
+            "Chai Shu Kway Chap": [
+                990,
+                12
+            ],
+            "Millicent Pte Ltd": [
+                990,
+                12
+            ],
+            "(Yummy Court) Aneka Selera": [
+                900,
+                11
+            ],
+            "(Yummy Court) Porridge": [
+                900,
+                11
+            ],
+            "(Fu Chan) Xian Mei": [
+                900,
+                11
+            ],
+            "(yummy Court) Xiang Wang Rojak": [
+                900,
+                11
+            ],
+            "(Fu Chan) Xiang Ji": [
+                900,
+                11
+            ],
+            "Taste of CCK": [
+                615,
+                7
+            ],
+            "4Fingers Crispy Chicken": [
+                529,
+                6
+            ],
+            "Long Heng Snack Bar": [
+                590,
+                7
+            ],
+            "Red Lantern Seafood \u7ea2\u706f\u7b3c\u6d77\u9c9c\u9986": [
+                617,
+                7
+            ]
+        },
+        "doctor": {
+            "Exersise Place": [
+                585,
+                7
+            ],
+            "Khoo Medical Clinic & Surgery": [
+                617,
+                7
+            ],
+            "Royal Care Medical": [
+                804,
+                10
+            ]
+        }
+    },
+    "FAJAR RD BLK 437 670437": {
+        "bus_station": {
+            "Fajar Stn": [
+                361,
+                4
+            ],
+            "Opp Greenridge Sec Sch": [
+                992,
+                12
+            ],
+            "Greenridge Sec Sch": [
+                987,
+                12
+            ],
+            "Opp Blk 451": [
+                674,
+                8
+            ],
+            "Opp Blk 171": [
+                2029,
+                24
+            ]
+        },
+        "subway_station": {
+            "Fajar": [
+                325,
+                4
+            ],
+            "Bangkit": [
+                1011,
+                12
+            ]
+        },
+        "school": {
+            "Zhenghua Primary School": [
+                2431,
+                29
+            ],
+            "Greenridge Secondary School": [
+                1236,
+                15
+            ],
+            "Greenridge Primary School": [
+                1271,
+                15
+            ]
+        },
+        "restaurant": {
+            "McDonald's": [
+                304,
+                4
+            ],
+            "Chang Cheng": [
+                441,
+                5
+            ],
+            "Subway": [
+                948,
+                11
+            ],
+            "KFC": [
+                1040,
+                12
+            ],
+            "\u8d22\u5e08\u5085\u6e2f\u5f0f\u70e7\u814a": [
+                304,
+                4
+            ],
+            "Kim San Seafood": [
+                304,
+                4
+            ],
+            "Wanton Mee": [
+                441,
+                5
+            ],
+            "138 Duck rice": [
+                441,
+                5
+            ],
+            "Jin Shan": [
+                441,
+                5
+            ],
+            "HK Roasted Duck": [
+                441,
+                5
+            ],
+            "Golden Rooster": [
+                441,
+                5
+            ],
+            "Chao Zhoou": [
+                441,
+                5
+            ],
+            "Vegeterian Food": [
+                441,
+                5
+            ],
+            "Snacks": [
+                441,
+                5
+            ],
+            "Fajar Noodle & Fish Soup": [
+                441,
+                5
+            ],
+            "Siang Garden Fajar": [
+                441,
+                5
+            ],
+            "Tanaka Vegetarian Food": [
+                441,
+                5
+            ]
+        },
+        "doctor": {
+            "Wan Siang Chinese Medical Hall": [
+                441,
+                5
+            ]
+        }
     }
 }

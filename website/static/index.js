@@ -47,16 +47,10 @@ function favourite_count(flatID) {
   })
 }
 
-function initialize() {
-
-  fetch("/initialise",{
-    body: JSON.stringify({ latitude:latitude, longitude:longitude }) })
-    .then((res) => res.json())
-    .then((data) => {
-      var latitude = latitude;
-      var longitude = longitude;
-    })
-  
+window.onload = function initialize() {
+  console.log(parseFloat(document.getElementById("latitude").innerHTML));
+  var latitude = parseFloat(document.getElementById("latitude").innerHTML);
+  var longitude = parseFloat(document.getElementById("longitude").innerHTML);
   console.log(latitude);
   const fenway = { lat:latitude, lng:longitude };
   const map = new google.maps.Map(document.getElementById("map"), {
