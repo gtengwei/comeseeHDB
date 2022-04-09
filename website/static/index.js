@@ -48,8 +48,8 @@ function favourite_count(flatID) {
 }
 
 function initialize() {
-  var latitude = parseFloat(getElementById('latitude').value);
-  var longitude = parseFloat(getElementById('longitude').value);
+  var latitude = parseFloat(document.getElementById('latitude').innerHTML);
+  var longitude = parseFloat(document.getElementById('longitude').innerHTML);
   console.log(latitude);
   console.log(longitude);
   const fenway = { lat: latitude, lng: longitude };
