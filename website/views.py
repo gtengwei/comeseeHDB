@@ -35,13 +35,6 @@ def delete_review():
 
 # Route for every flat
 
-@views.route('/initialise', methods=['GET'])
-def initialise(flatId):
-    print(flatId)
-    flat = Flat.query.get(flatId)
-    print(type(flat.longitude))
-    return jsonify({"latitude": flat.latitude, "longitude": flat.longitude})
-
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
 def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
@@ -92,6 +85,13 @@ def flat_details(flatId):
     # amenity = amenity
     return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity,url_staticimage = url_staticimage, latitude = latitude, longitude = longitude)
 
+@views.route('/initialise', methods=['GET'])
+def initialise(flatId):
+    print(flatId)
+    flat = Flat.query.get(flatId)
+    latitude = flat.latitude
+    longitude = flat.longitude
+    return jsonify({"latitude":latitude, "longitude":longitude})
 
 @views.route('/unfavourite', methods=['POST'])
 @login_required

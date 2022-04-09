@@ -48,17 +48,17 @@ function favourite_count(flatID) {
 }
 
 function initialize() {
+
   fetch("/initialise",{
-    method: "GET",
-    body: JSON.stringify({ latitude: latitude}, {longitude : longitude}) })
+    body: JSON.stringify({ latitude:latitude, longitude:longitude }) })
     .then((res) => res.json())
-    .then((data) => { 
-      latitude = data["latitude"];
-      longitude = data["longitude"];
+    .then((data) => {
+      var latitude = latitude;
+      var longitude = longitude;
     })
   
   console.log(latitude);
-  const fenway = { lat: +latitude, lng: +longitude };
+  const fenway = { lat:latitude, lng:longitude };
   const map = new google.maps.Map(document.getElementById("map"), {
     center: fenway,
     zoom: 14,
