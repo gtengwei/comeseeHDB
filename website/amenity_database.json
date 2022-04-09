@@ -3044,5 +3044,115 @@
                 28
             ]
         }
+    },
+    "ANG MO KIO AVE 1 BLK 205 560205": {
+        "bus_station": {
+            "Blk 209": [
+                339,
+                4
+            ],
+            "Blk 324": [
+                1244,
+                15
+            ],
+            "Opp Blk 315": [
+                2354,
+                28
+            ],
+            "Blk 322": [
+                1177,
+                14
+            ]
+        },
+        "school": {
+            "Ang Mo Kio Secondary School": [
+                319,
+                4
+            ],
+            "Kits4Kids Special School": [
+                286,
+                3
+            ],
+            "Ang Mo Kio Primary School": [
+                788,
+                9
+            ]
+        },
+        "restaurant": {
+            "Kam Jia Zhuang Seafood": [
+                227,
+                3
+            ],
+            "KFC": [
+                835,
+                10
+            ],
+            "Goodbargains Estore": [
+                1009,
+                12
+            ],
+            "Takagi Ramen - Ang Mo Kio": [
+                563,
+                7
+            ],
+            "Chicken Rice Special": [
+                280,
+                3
+            ],
+            "Jin Sheng Chicken Rice \u9326\u80dc\u9e21\u996d": [
+                199,
+                2
+            ],
+            "Soon Soon Carrot Cake \u9806\u9806\u83dc\u982d\u7cbf": [
+                206,
+                2
+            ],
+            "Noodle Doodle AMKSS": [
+                301,
+                4
+            ],
+            "\u95fb\u8bb0\u4e91\u541e\u9762 Wen Ji Wanton Noodle": [
+                227,
+                3
+            ],
+            "Snack and Go AMKSS": [
+                278,
+                3
+            ],
+            "Cooling Station AMKSS": [
+                285,
+                3
+            ],
+            "Ban Mian": [
+                244,
+                3
+            ],
+            "Huay Kwang Thai Wanton Mee": [
+                282,
+                3
+            ],
+            "Tong Xing": [
+                294,
+                4
+            ],
+            "Little Totful Chefs": [
+                323,
+                4
+            ]
+        },
+        "doctor": {
+            "Family Chiropractic Singapore": [
+                492,
+                6
+            ],
+            "\u8bb8\u767c\u5987\u79d1\u4e13\u79d1\u95e8\u8bca": [
+                384,
+                5
+            ],
+            "\u7f18\u9053\u517b\u751f\u9986Yuan Dao TCM Clinic": [
+                677,
+                8
+            ]
+        }
     }
 }
