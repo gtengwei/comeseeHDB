@@ -3258,5 +3258,107 @@
                 23
             ]
         }
+    },
+    "BT PANJANG RING RD BLK 234 670234": {
+        "bus_station": {
+            "Opp Greenridge Sec Sch": [
+                481,
+                6
+            ],
+            "Greenridge Sec Sch": [
+                1432,
+                17
+            ]
+        },
+        "subway_station": {
+            "Bangkit": [
+                810,
+                10
+            ],
+            "Pending": [
+                563,
+                7
+            ]
+        },
+        "school": {
+            "Zhenghua Primary School": [
+                2171,
+                26
+            ],
+            "Greenridge Secondary School": [
+                725,
+                9
+            ]
+        },
+        "restaurant": {
+            "Peking Vision-Care Pte Ltd": [
+                725,
+                9
+            ],
+            "Ding Ji": [
+                1415,
+                17
+            ],
+            "Hai Nan Hometown Curry": [
+                416,
+                5
+            ],
+            "You Xiang Teochew Noodles": [
+                368,
+                4
+            ],
+            "\u518d\u6765 Chye Lye Lor Mee": [
+                424,
+                5
+            ],
+            "Yew Lee WanTon Noodle": [
+                425,
+                5
+            ],
+            "Saamsudeen": [
+                429,
+                5
+            ],
+            "Korean Japanese Cuisine": [
+                433,
+                5
+            ],
+            "Old Times": [
+                433,
+                5
+            ],
+            "\u6771\u9806\u7d20\u98df": [
+                433,
+                5
+            ],
+            "\u4e91\u541e\u9eb5": [
+                433,
+                5
+            ],
+            "\u518d\u4f86\u5364\u9762": [
+                433,
+                5
+            ],
+            "Chong Panh Huat": [
+                433,
+                5
+            ],
+            "Liang Hao Ji": [
+                433,
+                5
+            ],
+            "Habib Sahra Pte Ltd.": [
+                433,
+                5
+            ],
+            "Ayu & Nasi Padang": [
+                433,
+                5
+            ],
+            "Xin Ban Mian": [
+                433,
+                5
+            ]
+        }
     }
 }

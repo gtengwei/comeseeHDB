@@ -89,12 +89,12 @@ def flat_details(flatId):
     return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity)
 
 
-@views.route('/streetview', methods=['GET', 'POST'])
-def streetview():
-    streetview = json.loads(request.data)
-    flatID = streetview['flatID']
-    flat = Flat.query.get(flatID)
-    return jsonify({"latitude": flat.latitude, "longitude": flat.longitude})
+# @views.route('/initialise', methods=['GET'])
+# def initialise(flatId):
+#     print(flatId)
+#     flat = Flat.query.get(flatId)
+#     print(type(flat.longitude))
+#     return jsonify({"latitude": flat.latitude, "longitude": flat.longitude})
 
 
 @views.route('/unfavourite', methods=['POST'])
