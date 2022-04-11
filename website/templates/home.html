@@ -139,18 +139,6 @@
 
                     <br>
 
-                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#amentity" aria-expanded="false" aria-controls="amentity"><h6 class="font-weight-bold">Amenities<span class="fa fa-university pl-1"></h6></span></button>
-                    <div class="collapse" id="amentity">
-                        <div class="py-2 ml-3">
-                            <h6 class="font-weight-bold">Amenities</h6>
-                            <div style="color: pink"><span class="fa fa-minus"></span></div>
-                            
-                                <div class="form-group"> <input type="checkbox" id="busInterchange" name="amenity" value = "BUS INTERCHANGE"> <label for="busInterchange">Bus Interchange</label> </div>
-                                <div class="form-group"> <input type="checkbox" id="hospital" name="amenity" value = "HOSPITAL"> <label for="hospital">Hospital</label> </div>
-                        
-                        </div>
-                    </div>
-
                 </div>
           </div>
       </div>
@@ -179,28 +167,7 @@
             <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button">
               <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
-            <div class = "guest_error">
-              <div class="modal fade" id="changePostalCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header text-center">
-                      <h4 class="modal-title w-100 font-weight-bold">Login Feature</h4>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
             
-                    <div class="modal-body mx-3">
-                      <div class="md-form mb-5">
-                          <a href='/sign-up'<h5> Create an account to use this feature!</h5></a>
-                      </div>
-            
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           {% endif %}
           <span id="favourite_count{{flat.id}}">{{flat.favourites|length}}</span>
 
@@ -343,7 +310,28 @@
 
 
 
-
+<div class = "guest_error">
+    <div class="modal fade" id="changePostalCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h4 class="modal-title w-100 font-weight-bold">Login Feature</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+  
+          <div class="modal-body mx-3">
+            <div class="md-form mb-5">
+                <a href='/sign-up'<h5> Create an account to use this feature!</h5></a>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
 
 
   
