@@ -8,7 +8,7 @@ def test_diffPostalCode_review(client, captured_templates):
     with client:
         login(client,testingEmail, testingPassword) # ==> user.postal_code = 190001
         
-        flatId = randint(1, Flat.query.count())
+        flatId = Flat.query.filter(Flat.postal_sector != current_user.postal_code).first().id
         assert Flat.query.get(flatId).postal_sector != current_user.postal_code, "trying to post review on flat with same postal sector"
         
         rv = client.post('/flat-details/'+str(flatId), data={'review': "Love this neighbourhood! Near to MRT so I can sleep later before commuting to work :))"}, follow_redirects=True)
