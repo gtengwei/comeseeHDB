@@ -48,7 +48,7 @@ def flat_details(flatId):
 
     url1 = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference="
     url2 = "&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
-    
+    url_staticimage = 0
     if photo:
         length = len(photo)
         cur = 0
@@ -130,8 +130,9 @@ def home():
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
     # print(os.getcwd())
-    conn = sqlite3.connect("database.db")
-    #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
+    # conn = sqlite3.connect("database.db")
+    # conn = open_connection()
+    conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     myquery = (
         "SELECT id FROM Flat ORDER BY numOfFavourites DESC;")
@@ -340,8 +341,9 @@ def home():
 def load_home():
     image_id = random.randint(0,(len(image)-1))
     # In order to load sorted flats faster
-    conn = sqlite3.connect("database.db")
-    #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
+    # conn = sqlite3.connect("database.db")
+    # conn = open_connection()
+    conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     criteria = session.get('criteria')
     if criteria:

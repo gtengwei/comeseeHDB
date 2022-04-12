@@ -2952,5 +2952,799 @@
                 11
             ]
         }
+    },
+    "PUNGGOL DR BLK 642C 823642": {
+        "subway_station": {
+            "Kadaloor": [
+                869,
+                10
+            ],
+            "Riviera": [
+                1571,
+                19
+            ]
+        },
+        "school": {
+            "Horizon Primary School": [
+                1148,
+                14
+            ],
+            "Waterway Primary School": [
+                1119,
+                13
+            ],
+            "Greendale Secondary School": [
+                1609,
+                19
+            ],
+            "Genius School House": [
+                426,
+                5
+            ]
+        },
+        "restaurant": {
+            "\u5408\u5229": [
+                370,
+                4
+            ],
+            "Master Crab Seafood Restaurant": [
+                370,
+                4
+            ],
+            "Indian Cuisine": [
+                370,
+                4
+            ],
+            "Mei Chin Seafood Restaurant": [
+                370,
+                4
+            ],
+            "Economic Fried Bee Hoon": [
+                370,
+                4
+            ],
+            "Fishball Noodle": [
+                370,
+                4
+            ],
+            "Ban Mian, Seafood Soup": [
+                370,
+                4
+            ],
+            "Western Food": [
+                370,
+                4
+            ],
+            "Gina Food": [
+                437,
+                5
+            ],
+            "Eat Hum \u5403\u86b6": [
+                1028,
+                12
+            ],
+            "828825": [
+                1664,
+                20
+            ],
+            "Tend Bistro": [
+                1536,
+                18
+            ],
+            "punggol golf driving range": [
+                1536,
+                18
+            ],
+            "Meshiya \u996d\u5c4b": [
+                1529,
+                18
+            ],
+            "CAI PU CHICKEN PORRIDGE": [
+                1529,
+                18
+            ],
+            "Leong Ji Kitchen": [
+                1529,
+                18
+            ],
+            "Ten Ten (\u5929\u5929) Otoko Sashimi/Don": [
+                1120,
+                13
+            ]
+        }
+    },
+    "BISHAN ST 12 BLK 127 570127": {
+        "bus_station": {
+            "Blk 131": [
+                320,
+                4
+            ],
+            "Opp Blk 125": [
+                852,
+                10
+            ],
+            "Aft Muhajirin Mque": [
+                2237,
+                27
+            ],
+            "Blk 115": [
+                731,
+                9
+            ],
+            "Opp Blk 1004": [
+                1440,
+                17
+            ]
+        },
+        "school": {
+            "PCF Hampton Pre-School": [
+                484,
+                6
+            ],
+            "Beatty Secondary School": [
+                2881,
+                34
+            ],
+            "United Montessori School House": [
+                1000,
+                12
+            ],
+            "Guangyang Secondary School": [
+                440,
+                5
+            ],
+            "Guangyang Primary School": [
+                737,
+                9
+            ]
+        },
+        "restaurant": {
+            "Cuisine Xpress Pte Ltd": [
+                2334,
+                28
+            ],
+            "Yu Kee Duck Rice": [
+                980,
+                12
+            ],
+            "Mata Thai": [
+                783,
+                9
+            ],
+            "Happy Family Restaurant": [
+                398,
+                5
+            ],
+            "Toon Wah Eating House": [
+                404,
+                5
+            ],
+            "FuLee Seafood \u5bcc\u4fd0\u6d77\u9c9c": [
+                404,
+                5
+            ],
+            "120 Economic Bee Hoon": [
+                458,
+                5
+            ],
+            "JWS Grille Factory": [
+                466,
+                6
+            ],
+            "Old honkong": [
+                248,
+                3
+            ],
+            "\u5fc3\u610f Mind Kitchen": [
+                690,
+                8
+            ],
+            "112 Economic Bee Hoon": [
+                696,
+                8
+            ],
+            "Fatty Bom Bom Sizzle": [
+                2255,
+                27
+            ],
+            "niigata": [
+                2205,
+                26
+            ],
+            "Texas Chicken": [
+                2205,
+                26
+            ],
+            "Jerk Thai": [
+                2205,
+                26
+            ],
+            "San Pin Pao Fan": [
+                2205,
+                26
+            ],
+            "Black Pepper Chicken .": [
+                2205,
+                26
+            ]
+        },
+        "doctor": {
+            "Kids Clinic @ Bishan by SMG": [
+                761,
+                9
+            ],
+            "Prudence Family Clinic Pte Ltd": [
+                749,
+                9
+            ],
+            "Q & M Dental Surgery (Bishan)": [
+                791,
+                9
+            ],
+            "Chua Dental Surgery": [
+                758,
+                9
+            ],
+            "EN HUI TCM CLINIC": [
+                761,
+                9
+            ],
+            "Sim Tiong Puay Dr": [
+                798,
+                10
+            ],
+            "Bishan Dental Surgery": [
+                798,
+                10
+            ],
+            "P Tan Family Medicine Clinic": [
+                2047,
+                24
+            ]
+        }
+    },
+    "CHOA CHU KANG AVE 1 BLK 130 680130": {
+        "bus_station": {
+            "Cck Polyclinic": [
+                617,
+                7
+            ]
+        },
+        "subway_station": {
+            "Keat Hong": [
+                404,
+                5
+            ]
+        },
+        "school": {
+            "Chua Chu Kang Secondary School": [
+                738,
+                9
+            ],
+            "South View Primary School": [
+                483,
+                6
+            ]
+        },
+        "restaurant": {
+            "McDonald's": [
+                663,
+                8
+            ],
+            "NKS Restaurant": [
+                288,
+                3
+            ],
+            "Yu Pan Fish Soup": [
+                965,
+                11
+            ],
+            "Fu Fa Fish Soup": [
+                975,
+                12
+            ],
+            "Hao You Ji \u597d\u53cb\u8bb0 roast meat": [
+                910,
+                11
+            ],
+            "Chai Shu Kway Chap": [
+                990,
+                12
+            ],
+            "Millicent Pte Ltd": [
+                990,
+                12
+            ],
+            "(Yummy Court) Aneka Selera": [
+                900,
+                11
+            ],
+            "(Yummy Court) Porridge": [
+                900,
+                11
+            ],
+            "(Fu Chan) Xian Mei": [
+                900,
+                11
+            ],
+            "(yummy Court) Xiang Wang Rojak": [
+                900,
+                11
+            ],
+            "(Fu Chan) Xiang Ji": [
+                900,
+                11
+            ],
+            "Taste of CCK": [
+                615,
+                7
+            ],
+            "4Fingers Crispy Chicken": [
+                529,
+                6
+            ],
+            "Long Heng Snack Bar": [
+                590,
+                7
+            ],
+            "Red Lantern Seafood \u7ea2\u706f\u7b3c\u6d77\u9c9c\u9986": [
+                617,
+                7
+            ]
+        },
+        "doctor": {
+            "Exersise Place": [
+                585,
+                7
+            ],
+            "Khoo Medical Clinic & Surgery": [
+                617,
+                7
+            ],
+            "Royal Care Medical": [
+                804,
+                10
+            ]
+        }
+    },
+    "LOR 1 TOA PAYOH BLK 172A 311172": {
+        "bus_station": {
+            "Opp Trellis Twrs": [
+                2456,
+                29
+            ],
+            "Bef Jln Dusun": [
+                2843,
+                34
+            ],
+            "Muay Thai": [
+                3569,
+                42
+            ],
+            "Opp Old Police Academy": [
+                3530,
+                42
+            ]
+        },
+        "school": {
+            "CHIJ Secondary School": [
+                811,
+                10
+            ],
+            "SJI International School": [
+                1658,
+                20
+            ],
+            "Carpe Diem Schoolhouse Pte Ltd": [
+                1122,
+                13
+            ]
+        },
+        "restaurant": {
+            "Jin Xing": [
+                400,
+                5
+            ],
+            "Donna Lau Cafe Owner": [
+                424,
+                5
+            ],
+            "Chop Steak": [
+                355,
+                4
+            ],
+            "Benson Salted Duck Rice": [
+                348,
+                4
+            ],
+            "Mian Jian Guo": [
+                358,
+                4
+            ],
+            "Lai Bao Fishhead steamboat": [
+                392,
+                5
+            ],
+            "Mr Bilal Prata famous prata": [
+                400,
+                5
+            ],
+            "168 Chicken Rice": [
+                400,
+                5
+            ],
+            "Pig Organ Soup and Kway Chap": [
+                400,
+                5
+            ],
+            "Jia Xiang Mei Shi": [
+                400,
+                5
+            ],
+            "Tony's Kitchen": [
+                400,
+                5
+            ],
+            "Kae Evisu food": [
+                736,
+                9
+            ],
+            "2Nd Kitchen Pte Ltd": [
+                2793,
+                33
+            ],
+            "Tiong Bee Bak Kut Teh": [
+                2823,
+                34
+            ],
+            "Jiu Xiang Xiang Roast Duck": [
+                2833,
+                34
+            ],
+            "ONE DUSUN": [
+                2893,
+                34
+            ],
+            "Cavemen Restaurant & Bar": [
+                2879,
+                34
+            ]
+        }
+    },
+    "CLEMENTI AVE 4 BLK 311A 121311": {
+        "bus_station": {
+            "Bet Blks 315/318": [
+                879,
+                10
+            ],
+            "Blk 376": [
+                769,
+                9
+            ],
+            "Opp Blk 317": [
+                1487,
+                18
+            ],
+            "Blk 377": [
+                1119,
+                13
+            ],
+            "Clementi Stn Exit B": [
+                1151,
+                14
+            ],
+            "Clementi Stn Exit A": [
+                1754,
+                21
+            ]
+        },
+        "subway_station": {
+            "Clementi": [
+                1127,
+                13
+            ]
+        },
+        "school": {
+            "Nan Hua Primary School": [
+                1831,
+                22
+            ],
+            "Fasosola Music School": [
+                1334,
+                16
+            ],
+            "Pei Tong Primary School": [
+                1073,
+                13
+            ]
+        },
+        "restaurant": {
+            "Subway": [
+                1547,
+                18
+            ],
+            "Swensen's": [
+                1829,
+                22
+            ],
+            "KFC": [
+                1817,
+                22
+            ],
+            "JINJJA Chicken": [
+                1147,
+                14
+            ],
+            "Ding Ji": [
+                928,
+                11
+            ],
+            "Crystal Jade Hong Kong Kitchen": [
+                1806,
+                22
+            ],
+            "Bee Cheng Hiang": [
+                1772,
+                21
+            ],
+            "Old Chang Kee @ Clementi Mall": [
+                1772,
+                21
+            ],
+            "Stuff'd": [
+                1772,
+                21
+            ],
+            "TORI-Q The Clementi Mall": [
+                1772,
+                21
+            ],
+            "Pezzo": [
+                1772,
+                21
+            ],
+            "So Pho (Clementi Mall)": [
+                1185,
+                14
+            ],
+            "Burger King": [
+                1547,
+                18
+            ],
+            "Crave Nasi Lemak": [
+                1547,
+                18
+            ],
+            "Ootoya (Clementi Mall)": [
+                1547,
+                18
+            ],
+            "Mr Prata": [
+                966,
+                12
+            ],
+            "Hawkerman @ Kedai Kopi": [
+                772,
+                9
+            ],
+            "Buey Tahan See-Food Clementi": [
+                778,
+                9
+            ]
+        },
+        "doctor": {
+            "Si Hoe Yeen Ling": [
+                966,
+                12
+            ]
+        }
+    },
+    "BUANGKOK GREEN BLK 988B 532988": {
+        "bus_station": {
+            "Blk 986b": [
+                592,
+                7
+            ]
+        },
+        "school": {
+            "Hougang Primary School": [
+                932,
+                11
+            ]
+        },
+        "restaurant": {
+            "Rongji Seafood": [
+                1435,
+                17
+            ],
+            "Orchid Live Seafood": [
+                1935,
+                23
+            ],
+            "Pietro Ristorante Italiano": [
+                1928,
+                23
+            ],
+            "Kueh Pulau Pinang \u69df\u57ce\u7cbf": [
+                306,
+                4
+            ],
+            "so kee alam hoker center": [
+                3208,
+                38
+            ],
+            "SRP PTE LTD": [
+                321,
+                4
+            ],
+            "Fang Wei Chicken Rice": [
+                400,
+                5
+            ],
+            "Top Corner Western Food": [
+                400,
+                5
+            ],
+            "AL DIA restaurant": [
+                1467,
+                17
+            ],
+            "Sally Roast Meat Rice": [
+                1474,
+                18
+            ],
+            "MS Econ Bee Hoon": [
+                363,
+                4
+            ],
+            "Gt Food Supply Pte. Ltd.": [
+                2199,
+                26
+            ],
+            "Chicks n Lobs": [
+                1934,
+                23
+            ],
+            "\u8b5a\u5bb6\u597d\u5f69 Tam Kah Shark's Fin": [
+                1989,
+                24
+            ],
+            "umisushi": [
+                1427,
+                17
+            ],
+            "Wu Fu (Fajar) Pte. Ltd.": [
+                2235,
+                27
+            ]
+        },
+        "doctor": {
+            "Cyberhub North": [
+                2194,
+                26
+            ]
+        }
+    },
+    "YISHUN ST 21 BLK 227 760227": {
+        "bus_station": {
+            "Blk 220": [
+                637,
+                8
+            ],
+            "Blk 154": [
+                1326,
+                16
+            ]
+        },
+        "school": {
+            "Yishun Town Secondary School": [
+                525,
+                6
+            ],
+            "Xishan Primary School": [
+                282,
+                3
+            ],
+            "Northland Secondary School": [
+                972,
+                12
+            ],
+            "Yishun Primary School": [
+                835,
+                10
+            ]
+        },
+        "restaurant": {
+            "Fragrance Foodstuff Pte Ltd": [
+                574,
+                7
+            ],
+            "Domino's Pizza": [
+                823,
+                10
+            ],
+            "Syed Restaurant": [
+                539,
+                6
+            ],
+            "Food yishun": [
+                574,
+                7
+            ],
+            "Jia Le (HK) Roasted Food": [
+                573,
+                7
+            ],
+            "Biryani Bae": [
+                573,
+                7
+            ],
+            "XO Fishhead Bee Hoon": [
+                573,
+                7
+            ],
+            "ECO BEE HOON": [
+                574,
+                7
+            ],
+            "Five Star Western Delights": [
+                576,
+                7
+            ],
+            "Rasa rosa Wansan Pte LTd": [
+                160,
+                2
+            ],
+            "AL AHAMED DELIGHTS": [
+                449,
+                5
+            ],
+            "Al-Zubair Dum Briyani": [
+                449,
+                5
+            ],
+            "Malu Malu Seafood": [
+                1232,
+                15
+            ],
+            "AL HABIB INDIAN MUSLIM FOOD": [
+                457,
+                5
+            ],
+            "West Grill Station": [
+                153,
+                2
+            ],
+            "Fried Delights": [
+                151,
+                2
+            ],
+            "Kuang Jie": [
+                448,
+                5
+            ]
+        },
+        "doctor": {
+            "Atrio Family Clinic Pte. Ltd.": [
+                346,
+                4
+            ],
+            "Custodia Dental Clinic": [
+                573,
+                7
+            ],
+            "Liew & Koh Dental Surgery": [
+                789,
+                9
+            ],
+            "Shanghai": [
+                789,
+                9
+            ],
+            "Dao Yuan TCM Pte. Ltd (\u9053\u7f18\u4e2d\u533b)": [
+                1260,
+                15
+            ]
+        }
     }
 }

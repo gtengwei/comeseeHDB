@@ -16,5 +16,6 @@ datetime
 pymysql
 cryptography
 requests
+regex
 
 

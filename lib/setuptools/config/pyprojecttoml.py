@@ -26,18 +26,17 @@ def load_file(filepath: _Path) -> dict:
         return tomli.load(file)
 
 
-def validate(config: dict, filepath: _Path):
-    from setuptools.extern._validate_pyproject import validate as _validate
+def validate(config: dict, filepath: _Path) -> bool:
+    from . import _validate_pyproject as validator
+
+    trove_classifier = validator.FORMAT_FUNCTIONS.get("trove-classifier")
+    if hasattr(trove_classifier, "_disable_download"):
+        # Improve reproducibility by default. See issue 31 for validate-pyproject.
+        trove_classifier._disable_download()  # type: ignore
 
     try:
-        return _validate(config)
-    except Exception as ex:
-        if ex.__class__.__name__ != "ValidationError":
-            # Workaround for the fact that `extern` can duplicate imports
-            ex_cls = ex.__class__.__name__
-            error = ValueError(f"invalid pyproject.toml config: {ex_cls} - {ex}")
-            raise error from None
-
+        return validator.validate(config)
+    except validator.ValidationError as ex:
         _logger.error(f"configuration error: {ex.summary}")  # type: ignore
         _logger.debug(ex.details)  # type: ignore
         error = ValueError(f"invalid pyproject.toml config: {ex.name}")  # type: ignore
@@ -317,12 +316,17 @@ class _ConfigExpander:
         return None
 
     def _obtain_readme(self, dist: "Distribution") -> Optional[Dict[str, str]]:
-        if "readme" in self.dynamic:
-            dynamic_cfg = self.dynamic_cfg
+        if "readme" not in self.dynamic:
+            return None
+
+        dynamic_cfg = self.dynamic_cfg
+        if "readme" in dynamic_cfg:
             return {
                 "text": self._obtain(dist, "readme", {}),
                 "content-type": dynamic_cfg["readme"].get("content-type", "text/x-rst"),
             }
+
+        self._ensure_previously_set(dist, "readme")
         return None
 
     def _obtain_entry_points(
