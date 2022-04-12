@@ -63,7 +63,7 @@
                     <div class="border-bottom pb-2 ml-2">
                         <h4 id="burgundy">Filter</h4>
                     </div>
-                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa fa-money pl-1"></h6></span></button>
+                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa-solid fa-money"></h6></span></button>
                     <div class="collapse" id="price">
                         <div class="py-2 border-bottom ml-3">
                             <div style="color: pink"><span class="fa fa-minus"></span></div>
@@ -205,7 +205,9 @@
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <img src="{{image[0]}}" class="img-thumbnail">
+              <div class="img">
+              <img src="{{ url_for('static', filename = flat.image)}}" class="img-thumbnail">
+            </div>
             </div>
             <div class="col">
               <p><strong>Price: </strong>${{flat.resale_price}}</p>
@@ -221,13 +223,16 @@
     {% endfor %}
   </div>
 
-  <div class = 'bottom-left'>
+<div class = 'bottom-left'>
+  <div class = 'fixed-bottom'>
     <button class="btn btn-primary btn-circle" type= "button" >
       <i class="fa fa-question"></i>
     </button>
-  </div>      
+  </div>
+</div>      
     
-  <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}" data-image="{{image[0]}}">
+<meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">
+
 <script type="text/javascript">
 
   var index = 20;
@@ -256,9 +261,9 @@
   function downloadContent(index, limit) {
     $.get('/load_home?index=' + index + '&limit=' + limit, (data) => {
       for (var index = 0; index < data.data.length; index++) {
-        var image = $('#my-data').data().image;
         var favourite = $('#my-data').data().f;
         var flat = "/flat-details/" + data.data[index][0]; 
+        var image = "/static/" + data.data[index][5];
 
         if (favourite.includes(data.data[index][0])) {
         var page2 = `
@@ -269,7 +274,7 @@
           <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="unfavourite(`+data.data[index][0]+`)">
             <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
           </button>
-          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][5]+`</span>
+          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][6]+`</span>
         </div>
           `
         }
@@ -282,7 +287,7 @@
           <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="favourite(`+data.data[index][0]+`)">
             <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
           </button>
-          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][5]+`</span>
+          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][6]+`</span>
         </div>
           `
         }    
@@ -340,70 +345,65 @@
 
   
   
-  <div class = "guest_error">
-    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header text-center">
-            <h4 class="modal-title w-100 font-weight-bold">Help</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-  
-          <div class="modal-body mx-3">
-            <div class="md-form mb-5">
-              <h4> What is this website?</h4>
-              <p> This website is a search engine for resale HDB flats in Singapore. 
+<div class = "guest_error">
+  <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Help</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body mx-3">
+          <div class="md-form mb-5">
+            <h4> What is this website?</h4>
+            <p> This website is a search engine for resale HDB flats in Singapore. 
+              <br>
+              You can search for flats by <b>address</b> and/or <b>postal code</b>!
+              <br>
+              You can also sort flats by <b>Price</b>, <b>Floor</b>, <b>Price per sqm</b> and more simply by clicking on the sort button.
+
+              <h5> 1. How to search</h5>
+              <p>
+                You can search for flats by entering the postal code or the address.
                 <br>
-                You can search for flats by <b>address</b> and/or <b>postal code</b>!
+                The address can be entered in the following format:
+                <br/>
+                Street Name
+                <br/>
+                Street as <b>st</b>
+                <br/>
+                Block as <b>blk</b>
+                <br/>
+                e.g. "Ang Mo Kio st 5 blk 5" or "Ang Mo Kio st 5"
+              </p>
+              <h5> 2. How to favourite</h5>
+              <p>
+                You can favourite a flat by clicking on the heart icon at the side of the address.
                 <br>
-                You can also sort flats by <b>Price</b>, <b>Floor</b>, <b>Price per sqm</b> and more simply by clicking on the sort button.
-
-                <h5> 1. How to search</h5>
-                <p>
-                  You can search for flats by entering the postal code or the address.
-                  <br>
-                  The address can be entered in the following format:
-                  <br/>
-                  Street Name
-                  <br/>
-                  Street as <b>st</b>
-                  <br/>
-                  Block as <b>blk</b>
-                  <br/>
-                  
-                  e.g. "Ang Mo Kio st 5 blk 5" or "Ang Mo Kio st 5"
-
-
-                </p>
-                <h5> 2. How to favourite</h5>
-                <p>
-                  You can favourite a flat by clicking on the heart icon at the side of the address.
-                  <br>
-                  You can only do this if you are logged in.
-                </p>
-                <h5> 3. How to sort</h5>
-                <p>
-                  You can sort flats by clicking on the Sort button.
-                  <br>
-                  You can sort by <b>Price</b>, <b>Floor</b>, <b>Price per sqm</b> and more simply by clicking on the sort button.
-                </p>
-                <h5> 4. How to filter</h5>
-                <p>
-                  You can filter flats by clicking on the Filter button.
-                  <br>
-                  You can filter by <b>Price Range</b>, <b>Town</b> or even a combination of these!
-                </p>
-                
-            </div>
-  
+                You can only do this if you are logged in.
+              </p>
+              <h5> 3. How to sort</h5>
+              <p>
+                You can sort flats by clicking on the Sort button.
+                <br>
+                You can sort by <b>Price</b>, <b>Floor</b>, <b>Price per sqm</b> and more simply by clicking on the sort button.
+              </p>
+              <h5> 4. How to filter</h5>
+              <p>
+                You can filter flats by clicking on the Filter button.
+                <br>
+                You can filter by <b>Price Range</b>, <b>Town</b> or even a combination of these!
+              </p> 
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
 </body>
 {% endblock %}

@@ -94,6 +94,7 @@ class Flat(db.Model):
     postal_code = db.Column(db.Integer)
     postal_sector = db.Column(db.Integer)
     address_no_postal_code = db.Column(db.String(150))
+    image = db.Column(db.String(150))
     reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
     favourites = db.relationship('Favourites', backref = 'flat', passive_deletes=True)   
 
