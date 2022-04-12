@@ -49,8 +49,8 @@
                 <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.address_no_postal_code}}</strong></a>
                 <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="unfavourite({{ flat.id }})">
                   <span id ="favourite_button_id{{flat.id}}"><i class="fa-solid fa-heart"></i></span>
+                  <span id="favourite_count{{flat.id}}">{{flat.favourites|length}}</span>
                 </button>
-      
               </div>
               <div class="card-body">
                 <div class="row">

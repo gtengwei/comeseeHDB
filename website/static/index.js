@@ -46,3 +46,27 @@ function favourite_count(flatID) {
     console.log("onload print this");
   })
 }
+
+window.onload = function initialize() {
+  console.log(parseFloat(document.getElementById("latitude").innerHTML));
+  var latitude = parseFloat(document.getElementById("latitude").innerHTML);
+  var longitude = parseFloat(document.getElementById("longitude").innerHTML);
+  console.log(latitude);
+  const fenway = { lat:latitude, lng:longitude };
+  const map = new google.maps.Map(document.getElementById("map"), {
+    center: fenway,
+    zoom: 14,
+  });
+  const panorama = new google.maps.StreetViewPanorama(
+    document.getElementById("pano"),
+    {
+      position: fenway,
+      pov: {
+        heading: 34,
+        pitch: 10,
+      },
+    }
+  );
+
+  map.setStreetView(panorama);
+}

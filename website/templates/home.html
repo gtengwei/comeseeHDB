@@ -12,7 +12,16 @@
           $("#changePostalCodeModal").modal('show');
         }); 
     });
-</script>
+  </script>
+
+  <script>
+    $(document).ready(function(){
+        $('.bottom-left').click(function(){
+          $("#helpModal").modal('show');
+        }); 
+    });
+  </script>
+
 
 
 </head> 
@@ -54,7 +63,7 @@
                     <div class="border-bottom pb-2 ml-2">
                         <h4 id="burgundy">Filter</h4>
                     </div>
-                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa-solid fa-dollar-sign"></h6></span></button>
+                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa-solid fa-money"></h6></span></button>
                     <div class="collapse" id="price">
                         <div class="py-2 border-bottom ml-3">
                             <div style="color: pink"><span class="fa fa-minus"></span></div>
@@ -130,18 +139,6 @@
 
                     <br>
 
-                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#amentity" aria-expanded="false" aria-controls="amentity"><h6 class="font-weight-bold">Amenities<span class="fa fa-university pl-1"></h6></span></button>
-                    <div class="collapse" id="amentity">
-                        <div class="py-2 ml-3">
-                            <h6 class="font-weight-bold">Amenities</h6>
-                            <div style="color: pink"><span class="fa fa-minus"></span></div>
-                            
-                                <div class="form-group"> <input type="checkbox" id="busInterchange" name="amenity" value = "BUS INTERCHANGE"> <label for="busInterchange">Bus Interchange</label> </div>
-                                <div class="form-group"> <input type="checkbox" id="hospital" name="amenity" value = "HOSPITAL"> <label for="hospital">Hospital</label> </div>
-                        
-                        </div>
-                    </div>
-
                 </div>
           </div>
       </div>
@@ -170,28 +167,7 @@
             <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button">
               <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
-            <div class = "guest_error">
-              <div class="modal fade" id="changePostalCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header text-center">
-                      <h4 class="modal-title w-100 font-weight-bold">Login Feature</h4>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-          
-                    <div class="modal-body mx-3">
-                      <div class="md-form mb-5">
-                          <a href='/sign-up'<h5> Create an account to use this feature!</h5></a>
-                      </div>
-          
-                    </div>
-                  </div>
-                </div>
-              </div>
-          </div>
+            
           {% endif %}
           <span id="favourite_count{{flat.id}}">{{flat.favourites|length}}</span>
 
@@ -199,7 +175,9 @@
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <img src="{{image[0]}}" class="img-thumbnail">
+              <div class="img">
+              <img src="{{ url_for('static', filename = flat.image)}}" class="img-thumbnail">
+            </div>
             </div>
             <div class="col">
               <p><strong>Price: </strong>${{flat.resale_price}}</p>
@@ -214,9 +192,17 @@
       </div>
     {% endfor %}
   </div>
-        
+
+<div class = 'bottom-left'>
+  <div class = 'fixed-bottom'>
+    <button class="btn btn-primary btn-circle" type= "button" >
+      <i class="fa fa-question"></i>
+    </button>
+  </div>
+</div>      
     
-  <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}" data-image="{{image[0]}}">
+<meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">
+
 <script type="text/javascript">
 
   var index = 20;
@@ -245,9 +231,9 @@
   function downloadContent(index, limit) {
     $.get('/load_home?index=' + index + '&limit=' + limit, (data) => {
       for (var index = 0; index < data.data.length; index++) {
-        var image = $('#my-data').data().image;
         var favourite = $('#my-data').data().f;
         var flat = "/flat-details/" + data.data[index][0]; 
+        var image = "/static/" + data.data[index][5];
 
         if (favourite.includes(data.data[index][0])) {
         var page2 = `
@@ -258,7 +244,7 @@
           <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="unfavourite(`+data.data[index][0]+`)">
             <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
           </button>
-          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][5]+`</span>
+          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][6]+`</span>
         </div>
           `
         }
@@ -271,7 +257,7 @@
           <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="favourite(`+data.data[index][0]+`)">
             <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
           </button>
-          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][5]+`</span>
+          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][6]+`</span>
         </div>
           `
         }    
@@ -321,5 +307,100 @@
       <i class="fas fa-circle-notch fa-spin"></i>
     </div>
   {% endif %}
+
+
+
+<div class = "guest_error">
+    <div class="modal fade" id="changePostalCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h4 class="modal-title w-100 font-weight-bold">Login Feature</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+  
+          <div class="modal-body mx-3">
+            <div class="md-form mb-5">
+                <a href='/sign-up'<h5> Create an account to use this feature!</h5></a>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+  
+  
+<div class = "guest_error">
+  <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Help</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body mx-3">
+          <div class="md-form mb-5">
+            <h4> What is comeseeHDB?</h4>
+            <p> <b>comeseeHDB</b> is a extensive search engine for resale HDB flats in Singapore. 
+              <br>
+              You can search for flats by <b>address</b> or <b>postal code</b>!
+              <br>
+              You can also sort flats by <b>Price</b>, <b>Floor</b>, <b>Price per sqm</b> and more simply by clicking on the sort button!
+              <br>
+              You can also filter flats by <b>Price Range</b>, <b>Town</b> and <b>Flat Type</b>!
+              <h5> 1. How to Search?</h5>
+              <p>
+                <ul>
+                <li>You can search for flats by entering the postal code or the address.</li>
+                <b>The address can be entered in the following format:</b>
+                <br/>
+                <li>Town Name</li>
+                <li>Street as <b>st</b></li>
+                <li>Block as <b>blk</b></li>
+                e.g. <i><b>"Ang Mo Kio st 5 blk 5"</b></i> or <i><b>"Ang Mo Kio st 5"</b></i>
+              </ul>
+              </p>
+              <h5> 2. How to Favourite?</h5>
+              <p>
+                <ul>
+                <li>You can favourite a flat by clicking on the heart icon at the side of the address.</li>
+                <li>You can only do this if you are logged in.</li>
+              </ul>
+              </p>
+              <h5> 3. How to Sort?</h5>
+              <p>
+                <ul>
+                <li>You can sort flats by clicking on the Sort button.</li>
+                <li>You can sort by <b>Price</b>, <b>Floor</b>, <b>Price per sqm</b> and more simply by clicking on the sort button.</li>
+              </ul>
+              </p>
+              <h5> 4. How to Filter?</h5>
+              <p>
+                <ul>
+                <li>You can filter flats by clicking on the Filter button.</li>
+                <li>You can filter by <b>Price Range</b>, <b>Town</b> or even a combination of these!</li>
+              </ul>
+              </p> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 {% endblock %}
+
+
+
+
