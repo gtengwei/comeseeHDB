@@ -3904,5 +3904,357 @@
                 13
             ]
         }
+    },
+    "JURONG WEST AVE 1 BLK 423 640423": {
+        "school": {
+            "Hua Yi Secondary School": [
+                1016,
+                12
+            ],
+            "Fuhua Secondary School": [
+                573,
+                7
+            ],
+            "Jurongville Secondary School": [
+                980,
+                12
+            ],
+            "Apple Plus School": [
+                461,
+                5
+            ]
+        },
+        "restaurant": {
+            "Domino's Pizza Jurong": [
+                42,
+                0
+            ],
+            "Ding Ji": [
+                159,
+                2
+            ],
+            "Tang Tea House": [
+                451,
+                5
+            ],
+            "The Big Bbq": [
+                7,
+                0
+            ],
+            "D' Life": [
+                163,
+                2
+            ],
+            "Malaysia": [
+                387,
+                5
+            ],
+            "Macpherson BBQ Seafood": [
+                387,
+                5
+            ],
+            "\u98df\u9738\u6d77\u9bae Seafood Park Jurong West": [
+                405,
+                5
+            ],
+            "Cahaya Nur 'Laila' Restaurant": [
+                382,
+                5
+            ],
+            "Block 498 Coffeeshop Fish Soup": [
+                382,
+                5
+            ],
+            "NOORLIN SEAFOOD": [
+                377,
+                4
+            ],
+            "\u6148\u4fee\u8f69": [
+                377,
+                4
+            ],
+            "Takagi Ramen @ Jurong West": [
+                176,
+                2
+            ],
+            "429 Western Food": [
+                212,
+                3
+            ],
+            "Maruhachi - Donbury & Curry": [
+                234,
+                3
+            ],
+            "YK \u677f\u9762 \u00b7 \u82cb\u83dc\u6c64": [
+                234,
+                3
+            ]
+        },
+        "doctor": {
+            "Eye Clinic Jurong": [
+                292,
+                3
+            ],
+            "EHA Clinic @ Jurong": [
+                387,
+                5
+            ],
+            "\u5434\u79c0\u73af\u4e2d\u533b\u5e08": [
+                143,
+                2
+            ],
+            "\u79d1\u5174\u75ab\u82d7": [
+                385,
+                5
+            ],
+            "GMGW Massage Therapy": [
+                234,
+                3
+            ],
+            "Access Medical (Jurong West)": [
+                655,
+                8
+            ],
+            "\u8bca\u6240": [
+                1297,
+                15
+            ],
+            "414 Coffee Shop": [
+                587,
+                7
+            ],
+            "Sunnyvale Clinic & Surgery": [
+                1243,
+                15
+            ]
+        }
+    },
+    "BISHAN ST 11 BLK 146 570146": {
+        "bus_station": {
+            "Aft Muhajirin Mque": [
+                1783,
+                21
+            ],
+            "Blk 131": [
+                992,
+                12
+            ],
+            "Opp Blk 125": [
+                1668,
+                20
+            ],
+            "Blk 237": [
+                2091,
+                25
+            ]
+        },
+        "school": {
+            "Beatty Secondary School": [
+                2427,
+                29
+            ],
+            "Guangyang Secondary School": [
+                1112,
+                13
+            ],
+            "PCF Hampton Pre-School": [
+                971,
+                12
+            ]
+        },
+        "restaurant": {
+            "Kelly Jie Seafood": [
+                1840,
+                22
+            ],
+            "Cuisine Xpress Pte Ltd": [
+                1880,
+                22
+            ],
+            "Chicks In The Coop": [
+                1963,
+                23
+            ],
+            "East Seafood White MeeHoon": [
+                1940,
+                23
+            ],
+            "\u81ea\u5728\u9f4b Zi Zai Vegetarian - Bishan": [
+                139,
+                2
+            ],
+            "Qiangji Chicken Rice": [
+                189,
+                2
+            ],
+            "Zichar": [
+                150,
+                2
+            ],
+            "M3 Makan Project Western": [
+                150,
+                2
+            ],
+            "Tai Zi (Bishan Branch)": [
+                150,
+                2
+            ],
+            "Rui Tian Cheng": [
+                169,
+                2
+            ],
+            "Serangoon Nasi Padang": [
+                171,
+                2
+            ],
+            "Tai Heng Handmade Dim Sum": [
+                171,
+                2
+            ],
+            "Old honkong": [
+                920,
+                11
+            ],
+            "Home Eatery": [
+                225,
+                3
+            ],
+            "Pure Heart Vegetarian": [
+                225,
+                3
+            ],
+            "Wei Ji Porridge \u5049\u8bb0\u7ca5": [
+                228,
+                3
+            ],
+            "Al-Aisa Prata House": [
+                488,
+                6
+            ],
+            "Jiu Fu Prawn Noodles": [
+                283,
+                3
+            ]
+        }
+    },
+    "BT BATOK CTRL BLK 103 650103": {
+        "bus_station": {
+            "Blk 102": [
+                729,
+                9
+            ],
+            "Opp Blk 120": [
+                567,
+                7
+            ],
+            "Blk 109": [
+                468,
+                6
+            ],
+            "Aft Bt Batok Stn/Blk 628": [
+                1187,
+                14
+            ],
+            "Blk 644": [
+                700,
+                8
+            ]
+        },
+        "subway_station": {
+            "Bukit Batok": [
+                683,
+                8
+            ]
+        },
+        "school": {
+            "Swim To Survive Swim School": [
+                1143,
+                14
+            ]
+        },
+        "restaurant": {
+            "Subway": [
+                1275,
+                15
+            ],
+            "Gao Ji F & B Pte Ltd": [
+                1288,
+                15
+            ],
+            "Eastern Rice Dumpling": [
+                596,
+                7
+            ],
+            "Chang Cheng - West Mall": [
+                663,
+                8
+            ],
+            "Cheung Wong Roasted Delights": [
+                850,
+                10
+            ],
+            "Lam's Kitchen @ West Mall": [
+                1284,
+                15
+            ],
+            "Spice Corner": [
+                1288,
+                15
+            ],
+            "Delifrance": [
+                596,
+                7
+            ],
+            "Encik Tan": [
+                1325,
+                16
+            ],
+            "Srisun Express Bukit Batok": [
+                611,
+                7
+            ],
+            "Soo San Na Catering Services": [
+                1238,
+                15
+            ],
+            "All-Big Trading Co": [
+                1238,
+                15
+            ],
+            "Banquet - Parkway Parade": [
+                1238,
+                15
+            ],
+            "Teochew Cuisine Restaurant": [
+                636,
+                8
+            ],
+            "McDonald's": [
+                1182,
+                14
+            ],
+            "Vie Bistro": [
+                915,
+                11
+            ]
+        },
+        "doctor": {
+            "Health Partners Family Clinic": [
+                1300,
+                15
+            ],
+            "The Baby and Child Clinic": [
+                687,
+                8
+            ],
+            "Hock Lam Heng Medical Hall": [
+                711,
+                8
+            ],
+            "T K Wong Clinic & Surgery": [
+                772,
+                9
+            ]
+        }
     }
 }
