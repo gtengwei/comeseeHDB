@@ -85,7 +85,7 @@ def flat_details(flatId):
     # f = open('testing.json') #FOR TESTING CAUSE EXPENSIVE
     # amenity = json.load(f)
     # amenity = amenity
-    return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity, latitude=flat.latitude, longitude=flat.longitude)
+    return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity, latitude=latitude, longitude=longitude)
 
 
 @views.route('/unfavourite', methods=['POST'])
