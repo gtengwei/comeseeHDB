@@ -338,9 +338,6 @@ def home():
                 return render_template('search.html', user=current_user, flats=[], random=RANDOM)
 
     session.clear()
-    print(image)
-    image_id = random.randint(0, (len(image)-1))
-    print(image_id)
     # return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], favourites = Favourites.query.all(), random = RANDOM, image = image, image_id = image_id)
     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in data], favourites=Favourites.query.all(), random=RANDOM, image = [Flat.query.get(x).image for x in data])
 
@@ -348,7 +345,6 @@ def home():
 # Infinite Scrolling for Home Page
 @views.route('/load_home', methods=['GET', 'POST'])
 def load_home():
-    image_id = random.randint(0, (len(image)-1))
     # In order to load sorted flats faster
     conn = sqlite3.connect("database.db")
     #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
@@ -1065,9 +1061,6 @@ def sort(criteria):
                     Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
 
-            else:
-                print(data)
-
             return sorting_criteria(criteria, data)
 
         elif not price:
@@ -1140,7 +1133,6 @@ def sort(criteria):
         towns = session.get('towns')
         flat_types = session.get('flat_types')
         amenities = session.get('amenities')
-        print(price)
 
         if address:
             address = "%{}%".format(address)
@@ -1156,7 +1148,6 @@ def sort(criteria):
                     data.extend(Flat.query.filter(Flat.resale_price.between(
                         price_range[i], price_range[i+1])).all())
                     # print(searchedFlats)
-            print('test' + str(data[:5]))
             # return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             if address and flat_types and amenities and towns:
@@ -1707,7 +1698,6 @@ def view_image(flatId):
 
 def get_amenity(flatId):
     cwd = Path(__file__).parent.absolute()
-    print(cwd)
     os.chdir(cwd)
 
     flat = Flat.query.filter_by(id=flatId).first_or_404()
@@ -1719,8 +1709,8 @@ def get_amenity(flatId):
 
     with open(filename, 'r') as f:
         data = json.load(f)
-        print(address)
-        print(data.get(address))
+        #print(address)
+        #print(data.get(address))
         if address in data.keys():
             return data.get(address)
         else:

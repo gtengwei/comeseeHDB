@@ -3518,5 +3518,391 @@
                 5
             ]
         }
+    },
+    "ALJUNIED AVE 2 BLK 119 380119": {
+        "bus_station": {
+            "Geylang Polyclinic": [
+                275,
+                3
+            ],
+            "Opp Geylang Meth Sec Sch": [
+                1950,
+                23
+            ]
+        },
+        "subway_station": {
+            "Aljunied": [
+                1224,
+                15
+            ]
+        },
+        "restaurant": {
+            "The Ranch Cafe": [
+                1285,
+                15
+            ],
+            "Lucky Specialties": [
+                849,
+                10
+            ],
+            "Yes Natural Restaurant": [
+                1237,
+                15
+            ],
+            "Old Chang Kee @ Aljunied MRT": [
+                1224,
+                15
+            ],
+            "Happy Restaurant Pte Ltd": [
+                818,
+                10
+            ],
+            "Tery mono": [
+                100,
+                1
+            ],
+            "\u4e07\u548c\u8f69 Wan He Xuan Vegetarian": [
+                93,
+                1
+            ],
+            "Nian Ci Zhai": [
+                93,
+                1
+            ],
+            "Moment Thai": [
+                93,
+                1
+            ],
+            "ShiYun Food Junction": [
+                64,
+                1
+            ],
+            "\u9806\u5229\u9b5a\u7cdc.\u6d77\u9bae\u6e6f": [
+                93,
+                1
+            ],
+            "119 Fish Soup": [
+                116,
+                1
+            ],
+            "My Little Coconut": [
+                127,
+                2
+            ],
+            "Koo Kee Yong Tow Foo Mee": [
+                93,
+                1
+            ],
+            "\u5927\u4e09\u5143\u70b9\u5fc3": [
+                93,
+                1
+            ]
+        },
+        "doctor": {
+            "Ling Xin TCM Center": [
+                93,
+                1
+            ],
+            "The Women's Specialist": [
+                236,
+                3
+            ],
+            "Guang Yi Tang TCM Centre LLP": [
+                801,
+                10
+            ],
+            "A Healing Heart Medical Clinic": [
+                596,
+                7
+            ],
+            "THK Senior Group Home @ Pipit": [
+                2130,
+                25
+            ]
+        }
+    },
+    "YISHUN AVE 1 BLK 431A 761431": {
+        "school": {
+            "Northbrooks Secondary School": [
+                1591,
+                19
+            ]
+        },
+        "restaurant": {
+            "al ahamed delights": [
+                957,
+                11
+            ],
+            "Soon Zhi Nyonya Katong Laksa": [
+                87,
+                1
+            ],
+            "Tong Luck": [
+                86,
+                1
+            ],
+            "504 Yishun Coffeeshop": [
+                2446,
+                29
+            ],
+            "Thai Cuisine Thumshop": [
+                1122,
+                13
+            ],
+            "San Pin Pao Fan (\u4e09\u54c1\u6ce1\u996d)": [
+                1688,
+                20
+            ],
+            "Le Man Seafood Restaurant 675": [
+                1659,
+                20
+            ],
+            "Simply D & H": [
+                1658,
+                20
+            ],
+            "\u6d77\u5357\u4ed4": [
+                1868,
+                22
+            ],
+            "Arabian Nights": [
+                1868,
+                22
+            ],
+            "Lian Soon Huat Seafood": [
+                1812,
+                22
+            ],
+            "Jy Wang Enterprise": [
+                935,
+                11
+            ],
+            "Char Grill Bar": [
+                1875,
+                22
+            ],
+            "Hong Ji Wanton Noodle": [
+                1178,
+                14
+            ],
+            "De Yun Bak Kut Teh": [
+                1186,
+                14
+            ],
+            "Jian Bo Shui Kueh": [
+                1899,
+                23
+            ]
+        },
+        "doctor": {
+            "OneCare Medical Clinic Yishun": [
+                194,
+                2
+            ],
+            "Tendai clinic": [
+                1789,
+                21
+            ],
+            "BCT TCM Clinic": [
+                1660,
+                20
+            ]
+        }
+    },
+    "JURONG EAST AVE 1 BLK 329 600329": {
+        "school": {
+            "Jurongville Secondary School": [
+                585,
+                7
+            ],
+            "Jurong Primary School": [
+                692,
+                8
+            ],
+            "Fuhua Secondary School": [
+                942,
+                11
+            ],
+            "Apple Plus School": [
+                628,
+                7
+            ]
+        },
+        "restaurant": {
+            "Domino's Pizza Jurong": [
+                918,
+                11
+            ],
+            "Tang Tea House": [
+                838,
+                10
+            ],
+            "Sshiok Thai": [
+                437,
+                5
+            ],
+            "Zheng\u2019s Eatery": [
+                437,
+                5
+            ],
+            "Chickata Makan Place": [
+                437,
+                5
+            ],
+            "RITZ'S KITCHEN": [
+                319,
+                4
+            ],
+            "Aashiq Restaurant": [
+                424,
+                5
+            ],
+            "Salmaan Food Paradise": [
+                291,
+                3
+            ],
+            "Master leong seafood": [
+                1014,
+                12
+            ],
+            "Jumi's Kitchen": [
+                1014,
+                12
+            ],
+            "Xing Wang Seafood": [
+                569,
+                7
+            ],
+            "KFC Jurong East II": [
+                1025,
+                12
+            ],
+            "Let's\u4e00\u8d77\u70e4": [
+                592,
+                7
+            ],
+            "Jia Ke Lai Ma La Xiang Guo": [
+                592,
+                7
+            ],
+            "Rasa Bestari": [
+                593,
+                7
+            ],
+            "JW 491 Frog Porridge": [
+                594,
+                7
+            ]
+        }
+    },
+    "ALJUNIED CRES BLK 101 380101": {
+        "bus_station": {
+            "Opp Geylang Meth Sec Sch": [
+                1873,
+                22
+            ],
+            "Blk 125": [
+                2082,
+                25
+            ],
+            "Opp Blk 125": [
+                1075,
+                13
+            ],
+            "Geylang Polyclinic": [
+                592,
+                7
+            ],
+            "Opp Blk 53": [
+                746,
+                9
+            ]
+        },
+        "school": {
+            "St Margaret's Primary School": [
+                2496,
+                30
+            ]
+        },
+        "restaurant": {
+            "CCK 190 Wanton Noodles": [
+                2694,
+                32
+            ],
+            "Old Chang Kee @ Aljunied MRT": [
+                1147,
+                14
+            ],
+            "Foo Yuan Fa": [
+                0,
+                0
+            ],
+            "Geylang east": [
+                388,
+                5
+            ],
+            "Eco-Harmony Cafe": [
+                309,
+                4
+            ],
+            "My Little Coconut": [
+                350,
+                4
+            ],
+            "119 Fish Soup": [
+                361,
+                4
+            ],
+            "ShiYun Food Junction": [
+                462,
+                6
+            ],
+            "Su Shi Jia Xiang Wei": [
+                2819,
+                34
+            ],
+            "NOM - Bistro & Bakery": [
+                2769,
+                33
+            ],
+            "Cai Long \u8d22\u9f99Coffee": [
+                2794,
+                33
+            ],
+            "\u5c0f\u996d\u4e2d\u5fc3\uff08\u9c7c\u6c64\u5c0f\u644a\uff09\u597d\u5403": [
+                347,
+                4
+            ],
+            "Jia Le Prawn Mee & Loh Mee": [
+                2806,
+                33
+            ],
+            "Pong Tian Vegetarian (\u9f4b)": [
+                2805,
+                33
+            ],
+            "Pan cake vegetarian": [
+                2804,
+                33
+            ],
+            "Shogun Sushi": [
+                708,
+                8
+            ]
+        },
+        "doctor": {
+            "The Women's Specialist": [
+                374,
+                4
+            ],
+            "Ling Xin TCM Center": [
+                525,
+                6
+            ],
+            "Guang Yi Tang TCM Centre LLP": [
+                1118,
+                13
+            ]
+        }
     }
 }
