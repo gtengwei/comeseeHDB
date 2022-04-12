@@ -167,6 +167,29 @@
             <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button">
               <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
+            <div class = "guest_error">
+              <div class="modal fade" id="changePostalCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header text-center">
+                      <h4 class="modal-title w-100 font-weight-bold">Login Feature</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+            
+                    <div class="modal-body mx-3">
+                      <div class="md-form mb-5">
+                          <a href='/sign-up'<h5> Create an account to use this feature!</h5></a>
+                      </div>
+            
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          
             
           {% endif %}
           <span id="favourite_count{{flat.id}}">{{flat.favourites|length}}</span>
@@ -310,28 +333,6 @@
 
 
 
-<div class = "guest_error">
-    <div class="modal fade" id="changePostalCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header text-center">
-            <h4 class="modal-title w-100 font-weight-bold">Login Feature</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-  
-          <div class="modal-body mx-3">
-            <div class="md-form mb-5">
-                <a href='/sign-up'<h5> Create an account to use this feature!</h5></a>
-            </div>
-  
-          </div>
-        </div>
-      </div>
-    </div>
-</div>
 
 
   
