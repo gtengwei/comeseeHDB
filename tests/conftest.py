@@ -9,11 +9,13 @@ sys.path.append("..")
 from website import create_app, db
 from website.misc import *
 from website.models import *
+import time
 
 
 
 # Run tests in a module - pytest tests/test_mod.py
 # Run tests in a directory - pytest tests
+# Run a test function in a module - pytest test_mod.py::test_func
 
 testingEmail = "yeophuenyeo@gmail.com" # insert verified user email and password for testing
 testingPassword = "password123"

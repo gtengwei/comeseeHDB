@@ -2655,6 +2655,10 @@
                 185,
                 2
             ],
+            "Fu Hui Wantan noodle and Lor Mee": [
+                184,
+                2
+            ],
             "Home Eatery": [
                 239,
                 3
@@ -2671,6 +2675,10 @@
                 297,
                 4
             ],
+            "YANG MING SEAFOOD \u626c\u540d\u6d77\u9c9c\u716e\u7092 (Bishan Branch)": [
+                196,
+                2
+            ],
             "Old honkong": [
                 934,
                 11
@@ -2686,6 +2694,28 @@
             "Prata Talk": [
                 306,
                 4
+            ]
+        },
+        "doctor": {
+            "Medihealth Bishan Clinic & Surgery": [
+                969,
+                12
+            ],
+            "Bishan Grace Clinic (Female Doctor MBBS) Flu Vaccine available Now": [
+                164,
+                2
+            ],
+            "Richlife Chinese Medical Centre \u5fa9\u751f\u4e2d\u533b": [
+                1162,
+                14
+            ],
+            "Xu Ri Traditional Chinese Medicine \u65ed\u65e5\u4e2d\u533b\u8bca\u6240": [
+                1224,
+                15
+            ],
+            "Family Wellness Foot Reflexology And Massage": [
+                2248,
+                27
             ]
         }
     },
@@ -3679,140 +3709,6 @@
             ]
         }
     },
-    "BISHAN ST 11 BLK 145 570145": {
-        "bus_station": {
-            "Blk 131": [
-                1006,
-                12
-            ],
-            "Opp Blk 125": [
-                1682,
-                20
-            ],
-            "Aft Muhajirin Mque": [
-                1797,
-                21
-            ]
-        },
-        "school": {
-            "Beatty Secondary School": [
-                2441,
-                29
-            ],
-            "PCF Hampton Pre-School": [
-                985,
-                12
-            ],
-            "Guangyang Secondary School": [
-                1126,
-                13
-            ]
-        },
-        "restaurant": {
-            "Cuisine Xpress Pte Ltd": [
-                1894,
-                23
-            ],
-            "Qiangji Chicken Rice": [
-                78,
-                1
-            ],
-            "\u81ea\u5728\u9f4b Zi Zai Vegetarian - Bishan": [
-                128,
-                2
-            ],
-            "Al-Aisa Prata House": [
-                502,
-                6
-            ],
-            "Zichar": [
-                164,
-                2
-            ],
-            "M3 Makan Project Western": [
-                164,
-                2
-            ],
-            "Tai Zi (Bishan Branch)": [
-                164,
-                2
-            ],
-            "Rui Tian Cheng": [
-                183,
-                2
-            ],
-            "Serangoon Nasi Padang": [
-                185,
-                2
-            ],
-            "Tai Heng Handmade Dim Sum": [
-                185,
-                2
-            ],
-            "Fu Hui Wantan noodle and Lor Mee": [
-                184,
-                2
-            ],
-            "Home Eatery": [
-                239,
-                3
-            ],
-            "Wei Ji Porridge \u5049\u8bb0\u7ca5": [
-                242,
-                3
-            ],
-            "Pure Heart Vegetarian": [
-                239,
-                3
-            ],
-            "Jiu Fu Prawn Noodles": [
-                297,
-                4
-            ],
-            "YANG MING SEAFOOD \u626c\u540d\u6d77\u9c9c\u716e\u7092 (Bishan Branch)": [
-                196,
-                2
-            ],
-            "Old honkong": [
-                934,
-                11
-            ],
-            "Yam Cheong Nam Kee": [
-                939,
-                11
-            ],
-            "Khoon Kee Fishball Noodles": [
-                290,
-                3
-            ],
-            "Prata Talk": [
-                306,
-                4
-            ]
-        },
-        "doctor": {
-            "Medihealth Bishan Clinic & Surgery": [
-                969,
-                12
-            ],
-            "Bishan Grace Clinic (Female Doctor MBBS) Flu Vaccine available Now": [
-                164,
-                2
-            ],
-            "Richlife Chinese Medical Centre \u5fa9\u751f\u4e2d\u533b": [
-                1162,
-                14
-            ],
-            "Xu Ri Traditional Chinese Medicine \u65ed\u65e5\u4e2d\u533b\u8bca\u6240": [
-                1224,
-                15
-            ],
-            "Family Wellness Foot Reflexology And Massage": [
-                2248,
-                27
-            ]
-        }
-    },
     "ALJUNIED AVE 2 BLK 119 380119": {
         "bus_station": {
             "Geylang Polyclinic": [
@@ -4092,6 +3988,144 @@
             "Zhong Kang TCM Physician Medicare Services": [
                 510,
                 6
+            ]
+        }
+    },
+    "AH HOOD RD BLK 101 320101": {
+        "bus_station": {
+            "Muay Thai": [
+                329,
+                4
+            ],
+            "Bef Jln Dusun": [
+                604,
+                7
+            ],
+            "Opp Trellis Twrs": [
+                4939,
+                59
+            ],
+            "Zhongshan Mall": [
+                385,
+                5
+            ]
+        },
+        "school": {
+            "Zesprion School of Learning": [
+                619,
+                7
+            ]
+        },
+        "restaurant": {
+            "Oopen Pasta & Grill": [
+                1024,
+                12
+            ],
+            "21 On Rajah": [
+                541,
+                6
+            ],
+            "SHI KOU Seafood \u5341\u53e3\u6d77\u9c9c": [
+                247,
+                3
+            ],
+            "Thai Food Near Me - Balestier": [
+                247,
+                3
+            ],
+            "ONE DUSUN": [
+                654,
+                8
+            ],
+            "BangKok J.N Thaifood": [
+                329,
+                4
+            ],
+            "Cavemen Restaurant & Bar": [
+                640,
+                8
+            ],
+            "Bangkok Jn Thaifood": [
+                332,
+                4
+            ],
+            "Anson Town Balestier": [
+                239,
+                3
+            ],
+            "Jiu Xiang Xiang Roast Duck": [
+                515,
+                6
+            ],
+            "Tiong Bee Bak Kut Teh": [
+                505,
+                6
+            ],
+            "Francesca's Viio Balestier": [
+                257,
+                3
+            ],
+            "Yummy Don - Balestier": [
+                257,
+                3
+            ]
+        },
+        "doctor": {
+            "LiveWell Medical Family Clinic": [
+                403,
+                5
+            ],
+            "Judy Wong Clinic for Women": [
+                2132,
+                25
+            ],
+            "Thomson Paediatric Centre": [
+                2113,
+                25
+            ],
+            "STO+G Practice": [
+                2130,
+                25
+            ],
+            "Fong Poh Him Dr": [
+                2132,
+                25
+            ],
+            "Jeanette Chen Women's Clinic": [
+                2132,
+                25
+            ],
+            "The Novena Medical Specialists": [
+                930,
+                11
+            ],
+            "Dr Kenny Pang": [
+                886,
+                11
+            ],
+            "Eunice K M Chua Dr": [
+                2104,
+                25
+            ],
+            "Vincent Lee Clinic": [
+                2127,
+                25
+            ],
+            "W C Cheng & Associates": [
+                2132,
+                25
+            ],
+            "Dr Benjamin Tham": [
+                2134,
+                25
+            ],
+            "Gerard Leong Cardiology Clinic": [
+                2134,
+                25
+            ],
+            "Dr TC Chang": [
+                2134,
+                25
             ]
         }
     }

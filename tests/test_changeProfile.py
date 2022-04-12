@@ -63,7 +63,7 @@ def test_valid_postalCodeChange(client, captured_templates):
         login(client,testingEmail, testingPassword)
         username = current_user.username
         old_pcd = current_user.postal_code
-        new_pcd = "19" # ========> change after each run, '19' or '38' or '75'
+        new_pcd = "75" # ========> change after each run, '19' or '38' or '75'
         
         assert old_pcd != new_pcd , "attempt to change to same postal code"
         sinceLastChange = calculate_time_difference(datetime.now(), current_user.postal_code_change)
@@ -115,7 +115,7 @@ def test_early_postalCodeChange(client, captured_templates):
 # =============================== PASSWORD CHANGE TESTS ===============================
 
 testingEmail2 = "yap.xuan.ying2001@gmail.com"
-old_pwd = "password123" # after/before each run, if last testcase passed -> switch "pwdChange123" or "password123" around
+old_pwd = "pwdChange123" # after/before each run, if last testcase passed -> switch "pwdChange123" or "password123" around
 
 def test_same_pwdChange(client, captured_templates):
     """Tests a view that requires authentication"""
@@ -214,7 +214,7 @@ def test_valid_pwdChange(client, captured_templates):
     with client:
         login(client,testingEmail2, old_pwd)
         username = current_user.username
-        new_pwd = "pwdChange123"
+        new_pwd = "password123"
 
         rv = client.post(url_for('user.request_password_change', username=username),
         data={'username': username, 'currentPassword': old_pwd,'password1': new_pwd, 'password2': new_pwd}, follow_redirects=True)
