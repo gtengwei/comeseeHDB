@@ -3746,5 +3746,699 @@
                 15
             ]
         }
+    },
+    "EDGEDALE PLAINS BLK 109D 824109": {
+        "bus_station": {
+            "Meridian Stn Exit B": [
+                1066,
+                13
+            ],
+            "Aft Punggol Rd, TPE": [
+                1658,
+                20
+            ],
+            "Bef Punggol Road": [
+                5919,
+                70
+            ],
+            "Coral Edge Stn Exit B": [
+                497,
+                6
+            ],
+            "Coral Edge Stn Exit A": [
+                934,
+                11
+            ],
+            "Blk 196c": [
+                946,
+                11
+            ]
+        },
+        "subway_station": {
+            "Meridian": [
+                583,
+                7
+            ],
+            "Coral Edge": [
+                585,
+                7
+            ]
+        },
+        "school": {
+            "Greendale Secondary School": [
+                585,
+                7
+            ],
+            "Mee Toh School": [
+                59,
+                1
+            ]
+        },
+        "restaurant": {
+            "Ice Talk Xpress": [
+                605,
+                7
+            ],
+            "Master Crab Seafood Restaurant": [
+                578,
+                7
+            ],
+            "Superman Nasi Lemak": [
+                668,
+                8
+            ],
+            "Master Soup (\u8001\u706b\u6c64) (Chinatown)": [
+                668,
+                8
+            ],
+            "Koo Kee Yong Tow Foo Mee": [
+                668,
+                8
+            ],
+            "RED DOT MALA HOTPOT \u5c0f\u7ea2\u70b9\u9ebb\u8fa3\u9999\u9505": [
+                668,
+                8
+            ],
+            "Qiu Lian Ban Mee (\u79cb\u83b2\u677f\u9762)": [
+                668,
+                8
+            ],
+            "Top 73+ Western Food": [
+                668,
+                8
+            ],
+            "Local Delights": [
+                577,
+                7
+            ],
+            "Snacks": [
+                668,
+                8
+            ],
+            "KFC Punggol Plaza": [
+                680,
+                8
+            ],
+            "\u5929\u5929\u5403\u9762": [
+                1168,
+                14
+            ],
+            "Chia Cher Khiang Restaurant": [
+                591,
+                7
+            ],
+            "BBBURGERS": [
+                598,
+                7
+            ],
+            "\u8089\u591a\u4e09\u5bf6\u98ef": [
+                1179,
+                14
+            ]
+        },
+        "doctor": {
+            "Chen Chern Yi Dr": [
+                668,
+                8
+            ],
+            "Edgedale Medical Clinic": [
+                790,
+                9
+            ],
+            "Mhc": [
+                1454,
+                17
+            ]
+        }
+    },
+    "JOO SENG RD BLK 9 360009": {
+        "bus_station": {
+            "Aft Jln Muhibbah": [
+                927,
+                11
+            ],
+            "Cencon Bldg": [
+                852,
+                10
+            ]
+        },
+        "school": {
+            "Cedar Primary School": [
+                1172,
+                14
+            ]
+        },
+        "restaurant": {
+            "City Gourmet": [
+                679,
+                8
+            ],
+            "Kriston Gourmet": [
+                679,
+                8
+            ],
+            "Menu Pte Ltd": [
+                679,
+                8
+            ],
+            "Sure Food Pte Ltd": [
+                679,
+                8
+            ],
+            "Choice Gourmet Pte Ltd": [
+                679,
+                8
+            ],
+            "Shell": [
+                1540,
+                18
+            ],
+            "Jw sweets factory": [
+                1279,
+                15
+            ],
+            "Hooi Kee": [
+                335,
+                4
+            ],
+            "Wei Jia": [
+                379,
+                4
+            ],
+            "House of Yikang Dessert": [
+                362,
+                4
+            ],
+            "FRIENDS BAKERY": [
+                362,
+                4
+            ],
+            "Singapura Rojak and Popiah": [
+                389,
+                5
+            ],
+            "Taste Of Vietnam Food": [
+                937,
+                11
+            ],
+            "Xin Lai Lai Seafood Restaurant": [
+                484,
+                6
+            ]
+        }
+    },
+    "BT PANJANG RING RD BLK 430 670430": {
+        "bus_station": {
+            "Blk 457": [
+                875,
+                10
+            ],
+            "Fajar Stn": [
+                622,
+                7
+            ],
+            "Opp Blk 451": [
+                586,
+                7
+            ]
+        },
+        "subway_station": {
+            "Segar": [
+                1728,
+                21
+            ],
+            "Fajar": [
+                841,
+                10
+            ]
+        },
+        "school": {
+            "Greenridge Primary School": [
+                747,
+                9
+            ]
+        },
+        "restaurant": {
+            "McDonald's": [
+                820,
+                10
+            ],
+            "Chang Cheng": [
+                957,
+                11
+            ],
+            "Subway": [
+                1532,
+                18
+            ],
+            "KFC Greenridge": [
+                909,
+                11
+            ],
+            "King's Western Grill": [
+                392,
+                5
+            ],
+            "NKS Indian Muslim Food": [
+                392,
+                5
+            ],
+            "Fried Hokkien Mee": [
+                492,
+                6
+            ],
+            "Hamzah's Indian Muslim Food": [
+                492,
+                6
+            ],
+            "Minced Meat Noodle You Tiao": [
+                488,
+                6
+            ],
+            "Tian Tian Lai Rojak": [
+                1710,
+                20
+            ],
+            "Xiang Cheng \u9999\u57ce Zichar": [
+                1679,
+                20
+            ],
+            "Selera Umi": [
+                878,
+                10
+            ],
+            "Ammar's Gastronomy": [
+                878,
+                10
+            ],
+            "Mentai Sens @ Segar": [
+                852,
+                10
+            ],
+            "I-Dragon Asia Pte Ltd": [
+                662,
+                8
+            ],
+            "Yu Pan noodle fish soup": [
+                938,
+                11
+            ],
+            "Malay Food": [
+                911,
+                11
+            ]
+        },
+        "doctor": {
+            "Wan Siang Chinese Medical Hall": [
+                957,
+                11
+            ]
+        }
+    },
+    "FAJAR RD BLK 437 670437": {
+        "bus_station": {
+            "Fajar Stn": [
+                361,
+                4
+            ],
+            "Opp Greenridge Sec Sch": [
+                992,
+                12
+            ],
+            "Greenridge Sec Sch": [
+                987,
+                12
+            ],
+            "Opp Blk 451": [
+                674,
+                8
+            ],
+            "Opp Blk 171": [
+                2029,
+                24
+            ]
+        },
+        "subway_station": {
+            "Fajar": [
+                325,
+                4
+            ],
+            "Bangkit": [
+                1011,
+                12
+            ]
+        },
+        "school": {
+            "Zhenghua Primary School": [
+                2431,
+                29
+            ],
+            "Greenridge Secondary School": [
+                1236,
+                15
+            ],
+            "Greenridge Primary School": [
+                1271,
+                15
+            ]
+        },
+        "restaurant": {
+            "McDonald's": [
+                304,
+                4
+            ],
+            "Chang Cheng": [
+                441,
+                5
+            ],
+            "Subway": [
+                948,
+                11
+            ],
+            "KFC Greenridge": [
+                1040,
+                12
+            ],
+            "\u8d22\u5e08\u5085\u6e2f\u5f0f\u70e7\u814a": [
+                304,
+                4
+            ],
+            "Kim San Seafood": [
+                304,
+                4
+            ],
+            "Wanton Mee": [
+                441,
+                5
+            ],
+            "138 Duck rice": [
+                441,
+                5
+            ],
+            "Jin Shan": [
+                441,
+                5
+            ],
+            "HK Roasted Duck": [
+                441,
+                5
+            ],
+            "Golden Rooster": [
+                441,
+                5
+            ],
+            "Chao Zhoou": [
+                441,
+                5
+            ],
+            "Vegeterian Food": [
+                441,
+                5
+            ],
+            "Snacks": [
+                441,
+                5
+            ],
+            "Fajar Noodle & Fish Soup": [
+                441,
+                5
+            ],
+            "Siang Garden Fajar": [
+                441,
+                5
+            ],
+            "Tanaka Vegetarian Food": [
+                441,
+                5
+            ]
+        },
+        "doctor": {
+            "Wan Siang Chinese Medical Hall": [
+                441,
+                5
+            ]
+        }
+    },
+    "FAJAR RD BLK 438 670438": {
+        "bus_station": {
+            "Fajar Stn": [
+                370,
+                4
+            ],
+            "Opp Greenridge Sec Sch": [
+                1001,
+                12
+            ],
+            "Greenridge Sec Sch": [
+                996,
+                12
+            ],
+            "Opp Blk 451": [
+                683,
+                8
+            ]
+        },
+        "subway_station": {
+            "Fajar": [
+                334,
+                4
+            ],
+            "Bangkit": [
+                1020,
+                12
+            ]
+        },
+        "school": {
+            "Greenridge Secondary School": [
+                1245,
+                15
+            ],
+            "Zhenghua Primary School": [
+                2440,
+                29
+            ],
+            "Beacon Primary School": [
+                856,
+                10
+            ],
+            "Greenridge Primary School": [
+                1280,
+                15
+            ]
+        },
+        "restaurant": {
+            "McDonald's": [
+                313,
+                4
+            ],
+            "Chang Cheng": [
+                450,
+                5
+            ],
+            "Subway": [
+                957,
+                11
+            ],
+            "Kim San Seafood": [
+                313,
+                4
+            ],
+            "Wanton Mee": [
+                450,
+                5
+            ],
+            "138 Duck rice": [
+                450,
+                5
+            ],
+            "Jin Shan": [
+                450,
+                5
+            ],
+            "HK Roasted Duck": [
+                450,
+                5
+            ],
+            "Golden Rooster": [
+                450,
+                5
+            ],
+            "Chao Zhoou": [
+                450,
+                5
+            ],
+            "Vegeterian Food": [
+                450,
+                5
+            ],
+            "Snacks": [
+                450,
+                5
+            ],
+            "Fajar Noodle & Fish Soup": [
+                450,
+                5
+            ],
+            "\u8d22\u5e08\u5085\u6e2f\u5f0f\u70e7\u814a": [
+                313,
+                4
+            ],
+            "Siang Garden Fajar": [
+                450,
+                5
+            ],
+            "Tanaka Vegetarian Food": [
+                450,
+                5
+            ],
+            "Indian Food": [
+                438,
+                5
+            ],
+            "Yu Pan noodle fish soup": [
+                431,
+                5
+            ]
+        },
+        "doctor": {
+            "Wan Siang Chinese Medical Hall": [
+                450,
+                5
+            ]
+        }
+    },
+    "YISHUN ST 21 BLK 226 760226": {
+        "bus_station": {
+            "Blk 220": [
+                588,
+                7
+            ],
+            "Blk 154": [
+                1287,
+                15
+            ],
+            "Opp Yishun Stn Exit B": [
+                1222,
+                15
+            ]
+        },
+        "school": {
+            "Yishun Town Secondary School": [
+                486,
+                6
+            ],
+            "Xishan Primary School": [
+                243,
+                3
+            ],
+            "Yishun Primary School": [
+                786,
+                9
+            ],
+            "Ahmad Ibrahim Primary School": [
+                869,
+                10
+            ]
+        },
+        "restaurant": {
+            "Fragrance Foodstuff Pte Ltd": [
+                525,
+                6
+            ],
+            "Domino's Pizza": [
+                774,
+                9
+            ],
+            "Coba Coba": [
+                1151,
+                14
+            ],
+            "Syed Restaurant": [
+                490,
+                6
+            ],
+            "SUSHI TEI": [
+                1087,
+                13
+            ],
+            "Long John Silver's": [
+                890,
+                11
+            ],
+            "Rasa rosa Wansan Pte LTd": [
+                209,
+                2
+            ],
+            "Food yishun": [
+                525,
+                6
+            ],
+            "Jia Le (HK) Roasted Food": [
+                524,
+                6
+            ],
+            "Biryani Bae": [
+                524,
+                6
+            ],
+            "XO Fishhead Bee Hoon": [
+                524,
+                6
+            ],
+            "Five Star Western Delights": [
+                527,
+                6
+            ],
+            "ECO BEE HOON": [
+                525,
+                6
+            ],
+            "West Grill Station": [
+                298,
+                4
+            ],
+            "Fried Delights": [
+                300,
+                4
+            ],
+            "AL AHAMED DELIGHTS": [
+                470,
+                6
+            ],
+            "Malu Malu Seafood": [
+                1193,
+                14
+            ],
+            "Mei Mei Drinks Station": [
+                297,
+                4
+            ],
+            "Al-Zubair Dum Briyani": [
+                400,
+                5
+            ]
+        },
+        "doctor": {
+            "Atrio Family Clinic Pte. Ltd.": [
+                297,
+                4
+            ],
+            "Custodia Dental Clinic": [
+                524,
+                6
+            ],
+            "Liew & Koh Dental Surgery": [
+                740,
+                9
+            ],
+            "Shanghai": [
+                740,
+                9
+            ],
+            "Dao Yuan TCM Pte. Ltd (\u9053\u7f18\u4e2d\u533b)": [
+                1211,
+                14
+            ]
+        }
     }
 }
