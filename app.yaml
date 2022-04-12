@@ -5,6 +5,24 @@ handlers:
 - url: /static/logo\.png
   static_files: logo.PNG
   upload: logo\.PNG
+- url: /static/hdb_image0\.jpg%0D
+  static_files: hdb_image0.jpg
+  upload: hdb_image0\.jpg
+- url: /static/hdb_image1\.jpg%0D
+  static_files: hdb_image1.jpg
+  upload: hdb_image1\.jpg
+- url: /static/hdb_image2\.jpg%0D
+  static_files: hdb_image2.jpg
+  upload: hdb_image2\.jpg
+- url: /static/hdb_image3\.jpg%0D
+  static_files: hdb_image3.jpg
+  upload: hdb_image3\.jpg
+- url: /static/hdb_image4\.jpg%0D
+  static_files: hdb_image4.jpg
+  upload: hdb_image4\.jpg
+- url: /static/hdb_image5\.jpg%0D
+  static_files: hdb_image5.jpg
+  upload: hdb_image5\.jpg
 - url: /static
   static_dir: website/static
 - url: /.*

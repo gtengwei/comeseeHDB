@@ -131,11 +131,11 @@ def home():
     os.chdir(cwd)
     # print(os.getcwd())
     # conn = sqlite3.connect("database.db")
-    # conn = open_connection()
-    conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
+    conn = open_connection()
+    # conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     myquery = (
-        "SELECT id FROM Flat ORDER BY numOfFavourites DESC;")
+        "SELECT id FROM flat ORDER BY numOfFavourites DESC;")
     c.execute(myquery)
     data = list(c.fetchall())
     # print(data)
@@ -354,14 +354,14 @@ def load_home():
     image_id = random.randint(0, (len(image)-1))
     # In order to load sorted flats faster
     # conn = sqlite3.connect("database.db")
-    # conn = open_connection()
-    conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
+    conn = open_connection()
+    # conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     criteria = session.get('criteria')
     if criteria:
         if criteria == 'price_high':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY resale_price DESC;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM flat ORDER BY resale_price DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -382,7 +382,7 @@ def load_home():
 
         elif criteria == 'price_low':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY resale_price;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM flat ORDER BY resale_price;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -402,7 +402,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'remaining_lease_high':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY remaining_lease DESC;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM flat ORDER BY remaining_lease DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -442,7 +442,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'storey_high':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY storey_range DESC;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM flat ORDER BY storey_range DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -462,7 +462,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'storey_low':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY storey_range;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM flat ORDER BY storey_range;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -482,7 +482,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'price_per_sqm_high':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY price_per_sqm DESC;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM flat ORDER BY price_per_sqm DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -502,7 +502,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'price_per_sqm_low':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY price_per_sqm;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM flat ORDER BY price_per_sqm;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -523,7 +523,7 @@ def load_home():
 
         elif criteria == 'favourites_high':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY numOfFavourites DESC;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM flat ORDER BY numOfFavourites DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -544,7 +544,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'favourites_low':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY numOfFavourites;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM flat ORDER BY numOfFavourites;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -566,7 +566,7 @@ def load_home():
 
     else:
         myquery = (
-            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY numOfFavourites DESC;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM flat ORDER BY numOfFavourites DESC;")
         c.execute(myquery)
         data = list(c.fetchall())
         # random.shuffle(data)
@@ -1332,13 +1332,13 @@ def sort(criteria):
                 cwd = Path(__file__).parent.absolute()
                 os.chdir(cwd)
                 # conn = sqlite3.connect("database.db")
-                # conn = open_connection()
-                conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
+                conn = open_connection()
+                # conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
                 c = conn.cursor()
 
                 if criteria == 'price_high':
                     myquery = (
-                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price DESC;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM flat ORDER BY resale_price DESC;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1349,7 +1349,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
                 elif criteria == 'price_low':
                     myquery = (
-                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY resale_price;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM flat ORDER BY resale_price;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1360,7 +1360,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x])
                 elif criteria == 'remaining_lease_high':
                     myquery = (
-                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease DESC;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM flat ORDER BY remaining_lease DESC;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1371,7 +1371,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
                 elif criteria == 'remaining_lease_low':
                     myquery = (
-                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY remaining_lease;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM flat ORDER BY remaining_lease;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1382,7 +1382,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
                 elif criteria == 'storey_high':
                     myquery = (
-                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range DESC;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM flat ORDER BY storey_range DESC;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1393,7 +1393,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
                 elif criteria == 'storey_low':
                     myquery = (
-                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY storey_range;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM flat ORDER BY storey_range;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1404,7 +1404,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
                 elif criteria == 'price_per_sqm_high':
                     myquery = (
-                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm DESC;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM flat ORDER BY price_per_sqm DESC;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1415,7 +1415,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
                 elif criteria == 'price_per_sqm_low':
                     myquery = (
-                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY price_per_sqm;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM flat ORDER BY price_per_sqm;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1426,7 +1426,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
                 elif criteria == 'favourites_high':
                     myquery = (
-                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM flat ORDER BY numOfFavourites DESC;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1437,7 +1437,7 @@ def sort(criteria):
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
                 elif criteria == 'favourites_low':
                     myquery = (
-                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM flat ORDER BY numOfFavourites;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria

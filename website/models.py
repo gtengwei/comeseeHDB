@@ -42,8 +42,8 @@ class User(db.Model, UserMixin):
     postal_code = db.Column(db.String(150))
     postal_code_change = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
     favourites = db.relationship('Favourites')
-    email_verified = db.Column(db.Boolean(), nullable=False, default=False)
-    email_verified_date = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
+    email_verified = db.Column(db.Boolean(), default=False)
+    email_verified_date = db.Column(db.DateTime(timezone=True), default=None)
     reviews = db.relationship('Review', backref = 'user', passive_deletes=True)
 
     def get_token(self,expires_sec=120):

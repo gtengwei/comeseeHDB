@@ -12,7 +12,9 @@ def open_connection():
     unix_socket = '/cloudsql/{}'.format(db_connection_name)
     conn = pymysql.connect(user=db_user, password=db_password,
                                 unix_socket=unix_socket, db=db_name,
-                                cursorclass=pymysql.cursors.DictCursor)
+                                cursorclass=pymysql.cursors.DictCursor,
+                                max_allowed_packet=16777216,
+                                connect_timeout=100)
     cursor = conn.cursor()
     cursor.execute('SET FOREIGN_KEY_CHECKS = 0')
     return conn
