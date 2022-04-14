@@ -50,7 +50,7 @@ def sign_up():
     if request.method == 'POST':
         email = request.form.get('email')
         username = request.form.get('username')
-        postal_code = request.form.get('postalCode')
+        postal_code = int(request.form.get('postalCode'))
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
@@ -66,7 +66,7 @@ def sign_up():
         elif len(username) < 2:
             flash('Username must be greater than 1 character.', category='error')
 
-        elif (postal_code < str(1) or postal_code > str(80)):
+        elif (postal_code < 1 or postal_code > 80):
             flash('First two digits of postal code must be between 1 and 80.', category='error')
 
         elif len(password1) < 8:

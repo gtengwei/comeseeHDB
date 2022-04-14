@@ -41,7 +41,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     username = db.Column(db.String(150))
-    postal_code = db.Column(db.String(150))
+    postal_code = db.Column(db.Integer)
     postal_code_change = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
     favourites = db.relationship('Favourites')
     email_verified = db.Column(db.Boolean(), nullable=False, default=False)

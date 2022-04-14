@@ -6726,7 +6726,29 @@
                 15
             ]
         },
+        "school": {
+            "Geylang Methodist School (Primary)": [
+                434,
+                5
+            ],
+            "Geylang Methodist School (Secondary)": [
+                536,
+                6
+            ],
+            "Geylang East Swimming Lessons - DolpSwim School": [
+                814,
+                10
+            ]
+        },
         "restaurant": {
+            "Chang Cheng - 119 Aljunied Avenue 2": [
+                89,
+                1
+            ],
+            "Hong Qin Fish and Duck Porridge": [
+                553,
+                7
+            ],
             "The Ranch Cafe": [
                 1285,
                 15
@@ -6734,6 +6756,10 @@
             "Lucky Specialties": [
                 849,
                 10
+            ],
+            "McDonald's Geylang East Central": [
+                210,
+                2
             ],
             "Yes Natural Restaurant": [
                 1237,
@@ -6747,6 +6773,10 @@
                 818,
                 10
             ],
+            "Geylang East Market & Food Centre": [
+                282,
+                3
+            ],
             "Tery mono": [
                 100,
                 1
@@ -6756,6 +6786,10 @@
                 1
             ],
             "Nian Ci Zhai": [
+                93,
+                1
+            ],
+            "Rong Kee Roasted Delights \u69ae\u8a18\u70e7\u814a - Aljunied": [
                 93,
                 1
             ],
@@ -6801,6 +6835,10 @@
                 801,
                 10
             ],
+            "Q & M Dental Surgery (Aljunied) Pte Ltd": [
+                233,
+                3
+            ],
             "A Healing Heart Medical Clinic": [
                 596,
                 7
@@ -6808,6 +6846,10 @@
             "THK Senior Group Home @ Pipit": [
                 2130,
                 25
+            ],
+            "OneCare Medical Clinic Aljunied MRT": [
+                1224,
+                15
             ]
         }
     },
@@ -8089,150 +8131,6 @@
             ]
         }
     },
-    "ALJUNIED AVE 2 BLK 119 380119": {
-        "bus_station": {
-            "Geylang Polyclinic": [
-                275,
-                3
-            ],
-            "Opp Geylang Meth Sec Sch": [
-                1950,
-                23
-            ]
-        },
-        "subway_station": {
-            "Aljunied": [
-                1224,
-                15
-            ]
-        },
-        "school": {
-            "Geylang Methodist School (Primary)": [
-                434,
-                5
-            ],
-            "Geylang Methodist School (Secondary)": [
-                536,
-                6
-            ],
-            "Geylang East Swimming Lessons - DolpSwim School": [
-                814,
-                10
-            ]
-        },
-        "restaurant": {
-            "Chang Cheng - 119 Aljunied Avenue 2": [
-                89,
-                1
-            ],
-            "Hong Qin Fish and Duck Porridge": [
-                553,
-                7
-            ],
-            "The Ranch Cafe": [
-                1285,
-                15
-            ],
-            "Lucky Specialties": [
-                849,
-                10
-            ],
-            "McDonald's Geylang East Central": [
-                210,
-                2
-            ],
-            "Yes Natural Restaurant": [
-                1237,
-                15
-            ],
-            "Old Chang Kee @ Aljunied MRT": [
-                1224,
-                15
-            ],
-            "Happy Restaurant Pte Ltd": [
-                818,
-                10
-            ],
-            "Geylang East Market & Food Centre": [
-                282,
-                3
-            ],
-            "Tery mono": [
-                100,
-                1
-            ],
-            "\u4e07\u548c\u8f69 Wan He Xuan Vegetarian": [
-                93,
-                1
-            ],
-            "Nian Ci Zhai": [
-                93,
-                1
-            ],
-            "Rong Kee Roasted Delights \u69ae\u8a18\u70e7\u814a - Aljunied": [
-                93,
-                1
-            ],
-            "Moment Thai": [
-                93,
-                1
-            ],
-            "ShiYun Food Junction": [
-                64,
-                1
-            ],
-            "\u9806\u5229\u9b5a\u7cdc.\u6d77\u9bae\u6e6f": [
-                93,
-                1
-            ],
-            "119 Fish Soup": [
-                116,
-                1
-            ],
-            "My Little Coconut": [
-                127,
-                2
-            ],
-            "Koo Kee Yong Tow Foo Mee": [
-                93,
-                1
-            ],
-            "\u5927\u4e09\u5143\u70b9\u5fc3": [
-                93,
-                1
-            ]
-        },
-        "doctor": {
-            "Ling Xin TCM Center": [
-                93,
-                1
-            ],
-            "The Women's Specialist": [
-                236,
-                3
-            ],
-            "Guang Yi Tang TCM Centre LLP": [
-                801,
-                10
-            ],
-            "Q & M Dental Surgery (Aljunied) Pte Ltd": [
-                233,
-                3
-            ],
-            "A Healing Heart Medical Clinic": [
-                596,
-                7
-            ],
-            "THK Senior Group Home @ Pipit": [
-                2130,
-                25
-            ],
-            "OneCare Medical Clinic Aljunied MRT": [
-                1224,
-                15
-            ]
-        }
-    },
     "YISHUN ST 81 BLK 851 760851": {
         "subway_station": {
             "Khatib": [
@@ -8371,141 +8269,251 @@
             ]
         }
     },
-    "AH HOOD RD BLK 101 320101": {
+    "ALJUNIED CRES BLK 112 380112": {
         "bus_station": {
-            "Muay Thai": [
-                329,
+            "Geylang Polyclinic": [
+                373,
                 4
             ],
-            "Bef Jln Dusun": [
-                604,
-                7
-            ],
-            "Opp Trellis Twrs": [
-                4939,
-                59
-            ],
-            "Zhongshan Mall": [
-                385,
-                5
-            ]
-        },
-        "school": {
-            "Zesprion School of Learning": [
-                619,
-                7
+            "Opp Geylang Meth Sec Sch": [
+                2048,
+                24
             ]
         },
         "restaurant": {
-            "Oopen Pasta & Grill": [
-                1024,
-                12
+            "CCK 190 Wanton Noodles": [
+                2475,
+                29
             ],
-            "21 On Rajah": [
-                541,
+            "The Ranch Cafe": [
+                1383,
+                16
+            ],
+            "Old Chang Kee @ Aljunied MRT": [
+                1322,
+                16
+            ],
+            "My Little Coconut": [
+                140,
+                2
+            ],
+            "ShiYun Food Junction": [
+                252,
+                3
+            ],
+            "Geylang east": [
+                483,
                 6
             ],
-            "SHI KOU Seafood \u5341\u53e3\u6d77\u9c9c": [
-                247,
-                3
+            "\u5c0f\u996d\u4e2d\u5fc3\uff08\u9c7c\u6c64\u5c0f\u644a\uff09\u597d\u5403": [
+                137,
+                2
             ],
-            "Thai Food Near Me - Balestier": [
-                247,
-                3
-            ],
-            "ONE DUSUN": [
-                654,
-                8
-            ],
-            "BangKok J.N Thaifood": [
-                329,
+            "Tery mono": [
+                322,
                 4
             ],
-            "Cavemen Restaurant & Bar": [
-                640,
-                8
+            "Miao Quan Acupunturist": [
+                960,
+                11
             ],
-            "Bangkok Jn Thaifood": [
-                332,
+            "Tropical Drinks Station": [
+                215,
+                3
+            ],
+            "\u4e07\u548c\u8f69 Wan He Xuan Vegetarian": [
+                315,
                 4
             ],
-            "Anson Town Balestier": [
-                239,
+            "Nian Ci Zhai": [
+                315,
+                4
+            ],
+            "Mei Xiang Porridge": [
+                217,
                 3
             ],
-            "Jiu Xiang Xiang Roast Duck": [
-                515,
-                6
-            ],
-            "Tiong Bee Bak Kut Teh": [
-                505,
-                6
-            ],
-            "Francesca's Viio Balestier": [
-                257,
-                3
-            ],
-            "Yummy Don - Balestier": [
-                257,
+            "\u9315": [
+                217,
                 3
             ]
         },
         "doctor": {
-            "LiveWell Medical Family Clinic": [
-                403,
-                5
+            "The Women's Specialist": [
+                164,
+                2
             ],
-            "Judy Wong Clinic for Women": [
-                2132,
-                25
+            "Ling Xin TCM Center": [
+                315,
+                4
             ],
-            "Thomson Paediatric Centre": [
-                2113,
-                25
-            ],
-            "STO+G Practice": [
-                2130,
-                25
-            ],
-            "Fong Poh Him Dr": [
-                2132,
-                25
-            ],
-            "Jeanette Chen Women's Clinic": [
-                2132,
-                25
-            ],
-            "The Novena Medical Specialists": [
-                930,
+            "Guang Yi Tang TCM Centre LLP": [
+                899,
                 11
             ],
-            "Dr Kenny Pang": [
-                886,
-                11
+            "THK Senior Group Home @ Pipit": [
+                2228,
+                27
             ],
-            "Eunice K M Chua Dr": [
-                2104,
-                25
+            "A Healing Heart Medical Clinic": [
+                694,
+                8
+            ]
+        }
+    },
+    "CLEMENTI AVE 3 BLK 440C 123440": {
+        "bus_station": {
+            "Opp Blk 317": [
+                189,
+                2
             ],
-            "Vincent Lee Clinic": [
-                2127,
-                25
+            "Clementi Stn Exit B": [
+                716,
+                9
             ],
-            "W C Cheng & Associates": [
-                2132,
-                25
+            "Clementi Stn Exit A": [
+                1212,
+                14
             ],
-            "Dr Benjamin Tham": [
-                2134,
-                25
+            "Bet Blks 315/318": [
+                568,
+                7
             ],
-            "Gerard Leong Cardiology Clinic": [
-                2134,
-                25
+            "Blk 376": [
+                673,
+                8
             ],
-            "Dr TC Chang": [
-                2134,
-                25
+            "Blk 377": [
+                693,
+                8
+            ]
+        },
+        "subway_station": {
+            "Clementi": [
+                692,
+                8
+            ]
+        },
+        "school": {
+            "Nan Hua Primary School": [
+                533,
+                6
+            ],
+            "Clementi Town Secondary School": [
+                652,
+                8
+            ],
+            "Clementi Primary School": [
+                468,
+                6
+            ],
+            "Fasosola Music School": [
+                346,
+                4
+            ],
+            "Pei Tong Primary School": [
+                647,
+                8
+            ]
+        },
+        "restaurant": {
+            "Subway": [
+                579,
+                7
+            ],
+            "Burger King": [
+                579,
+                7
+            ],
+            "KFC": [
+                1275,
+                15
+            ],
+            "Swensen's": [
+                1287,
+                15
+            ],
+            "Banana Leaf Seafood BBQ": [
+                1119,
+                13
+            ],
+            "JINJJA Chicken": [
+                712,
+                8
+            ],
+            "Crystal Jade Hong Kong Kitchen": [
+                1264,
+                15
+            ],
+            "Ah Ma Yi Kou Wei": [
+                579,
+                7
+            ],
+            "So Pho (Clementi Mall)": [
+                217,
+                3
+            ],
+            "Bee Cheng Hiang": [
+                1230,
+                15
+            ],
+            "TORI-Q The Clementi Mall": [
+                1230,
+                15
+            ],
+            "Old Chang Kee @ Clementi Mall": [
+                1230,
+                15
+            ],
+            "Stuff'd": [
+                1230,
+                15
+            ],
+            "Pezzo": [
+                1230,
+                15
+            ],
+            "Crave Nasi Lemak": [
+                579,
+                7
+            ],
+            "Ootoya (Clementi Mall)": [
+                579,
+                7
+            ],
+            "JUEWEI @ GRANTRAL": [
+                1138,
+                14
+            ],
+            "Sedap Noodle": [
+                569,
+                7
+            ]
+        },
+        "doctor": {
+            "T32 Dental Pearl @ Clementi": [
+                1159,
+                14
+            ],
+            "Si Hoe Yeen Ling": [
+                489,
+                6
+            ],
+            "Kang Mei TCM": [
+                544,
+                6
+            ],
+            "Chia Baby & Child Clinic": [
+                548,
+                7
+            ],
+            "Premier Dental Clinic": [
+                1038,
+                12
+            ],
+            "SGCert Thermage": [
+                1304,
+                16
             ]
         }
     }
