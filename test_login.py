@@ -5,12 +5,12 @@ def test_valid_login(client, captured_templates):
     from flask_login import current_user
 
     with client:
-        rv = login(client,"yeophuenyeo@gmail.com", "password123")
+        rv = login(client,"test@gmail.com", "12345678")
 
         # session is still accessible
         assert rv.status_code == 200
         assert current_user.is_authenticated
-        assert current_user.email == "yeophuenyeo@gmail.com"
+        assert current_user.email == "test@gmail.com"
         assert current_user.username == "checkValidLogin"
         assert len(captured_templates) == 1
         template, context = captured_templates[0]
@@ -21,7 +21,7 @@ def test_unverified_login(client, captured_templates):
     from flask_login import current_user
 
     with client:
-        rv = login(client,"yap.xuan.ying2001@gmail.com", "password123")
+        rv = login(client,"test1@gmail.com", "12345678")
 
         # session is still accessible
         assert rv.status_code == 200

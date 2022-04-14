@@ -15,7 +15,6 @@ from .misc import *
 import itertools
 import requests
 
-image = generate_flat_image()
 views = Blueprint('views', __name__)
 #url = url_for('static', filename='images/' + str(random.randint(1,10)) + '.jpg')
 INDEX = 20  # Number of items to show on homepage

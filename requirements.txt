@@ -9,6 +9,7 @@ mysql_connector_repackaged==0.3.1
 pandas==1.4.1
 PyMySQL==1.0.2
 pytest==7.1.1
-requests==2.27.1
+regex==2022.3.15
+requests==2.26.0
 SQLAlchemy==1.4.31
 Werkzeug==2.0.3

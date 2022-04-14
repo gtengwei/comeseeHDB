@@ -73,6 +73,17 @@ def create_flat_csv():
     df = pd.read_csv('merged.csv')    
     df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
 
+def append_image():
+    # read csv
+    df = pd.read_csv('merged.csv')
+    df['image'] = None
+    for i in range(len(df)):
+        count = i % 6
+        df.at[i, 'image'] = 'hdb_image'+str(count)+'.jpg'
+
+    #df.drop('Unnamed: 0', axis=1, inplace=True)
+    df.to_csv('merged.csv', index=False)
+
 if __name__ == "__main__":
     # main()
     #create_database()
