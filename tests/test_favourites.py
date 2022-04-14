@@ -1,4 +1,4 @@
-from conftest import *
+from .conftest import *
 import json
 
 # NO restriction on adding favourites of the same (flat_id, user_id) via POST request
@@ -7,7 +7,7 @@ def test_favourite(client, captured_templates):
     from flask_login import current_user
 
     with client:
-        login(client,"yeophuenyeo@gmail.com", "password123")
+        login(client,testingEmail, testingPassword)
         flatID = 3 #===> insert flatID that has not been favourited
         rv = client.post('/favourite', data=json.dumps( {'flatID': flatID}) )
 
@@ -25,7 +25,7 @@ def test_unfavourite(client, captured_templates):
     from flask_login import current_user
 
     with client:
-        login(client,"yeophuenyeo@gmail.com", "password123")
+        login(client,testingEmail, testingPassword)
         # Find a favourite belonging to user
         favourite = Favourites.query.filter_by(user_id=current_user.id).first()
         favouriteID = favourite.flat_id

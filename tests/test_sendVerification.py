@@ -1,4 +1,4 @@
-from conftest import *
+from .conftest import *
 
 def test_verified_sendVerification(client, captured_templates):
 
@@ -18,7 +18,7 @@ def test_unverified_sendVerification(client, captured_templates):
 
     with client:
         rv = client.post('/verify-email', 
-        data={'email': 'yap.xuan.ying2001@gmail.com'}, follow_redirects=True) # ==> insert unverified email
+        data={'email': "www.sherelyn912@gmail.com"}, follow_redirects=True) # ==> insert unverified email
 
         # session is still accessible
         assert rv.status_code == 200

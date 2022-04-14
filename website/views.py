@@ -161,13 +161,12 @@ def home():
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
-                if i % 2 == 0:
-                    data = list(itertools.chain(Flat.query.filter(
-                        Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
-                    # print(searchedFlats)
-            # print(data[0])
-            # return render_template("search.html", user=current_user, flats=data[:INDEX])
-
+                if i%2 == 0:
+                    data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
+                    #print(searchedFlats)
+            #print(data[0])                
+            #return render_template("search.html", user=current_user, flats=data[:INDEX])
+            
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
                     flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()

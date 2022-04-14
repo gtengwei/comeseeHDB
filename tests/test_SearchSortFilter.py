@@ -1,4 +1,4 @@
-from conftest import *
+from .conftest import *
 
 def test_Search(client, captured_templates):
 

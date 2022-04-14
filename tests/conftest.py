@@ -1,18 +1,24 @@
 import pytest, sqlite3
 from flask_sqlalchemy import SQLAlchemy
-from website import create_app, db
-from website.models import *
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import session, url_for, request, Blueprint, template_rendered
-import unittest
-from flask_testing import TestCase
+import sys
 import os
-from pathlib import Path
+sys.path.append("..")
+from website import create_app, db
+from website.misc import *
+from website.models import *
+import time
 
 
-# Run tests in a module - pytest test_mod.py
-# Run tests in a directory - pytest directory/
+
+# Run tests in a module - pytest tests/test_mod.py
+# Run tests in a directory - pytest tests
+# Run a test function in a module - pytest test_mod.py::test_func
+
+testingEmail = "yeophuenyeo@gmail.com" # insert verified user email and password for testing
+testingPassword = "password123"
 
             
 @pytest.fixture

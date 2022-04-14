@@ -1,4 +1,4 @@
-from conftest import *
+from .conftest import *
 
 '''
 FLASH MESSAGES
@@ -12,13 +12,13 @@ FLASH MESSAGES
     b"Account created! Please verify your email before logging in."
 '''
 
-def test_valid_register(client, captured_templates):
+'''def test_valid_register(client, captured_templates):
 
     with client:
         rv = client.post('/sign-up', 
-        data={'email': 'yap.xuan.ying2001@gmail.com',
-        'username': 'testRegister',
-        'postalCode': '111111',
+        data={'email': 'www.sherelyn912@gmail.com',
+        'username': 'testValidRegister',
+        'postalCode': '11',
         'password1': 'password123',
         'password2': 'password123'}, follow_redirects=True) #=====> insert email that has not been registered
 
@@ -27,7 +27,7 @@ def test_valid_register(client, captured_templates):
         assert b"Account created! Please verify your email before logging in." in rv.data, "ensure email entered is not registered"
         assert len(captured_templates) == 1
         template, context = captured_templates[0]
-        assert template.name == "login.html"
+        assert template.name == "login.html"'''
 
 def test_invalid_register(client, captured_templates):
 
@@ -55,7 +55,7 @@ def test_existingKey_register(client, captured_templates):
         'username': 'testExistingEmail',
         'postalCode': '111111',
         'password1': 'password123',
-        'password2': 'password123'})
+        'password2': 'password123'}) 
 
         # session is still accessible
         assert rv.status_code == 200
