@@ -2,7 +2,6 @@
 from cgi import print_exception
 from flask import Blueprint, render_template, request, flash, jsonify, session
 from flask_login import login_required, current_user
-from regex import P
 from .models import *
 from . import db
 import json
