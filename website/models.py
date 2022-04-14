@@ -1,5 +1,5 @@
 ## To create relational schema and the attributes of the schema
-from . import db
+
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -12,6 +12,9 @@ import pandas as pd
 import os
 from pathlib import Path
 from sqlalchemy.dialects.mysql import BIGINT
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 ## To migrate database
 class Review(db.Model):
@@ -42,7 +45,7 @@ class User(db.Model, UserMixin):
     postal_code_change = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
     favourites = db.relationship('Favourites')
     email_verified = db.Column(db.Boolean(), nullable=False, default=False)
-    email_verified_date = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
+    email_verified_date = db.Column(db.DateTime(timezone=True), default = None)
     reviews = db.relationship('Review', backref = 'user', passive_deletes=True)
 
     def get_token(self,expires_sec=120):
@@ -86,10 +89,16 @@ class Flat(db.Model):
     resale_price = db.Column(db.Integer) 
     price_per_sqm = db.Column(db.Integer)
     address = db.Column(db.String(150))
-    reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
     resale_price = db.Column(Float)
-    favourites = db.relationship('Favourites', backref = 'flat', passive_deletes=True)   
     numOfFavourites = db.Column(db.Integer, default=0)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
+    postal_code = db.Column(db.Integer)
+    postal_sector = db.Column(db.Integer)
+    address_no_postal_code = db.Column(db.String(150))
+    image = db.Column(db.String(150))
+    reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
+    favourites = db.relationship('Favourites', backref = 'flat', passive_deletes=True)   
 
 def create_Flat_table():
     #To create the table in the database (SQLite)
@@ -97,7 +106,7 @@ def create_Flat_table():
     db.Model.metadata.create_all(engine)
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
-    df = pd.read_csv('test.csv')
+    df = pd.read_csv('merged.csv')
     df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
 
     '''
@@ -111,4 +120,10 @@ def create_Flat_table():
     '''
     
 
-
+'''def create_Flat_table():
+    #This will create the table in the database
+    engine = create_engine('sqlite:///website/database.db')
+    db.Model.metadata.create_all(engine)
+    os.chdir('C:/Users/Yap Xuan Ying/Documents/WORK!!!/comeseeHDB/website')
+    df = pd.read_csv('merged.csv')
+    df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')'''

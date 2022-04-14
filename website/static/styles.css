@@ -1,0 +1,67 @@
+.card {
+    background-color: white;
+
+}
+.card-header {
+    background-color: #ffcad4;
+    display: inline-flex;
+
+}
+.card-body {
+    background-color: white;  
+}
+
+button[class^="favourite_button"] {
+    background-color: #ffcad4;
+    border:none;
+    outline:none;
+    color: red;
+}
+
+.unfavourite_button {
+    background-color: #ffcad4;
+    border:none;
+    outline:none;
+    color: red;
+}
+
+.img-thumbnail{
+    border-radius: 25px;
+    width: 500px;
+    height: 190px;
+}
+
+.features {
+    margin-top: 10px;
+    min-height: 400px;
+    border: 1px solid #8C8C8C;
+    border-radius: 7px;
+    color: #4A4A4A;
+    overflow: hidden;
+    position: relative;
+}
+  
+.bottom-left{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 10px 10px;
+    border-radius: 60px;
+    font-size: 15px;
+    
+}
+
+.btn-circle{
+    width: 50px;
+    height: 50px;
+    padding: 10px 16px;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 1.33;
+}
+
+.fixed-bottom{
+    padding: 10px 10px
+}
+

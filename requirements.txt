@@ -12,8 +12,3 @@ pytest==7.1.1
 requests==2.27.1
 SQLAlchemy==1.4.31
 Werkzeug==2.0.3
-datetime
-pymysql
-cryptography
-requests
-regex
