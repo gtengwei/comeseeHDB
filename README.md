@@ -4,7 +4,7 @@ comeseeHDB is a website application created for everyone who is interested to vi
 http://comesee-hdb.et.r.appspot.com/
 ## Installation
 
-Download/Clone the github repository. Install all python packages listed in requirement.txt
+Download/Clone the github repository. Install all python packages listed in requirements.txt
 
 ## Testing with pytest
 
