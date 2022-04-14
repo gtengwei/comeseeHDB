@@ -1,3 +1,21 @@
+# comeseeHDB
+
+comeseeHDB is a website application created for everyone who is interested to view and gain more insights on HDB resale flats that were sold in the past 5 years.
+
+## Installation
+
+Download/Clone the github repository. Install all python packages listed in requirement.txt
+
+## Testing with pytest
+
+refer to tests/conftest.py
+
+```bash
+pytest tests # Test all test cases 
+pytest tests/test_function.py # Test all test cases in test_function.py
+pytest tests/test_function.py::test_func # Test test_func in test_function.py
+```
+
 # Building the Smart Nation comeseeHDB
 The Smart Nation movement went from conceptualization to real action. The ZEA
 (CZ2006/CE2006 Authority) launched its fourth Data-Driven Smart Nation Competition in
@@ -33,3 +51,5 @@ The applications should be web applications deployed in a cloud platform. The tr
 usage of the cloud platform will be provided for free. The applications will be judged by the
 innovative use of data as well as the quality of the milestone deliverables described in the
 Lab Manuals and the rigorous process that the teams follow through the competition.
+
+
