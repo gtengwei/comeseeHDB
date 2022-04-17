@@ -55,7 +55,7 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <img src="{{image[0]}}" class="img-thumbnail">
+                    <img src="{{ url_for('static', filename = flat.image)}}" class="img-thumbnail">
                   </div>
                   <div class="col">
                     <p><strong>Price: </strong>${{flat.resale_price}}</p>
