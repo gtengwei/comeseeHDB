@@ -50,7 +50,8 @@ def sign_up():
     if request.method == 'POST':
         email = request.form.get('email')
         username = request.form.get('username')
-        postal_code = int(request.form.get('postalCode'))
+        if request.form.get('postalCode'):
+            postal_code = int(request.form.get('postalCode'))
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
