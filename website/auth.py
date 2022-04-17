@@ -63,8 +63,8 @@ def sign_up():
         elif len(email) < 4:
             flash('Email must be greater than 3 characters.', category='error')
 
-        elif len(username) < 2:
-            flash('Username must be greater than 1 character.', category='error')
+        elif len(username) < 4:
+            flash('Username must be at least 4 character long.', category='error')
 
         elif (postal_code < 1 or postal_code > 80):
             flash('First two digits of postal code must be between 1 and 80.', category='error')
