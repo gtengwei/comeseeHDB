@@ -8608,5 +8608,101 @@
                 17
             ]
         }
+    },
+    "WOODLANDS CRES BLK 782B 732782": {
+        "school": {
+            "Admiralty Secondary School": [
+                92,
+                1
+            ],
+            "Riverside Primary School": [
+                242,
+                3
+            ]
+        },
+        "restaurant": {
+            "Char-grill Bar": [
+                652,
+                8
+            ],
+            "Dad's Corner": [
+                652,
+                8
+            ],
+            "FS_18": [
+                559,
+                7
+            ],
+            "Satay mantop": [
+                568,
+                7
+            ],
+            "Habib's Express": [
+                568,
+                7
+            ],
+            "FROST & AKC18 PARTNERS": [
+                384,
+                5
+            ],
+            "Warong Buk Ummii": [
+                1451,
+                17
+            ],
+            "Domino's Pizza Woodlands Rise": [
+                605,
+                7
+            ],
+            "Yakiniku Kura": [
+                612,
+                7
+            ],
+            "Taokingu Ramen \u6d9b\u8482\u30e9\u30fc\u30e1\u30f3": [
+                611,
+                7
+            ],
+            "Ma Ma Spin Pot": [
+                612,
+                7
+            ],
+            "Ten & Han Trading Pte Ltd": [
+                1318,
+                16
+            ],
+            "Feequl Corner": [
+                1885,
+                22
+            ],
+            "Journey To The West": [
+                1881,
+                22
+            ],
+            "Seafood Ban Mian": [
+                1026,
+                12
+            ],
+            "My Place Seafood": [
+                1026,
+                12
+            ]
+        },
+        "doctor": {
+            "DR NAH & LEE FAMILY CLINIC": [
+                456,
+                5
+            ],
+            "PR Orange SG": [
+                1288,
+                15
+            ],
+            "Big Boss Essential Oil": [
+                1288,
+                15
+            ],
+            "EH Medical Clinic (Woodlands)": [
+                567,
+                7
+            ]
+        }
     }
 }
