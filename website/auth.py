@@ -6,8 +6,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_mail import Message as MailMessage
-import json
-from random import randint
 from .misc import *
 from datetime import datetime
 
