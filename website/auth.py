@@ -31,9 +31,9 @@ def login():
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
-                flash('Incorrect password, try again.', category='error')
+                flash('Incorrect password, please try again.', category='error')
         else:
-            flash('Email does not exist.', category='error')
+            flash('Email does not exist in the system. Please create an account before logging in!', category='error')
 
     return render_template("login.html", user=current_user)
 

@@ -8516,5 +8516,97 @@
                 16
             ]
         }
+    },
+    "JURONG WEST AVE 1 BLK 503 640503": {
+        "school": {
+            "Rulang Primary School": [
+                812,
+                10
+            ],
+            "Zoo-phonics School": [
+                292,
+                3
+            ],
+            "PlayFACTO School @ Jurong West": [
+                310,
+                4
+            ]
+        },
+        "restaurant": {
+            "Canadian 2 For 1 Pizza": [
+                825,
+                10
+            ],
+            "Ding Ji": [
+                470,
+                6
+            ],
+            "McDonald's Jurong Spring CC": [
+                195,
+                2
+            ],
+            "Classic Putian": [
+                20,
+                0
+            ],
+            "\u7f8e\u534e\u8d77\u9aa8\u9e2d\u996d\u7cbf\u6c41": [
+                283,
+                3
+            ],
+            "Hell Grill Kitchen Pte Ltd": [
+                264,
+                3
+            ],
+            "Boss Ku Nasi Padang": [
+                283,
+                3
+            ],
+            "Tan Tat Lim": [
+                31,
+                0
+            ],
+            "Anna Banh Mi": [
+                31,
+                0
+            ],
+            "Lao chong Qing": [
+                31,
+                0
+            ],
+            "Hao Ji Handmade Pau": [
+                31,
+                0
+            ],
+            "Jian Bo Shui Kueh": [
+                31,
+                0
+            ],
+            "Clementi Homemade Pau Dian": [
+                36,
+                0
+            ],
+            "\u62ff\u5b9d\u5f2f\u719f\u98df Na Bao Wan": [
+                30,
+                0
+            ],
+            "Wen Guang \u6587\u5149\u7cbf\u6761\u6c64\u9762": [
+                31,
+                0
+            ],
+            "Da Di Meng": [
+                31,
+                0
+            ]
+        },
+        "doctor": {
+            "TC Family Clinic Pte Ltd": [
+                788,
+                9
+            ],
+            "GMGW Massage Therapy": [
+                1462,
+                17
+            ]
+        }
     }
 }
