@@ -8,8 +8,7 @@ from random import randint
 from .models import Flat
 from . import db
 from datetime import datetime
-import json
-import random
+
 
 INDEX = 20
 
