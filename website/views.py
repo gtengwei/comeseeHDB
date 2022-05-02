@@ -8,8 +8,6 @@ import json
 import sqlite3
 import os
 from pathlib import Path
-import mysql.connector
-import pymysql
 from .misc import *
 import itertools
 import requests
