@@ -8704,5 +8704,113 @@
                 7
             ]
         }
+    },
+    "ADMIRALTY DR BLK 353C 753353": {
+        "bus_station": {
+            "Sembawang Int": [
+                1516,
+                18
+            ],
+            "Sembawang Interchange": [
+                1230,
+                15
+            ]
+        },
+        "subway_station": {
+            "Sembawang": [
+                416,
+                5
+            ]
+        },
+        "school": {
+            "Canberra Primary School": [
+                1705,
+                20
+            ],
+            "Joy Montessori Schoolhouse": [
+                1038,
+                12
+            ]
+        },
+        "restaurant": {
+            "Sushi Express @ Sun Plaza": [
+                1169,
+                14
+            ],
+            "White Restaurant": [
+                1169,
+                14
+            ],
+            "Pizza Hut Sun Plaza": [
+                1169,
+                14
+            ],
+            "Pot Addiction Sun Plaza": [
+                1278,
+                15
+            ],
+            "Swensen's": [
+                1204,
+                14
+            ],
+            "Broadway Food Centre": [
+                923,
+                11
+            ],
+            "Chang Cheng - Canberra Link": [
+                444,
+                5
+            ],
+            "Char-Grill Bar @ Canberra Link": [
+                444,
+                5
+            ],
+            "Ezan Satay": [
+                440,
+                5
+            ],
+            "KFC": [
+                1172,
+                14
+            ],
+            "McDonald's": [
+                1169,
+                14
+            ],
+            "Ya Kun Kaya Toast": [
+                1169,
+                14
+            ],
+            "Yu Kee Duck Rice": [
+                1173,
+                14
+            ],
+            "Danzai Noodles": [
+                1159,
+                14
+            ],
+            "Wok Story": [
+                1167,
+                14
+            ],
+            "Wen Jia Bao \u6e29\u5bb6\u9971": [
+                1167,
+                14
+            ],
+            "Kawan Station": [
+                1161,
+                14
+            ],
+            "Hugabo": [
+                1169,
+                14
+            ]
+        },
+        "doctor": {
+            "Thomson Women\u2019s Clinic": [
+                1169,
+                14
+            ]
+        }
     }
 }
