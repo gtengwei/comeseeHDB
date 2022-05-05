@@ -277,6 +277,8 @@
               <p><strong>Flat Type: </strong>{{flats[i+1].flat_type}}</p>
               <br/>
               <p><strong>Floor: </strong>{{flats[i+1].storey_range}}</p>
+              <br/>
+              <p><strong>Sold Date: </strong>{{flats[i+1].month}}</p>
               
             </div>
           </div>
@@ -326,7 +328,7 @@
 
   function downloadContent(index, limit) {
     $.get('/load_home?index=' + index + '&limit=' + limit, (data) => {
-      for (var index = 0; index < data.data.length; index++) {
+      for (var index = 0; index < data.data.length; index+=2) {
         var favourite = $('#my-data').data().f;
         var flat = "/flat-details/" + data.data[index][0]; 
         var image = "/static/" + data.data[index][5];
@@ -361,8 +363,12 @@
               </div>
             </div>
           </div>
-        </div>
-        </div>
+        </div>`
+        if ((index+1)%2 == 1){
+        image = "/static/" + data.data[index+1][5];
+        page +=
+        `
+
         <div class="col-md-6">
             <div class="card mb-3">
 
@@ -391,11 +397,11 @@
             </div>
           </div>
         </div>
-        </div>
-        </div>
           `
+      }
         }
-        else {
+
+      else {
         var page = `
         <div class="row">
         <div class="col-md-6">
@@ -426,16 +432,21 @@
             </div>
           </div>
         </div>
-        </div>
+        `
+
+        if ((index+1)%2 == 1){
+        image = "/static/" + data.data[index+1][5];
+        page +=
+        ` 
         <div class="col-md-6">
             <div class="card mb-3">
 
             <div class="card-header">
-              <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-              <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="unfavourite(`+data.data[index][0]+`)">
-                <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
+              <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index+1][1] + `</strong></a>
+              <button class="favourite_button" id ="favourite_button`+data.data[index+1][0]+`" type="button" onClick="unfavourite(`+data.data[index+1][0]+`)">
+                <span id ="favourite_button_id`+data.data[index+1][0]+`"><i class="fa-regular fa-heart"></i></span>
               </button>
-              <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
+              <span id="favourite_count`+data.data[index+1][0]+`">`+data.data[index+1][7]+`</span>
             </div>
             <div class="card-body">
               <div class="row">
@@ -443,21 +454,20 @@
                   <img src="` + image + `" class="img-thumbnail">
                 </div>
                 <div class="col">
-                  <p><strong>Price: </strong>` +`$`+ data.data[index][2] + `</p>
+                  <p><strong>Price: </strong>` +`$`+ data.data[index+1][2] + `</p>
                   <br/>
-                  <p><strong>Flat Type: </strong>` + data.data[index][3] + `</p>
+                  <p><strong>Flat Type: </strong>` + data.data[index+1][3] + `</p>
                   <br/>
-                  <p><strong>Floor: </strong>` + data.data[index][4] + `</p>
+                  <p><strong>Floor: </strong>` + data.data[index+1][4] + `</p>
                   <br/>
-                  <p><strong>Sold Date: </strong>` + data.data[index][6] + `</p>
+                  <p><strong>Sold Date: </strong>` + data.data[index+1][6] + `</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        </div>
-        </div>
           `
+      }
         }    
         $('#properties').append(page)
         

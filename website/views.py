@@ -927,11 +927,11 @@ def load_search():
     if data_price:
         for flat in data_price:
             data.append(tuple([flat.id, flat.address_no_postal_code,
-                               flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                               flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
     else:
         for flat in searchedFlats:
             data.append(tuple([flat.id, flat.address_no_postal_code,
-                        flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                        flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
     if request.args:
         index = int(request.args.get('index'))
         limit = int(request.args.get('limit'))
