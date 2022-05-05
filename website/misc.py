@@ -185,7 +185,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.resale_price, reverse=True)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
             # print(data[0][0])
         if request.args:
             index = int(request.args.get('index'))
@@ -207,7 +207,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.resale_price, reverse=False)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -228,7 +228,7 @@ def sorting_criteria_load(criteria, flats = []):
             key=lambda x: x.remaining_lease, reverse=True)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -249,7 +249,7 @@ def sorting_criteria_load(criteria, flats = []):
                     reverse=False)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -269,7 +269,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.storey_range, reverse=True)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -290,7 +290,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.storey_range, reverse=False)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -311,7 +311,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -332,7 +332,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -353,7 +353,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.numOfFavourites, reverse=True)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -374,7 +374,7 @@ def sorting_criteria_load(criteria, flats = []):
         flats.sort(key=lambda x: x.numOfFavourites, reverse=False)
         for flat in flats:
             data.append(tuple(
-                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
         if request.args:
             index = int(request.args.get('index'))
             limit = int(request.args.get('limit'))
@@ -397,7 +397,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats = Flat.query.order_by(Flat.resale_price.desc()).all()
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
                 # print(data[0][0])
             if request.args:
                 index = int(request.args.get('index'))
@@ -419,7 +419,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats = Flat.query.order_by(Flat.resale_price.asc()).all()
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -439,7 +439,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats = Flat.query.order_by(Flat.remaining_lease.desc()).all()
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -460,7 +460,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats.sort(key=lambda x: x.remaining_lease, reverse=False)
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -480,7 +480,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats.sort(key=lambda x: x.storey_range, reverse=True)
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -501,7 +501,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats.sort(key=lambda x: x.storey_range, reverse=False)
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -522,7 +522,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats.sort(key=lambda x: x.price_per_sqm, reverse=True)
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -543,7 +543,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats.sort(key=lambda x: x.price_per_sqm, reverse=False)
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -564,7 +564,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats.sort(key=lambda x: x.numOfFavourites, reverse=True)
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))
@@ -585,7 +585,7 @@ def sorting_criteria_load(criteria, flats = []):
             flats.sort(key=lambda x: x.numOfFavourites, reverse=False)
             for flat in flats:
                 data.append(tuple(
-                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                    [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
             if request.args:
                 index = int(request.args.get('index'))
                 limit = int(request.args.get('limit'))

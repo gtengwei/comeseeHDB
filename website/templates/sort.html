@@ -313,6 +313,8 @@
                 <p><strong>Flat Type: </strong>{{flat.flat_type}}</p>
                 <br/>
                 <p><strong>Floor: </strong>{{flat.storey_range}}</p>
+                <br/>
+                <p><strong>Sold Date: </strong>{{flat.month}}</p>
                 
               </div>
             </div>
@@ -362,7 +364,7 @@
           <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="unfavourite(`+data.data[index][0]+`)">
             <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
           </button>
-          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][6]+`</span>
+          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
         </div>
           `
         }
@@ -375,7 +377,7 @@
           <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="favourite(`+data.data[index][0]+`)">
             <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
           </button>
-          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][6]+`</span>
+          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
         </div>
           `
         }    
@@ -395,6 +397,8 @@
                   <p><strong>Flat Type: </strong>` + data.data[index][3] + `</p>
                   <br/>
                   <p><strong>Floor: </strong>` + data.data[index][4] + `</p>
+                  <br/>
+                  <p><strong>Sold Date: </strong>` + data.data[index][6] + `</p>
                 </div>
               </div>
             </div>
