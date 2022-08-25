@@ -1709,7 +1709,7 @@ def get_amenity(flatId):
         if address in data.keys():
             return data.get(address)
         else:
-            API_KEY = "AIzaSyB3Dn5nm1N8kTQvWiMuQ2PeS_8LI24jUys"
+            API_KEY = "AIzaSyAihwKNj-07whXNy0_nKDqkxN4QxCA-3uI"
             API_KEY2 = 'Ag6YKlKz_hSG8Drz9iLXx1n3-8r4qRW6XJSt2haPIuZr51AzdiGYq54G5amxfusp'
 
             specificamenity = {}  # specific amenity

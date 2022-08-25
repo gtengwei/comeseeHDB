@@ -257,8 +257,8 @@
 {% endif %}
 
 <body class="bg">
-  <div id="properties" class="card-body mx-auto bg-pink" style="width: 60rem;">
-    {% for i in range(0, ((flats|length)/2)|int, 2) %}
+  <div id="properties" class="card-body mx-auto bg-pink">
+    {% for i in range(0, (flats|length)|int, 2) %}
     <div class="row">
       <div class="col-md-6">
       <div class="card mb-3">
@@ -575,7 +575,7 @@
       });
       var flat_length = $('#my-data').data().flat_length;
       if (flat_length <= (index)) {
-        document.getElementById("end_page").innerHTML = '<h3>You Have Reach The End of Your Search Results</h3>';
+        document.getElementById("end_page").innerHTML = '<h3>You Have Reached The End of Your Search Results</h3>';
       }
     }
     
@@ -583,7 +583,7 @@
 
 {% if flats|length < 20 %}
   <div class="fa-3x d-flex justify-content-center" id = "end_page" >
-    <h3>You Have Reach The End of Your Search Results</h3>
+    <h3>You Have Reached The End of Your Search Results</h3>
   </div>
   
 {% else %}
