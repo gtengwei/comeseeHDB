@@ -1,7 +1,6 @@
 ## To create the app and database
 from venv import create
 from flask import Flask, Blueprint
-from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 from flask_mail import Mail
@@ -17,7 +16,7 @@ def create_database(app):
 
     if not path.exists('website/' + DB_NAME):
         create_Flat_table()
-        db.create_all(app=app)
+        db.create_all()
         print('Created Database!')
     return
 
@@ -27,6 +26,7 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 create_database(app)
 
 # To send reset password email to user

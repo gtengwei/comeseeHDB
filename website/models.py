@@ -18,11 +18,27 @@ db = SQLAlchemy()
 
 ## To migrate database
 class Review(db.Model):
+    _N = 6
+
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     data = db.Column(db.String(500), nullable=False)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'), nullable=False)
+    review_path = db.Column(db.Text, index=True)
+    parent_id = db.Column(db.Integer, db.ForeignKey('review.id'))
+    reply = db.relationship('Review', backref=db.backref('parent', remote_side=[id]), lazy='dynamic')
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        prefix = self.parent.review_path + '.' if self.parent else ''
+        self.review_path = prefix + '{:0{}d}'.format(self.id, self._N)
+        db.session.commit()
+        
+    def level(self):
+        if self.review_path is None:
+            return 0
+        return len(self.review_path) // self._N - 1
 
 
 class Favourites(db.Model):

@@ -62,20 +62,37 @@ def flat_details(flatId):
 
     if request.method == 'POST':
         review = request.form.get('review')
-
-        if len(review) < 1:
-            flash('Review is too short!', category='error')
-        elif len(review) > 500:
-            flash(
-                'Review is too long! Maximum length for a review is 500 characters', category='error')
-        elif current_user.postal_code != flat.postal_sector:
-            flash('You cannot review this flat! You can only review flats in your own postal district!', category='error')
-        else:
-            new_review = Review(
-                data=review, user_id=current_user.id, flat_id=flatId)
-            db.session.add(new_review)
-            db.session.commit()
-            flash('Review added!', category='success')
+        reply = request.form.get('reply')
+        if reply:
+            parent_id = request.form.get('parent_id')
+            if len(reply) < 1:
+                flash('reply is too short!', category='error')
+            elif len(reply) > 500:
+                flash(
+                    'reply is too long! Maximum length for a reply is 500 characters', category='error')
+            elif str(current_user.postal_code) != flat.postal_sector:
+                print(type(flat.postal_sector))
+                flash('You cannot reply this flat! You can only reply flats in your own postal district!', category='error')
+            else:
+                new_reply= Review(
+                    data=reply, user_id=current_user.id, flat_id=flatId, parent_id = parent_id)
+                new_reply.save()
+                #print(parent_path)
+                flash('Reply added!', category='success')
+        if review:
+            if len(review) < 1:
+                flash('Review is too short!', category='error')
+            elif len(review) > 500:
+                flash(
+                    'Review is too long! Maximum length for a review is 500 characters', category='error')
+            elif str(current_user.postal_code) != flat.postal_sector:
+                print(type(flat.postal_sector))
+                flash('You cannot review this flat! You can only review flats in your own postal district!', category='error')
+            else:
+                new_review = Review(
+                    data=review, user_id=current_user.id, flat_id=flatId)
+                new_review.save()
+                flash('Review added!', category='success')
     amenity = get_amenity(flatId)
     # f = open('testing.json') #FOR TESTING CAUSE EXPENSIVE
     # amenity = json.load(f)

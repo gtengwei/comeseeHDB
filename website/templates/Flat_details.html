@@ -486,5 +486,68 @@
   </li>
   {% endfor %}
 </ul>
+
+<ul class="list-group list-group-flush" id="reviews">
+{% for review in flat.reviews|sort(attribute='review_path') %}
+<div class="row">
+    <!-- Begin review indentation -->
+    {% if review.level() == 0 %}
+    <div class="col-sm-12" >
+        {% elif review.level() == 1 %}
+        <div class="col-sm-11 offset-1" >
+            {% elif review.level() == 2 %}
+            <div class="col-sm-10 offset-2 ">
+                {% elif review.level() == 3 %}
+                <div class="col-sm-9 offset-3 ">
+                    {% elif review.level() == 4 %}
+                    <div class="col-sm-8 offset-4">
+                        {% else %}
+                        <div class="col-sm-7 offset-5 ">
+                            {% endif %}
+                            <!-- End review indentation -->
+                              <li class="list-group-item">
+                                <img src="{{ review.user.avatar(50) }}">
+                                <b>{{review.user.username}}</b>
+                                <div style="word-wrap: break-word; width:1000px">
+                                  <p>{{ review.data }}</p>
+                                      <div class="row justify-content-end">
+                                          <small class="text-muted mb-0"> Posted {{moment(review.date).fromNow() }}</small>
+                                      </div>
+                                </div>
+                                {% if review.user == user %}
+                                <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                                {% endif %}
+                              </li>
+                              <div>
+                            {% if user.is_authenticated %}
+                            <form method="POST">
+                              <span class="input-group-append ">
+                                <textarea name="reply" id="reply" class="form-control" style ="height: 50px" placeholder="Write your reply here!"></textarea>
+                                <br />
+                                <div align="center">
+                                  <input type="hidden" name="parent_id" id="parent_id" value={{review['id']}} />
+                                  <button type="submit" class="btn btn-primary btn-sm">Add reply</button>  
+                                </div>
+                              </span>
+                            </form>
+
+                            {% else %}
+
+                            <span class="input-group-append ">
+                              <textarea name="reply" id="reply" class="form-control" style ="height: 50px" placeholder="Write your reply here!"></textarea>
+                              <br />
+                              <div align="center">
+                                <div class = "reply_button">
+                                  <button  class="btn btn-primary btn-sm" class = "reply_button">Login to add reply</a>
+                                </div> 
+                              </div>
+                            </span>
+                            {% endif %}
+                          </div>
+                    </div>
+                    {% endfor %}
+                  </ul>
 </body>
 {% endblock %}
