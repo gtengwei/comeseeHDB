@@ -19,25 +19,20 @@ db = SQLAlchemy()
 ## To migrate database
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    #id = db.Column(BIGINT, primary_key=True, nullable=False) # for mysql
     data = db.Column(db.String(500), nullable=False)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'), nullable=False)
-    #user_id = db.Column(BIGINT, db.ForeignKey('user.id'), nullable=False) # for mysql
-    #flat_id = db.Column(BIGINT, db.ForeignKey('flat.id'), nullable=False) # for mysql
+
 
 class Favourites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'))
-    #user_id = db.Column(BIGINT, db.ForeignKey('user.id')) # for mysql
-    #flat_id = db.Column(BIGINT, db.ForeignKey('flat.id')) # for mysql
 
 # Table for User entity
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    #id = db.Column(BIGINT, primary_key=True, nullable=False) # for mysql
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     username = db.Column(db.String(150))
@@ -75,7 +70,6 @@ class User(db.Model, UserMixin):
 class Flat(db.Model):
     #tell SQLAlchemy the name of column and its attributes:
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    #id = db.Column(BIGINT, primary_key=True, nullable=False) # for mysql
     month = db.Column(db.String(150)) 
     town = db.Column(db.String(150))
     flat_type = db.Column(db.String(150))
@@ -109,21 +103,4 @@ def create_Flat_table():
     df = pd.read_csv('merged.csv')
     df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
 
-    '''
-    # To create the table in the database (MySQL)
-    engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
-    db.Model.metadata.create_all(engine)
-    cwd = Path(__file__).parent.absolute()
-    os.chdir(cwd)    
-    df = pd.read_csv('test.csv')    
-    df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
-    '''
-    
 
-'''def create_Flat_table():
-    #This will create the table in the database
-    engine = create_engine('sqlite:///website/database.db')
-    db.Model.metadata.create_all(engine)
-    os.chdir('C:/Users/Yap Xuan Ying/Documents/WORK!!!/comeseeHDB/website')
-    df = pd.read_csv('merged.csv')
-    df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')'''

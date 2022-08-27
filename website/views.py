@@ -126,7 +126,6 @@ def home():
     os.chdir(cwd)
     # print(os.getcwd())
     conn = sqlite3.connect("database.db")
-    #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     myquery = (
         "SELECT id FROM Flat ORDER BY numOfFavourites DESC;")
@@ -153,16 +152,12 @@ def home():
             address = "%{}%".format(address)
 
         if price:
-            #minPrice = int(price[0])
-            #maxPrice = minPrice + 100000
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
                     data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
-                    #print(searchedFlats)
-            #print(data[0])                
-            #return render_template("search.html", user=current_user, flats=data[:INDEX])
+
             
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -342,7 +337,6 @@ def home():
 def load_home():
     # In order to load sorted flats faster
     conn = sqlite3.connect("database.db")
-    #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     criteria = session.get('criteria')
     if criteria:
@@ -595,8 +589,6 @@ def search(address):
             address = "%{}%".format(address)
 
         if price:
-            #minPrice = int(price[0])
-            #maxPrice = minPrice + 100000
             data = []
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
@@ -604,9 +596,6 @@ def search(address):
                 if i % 2 == 0:
                     data = list(itertools.chain(Flat.query.filter(
                         Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
-                    # print(searchedFlats)
-            # print(data[0])
-            # return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -764,9 +753,8 @@ def search(address):
 
     return render_template('search.html', user=current_user, address=address, random=RANDOM)
 
+
 # Infinite Scrolling for Search Page
-
-
 @views.route('/load_search', methods=['GET', 'POST'])
 def load_search():
     data = []
@@ -780,17 +768,12 @@ def load_search():
         address = "%{}%".format(address)
 
     if price:
-        #minPrice = int(price[0])
-        #maxPrice = minPrice + 100000
         price_range = [word for line in price for word in line.split('-')]
         for i in range(len(price_range)):
             price_range[i] = int(price_range[i])
             if i % 2 == 0:
                 data_price = list(itertools.chain(Flat.query.filter(
                     Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
-                # print(searchedFlats)
-        # print(data_price[0])
-        # return render_template("search.html", user=current_user, flats=data_price[:INDEX])
 
         if address and flat_types and amenities and towns:
             searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -970,17 +953,12 @@ def sort(criteria):
             address = "%{}%".format(address)
 
         if price:
-            #minPrice = int(price[0])
-            #maxPrice = minPrice + 100000
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i % 2 == 0:
                     data.extend(Flat.query.filter(Flat.resale_price.between(
                         price_range[i], price_range[i+1])).all())
-                    # print(searchedFlats)
-            # print(data[0])
-            # return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -1133,17 +1111,12 @@ def sort(criteria):
             address = "%{}%".format(address)
 
         if price:
-            #minPrice = int(price[0])
-            #maxPrice = minPrice + 100000
-
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i % 2 == 0:
                     data.extend(Flat.query.filter(Flat.resale_price.between(
                         price_range[i], price_range[i+1])).all())
-                    # print(searchedFlats)
-            # return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -1314,7 +1287,6 @@ def sort(criteria):
                 cwd = Path(__file__).parent.absolute()
                 os.chdir(cwd)
                 conn = sqlite3.connect("database.db")
-                #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
                 c = conn.cursor()
 
                 if criteria == 'price_high':
@@ -1445,8 +1417,6 @@ def load_sort():
         address = '%{}%'.format(address)
 
     if price:
-        #minPrice = int(price[0])
-        #maxPrice = minPrice + 100000
         data = []
         price_range = [word for line in price for word in line.split('-')]
         for i in range(len(price_range)):
@@ -1454,7 +1424,6 @@ def load_sort():
             if i % 2 == 0:
                 data.extend(Flat.query.filter(Flat.resale_price.between(
                     price_range[i], price_range[i+1])).all())
-        # return render_template("search.html", user=current_user, flats=data[:INDEX])
         if flat_types:
             searchedFlats = Flat.query.filter(
                 Flat.flat_type.in_(flat_types)).all()
@@ -1603,7 +1572,6 @@ def filter():
         towns = request.form.getlist('town')
         flat_types = request.form.getlist('flat_type')
         amenities = request.form.getlist('amenity')
-        #flat = Flat.query.filter(Flat.town.in_(towns)).filter(Flat.flat_type.in_(flat_types)).filter(Flat.amenity.in_(amenities)).all()
         if towns:
             if flat_types:
                 if amenities:
@@ -1628,7 +1596,6 @@ def filter():
             flat = Flat.query.filter(Flat.amenity.in_(amenities)).all()
 
         return render_template('filter.html', user=current_user, flats=flat[:INDEX])
-        # return render_template('sort.html', user=current_user, flats=flat)
 
     return render_template('filter.html', user=current_user)
 
@@ -1704,8 +1671,6 @@ def get_amenity(flatId):
 
     with open(filename, 'r') as f:
         data = json.load(f)
-        #print(address)
-        #print(data.get(address))
         if address in data.keys():
             return data.get(address)
         else:
