@@ -23,6 +23,23 @@
       }); 
   });
 </script>
+
+<script>
+  function reply(){
+    var x = document.getElementById("reply");
+    var y = document.getElementById("reply_button");
+    console.log(x);
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      y.style.display = "block";
+    } else {
+      x.style.display = "none";
+      y.style.display = "none";
+    }
+  }
+</script>
+
+
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
 
@@ -467,34 +484,14 @@
   <h3 class="text-muted mb-0" align="right">{{flat.reviews|length}} Reviews Posted</h3>
 {% endif %}
 
-<ul class="list-group list-group-flush" id="reviews">
-  {% for review in flat.reviews|reverse %}
-  <li class="list-group-item">
-    <img src="{{ review.user.avatar(50) }}">
-    <b>{{review.user.username}}</b>
-    <div style="word-wrap: break-word; width:1000px">
-      <p>{{ review.data }}</p>
-          <div class="row justify-content-end">
-              <small class="text-muted mb-0"> Posted {{moment(review.date).fromNow() }}</small>
-          </div>
-    </div>
-    {% if review.user == user %}
-    <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    {% endif %}
-  </li>
-  {% endfor %}
-</ul>
 
 <ul class="list-group list-group-flush" id="reviews">
 {% for review in flat.reviews|sort(attribute='review_path') %}
-<div class="row">
     <!-- Begin review indentation -->
     {% if review.level() == 0 %}
     <div class="col-sm-12" >
         {% elif review.level() == 1 %}
-        <div class="col-sm-11 offset-1" >
+        <div class="col-sm-11 offset-1">
             {% elif review.level() == 2 %}
             <div class="col-sm-10 offset-2 ">
                 {% elif review.level() == 3 %}
@@ -508,27 +505,31 @@
                               <li class="list-group-item">
                                 <img src="{{ review.user.avatar(50) }}">
                                 <b>{{review.user.username}}</b>
-                                <div style="word-wrap: break-word; width:1000px">
+                                <div style="word-wrap: break-word; width:100%">
                                   <p>{{ review.data }}</p>
                                       <div class="row justify-content-end">
-                                          <small class="text-muted mb-0"> Posted {{moment(review.date).fromNow() }}</small>
+                                        <span>
+                                        <button type="button" class="btn btn-link btn-sm" id="theButton" onClick=reply() value={{review['id']}}>Reply</button>
+                                      </span>
+                                          <small class="text-muted"> Posted {{moment(review.date).fromNow() }}</small>
+                                          {% if review.user == user %}
+                                          <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                          {% endif %}
                                       </div>
                                 </div>
-                                {% if review.user == user %}
-                                <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                                {% endif %}
+                                
                               </li>
                               <div>
                             {% if user.is_authenticated %}
                             <form method="POST">
-                              <span class="input-group-append ">
+                              <span class="input-group-append" style="padding-left:18px">
                                 <textarea name="reply" id="reply" class="form-control" style ="height: 50px" placeholder="Write your reply here!"></textarea>
                                 <br />
                                 <div align="center">
                                   <input type="hidden" name="parent_id" id="parent_id" value={{review['id']}} />
-                                  <button type="submit" class="btn btn-primary btn-sm">Add reply</button>  
+                                  <button type="submit" id="reply_button" class="btn btn-primary btn-sm">Add reply</button>  
                                 </div>
                               </span>
                             </form>
@@ -549,5 +550,6 @@
                     </div>
                     {% endfor %}
                   </ul>
+
 </body>
 {% endblock %}

@@ -27,7 +27,7 @@ class Review(db.Model):
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'), nullable=False)
     review_path = db.Column(db.Text, index=True)
     parent_id = db.Column(db.Integer, db.ForeignKey('review.id'))
-    reply = db.relationship('Review', backref=db.backref('parent', remote_side=[id]), lazy='dynamic')
+    reply = db.relationship('Review', cascade="all,delete", backref=db.backref('parent', remote_side=[id]), lazy='dynamic')
     def save(self):
         db.session.add(self)
         db.session.commit()
