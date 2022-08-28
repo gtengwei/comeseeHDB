@@ -524,12 +524,12 @@
                               <div>
                             {% if user.is_authenticated %}
                             <form method="POST">
-                              <span class="input-group-append" style="padding-left:18px">
-                                <textarea name="reply" id="reply" class="form-control" style ="height: 50px" placeholder="Write your reply here!"></textarea>
+                              <span class="input-group-append" style="padding-left:18px;">
+                                <textarea name="reply" id="reply" class="form-control" style ="height: 50px; display: none;" placeholder="Write your reply here!"></textarea>
                                 <br />
                                 <div align="center">
                                   <input type="hidden" name="parent_id" id="parent_id" value={{review['id']}} />
-                                  <button type="submit" id="reply_button" class="btn btn-primary btn-sm">Add reply</button>  
+                                  <button type="submit" id="reply_button" class="btn btn-primary btn-sm" style="display:none;">Add reply</button>  
                                 </div>
                               </span>
                             </form>
