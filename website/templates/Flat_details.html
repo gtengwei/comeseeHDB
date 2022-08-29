@@ -24,22 +24,6 @@
   });
 </script>
 
-<script>
-  function reply(){
-    var x = document.getElementById("reply");
-    var y = document.getElementById("reply_button");
-    console.log(x);
-    if (x.style.display === "none") {
-      x.style.display = "block";
-      y.style.display = "block";
-    } else {
-      x.style.display = "none";
-      y.style.display = "none";
-    }
-  }
-</script>
-
-
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
 
@@ -508,8 +492,8 @@
                                 <div style="word-wrap: break-word; width:100%">
                                   <p>{{ review.data }}</p>
                                       <div class="row justify-content-end">
-                                        <span>
-                                        <button type="button" class="btn btn-link btn-sm" id="theButton" onClick=reply() value={{review['id']}}>Reply</button>
+                                        <span id="reply_button-{{review.id}}">
+                                        <button type="button" class="btn btn-link btn-sm" id="reply_button-{{review.id}}" onClick=reply({{review.id}})>Reply</button>
                                       </span>
                                           <small class="text-muted"> Posted {{moment(review.date).fromNow() }}</small>
                                           {% if review.user == user %}
@@ -525,11 +509,11 @@
                             {% if user.is_authenticated %}
                             <form method="POST">
                               <span class="input-group-append" style="padding-left:18px;">
-                                <textarea name="reply" id="reply" class="form-control" style ="height: 50px; display: none;" placeholder="Write your reply here!"></textarea>
+                                <textarea name="reply" id="reply-{{review.id}}" class="form-control" style ="height: 50px; display: none;" placeholder="Write your reply here!"></textarea>
                                 <br />
                                 <div align="center">
                                   <input type="hidden" name="parent_id" id="parent_id" value={{review['id']}} />
-                                  <button type="submit" id="reply_button" class="btn btn-primary btn-sm" style="display:none;">Add reply</button>  
+                                  <button type="submit" id="reply_submit_button-{{review.id}}" class="btn btn-primary btn-sm" style="display:none;">Add reply</button>  
                                 </div>
                               </span>
                             </form>
