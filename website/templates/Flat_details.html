@@ -23,6 +23,13 @@
       }); 
   });
 </script>
+<script>
+  $(document).ready(function(){
+      $('.reply_button').click(function(){
+        $("#changePostalCodeModal").modal('show');
+      }); 
+  });
+</script>
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
@@ -521,11 +528,11 @@
                             {% else %}
 
                             <span class="input-group-append ">
-                              <textarea name="reply" id="reply" class="form-control" style ="height: 50px" placeholder="Write your reply here!"></textarea>
+                              <textarea name="reply" id="reply-{{review.id}}" class="form-control" style ="height: 50px; display: none;" placeholder="Write your reply here!"></textarea>
                               <br />
                               <div align="center">
                                 <div class = "reply_button">
-                                  <button  class="btn btn-primary btn-sm" class = "reply_button">Login to add reply</a>
+                                  <button class="btn btn-primary btn-sm" id="reply_submit_button-{{review.id}}" class="reply_button" style="display:none;">Login to add reply</a>
                                 </div> 
                               </div>
                             </span>
