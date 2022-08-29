@@ -72,7 +72,6 @@ window.onload = function initialize() {
 }
 
 function reply(reviewId){
-  var review = document.getElementById(`reply_button-${reviewId}`)
   var x = document.getElementById(`reply-${reviewId}`);
   var y = document.getElementById(`reply_submit_button-${reviewId}`);
   //console.log(review)
