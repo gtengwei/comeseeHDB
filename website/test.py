@@ -65,3 +65,26 @@ def create_mysql_database():
     cursor = database.cursor()
     cursor.execute("CREATE DATABASE IF NOT EXISTS mysql_database")
 
+def create_flat_csv(): 
+    engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
+    #Base.metadata.create_all(engine)
+    cwd = Path(__file__).parent.absolute()
+    os.chdir(cwd)
+    df = pd.read_csv('merged.csv')    
+    df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
+
+def append_image():
+    # read csv
+    df = pd.read_csv('merged.csv')
+    df['image'] = None
+    for i in range(len(df)):
+        count = i % 6
+        df.at[i, 'image'] = 'hdb_image'+str(count)+'.jpg'
+
+    #df.drop('Unnamed: 0', axis=1, inplace=True)
+    df.to_csv('merged.csv', index=False)
+
+if __name__ == "__main__":
+    # main()
+    #create_database()
+    create_flat_csv()
