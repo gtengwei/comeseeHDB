@@ -2,20 +2,16 @@
 from cgi import print_exception
 from flask import Blueprint, render_template, request, flash, jsonify, session
 from flask_login import login_required, current_user
-from regex import P
 from .models import *
 from . import db
 import json
 import sqlite3
 import os
 from pathlib import Path
-import mysql.connector
-import pymysql
 from .misc import *
 import itertools
 import requests
 
-image = generate_flat_image()
 views = Blueprint('views', __name__)
 #url = url_for('static', filename='images/' + str(random.randint(1,10)) + '.jpg')
 INDEX = 20  # Number of items to show on homepage
@@ -66,25 +62,42 @@ def flat_details(flatId):
 
     if request.method == 'POST':
         review = request.form.get('review')
-
-        if len(review) < 1:
-            flash('Review is too short!', category='error')
-        elif len(review) > 500:
-            flash(
-                'Review is too long! Maximum length for a review is 500 characters', category='error')
-        elif current_user.postal_code != flat.postal_sector:
-            flash('You cannot review this flat! You can only review flats in your own postal district!', category='error')
-        else:
-            new_review = Review(
-                data=review, user_id=current_user.id, flat_id=flatId)
-            db.session.add(new_review)
-            db.session.commit()
-            flash('Review added!', category='success')
+        reply = request.form.get('reply')
+        if reply:
+            parent_id = request.form.get('parent_id')
+            if len(reply) < 1:
+                flash('reply is too short!', category='error')
+            elif len(reply) > 500:
+                flash(
+                    'reply is too long! Maximum length for a reply is 500 characters', category='error')
+            elif str(current_user.postal_code) != flat.postal_sector:
+                print(type(flat.postal_sector))
+                flash('You cannot reply this flat! You can only reply flats in your own postal district!', category='error')
+            else:
+                new_reply= Review(
+                    data=reply, user_id=current_user.id, flat_id=flatId, parent_id = parent_id)
+                new_reply.save()
+                #print(parent_path)
+                flash('Reply added!', category='success')
+        if review:
+            if len(review) < 1:
+                flash('Review is too short!', category='error')
+            elif len(review) > 500:
+                flash(
+                    'Review is too long! Maximum length for a review is 500 characters', category='error')
+            elif str(current_user.postal_code) != flat.postal_sector:
+                print(type(flat.postal_sector))
+                flash('You cannot review this flat! You can only review flats in your own postal district!', category='error')
+            else:
+                new_review = Review(
+                    data=review, user_id=current_user.id, flat_id=flatId)
+                new_review.save()
+                flash('Review added!', category='success')
     amenity = get_amenity(flatId)
     # f = open('testing.json') #FOR TESTING CAUSE EXPENSIVE
     # amenity = json.load(f)
     # amenity = amenity
-    return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity, latitude=flat.latitude, longitude=flat.longitude)
+    return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity, latitude=latitude, longitude=longitude)
 
 
 @views.route('/unfavourite', methods=['POST'])
@@ -130,7 +143,6 @@ def home():
     os.chdir(cwd)
     # print(os.getcwd())
     conn = sqlite3.connect("database.db")
-    #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     myquery = (
         "SELECT id FROM Flat ORDER BY numOfFavourites DESC;")
@@ -157,18 +169,13 @@ def home():
             address = "%{}%".format(address)
 
         if price:
-            #minPrice = int(price[0])
-            #maxPrice = minPrice + 100000
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
-                if i % 2 == 0:
-                    data = list(itertools.chain(Flat.query.filter(
-                        Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
-                    # print(searchedFlats)
-            # print(data[0])
-            # return render_template("search.html", user=current_user, flats=data[:INDEX])
+                if i%2 == 0:
+                    data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
 
+            
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
                     flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
@@ -338,9 +345,6 @@ def home():
                 return render_template('search.html', user=current_user, flats=[], random=RANDOM)
 
     session.clear()
-    print(image)
-    image_id = random.randint(0, (len(image)-1))
-    print(image_id)
     # return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], favourites = Favourites.query.all(), random = RANDOM, image = image, image_id = image_id)
     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in data], favourites=Favourites.query.all(), random=RANDOM, image = [Flat.query.get(x).image for x in data])
 
@@ -348,16 +352,14 @@ def home():
 # Infinite Scrolling for Home Page
 @views.route('/load_home', methods=['GET', 'POST'])
 def load_home():
-    image_id = random.randint(0, (len(image)-1))
     # In order to load sorted flats faster
     conn = sqlite3.connect("database.db")
-    #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     criteria = session.get('criteria')
     if criteria:
         if criteria == 'price_high':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY resale_price DESC;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY resale_price DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -378,7 +380,7 @@ def load_home():
 
         elif criteria == 'price_low':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY resale_price;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY resale_price;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -398,7 +400,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'remaining_lease_high':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY remaining_lease DESC;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY remaining_lease DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -418,7 +420,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'remaining_lease_low':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY remaining_lease;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY remaining_lease;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -438,7 +440,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'storey_high':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY storey_range DESC;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY storey_range DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -458,7 +460,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'storey_low':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY storey_range;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY storey_range;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -478,7 +480,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'price_per_sqm_high':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY price_per_sqm DESC;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY price_per_sqm DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -498,7 +500,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'price_per_sqm_low':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY price_per_sqm;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY price_per_sqm;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -519,7 +521,7 @@ def load_home():
 
         elif criteria == 'favourites_high':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY numOfFavourites DESC;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY numOfFavourites DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -540,7 +542,7 @@ def load_home():
                 return jsonify({'data': data})
         elif criteria == 'favourites_low':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY numOfFavourites;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY numOfFavourites;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -562,7 +564,7 @@ def load_home():
 
     else:
         myquery = (
-            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image FROM Flat ORDER BY numOfFavourites DESC;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY numOfFavourites DESC;")
         c.execute(myquery)
         data = list(c.fetchall())
         # random.shuffle(data)
@@ -604,8 +606,6 @@ def search(address):
             address = "%{}%".format(address)
 
         if price:
-            #minPrice = int(price[0])
-            #maxPrice = minPrice + 100000
             data = []
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
@@ -613,9 +613,6 @@ def search(address):
                 if i % 2 == 0:
                     data = list(itertools.chain(Flat.query.filter(
                         Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
-                    # print(searchedFlats)
-            # print(data[0])
-            # return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -773,9 +770,8 @@ def search(address):
 
     return render_template('search.html', user=current_user, address=address, random=RANDOM)
 
+
 # Infinite Scrolling for Search Page
-
-
 @views.route('/load_search', methods=['GET', 'POST'])
 def load_search():
     data = []
@@ -789,17 +785,12 @@ def load_search():
         address = "%{}%".format(address)
 
     if price:
-        #minPrice = int(price[0])
-        #maxPrice = minPrice + 100000
         price_range = [word for line in price for word in line.split('-')]
         for i in range(len(price_range)):
             price_range[i] = int(price_range[i])
             if i % 2 == 0:
                 data_price = list(itertools.chain(Flat.query.filter(
                     Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
-                # print(searchedFlats)
-        # print(data_price[0])
-        # return render_template("search.html", user=current_user, flats=data_price[:INDEX])
 
         if address and flat_types and amenities and towns:
             searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -936,11 +927,11 @@ def load_search():
     if data_price:
         for flat in data_price:
             data.append(tuple([flat.id, flat.address_no_postal_code,
-                               flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                               flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
     else:
         for flat in searchedFlats:
             data.append(tuple([flat.id, flat.address_no_postal_code,
-                        flat.resale_price, flat.flat_type, flat.storey_range, flat.image]))
+                        flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
     if request.args:
         index = int(request.args.get('index'))
         limit = int(request.args.get('limit'))
@@ -979,17 +970,12 @@ def sort(criteria):
             address = "%{}%".format(address)
 
         if price:
-            #minPrice = int(price[0])
-            #maxPrice = minPrice + 100000
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i % 2 == 0:
                     data.extend(Flat.query.filter(Flat.resale_price.between(
                         price_range[i], price_range[i+1])).all())
-                    # print(searchedFlats)
-            # print(data[0])
-            # return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -1064,9 +1050,6 @@ def sort(criteria):
                 searchedFlats = Flat.query.filter(
                     Flat.amenities.in_(amenities)).all()
                 data = [flat for flat in data if flat in searchedFlats]
-
-            else:
-                print(data)
 
             return sorting_criteria(criteria, data)
 
@@ -1140,24 +1123,17 @@ def sort(criteria):
         towns = session.get('towns')
         flat_types = session.get('flat_types')
         amenities = session.get('amenities')
-        print(price)
 
         if address:
             address = "%{}%".format(address)
 
         if price:
-            #minPrice = int(price[0])
-            #maxPrice = minPrice + 100000
-
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i % 2 == 0:
                     data.extend(Flat.query.filter(Flat.resale_price.between(
                         price_range[i], price_range[i+1])).all())
-                    # print(searchedFlats)
-            print('test' + str(data[:5]))
-            # return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -1328,7 +1304,6 @@ def sort(criteria):
                 cwd = Path(__file__).parent.absolute()
                 os.chdir(cwd)
                 conn = sqlite3.connect("database.db")
-                #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
                 c = conn.cursor()
 
                 if criteria == 'price_high':
@@ -1459,8 +1434,6 @@ def load_sort():
         address = '%{}%'.format(address)
 
     if price:
-        #minPrice = int(price[0])
-        #maxPrice = minPrice + 100000
         data = []
         price_range = [word for line in price for word in line.split('-')]
         for i in range(len(price_range)):
@@ -1468,7 +1441,6 @@ def load_sort():
             if i % 2 == 0:
                 data.extend(Flat.query.filter(Flat.resale_price.between(
                     price_range[i], price_range[i+1])).all())
-        # return render_template("search.html", user=current_user, flats=data[:INDEX])
         if flat_types:
             searchedFlats = Flat.query.filter(
                 Flat.flat_type.in_(flat_types)).all()
@@ -1617,7 +1589,6 @@ def filter():
         towns = request.form.getlist('town')
         flat_types = request.form.getlist('flat_type')
         amenities = request.form.getlist('amenity')
-        #flat = Flat.query.filter(Flat.town.in_(towns)).filter(Flat.flat_type.in_(flat_types)).filter(Flat.amenity.in_(amenities)).all()
         if towns:
             if flat_types:
                 if amenities:
@@ -1642,7 +1613,6 @@ def filter():
             flat = Flat.query.filter(Flat.amenity.in_(amenities)).all()
 
         return render_template('filter.html', user=current_user, flats=flat[:INDEX])
-        # return render_template('sort.html', user=current_user, flats=flat)
 
     return render_template('filter.html', user=current_user)
 
@@ -1707,7 +1677,6 @@ def view_image(flatId):
 
 def get_amenity(flatId):
     cwd = Path(__file__).parent.absolute()
-    print(cwd)
     os.chdir(cwd)
 
     flat = Flat.query.filter_by(id=flatId).first_or_404()
@@ -1719,12 +1688,10 @@ def get_amenity(flatId):
 
     with open(filename, 'r') as f:
         data = json.load(f)
-        print(address)
-        print(data.get(address))
         if address in data.keys():
             return data.get(address)
         else:
-            API_KEY = "AIzaSyB3Dn5nm1N8kTQvWiMuQ2PeS_8LI24jUys"
+            API_KEY = "AIzaSyAihwKNj-07whXNy0_nKDqkxN4QxCA-3uI"
             API_KEY2 = 'Ag6YKlKz_hSG8Drz9iLXx1n3-8r4qRW6XJSt2haPIuZr51AzdiGYq54G5amxfusp'
 
             specificamenity = {}  # specific amenity
