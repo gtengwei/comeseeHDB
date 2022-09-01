@@ -3,7 +3,8 @@
 
 {% block content %}
 <head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
     <script>
       $(document).ready(function(){
@@ -12,36 +13,14 @@
           }); 
       });
   </script>
-      <style>
-        /* Modify the background color */
-        
-      .card {
-          background-color: white;
-      }
-      .card-header {
-          background-color: pink;
-          display: inline-flex;
-  
-      }
-      .card-body {
-          background-color: white;
-  
-      }
-      
-      button[class^="favourite_button"] {
-          background-color: pink;
-          border:none;
-          outline:none;
-          color: red;
-      }
 
-      .unfavourite_button {
-          background-color: pink;
-          border:none;
-          outline:none;
-          color: red;
-      }
-      </style>
+  <script>
+    $(document).ready(function(){
+        $('.bottom-left').click(function(){
+          $("#helpModal").modal('show');
+        }); 
+    });
+  </script>
   </head> 
 
 
@@ -56,13 +35,15 @@
                     </button>
                     <a href= "{{ url_for('views.flat_details', flatId = random) }}" title="Click here for a random flat!"
                     <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" >
-                      <i class="fa-solid fa-question"></i>
+                      <i class="fa-solid fa-dice"></i>
                     </button> </a>
                     <div class="btn-group">
                       <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Sort
                       </button>
                       <div class="dropdown-menu">
+                        <a class="dropdown-item" name = "favourites_high" id="favourites_high" href="{{ url_for('views.sort', criteria = 'favourites_high') }}">Favourites (High to Low)</a>
+                        <a class="dropdown-item" name = "favourites_low" id="favourites_low" href="{{ url_for('views.sort', criteria = 'favourites_low') }}">Favourites (Low to High)</a>
                         <a class="dropdown-item" name= "price_high" id = "price_high" href="{{ url_for('views.sort',  criteria = 'price_high') }}">Price (High to Low)</a>
                         <a class="dropdown-item" name = "price_low" id="price_low" href="{{ url_for('views.sort', criteria = 'price_low') }}">Price (Low to High)</a>
                         <a class="dropdown-item" name = "remaining_lease_high" id="remaining_lease_high" href="{{ url_for('views.sort', criteria = 'remaining_lease_high') }}">Remaining Lease (High to Low)</a>
@@ -71,8 +52,6 @@
                         <a class="dropdown-item" name = "storey_low" id="storey_low" href="{{ url_for('views.sort', criteria = 'storey_low') }}">Floor (Low to High)</a>
                         <a class="dropdown-item" name = "price_per_sqm_high" id="price_per_sqm_high" href="{{ url_for('views.sort', criteria = 'price_per_sqm_high') }}">Price per Square Metre (High to Low)</a>
                         <a class="dropdown-item" name = "price_per_sqm_low" id="price_per_sqm_low" href="{{ url_for('views.sort', criteria = 'price_per_sqm_low') }}">Price per Square Metre (Low to High)</a>
-                        <a class="dropdown-item" name = "favourites_high" id="favourites_high" href="{{ url_for('views.sort', criteria = 'favourites_high') }}">Favourites (High to Low)</a>
-                        <a class="dropdown-item" name = "favourites_low" id="favourites_low" href="{{ url_for('views.sort', criteria = 'favourites_low') }}">Favourites (Low to High)</a>
                       </div>
                     </div> 
                   </span>
@@ -82,7 +61,7 @@
                       <div class="border-bottom pb-2 ml-2">
                           <h4 id="burgundy">Filter</h4>
                       </div>
-                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span class="fa fa-building pl-1"></h6></span></button>
+                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span style = "padding: 0.5em;" class="fa-solid fa-money"></h6></span></button>
                       <div class="collapse" id="price">
                           <div class="py-2 border-bottom ml-3">
                               <div style="color: pink"><span class="fa fa-minus"></span></div>
@@ -104,14 +83,15 @@
                       </div>
 
                       <br>
-                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#town" aria-expanded="false" aria-controls="town"><h6 class="font-weight-bold">Towns<span class="fa fa-building pl-1"></h6></span></button>
+                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#town" aria-expanded="false" aria-controls="town"><h6 class="font-weight-bold">Towns<span style = "padding: 0.5em;" class="fa fa-building pl-1"></h6></span></button>
                       <div class="collapse" id="town">
                           <div class="py-2 border-bottom ml-3">
                               <div style="color: pink"><span class="fa fa-minus"></span></div>
                               
                                   <div class="form-group"> <input type="checkbox" id="ang mo kio" name="town" value="ANG MO KIO"> <label for="ang mo kio">Ang Mo Kio</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bedok" name="town" value ="BEDOK"> <label for="bedok">Bedok</label> </div>
-                                  <div class="form-group"> <input type="checkbox" id="bukit batok" name="town" value = "BISHAN"> <label for="bukit batok">Bukit Batok</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="bishan" name="town" value ="BISHAN"> <label for="bishan">Bishan</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="bukit batok" name="town" value = "BUKIT BATOK"> <label for="bukit batok">Bukit Batok</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bukit merah" name="town" value = "BUKIT MERAH"> <label for="bukit merah">Bukit Merah</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bukit panjang" name="town" value = "BUKIT PANJANG"> <label for="bukit panjang">Bukit Panjang</label> </div>
                                   <div class="form-group"> <input type="checkbox" id="bukit timah" name="town" value = "BUKIT TIMAH"> <label for="bukit timah">Bukit Timah</label> </div>
@@ -140,7 +120,7 @@
   
                       <br>
   
-                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#flat_type" aria-expanded="false" aria-controls="flat_type"><h6 class="font-weight-bold">Flat Types<span class="fa fa-home pl-1"></h6></span></button>
+                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#flat_type" aria-expanded="false" aria-controls="flat_type"><h6 class="font-weight-bold">Flat Types<span style = "padding: 0.5em;" class="fa fa-home pl-1"></h6></span></button>
                       <div class="collapse" id="flat_type">
                           <div class="py-2 border-bottom ml-3">
                               <div style="color: pink"><span class="fa fa-minus"></span></div>
@@ -155,18 +135,6 @@
                       </div>
   
                       <br>
-  
-                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#amentity" aria-expanded="false" aria-controls="amentity"><h6 class="font-weight-bold">Amenities<span class="fa fa-university pl-1"></h6></span></button>
-                      <div class="collapse" id="amentity">
-                          <div class="py-2 ml-3">
-                              <h6 class="font-weight-bold">Amenities</h6>
-                              <div style="color: pink"><span class="fa fa-minus"></span></div>
-                              
-                                  <div class="form-group"> <input type="checkbox" id="busInterchange" name="amenity" value = "BUS INTERCHANGE"> <label for="busInterchange">Bus Interchange</label> </div>
-                                  <div class="form-group"> <input type="checkbox" id="hospital" name="amenity" value = "HOSPITAL"> <label for="hospital">Hospital</label> </div>
-                          
-                          </div>
-                      </div>
   
                   </div>
             </div>
@@ -224,7 +192,7 @@
 <h3 align="center">Filtered by {{session['price']}}, {{session['amenities']}}</h3>
 
 {% elif session['price'] %}
-<h3 align="center">Filtered by {{session['price']}}</h3>}}
+<h3 align="center">Filtered by {{session['price']}}</h3>
 
 {% elif session['address'] and session['towns'] and session['flat_types'] and session['amenities'] %}
 <h3 align="center">You searched for: {{session['address']}}</h3>
@@ -289,25 +257,26 @@
 {% endif %}
 
 <body class="bg">
-    
-    <div id="sortProperties" class="card-body mx-auto bg-pink" style="width: 30rem;">
-      {% for flat in flats %}
-        <div class="card mb-3">
-          <div class="card-header">
-            <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.address}}</strong></a>
-            {% if user.is_authenticated %}
-            {% if flat.id in user.favourites|map(attribute="flat_id")|list %}
-            <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="unfavourite({{ flat.id }})">
-              <span id ="favourite_button_id{{flat.id}}"><i class="fa-solid fa-heart"></i></span>
+  <div id="properties" class="card-body mx-auto bg-pink">
+    {% for i in range(0, (flats|length)|int, 2) %}
+    <div class="row">
+      <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-header">
+          <strong><a href ="{{ url_for('views.flat_details', flatId=flats[i].id) }}" target = "_blank">{{flats[i].address_no_postal_code}}</strong></a>
+          {% if user.is_authenticated %}
+            {% if flats[i].id in user.favourites|map(attribute="flat_id")|list %}
+            <button class="favourite_button" id ="favourite_button{{flats[i].id}}" type="button" onClick="unfavourite({{ flats[i].id }})">
+              <span id ="favourite_button_id{{flats[i].id}}"><i class="fa-solid fa-heart"></i></span>
             </button>
             {% else %}
-            <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="favourite({{ flat.id }})">
-              <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
+            <button class="favourite_button" id ="favourite_button{{flats[i].id}}" type="button" onClick="favourite({{ flats[i].id }})">
+              <span id ="favourite_button_id{{flats[i].id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
             {% endif %}
           {% else %}
-            <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button">
-              <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
+            <button class="favourite_button" id ="favourite_button{{flats[i].id}}" type="button">
+              <span id ="favourite_button_id{{flats[i].id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
             <div class = "guest_error">
               <div class="modal fade" id="changePostalCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -320,43 +289,127 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-          
+            
                     <div class="modal-body mx-3">
                       <div class="md-form mb-5">
-                        <a href='/sign-up'<h5> Create an account to use this feature!</h5></a> 
+                          <a href='/sign-up'<h5> Create an account to use this feature!</h5></a>
                       </div>
-          
+            
                     </div>
                   </div>
                 </div>
               </div>
           </div>
+          
+            
           {% endif %}
-            <span id="favourite_count{{flat.id}}">{{flat.favourites|length}}</span>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <img src="{{flat['image']}}" class="img-thumbnail">
-              </div>
-              <div class="col">
-                <p><strong>Price: </strong>${{flat.resale_price}}</p>
-                <br/>
-                <p><strong>Flat Type: </strong>{{flat.flat_type}}</p>
-                <br/>
-                <p><strong>Floor: </strong>{{flat.storey_range}}</p>
-                
-              </div>
+          <span id="favourite_count{{flats[i].id}}">{{flats[i].favourites|length}}</span>
+
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <div class="img">
+              <img src="{{ url_for('static', filename = flats[i].image)}}" class="img-thumbnail">
+            </div>
+            </div>
+            <div class="col">
+              <p><strong>Price: </strong>${{flats[i].resale_price}}</p>
+              <br/>
+              <p><strong>Flat Type: </strong>{{flats[i].flat_type}}</p>
+              <br/>
+              <p><strong>Floor: </strong>{{flats[i].storey_range}}</p>
+              <br/>
+              <p><strong>Sold Date: </strong>{{flats[i].month}}</p>
+              
             </div>
           </div>
         </div>
-      {% endfor %}
+      </div>
     </div>
-    <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{flat|length}}">
+    {% if (i+1) <= (flats|length-1)%}
+    <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-header">
+          <strong><a href ="{{ url_for('views.flat_details', flatId=flats[i+1].id) }}" target = "_blank">{{flats[i+1].address_no_postal_code}}</strong></a>
+          {% if user.is_authenticated %}
+            {% if flats[i+1].id in user.favourites|map(attribute="flat_id")|list %}
+            <button class="favourite_button" id ="favourite_button{{flats[i+1].id}}" type="button" onClick="unfavourite({{ flats[i+1].id }})">
+              <span id ="favourite_button_id{{flats[i+1].id}}"><i class="fa-solid fa-heart"></i></span>
+            </button>
+            {% else %}
+            <button class="favourite_button" id ="favourite_button{{flats[i+1].id}}" type="button" onClick="favourite({{ flats[i+1].id }})">
+              <span id ="favourite_button_id{{flats[i+1].id}}"><i class="fa-regular fa-heart"></i></span>
+            </button>
+            {% endif %}
+          {% else %}
+            <button class="favourite_button" id ="favourite_button{{flats[i+1].id}}" type="button">
+              <span id ="favourite_button_id{{flats[i+1].id}}"><i class="fa-regular fa-heart"></i></span>
+            </button>
+            <div class = "guest_error">
+              <div class="modal fade" id="changePostalCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header text-center">
+                      <h4 class="modal-title w-100 font-weight-bold">Login Feature</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+            
+                    <div class="modal-body mx-3">
+                      <div class="md-form mb-5">
+                          <a href='/sign-up'<h5> Create an account to use this feature!</h5></a>
+                      </div>
+            
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
           
+            
+          {% endif %}
+          <span id="favourite_count{{flats[i+1].id}}">{{flats[i+1].favourites|length}}</span>
+
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <div class="img">
+              <img src="{{ url_for('static', filename = flats[i+1].image)}}" class="img-thumbnail">
+            </div>
+            </div>
+            <div class="col">
+              <p><strong>Price: </strong>${{flats[i+1].resale_price}}</p>
+              <br/>
+              <p><strong>Flat Type: </strong>{{flats[i+1].flat_type}}</p>
+              <br/>
+              <p><strong>Floor: </strong>{{flats[i+1].storey_range}}</p>
+              <br/>
+              <p><strong>Sold Date: </strong>{{flats[i+1].month}}</p>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+    {% endfor %}
   
-    
-  
+  </div>
+
+<div class = 'bottom-left'>
+  <div class = 'fixed-bottom'>
+    <button class="btn btn-primary btn-circle" type= "button" >
+      <i class="fa fa-question"></i>
+    </button>
+  </div>
+</div>
+
+<meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">   
 <script type="text/javascript">
     var index = 20;
     var limit = 20;
@@ -365,8 +418,8 @@
       var current_y = $(window).scrollTop();
       var window_height = $(window).height();
       var document_height = $(document).height();
-      
-      if (current_y + window_height  == document_height) {
+
+      if (current_y + window_height  >= (document_height-1)) {
         downloadContent(index, limit);
         index += 20
       }
@@ -375,45 +428,28 @@
   
     function downloadContent(index, limit) {
     $.get('/load_sort?index=' + index + '&limit=' + limit, (data) => {
-      for (var index = 0; index < data.data.length; index++) {
+      for (var index = 0; index < data.data.length; index+=2) {
         var favourite = $('#my-data').data().f;
         var flat = "/flat-details/" + data.data[index][0]; 
+        var image = "/static/" + data.data[index][5];
 
         if (favourite.includes(data.data[index][0])) {
-        var page2 = `
-        <div class="card mb-3">
+        var page = `
+          <div class="row">
+            <div class="col-md-6">
+            <div class="card mb-3">
 
-        <div class="card-header">
-          <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-          <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="unfavourite(`+data.data[index][0]+`)">
-            <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
-          </button>
-          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][5]+`</span>
-        </div>
-          `
-        }
-        else {
-        var page2 = `
-        <div class="card mb-3">
-
-        <div class="card-header">
-        <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-          <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="favourite(`+data.data[index][0]+`)">
-            <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
-          </button>
-          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][5]+`</span>
-        </div>
-          `
-        }    
-        $('#sortProperties').append(page2)
-        
-
-        var page =
-            `
+            <div class="card-header">
+              <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
+              <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="unfavourite(`+data.data[index][0]+`)">
+                <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
+              </button>
+              <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
+            </div>
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <img src="` + data.data[index].image + `" class="img-thumbnail">
+                  <img src="` + image + `" class="img-thumbnail">
                 </div>
                 <div class="col">
                   <p><strong>Price: </strong>` +`$`+ data.data[index][2] + `</p>
@@ -421,38 +457,204 @@
                   <p><strong>Flat Type: </strong>` + data.data[index][3] + `</p>
                   <br/>
                   <p><strong>Floor: </strong>` + data.data[index][4] + `</p>
+                  <br/>
+                  <p><strong>Sold Date: </strong>` + data.data[index][6] + `</p>
                 </div>
               </div>
             </div>
           </div>
+        </div>`
+        if ((index+1)%2 == 1){
+        image = "/static/" + data.data[index+1][5];
+        page +=
         `
+
+        <div class="col-md-6">
+            <div class="card mb-3">
+
+            <div class="card-header">
+              <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
+              <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="unfavourite(`+data.data[index][0]+`)">
+                <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
+              </button>
+              <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <img src="` + image + `" class="img-thumbnail">
+                </div>
+                <div class="col">
+                  <p><strong>Price: </strong>` +`$`+ data.data[index][2] + `</p>
+                  <br/>
+                  <p><strong>Flat Type: </strong>` + data.data[index][3] + `</p>
+                  <br/>
+                  <p><strong>Floor: </strong>` + data.data[index][4] + `</p>
+                  <br/>
+                  <p><strong>Sold Date: </strong>` + data.data[index][6] + `</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          `
+      }
+        }
+
+      else {
+        var page = `
+        <div class="row">
+        <div class="col-md-6">
+        <div class="card mb-3">
+
+        <div class="card-header">
+        <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
+          <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="favourite(`+data.data[index][0]+`)">
+            <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
+          </button>
+          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
+        </div>
+        <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <img src="` + image + `" class="img-thumbnail">
+                </div>
+                <div class="col">
+                  <p><strong>Price: </strong>` +`$`+ data.data[index][2] + `</p>
+                  <br/>
+                  <p><strong>Flat Type: </strong>` + data.data[index][3] + `</p>
+                  <br/>
+                  <p><strong>Floor: </strong>` + data.data[index][4] + `</p>
+                  <br/>
+                  <p><strong>Sold Date: </strong>` + data.data[index][6] + `</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        `
+
+        if ((index+1)%2 == 1){
+        image = "/static/" + data.data[index+1][5];
+        page +=
+        ` 
+        <div class="col-md-6">
+            <div class="card mb-3">
+
+            <div class="card-header">
+              <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index+1][1] + `</strong></a>
+              <button class="favourite_button" id ="favourite_button`+data.data[index+1][0]+`" type="button" onClick="unfavourite(`+data.data[index+1][0]+`)">
+                <span id ="favourite_button_id`+data.data[index+1][0]+`"><i class="fa-regular fa-heart"></i></span>
+              </button>
+              <span id="favourite_count`+data.data[index+1][0]+`">`+data.data[index+1][7]+`</span>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <img src="` + image + `" class="img-thumbnail">
+                </div>
+                <div class="col">
+                  <p><strong>Price: </strong>` +`$`+ data.data[index+1][2] + `</p>
+                  <br/>
+                  <p><strong>Flat Type: </strong>` + data.data[index+1][3] + `</p>
+                  <br/>
+                  <p><strong>Floor: </strong>` + data.data[index+1][4] + `</p>
+                  <br/>
+                  <p><strong>Sold Date: </strong>` + data.data[index+1][6] + `</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          `
+      }
+        }    
+        $('#properties').append(page)
   
-          $('#sortProperties').append(page)
-          /*
-          var flat_length = $('#my-data').data().flat_length;
-          if (flat_length == index) {
-          document.getElementById("end_page").innerHTML = '<h3>You Have Reach The End of Your Search Results</h3>';
-          }
-          */
-      
           }
       });
+      var flat_length = $('#my-data').data().flat_length;
+      if (flat_length <= (index)) {
+        document.getElementById("end_page").innerHTML = '<h3>You Have Reached The End of Your Search Results</h3>';
+      }
     }
     
 </script>
 
 {% if flats|length < 20 %}
   <div class="fa-3x d-flex justify-content-center" id = "end_page" >
-    <h3>You Have Reach The End of Your Search Results</h3>
+    <h3>You Have Reached The End of Your Search Results</h3>
   </div>
   
-  {% else %}
-  
-    <div class="fa-3x d-flex justify-content-center" id ="end_page">
-      <i class="fas fa-circle-notch fa-spin"></i>
+{% else %}
+
+  <div class="fa-3x d-flex justify-content-center" id ="end_page">
+    <i class="fas fa-circle-notch fa-spin"></i>
+  </div>
+{% endif %}
+
+
+<div class = "guest_error">
+  <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Help</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body mx-3">
+          <div class="md-form mb-5">
+            <h4> What is comeseeHDB?</h4>
+            <p> <b>comeseeHDB</b> is a extensive search engine for resale HDB flats in Singapore. 
+              <br>
+              You can search for flats by <b>address</b> or <b>postal code</b>!
+              <br>
+              You can also sort flats by <b>Price</b>, <b>Floor</b>, <b>Price per sqm</b> and more simply by clicking on the sort button!
+              <br>
+              You can also filter flats by <b>Price Range</b>, <b>Town</b> and <b>Flat Type</b>!
+              <h5> 1. How to Search?</h5>
+              <p>
+                <ul>
+                <li>You can search for flats by entering the postal code or the address.</li>
+                <b>The address can be entered in the following format:</b>
+                <br/>
+                <li>Town Name</li>
+                <li>Street as <b>st</b></li>
+                <li>Block as <b>blk</b></li>
+                e.g. <i><b>"Ang Mo Kio st 5 blk 5"</b></i> or <i><b>"Ang Mo Kio st 5"</b></i>
+              </ul>
+              </p>
+              <h5> 2. How to Favourite?</h5>
+              <p>
+                <ul>
+                <li>You can favourite a flat by clicking on the heart icon at the side of the address.</li>
+                <li>You can only do this if you are logged in.</li>
+              </ul>
+              </p>
+              <h5> 3. How to Sort?</h5>
+              <p>
+                <ul>
+                <li>You can sort flats by clicking on the Sort button.</li>
+                <li>You can sort by <b>Price</b>, <b>Floor</b>, <b>Price per sqm</b> and more simply by clicking on the sort button.</li>
+              </ul>
+              </p>
+              <h5> 4. How to Filter?</h5>
+              <p>
+                <ul>
+                <li>You can filter flats by clicking on the Filter button.</li>
+                <li>You can filter by <b>Price Range</b>, <b>Town</b> or even a combination of these!</li>
+              </ul>
+              </p> 
+          </div>
+        </div>
+      </div>
     </div>
-  {% endif %}
-  
+  </div>
+</div>
 </body>
     
 

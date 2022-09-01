@@ -3,8 +3,8 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from .models import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
-from flask_login import login_user, login_required, logout_user, current_user
-from datetime import datetime, timedelta
+from flask_login import login_required, current_user
+from datetime import datetime
 from .misc import *
 
 user = Blueprint('user', __name__)
@@ -59,8 +59,8 @@ def change_username(username):
                 flash('Username must be different from current username.', category='error')
             elif check_username:
                 flash('Username already exists.', category='error')
-            elif len(username) < 1:
-                flash('Username must be at least 1 character long.', category='error')
+            elif len(username) < 4:
+                flash('Username must be at least 4 character long.', category='error')
             else:
                 user.username = username
                 db.session.commit()
@@ -86,6 +86,10 @@ def change_postal_code(username):
                 elif (calculate_time_difference(datetime.now(), user.postal_code_change)) < 90 :
                     flash('You can only change your postal code 3 months after your last change.', category='error')
                     flash('You can change your postal code again in ' + str(90 - calculate_time_difference(datetime.now(), user.postal_code_change)) + ' days.', category='error')
+               
+                elif postal_code == user.postal_code:
+                    flash('Postal code must be different from current postal code.', category='error')
+
                 else:
                     user.postal_code = postal_code
                     user.postal_code_change = datetime.now()

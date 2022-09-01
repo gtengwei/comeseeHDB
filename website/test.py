@@ -30,8 +30,13 @@ class HDB_Flats(Base):
     resale_price = Column(Float)
 
 
-def main():
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
+def create_HDB_Flats_table():
+    # This will create the table in the database
+    engine = create_engine('sqlite:///website/database.db')
+    Base.metadata.create_all(engine)
+    file_name = 'test.csv'
+    cwd = Path(__file__).parent.absolute()
+    os.chdir(cwd)
     df = pd.read_csv('merged.csv')
     # print(df.dtypes)
     df['price_per_sqm'] = round(
@@ -39,21 +44,16 @@ def main():
     # print(df['price_per_square_metre'])
     df['block'].astype(str)
     df['street_name'].astype(str)
-    df['address'] = df['street_name'] + ' BLK ' + df['block']
+    df['postal_code'] = df['postal_code'].astype(str)
+    df['address'] = df['street_name'] + ' BLK ' + df['block'] + ' ' + df['postal_code']
+    df['address_no_postal_code'] = df['street_name'] + ' BLK ' + df['block']
     df['numOfFavourites'] = 0
     # print(df['address'])
     # writing into the file
-    #df.drop('price_per_square_metre', axis=1, inplace=True)
+    #df.drop('address2', axis=1, inplace=True)
     df.sort_values(by=['address'], ascending=True, inplace=True)
     df.to_csv("merged.csv", index=False)
 
-def create_flat_csv(): 
-    engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
-    #Base.metadata.create_all(engine)
-    cwd = Path(__file__).parent.absolute()
-    os.chdir(cwd)
-    df = pd.read_csv('test.csv')    
-    df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
 
 
 def create_mysql_database():
@@ -65,9 +65,26 @@ def create_mysql_database():
     cursor = database.cursor()
     cursor.execute("CREATE DATABASE IF NOT EXISTS mysql_database")
 
-        
+def create_flat_csv(): 
+    engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
+    #Base.metadata.create_all(engine)
+    cwd = Path(__file__).parent.absolute()
+    os.chdir(cwd)
+    df = pd.read_csv('merged.csv')    
+    df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
+
+def append_image():
+    # read csv
+    df = pd.read_csv('merged.csv')
+    df['image'] = None
+    for i in range(len(df)):
+        count = i % 6
+        df.at[i, 'image'] = 'hdb_image'+str(count)+'.jpg'
+
+    #df.drop('Unnamed: 0', axis=1, inplace=True)
+    df.to_csv('merged.csv', index=False)
+
 if __name__ == "__main__":
-    main()
+    # main()
     #create_database()
-    #create_flat_csv()
-    #add_test_data()
+    create_flat_csv()
