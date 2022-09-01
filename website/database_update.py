@@ -144,7 +144,7 @@ def update_values(update, old):
     return old
 
 
-def database():
+def database():  # update the database
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("DROP TABLE flat")
