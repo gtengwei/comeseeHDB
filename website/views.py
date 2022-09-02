@@ -109,10 +109,15 @@ def favourite_count():
     flat = Flat.query.get(flatID)
     return jsonify({"favourite_count": len(flat.favourites)})
 
+# Route for Landing Page
+@views.route('/', methods=['GET','POST'])
+def landing():
+    cwd = Path(__file__).parent.absolute()
+    os.chdir(cwd)
+    return render_template("landing.html", user=current_user)
+
 # Route for Home Page
-
-
-@views.route('/', methods=['GET', 'POST'])
+@views.route('/home', methods=['GET', 'POST'])
 def home():
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
