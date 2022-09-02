@@ -1,7 +1,4 @@
 # To create the app and database
-from .user import user
-from .auth import auth
-from .views import views
 from venv import create
 from flask import Flask, Blueprint
 from os import path
@@ -47,7 +44,9 @@ db.init_app(app)
 mail.init_app(app)
 
 # Insert Blueprint here
-
+from .user import user
+from .auth import auth
+from .views import views
 app.register_blueprint(views, url_prefix='/')
 app.register_blueprint(auth, url_prefix='/')
 app.register_blueprint(user, url_prefix='/')
