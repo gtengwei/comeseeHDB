@@ -1,4 +1,7 @@
-## To create the app and database
+# To create the app and database
+from .user import user
+from .auth import auth
+from .views import views
 from venv import create
 from flask import Flask, Blueprint
 from os import path
@@ -12,6 +15,7 @@ login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 mail = Mail()
 
+
 def create_database(app):
 
     if not path.exists('website/' + DB_NAME):
@@ -20,7 +24,8 @@ def create_database(app):
         print('Created Database!')
     return
 
-#def create_app():
+
+# def create_app():
 app = Flask(__name__)
 
 
@@ -33,8 +38,8 @@ create_database(app)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'cz2006.clutch@gmail.com'
-app.config['MAIL_PASSWORD'] = 'kirmwdgulviicllv'
+app.config['MAIL_USERNAME'] = 'cz3002.clutch@gmail.com'
+app.config['MAIL_PASSWORD'] = 'zmexsqegkpavaovi'
 
 moment = Moment(app)
 login_manager.init_app(app)
@@ -42,25 +47,17 @@ db.init_app(app)
 mail.init_app(app)
 
 # Insert Blueprint here
-from .views import views
-from .auth import auth
-from .user import user
 
 app.register_blueprint(views, url_prefix='/')
 app.register_blueprint(auth, url_prefix='/')
 app.register_blueprint(user, url_prefix='/')
 
- # return app
-
-    
+# return app
 
 
 @login_manager.user_loader
 def load_user(id):
-    ## Looks for primary key in database
+    # Looks for primary key in database
     return User.query.get(int(id))
 
-    #return app
-
-
-
+    # return app
