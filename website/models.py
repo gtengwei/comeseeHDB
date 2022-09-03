@@ -1,5 +1,5 @@
 ## To create relational schema and the attributes of the schema
-from . import db
+
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -12,6 +12,9 @@ import pandas as pd
 import os
 from pathlib import Path
 from sqlalchemy.dialects.mysql import BIGINT
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 ## To migrate database
 class Review(db.Model):
@@ -23,6 +26,7 @@ class Review(db.Model):
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'), nullable=False)
     #user_id = db.Column(BIGINT, db.ForeignKey('user.id'), nullable=False) # for mysql
     #flat_id = db.Column(BIGINT, db.ForeignKey('flat.id'), nullable=False) # for mysql
+    favourites = db.relationship('ReviewFavourites')
 
 class Favourites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -31,6 +35,11 @@ class Favourites(db.Model):
     #user_id = db.Column(BIGINT, db.ForeignKey('user.id')) # for mysql
     #flat_id = db.Column(BIGINT, db.ForeignKey('flat.id')) # for mysql
 
+class ReviewFavourites(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=False)
+
 # Table for User entity
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -38,12 +47,13 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     username = db.Column(db.String(150))
-    postal_code = db.Column(db.String(150))
+    postal_code = db.Column(db.Integer)
     postal_code_change = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
     favourites = db.relationship('Favourites')
     email_verified = db.Column(db.Boolean(), nullable=False, default=False)
-    email_verified_date = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
+    email_verified_date = db.Column(db.DateTime(timezone=True), default = None)
     reviews = db.relationship('Review', backref = 'user', passive_deletes=True)
+    review_favourites = db.relationship('ReviewFavourites')
 
     def get_token(self,expires_sec=120):
         serial=Serializer(current_app.config['SECRET_KEY'],expires_in = expires_sec)
@@ -93,6 +103,7 @@ class Flat(db.Model):
     postal_code = db.Column(db.Integer)
     postal_sector = db.Column(db.Integer)
     address_no_postal_code = db.Column(db.String(150))
+    image = db.Column(db.String(150))
     reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
     favourites = db.relationship('Favourites', backref = 'flat', passive_deletes=True)   
 
@@ -116,4 +127,10 @@ def create_Flat_table():
     '''
     
 
-
+'''def create_Flat_table():
+    #This will create the table in the database
+    engine = create_engine('sqlite:///website/database.db')
+    db.Model.metadata.create_all(engine)
+    os.chdir('C:/Users/Yap Xuan Ying/Documents/WORK!!!/comeseeHDB/website')
+    df = pd.read_csv('merged.csv')
+    df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')'''

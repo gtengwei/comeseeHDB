@@ -49,13 +49,13 @@
                 <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.address_no_postal_code}}</strong></a>
                 <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="unfavourite({{ flat.id }})">
                   <span id ="favourite_button_id{{flat.id}}"><i class="fa-solid fa-heart"></i></span>
+                  <span id="favourite_count{{flat.id}}">{{flat.favourites|length}}</span>
                 </button>
-      
               </div>
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <img src="{{image[0]}}" class="img-thumbnail">
+                    <img src="{{ url_for('static', filename = flat.image)}}" class="img-thumbnail">
                   </div>
                   <div class="col">
                     <p><strong>Price: </strong>${{flat.resale_price}}</p>
@@ -63,6 +63,8 @@
                     <p><strong>Flat Type: </strong>{{flat.flat_type}}</p>
                     <br/>
                     <p><strong>Floor: </strong>{{flat.storey_range}}</p>
+                    <br/>
+                    <p><strong>Sold Date: </strong>{{flat.month}}</p>
                     
                   </div>
                 </div>

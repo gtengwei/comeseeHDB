@@ -8,8 +8,35 @@ import csv
 import pymysql
 from pathlib import Path
 
-def main():
-    os.chdir("C:/Users/tengwei/Desktop/github/comeseeHDB/website")
+Base = declarative_base()
+
+
+class HDB_Flats(Base):
+    # Tell SQLAlchemy what the table name is and if there's any table-specific arguments it should know about
+    __tablename__ = 'HDB_Flats'
+    __table_args__ = {'sqlite_autoincrement': True}
+    # tell SQLAlchemy the name of column and its attributes:
+    id = Column(Integer, primary_key=True, nullable=False)
+    month = Column(Integer)
+    town = Column(String)
+    flat_type = Column(String)
+    block = Column(String)
+    street_name = Column(String)
+    storey_range = Column(String)
+    floor_area_sqm = Column(Float)
+    flat_model = Column(String)
+    lease_commence_date = Column(Date)
+    remaining_lease = Column(Float)
+    resale_price = Column(Float)
+
+
+def create_HDB_Flats_table():
+    # This will create the table in the database
+    engine = create_engine('sqlite:///website/database.db')
+    Base.metadata.create_all(engine)
+    file_name = 'test.csv'
+    cwd = Path(__file__).parent.absolute()
+    os.chdir(cwd)
     df = pd.read_csv('merged.csv')
     # print(df.dtypes)
     df['price_per_sqm'] = round(
@@ -27,13 +54,6 @@ def main():
     df.sort_values(by=['address'], ascending=True, inplace=True)
     df.to_csv("merged.csv", index=False)
 
-def create_flat_csv(): 
-    engine = create_engine('mysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
-    #Base.metadata.create_all(engine)
-    cwd = Path(__file__).parent.absolute()
-    os.chdir(cwd)
-    df = pd.read_csv('test.csv')    
-    df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
 
 
 def create_mysql_database():
@@ -45,9 +65,26 @@ def create_mysql_database():
     cursor = database.cursor()
     cursor.execute("CREATE DATABASE IF NOT EXISTS mysql_database")
 
-        
+def create_flat_csv(): 
+    engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
+    #Base.metadata.create_all(engine)
+    cwd = Path(__file__).parent.absolute()
+    os.chdir(cwd)
+    df = pd.read_csv('merged.csv')    
+    df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
+
+def append_image():
+    # read csv
+    df = pd.read_csv('merged.csv')
+    df['image'] = None
+    for i in range(len(df)):
+        count = i % 6
+        df.at[i, 'image'] = 'hdb_image'+str(count)+'.jpg'
+
+    #df.drop('Unnamed: 0', axis=1, inplace=True)
+    df.to_csv('merged.csv', index=False)
+
 if __name__ == "__main__":
-    main()
+    # main()
     #create_database()
-    #create_flat_csv()
-    #add_test_data()
+    create_flat_csv()
