@@ -9,36 +9,30 @@
   <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <script type="text/javascript" src="/static/index.js"></script>
+  <script 
+    {{ moment.include_moment() }}
+    ></script>
  <script>
   $(document).ready(function(){
       $('.favourite_button').click(function(){
-        $("#changePostalCodeModal").modal('show');
+        $("#createAccountModal").modal('show');
       }); 
   });
 </script>
 <script>
   $(document).ready(function(){
       $('.review_button').click(function(){
-        $("#changePostalCodeModal").modal('show');
+        $("#createAccountModal").modal('show');
       }); 
   });
 </script>
-
 <script>
-  function reply(){
-    var x = document.getElementById("reply");
-    var y = document.getElementById("reply_button");
-    console.log(x);
-    if (x.style.display === "none") {
-      x.style.display = "block";
-      y.style.display = "block";
-    } else {
-      x.style.display = "none";
-      y.style.display = "none";
-    }
-  }
+  $(document).ready(function(){
+      $('.reply_button').click(function(){
+        $("#createAccountModal").modal('show');
+      }); 
+  });
 </script>
-
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
@@ -114,7 +108,7 @@
         <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
       </button>
       <div class = "guest_error">
-        <div class="modal fade" id="changePostalCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        <div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
           aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -486,7 +480,6 @@
   <h3 class="text-muted mb-0" align="right">{{flat.reviews|length}} Reviews Posted</h3>
 {% endif %}
 
-
 <ul class="list-group list-group-flush" id="reviews">
 {% for review in flat.reviews|sort(attribute='review_path') %}
     <!-- Begin review indentation -->
@@ -510,8 +503,8 @@
                                 <div style="word-wrap: break-word; width:100%">
                                   <p>{{ review.data }}</p>
                                       <div class="row justify-content-end">
-                                        <span>
-                                        <button type="button" class="btn btn-link btn-sm" id="theButton" onClick=reply() value={{review['id']}}>Reply</button>
+                                        <span id="reply_button-{{review.id}}">
+                                        <button type="button" class="btn btn-link btn-sm" id="reply_button-{{review.id}}" onClick=reply({{review.id}})>Reply</button>
                                       </span>
                                           <small class="text-muted"> Posted {{moment(review.date).fromNow() }}</small>
                                           {% if review.user == user %}
@@ -527,11 +520,11 @@
                             {% if user.is_authenticated %}
                             <form method="POST">
                               <span class="input-group-append" style="padding-left:18px;">
-                                <textarea name="reply" id="reply" class="form-control" style ="height: 50px; display: none;" placeholder="Write your reply here!"></textarea>
+                                <textarea name="reply" id="reply-{{review.id}}" class="form-control" style ="height: 50px; display: none;" placeholder="Write your reply here!"></textarea>
                                 <br />
                                 <div align="center">
                                   <input type="hidden" name="parent_id" id="parent_id" value={{review['id']}} />
-                                  <button type="submit" id="reply_button" class="btn btn-primary btn-sm" style="display:none;">Add reply</button>  
+                                  <button type="submit" id="reply_submit_button-{{review.id}}" class="btn btn-primary btn-sm" style="display:none;">Add reply</button>  
                                 </div>
                               </span>
                             </form>
@@ -539,11 +532,11 @@
                             {% else %}
 
                             <span class="input-group-append ">
-                              <textarea name="reply" id="reply" class="form-control" style ="height: 50px" placeholder="Write your reply here!"></textarea>
+                              <textarea name="reply" id="reply-{{review.id}}" class="form-control" style ="height: 50px; display: none;" placeholder="Write your reply here!"></textarea>
                               <br />
                               <div align="center">
                                 <div class = "reply_button">
-                                  <button  class="btn btn-primary btn-sm" class = "reply_button">Login to add reply</a>
+                                  <button class="btn btn-primary btn-sm" id="reply_submit_button-{{review.id}}" class="reply_button" style="display:none;">Login to add reply</a>
                                 </div> 
                               </div>
                             </span>

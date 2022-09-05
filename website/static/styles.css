@@ -68,9 +68,3 @@ button[class^="favourite_button"] {
 #properties{
     width: 90%;
 }
-
-.text-muted{
-    padding-top: 7px; 
-    padding-right:10px;
-
-}
