@@ -74,6 +74,10 @@
 
 
 
+
+
+
+
 <div class="street_name">
   <h1>{{flat.address_no_postal_code}}</h1>
   {% if user.is_authenticated %}
@@ -312,9 +316,9 @@
   <br>
   <br>
   {%if amenities['school']|length !=0 %}
-  {%for key1,value1 in amenities["school"].items()%}
-  <p class = "text-muted mb-0">{{key1}}</p>
-  {% endfor %}
+    {%for key1,value1 in amenities["school"].items()%}
+    <p class = "text-muted mb-0">{{key1}}</p>
+    {% endfor %}
 </div>
 
 <div class="col-sm-2 border-none">
@@ -331,11 +335,29 @@
       <p class = "text-muted mb-0">{{value1[1]}}min</p>
       {% endfor %}
     </div>
-  {%endif%}
-  </div>
+
+  {% else %}
+     <div>
+      <p class = "text-muted mb-0">None</p>
+      </div>
+
+    <div class="col-sm-2 border-none">
+      <br>
+      <br>
+      <div class = "row">
+        <div class = 'col-sm-4'>
+          <p class = "text-muted mb-0" style="display:none;">0 m</p>
+        </div>
+        <div class = "col-sm-2 border-none">
+          <p class = "text-muted mb-0" style="display:none;">0min</p>
+        </div>
+      </div>
+      {%endif%}
+    </div>
 </div>
 
 </div>
+
 
 <hr>
 
@@ -372,6 +394,8 @@
   </div>
   </div>
   </div>
+
+
   <div class="col-sm-4">
     <button class="amenities_btn " type="button" disabled>
       <p class="mb-0">Clinic

@@ -67,8 +67,15 @@ def calculate_time_difference(current_datetime, datetime_to_compare):
     time_difference = current_datetime - datetime_to_compare
     return time_difference.days
 
+# def generate_random_flat():
+#     random_num = randint(1, Flat.query.count())
+#     return random_num
+
 def generate_random_flat():
-    random_num = randint(1, Flat.query.count())
+    random_num_list = [3542, 5664, 3421, 17316, 3344, 10885, 9656, 422, 9426, 23477, 6692,
+                         406, 16513, 9647,509, 29285, 40033, 23412, 50774,1]
+    #random_num = randint(1, Flat.query.count())
+    random_num = random.choice(random_num_list)
     return random_num
 
 def generate_flat_image():
