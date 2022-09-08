@@ -55,7 +55,7 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <img src="{{ url_for('static', filename = flat.image)}}" class="img-thumbnail">
+                    <img src="{{image[0]}}" class="img-thumbnail">
                   </div>
                   <div class="col">
                     <p><strong>Price: </strong>${{flat.resale_price}}</p>
@@ -63,8 +63,6 @@
                     <p><strong>Flat Type: </strong>{{flat.flat_type}}</p>
                     <br/>
                     <p><strong>Floor: </strong>{{flat.storey_range}}</p>
-                    <br/>
-                    <p><strong>Sold Date: </strong>{{flat.month}}</p>
                     
                   </div>
                 </div>

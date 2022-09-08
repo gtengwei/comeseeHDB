@@ -28,7 +28,7 @@ button[class^="favourite_button"] {
 .img-thumbnail{
     border-radius: 25px;
     width: 500px;
-    height: 220px;
+    height: 190px;
 }
 
 .features {
@@ -65,6 +65,5 @@ button[class^="favourite_button"] {
     padding: 10px 10px
 }
 
-#properties{
-    width: 90%;
-}
+  
+
