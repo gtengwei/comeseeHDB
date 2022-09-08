@@ -1,5 +1,6 @@
 ## Helper functions for website
 ## To organise the code
+## test commit
 from website import mail
 from flask import flash, url_for, render_template, session, jsonify, request
 from flask_mail import Message
