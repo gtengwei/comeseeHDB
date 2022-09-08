@@ -6,8 +6,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_mail import Message as MailMessage
-import json
-from random import randint
 from .misc import *
 from datetime import datetime
 
@@ -31,9 +29,9 @@ def login():
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
-                flash('Incorrect password, try again.', category='error')
+                flash('Incorrect password, please try again.', category='error')
         else:
-            flash('Email does not exist.', category='error')
+            flash('Email does not exist in the system. Please create an account before logging in!', category='error')
 
     return render_template("login.html", user=current_user)
 
@@ -50,7 +48,8 @@ def sign_up():
     if request.method == 'POST':
         email = request.form.get('email')
         username = request.form.get('username')
-        postal_code = request.form.get('postalCode')
+        if request.form.get('postalCode'):
+            postal_code = int(request.form.get('postalCode'))
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
@@ -63,11 +62,11 @@ def sign_up():
         elif len(email) < 4:
             flash('Email must be greater than 3 characters.', category='error')
 
-        elif len(username) < 2:
-            flash('Username must be greater than 1 character.', category='error')
+        elif len(username) < 4:
+            flash('Username must be at least 4 character long.', category='error')
 
-        elif (postal_code < str(1) or postal_code > str(82)):
-            flash('First two digits of postal code must be between 1 and 82.', category='error')
+        elif (postal_code < 1 or postal_code > 80):
+            flash('First two digits of postal code must be between 1 and 80.', category='error')
 
         elif len(password1) < 8:
             flash('Password must be at least 8 characters.', category='error')

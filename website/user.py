@@ -3,8 +3,8 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for,
 from .models import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
-from flask_login import login_user, login_required, logout_user, current_user
-from datetime import datetime, timedelta
+from flask_login import login_required, current_user
+from datetime import datetime
 from .misc import *
 
 user = Blueprint('user', __name__)
@@ -59,8 +59,8 @@ def change_username(username):
                 flash('Username must be different from current username.', category='error')
             elif check_username:
                 flash('Username already exists.', category='error')
-            elif len(username) < 1:
-                flash('Username must be at least 1 character long.', category='error')
+            elif len(username) < 4:
+                flash('Username must be at least 4 character long.', category='error')
             else:
                 user.username = username
                 db.session.commit()
@@ -106,7 +106,6 @@ def change_postal_code(username):
 @user.route('/favourites/<username>', methods=['GET', 'POST']) 
 @login_required
 def favourites(username):
-    url = generate_flat_image()
     fav_list = []
     for x in current_user.favourites:
             fav_list.append(x.flat_id)
@@ -118,12 +117,12 @@ def favourites(username):
         .filter(Favourites.user_id == current_user.id)\
         .filter(Flat.address.like(address)).all()
         if flats:
-            return render_template("favourites.html", user=current_user, flats=flats, image=url)
+            return render_template("favourites.html", user=current_user, flats=flats)
         else:
             flash('No results found.', category='error')
             return render_template("favourites.html", user=current_user, flats=[])
             
-    return render_template("favourites.html", user=current_user, flats = [Flat.query.get(x) for x in fav_list], image=url)
+    return render_template("favourites.html", user=current_user, flats = [Flat.query.get(x) for x in fav_list])
 
 
 

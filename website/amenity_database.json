@@ -2655,6 +2655,10 @@
                 185,
                 2
             ],
+            "Fu Hui Wantan noodle and Lor Mee": [
+                184,
+                2
+            ],
             "Home Eatery": [
                 239,
                 3
@@ -2671,6 +2675,10 @@
                 297,
                 4
             ],
+            "YANG MING SEAFOOD \u626c\u540d\u6d77\u9c9c\u716e\u7092 (Bishan Branch)": [
+                196,
+                2
+            ],
             "Old honkong": [
                 934,
                 11
@@ -2686,6 +2694,28 @@
             "Prata Talk": [
                 306,
                 4
+            ]
+        },
+        "doctor": {
+            "Medihealth Bishan Clinic & Surgery": [
+                969,
+                12
+            ],
+            "Bishan Grace Clinic (Female Doctor MBBS) Flu Vaccine available Now": [
+                164,
+                2
+            ],
+            "Richlife Chinese Medical Centre \u5fa9\u751f\u4e2d\u533b": [
+                1162,
+                14
+            ],
+            "Xu Ri Traditional Chinese Medicine \u65ed\u65e5\u4e2d\u533b\u8bca\u6240": [
+                1224,
+                15
+            ],
+            "Family Wellness Foot Reflexology And Massage": [
+                2248,
+                27
             ]
         }
     },
@@ -6696,7 +6726,29 @@
                 15
             ]
         },
+        "school": {
+            "Geylang Methodist School (Primary)": [
+                434,
+                5
+            ],
+            "Geylang Methodist School (Secondary)": [
+                536,
+                6
+            ],
+            "Geylang East Swimming Lessons - DolpSwim School": [
+                814,
+                10
+            ]
+        },
         "restaurant": {
+            "Chang Cheng - 119 Aljunied Avenue 2": [
+                89,
+                1
+            ],
+            "Hong Qin Fish and Duck Porridge": [
+                553,
+                7
+            ],
             "The Ranch Cafe": [
                 1285,
                 15
@@ -6704,6 +6756,10 @@
             "Lucky Specialties": [
                 849,
                 10
+            ],
+            "McDonald's Geylang East Central": [
+                210,
+                2
             ],
             "Yes Natural Restaurant": [
                 1237,
@@ -6717,6 +6773,10 @@
                 818,
                 10
             ],
+            "Geylang East Market & Food Centre": [
+                282,
+                3
+            ],
             "Tery mono": [
                 100,
                 1
@@ -6726,6 +6786,10 @@
                 1
             ],
             "Nian Ci Zhai": [
+                93,
+                1
+            ],
+            "Rong Kee Roasted Delights \u69ae\u8a18\u70e7\u814a - Aljunied": [
                 93,
                 1
             ],
@@ -6771,6 +6835,10 @@
                 801,
                 10
             ],
+            "Q & M Dental Surgery (Aljunied) Pte Ltd": [
+                233,
+                3
+            ],
             "A Healing Heart Medical Clinic": [
                 596,
                 7
@@ -6778,6 +6846,10 @@
             "THK Senior Group Home @ Pipit": [
                 2130,
                 25
+            ],
+            "OneCare Medical Clinic Aljunied MRT": [
+                1224,
+                15
             ]
         }
     },
@@ -7899,128 +7971,848 @@
             ]
         }
     },
-    "JURONG WEST AVE 1 BLK 423 640423": {
+    "BEACH RD BLK 1 190001": {
+        "bus_station": {
+            "Lavender Stn Exit A/ICA": [
+                1143,
+                14
+            ],
+            "Golden Mile Cplx": [
+                429,
+                5
+            ],
+            "Blk 461": [
+                1280,
+                15
+            ],
+            "Bef Crawford Bridge": [
+                1917,
+                23
+            ],
+            "Lavender Stn Exit B": [
+                1705,
+                20
+            ]
+        },
+        "subway_station": {
+            "Nicoll Highway": [
+                1237,
+                15
+            ],
+            "Lavender": [
+                962,
+                11
+            ]
+        },
         "school": {
-            "Hua Yi Secondary School": [
-                1016,
+            "Bethany School Of Missions (s)": [
+                434,
+                5
+            ],
+            "Dennis Austin Language School": [
+                547,
+                6
+            ]
+        },
+        "restaurant": {
+            "Subway": [
+                1344,
+                16
+            ],
+            "Golden Mile Food Centre": [
+                52,
+                1
+            ],
+            "The Fabulous Baker Boy": [
+                1298,
+                15
+            ],
+            "Billy Bombers Licensing Pte Ltd": [
+                1333,
+                16
+            ],
+            "Bugis (Longhouse) Lim Kee Beef Noodles": [
+                120,
+                1
+            ],
+            "Haji Kadir Food Chains": [
+                55,
+                1
+            ],
+            "Y Cube Mookata Buffet": [
+                429,
+                5
+            ],
+            "Dee Tongue Thai By RUNG MAMA": [
+                506,
+                6
+            ],
+            "Cheese Story Mookata": [
+                1183,
+                14
+            ],
+            "Nana Original Thai Food (Golden Mile Complex)": [
+                1178,
+                14
+            ],
+            "Siam Square Mookata - Best Mookata in Singapore": [
+                961,
+                11
+            ],
+            "Hoe Hokkien Mee": [
+                668,
+                8
+            ],
+            "Super Ngon Vietnamese Noodle Cafe": [
+                906,
+                11
+            ],
+            "Hill Street Tai Hwa Pork Noodle": [
+                912,
+                11
+            ],
+            "Host Creation": [
+                1147,
+                14
+            ],
+            "Geylang Claypot Rice \u82bd\u7b3c\u7802\u7172\u996d": [
+                1536,
+                18
+            ],
+            "M.A Deen Biasa PTE LTD": [
+                1033,
                 12
             ],
-            "Fuhua Secondary School": [
-                573,
+            "Tosh Restaurant": [
+                1462,
+                17
+            ],
+            "WitBier": [
+                1402,
+                17
+            ],
+            "Sari Ratu Padang Indonesian restaurant": [
+                1398,
+                17
+            ]
+        },
+        "doctor": {
+            "Insomnia Cure Singapore": [
+                918,
+                11
+            ],
+            "The Listening Lab - Hearing Centre in North Bridge Road": [
+                1006,
+                12
+            ],
+            "Golden Mile Clinic": [
+                476,
+                6
+            ],
+            "Li Ming Chinese physician pte ltd": [
+                821,
+                10
+            ],
+            "Kanji Physical Japan": [
+                1351,
+                16
+            ],
+            "Bao Er Arsthetic": [
+                1344,
+                16
+            ],
+            "Industrial Health Services": [
+                1320,
+                16
+            ],
+            "Celest Skin Solutions": [
+                1403,
+                17
+            ]
+        }
+    },
+    "YISHUN ST 81 BLK 851 760851": {
+        "subway_station": {
+            "Khatib": [
+                2601,
+                31
+            ]
+        },
+        "school": {
+            "Chung Cheng High School (Yishun)": [
+                632,
+                8
+            ],
+            "Skylace Language School - Yishun Branch": [
+                647,
+                8
+            ],
+            "Orchid Park Secondary School": [
+                306,
+                4
+            ],
+            "Naval Base Primary School": [
+                628,
                 7
             ],
-            "Jurongville Secondary School": [
-                980,
-                12
+            "Changchun Language School - Khatib Branch": [
+                378,
+                4
             ],
-            "Apple Plus School": [
-                461,
+            "MOE Kindergarten @ Naval Base Primary School": [
+                451,
                 5
             ]
         },
         "restaurant": {
-            "Domino's Pizza Jurong": [
-                42,
-                0
-            ],
-            "Ding Ji": [
-                159,
-                2
-            ],
-            "Tang Tea House": [
-                451,
+            "Broadway Food Centre": [
+                394,
                 5
             ],
-            "The Big Bbq": [
-                7,
-                0
+            "Mr Teh Tarik": [
+                652,
+                8
             ],
-            "D' Life": [
-                163,
-                2
+            "Eastern Rice Dumpling - Khatib MRT Station": [
+                2599,
+                31
             ],
-            "Malaysia": [
-                387,
-                5
+            "McDonald's": [
+                655,
+                8
             ],
-            "Macpherson BBQ Seafood": [
-                387,
-                5
+            "BLACKSHEEP PRODUCTIONS": [
+                354,
+                4
             ],
-            "\u98df\u9738\u6d77\u9bae Seafood Park Jurong West": [
-                405,
-                5
+            "Auntie Kim's Popiah": [
+                378,
+                4
             ],
-            "Cahaya Nur 'Laila' Restaurant": [
+            "Chowhound Western Grill - Yishun Street 81": [
                 382,
                 5
             ],
-            "Block 498 Coffeeshop Fish Soup": [
-                382,
+            "Tian Tian Chi Mian @ Blk 848 Yishun Street-81": [
+                393,
                 5
             ],
-            "NOORLIN SEAFOOD": [
-                377,
+            "Chong Pang Huat BBQ Chicken Wings": [
+                396,
+                5
+            ],
+            "Da Jia Lai coffee shop": [
+                397,
+                5
+            ],
+            "Han N Han Peanut Pancake": [
+                401,
+                5
+            ],
+            "Fu Kang Vegetarian (Yishun)": [
+                401,
+                5
+            ],
+            "La Bbq Seafood": [
+                401,
+                5
+            ],
+            "Ming Xiang Roasted": [
+                401,
+                5
+            ],
+            "848 Claypot Chicken Rice": [
+                401,
+                5
+            ],
+            "Xin Hua Lou": [
+                401,
+                5
+            ],
+            "\u65fa\u4f73\u65fa": [
+                401,
+                5
+            ],
+            "Vegetarian Stall": [
+                401,
+                5
+            ],
+            "848 Braised Duck Rice": [
+                401,
+                5
+            ],
+            "KungFu Mala Hotpot": [
+                404,
+                5
+            ]
+        },
+        "doctor": {
+            "Q & M Dental Surgery (Khatib)": [
+                637,
+                8
+            ],
+            "OneDoctors Family Clinic (Yishun)": [
+                627,
+                7
+            ],
+            "Hii Women's Clinic": [
+                655,
+                8
+            ],
+            "57 Medical Clinic (Yishun)": [
+                882,
+                10
+            ],
+            "Zhong Kang TCM Physician Medicare Services": [
+                510,
+                6
+            ]
+        }
+    },
+    "ALJUNIED CRES BLK 112 380112": {
+        "bus_station": {
+            "Geylang Polyclinic": [
+                373,
                 4
             ],
-            "\u6148\u4fee\u8f69": [
-                377,
-                4
+            "Opp Geylang Meth Sec Sch": [
+                2048,
+                24
+            ]
+        },
+        "restaurant": {
+            "CCK 190 Wanton Noodles": [
+                2475,
+                29
             ],
-            "Takagi Ramen @ Jurong West": [
-                176,
+            "The Ranch Cafe": [
+                1383,
+                16
+            ],
+            "Old Chang Kee @ Aljunied MRT": [
+                1322,
+                16
+            ],
+            "My Little Coconut": [
+                140,
                 2
             ],
-            "429 Western Food": [
-                212,
+            "ShiYun Food Junction": [
+                252,
                 3
             ],
-            "Maruhachi - Donbury & Curry": [
-                234,
+            "Geylang east": [
+                483,
+                6
+            ],
+            "\u5c0f\u996d\u4e2d\u5fc3\uff08\u9c7c\u6c64\u5c0f\u644a\uff09\u597d\u5403": [
+                137,
+                2
+            ],
+            "Tery mono": [
+                322,
+                4
+            ],
+            "Miao Quan Acupunturist": [
+                960,
+                11
+            ],
+            "Tropical Drinks Station": [
+                215,
                 3
             ],
-            "YK \u677f\u9762 \u00b7 \u82cb\u83dc\u6c64": [
-                234,
+            "\u4e07\u548c\u8f69 Wan He Xuan Vegetarian": [
+                315,
+                4
+            ],
+            "Nian Ci Zhai": [
+                315,
+                4
+            ],
+            "Mei Xiang Porridge": [
+                217,
+                3
+            ],
+            "\u9315": [
+                217,
                 3
             ]
         },
         "doctor": {
-            "Eye Clinic Jurong": [
+            "The Women's Specialist": [
+                164,
+                2
+            ],
+            "Ling Xin TCM Center": [
+                315,
+                4
+            ],
+            "Guang Yi Tang TCM Centre LLP": [
+                899,
+                11
+            ],
+            "THK Senior Group Home @ Pipit": [
+                2228,
+                27
+            ],
+            "A Healing Heart Medical Clinic": [
+                694,
+                8
+            ]
+        }
+    },
+    "CLEMENTI AVE 3 BLK 440C 123440": {
+        "bus_station": {
+            "Opp Blk 317": [
+                189,
+                2
+            ],
+            "Clementi Stn Exit B": [
+                716,
+                9
+            ],
+            "Clementi Stn Exit A": [
+                1212,
+                14
+            ],
+            "Bet Blks 315/318": [
+                568,
+                7
+            ],
+            "Blk 376": [
+                673,
+                8
+            ],
+            "Blk 377": [
+                693,
+                8
+            ]
+        },
+        "subway_station": {
+            "Clementi": [
+                692,
+                8
+            ]
+        },
+        "school": {
+            "Nan Hua Primary School": [
+                533,
+                6
+            ],
+            "Clementi Town Secondary School": [
+                652,
+                8
+            ],
+            "Clementi Primary School": [
+                468,
+                6
+            ],
+            "Fasosola Music School": [
+                346,
+                4
+            ],
+            "Pei Tong Primary School": [
+                647,
+                8
+            ]
+        },
+        "restaurant": {
+            "Subway": [
+                579,
+                7
+            ],
+            "Burger King": [
+                579,
+                7
+            ],
+            "KFC": [
+                1275,
+                15
+            ],
+            "Swensen's": [
+                1287,
+                15
+            ],
+            "Banana Leaf Seafood BBQ": [
+                1119,
+                13
+            ],
+            "JINJJA Chicken": [
+                712,
+                8
+            ],
+            "Crystal Jade Hong Kong Kitchen": [
+                1264,
+                15
+            ],
+            "Ah Ma Yi Kou Wei": [
+                579,
+                7
+            ],
+            "So Pho (Clementi Mall)": [
+                217,
+                3
+            ],
+            "Bee Cheng Hiang": [
+                1230,
+                15
+            ],
+            "TORI-Q The Clementi Mall": [
+                1230,
+                15
+            ],
+            "Old Chang Kee @ Clementi Mall": [
+                1230,
+                15
+            ],
+            "Stuff'd": [
+                1230,
+                15
+            ],
+            "Pezzo": [
+                1230,
+                15
+            ],
+            "Crave Nasi Lemak": [
+                579,
+                7
+            ],
+            "Ootoya (Clementi Mall)": [
+                579,
+                7
+            ],
+            "JUEWEI @ GRANTRAL": [
+                1138,
+                14
+            ],
+            "Sedap Noodle": [
+                569,
+                7
+            ]
+        },
+        "doctor": {
+            "T32 Dental Pearl @ Clementi": [
+                1159,
+                14
+            ],
+            "Si Hoe Yeen Ling": [
+                489,
+                6
+            ],
+            "Kang Mei TCM": [
+                544,
+                6
+            ],
+            "Chia Baby & Child Clinic": [
+                548,
+                7
+            ],
+            "Premier Dental Clinic": [
+                1038,
+                12
+            ],
+            "SGCert Thermage": [
+                1304,
+                16
+            ]
+        }
+    },
+    "JURONG WEST AVE 1 BLK 503 640503": {
+        "school": {
+            "Rulang Primary School": [
+                812,
+                10
+            ],
+            "Zoo-phonics School": [
                 292,
                 3
             ],
-            "EHA Clinic @ Jurong": [
-                387,
-                5
+            "PlayFACTO School @ Jurong West": [
+                310,
+                4
+            ]
+        },
+        "restaurant": {
+            "Canadian 2 For 1 Pizza": [
+                825,
+                10
             ],
-            "\u5434\u79c0\u73af\u4e2d\u533b\u5e08": [
-                143,
+            "Ding Ji": [
+                470,
+                6
+            ],
+            "McDonald's Jurong Spring CC": [
+                195,
                 2
             ],
-            "\u79d1\u5174\u75ab\u82d7": [
-                385,
-                5
+            "Classic Putian": [
+                20,
+                0
             ],
-            "GMGW Massage Therapy": [
-                234,
+            "\u7f8e\u534e\u8d77\u9aa8\u9e2d\u996d\u7cbf\u6c41": [
+                283,
                 3
             ],
-            "Access Medical (Jurong West)": [
-                655,
-                8
+            "Hell Grill Kitchen Pte Ltd": [
+                264,
+                3
             ],
-            "\u8bca\u6240": [
-                1297,
-                15
+            "Boss Ku Nasi Padang": [
+                283,
+                3
             ],
-            "414 Coffee Shop": [
-                587,
-                7
+            "Tan Tat Lim": [
+                31,
+                0
             ],
-            "Sunnyvale Clinic & Surgery": [
-                1243,
-                15
+            "Anna Banh Mi": [
+                31,
+                0
+            ],
+            "Lao chong Qing": [
+                31,
+                0
+            ],
+            "Hao Ji Handmade Pau": [
+                31,
+                0
+            ],
+            "Jian Bo Shui Kueh": [
+                31,
+                0
+            ],
+            "Clementi Homemade Pau Dian": [
+                36,
+                0
+            ],
+            "\u62ff\u5b9d\u5f2f\u719f\u98df Na Bao Wan": [
+                30,
+                0
+            ],
+            "Wen Guang \u6587\u5149\u7cbf\u6761\u6c64\u9762": [
+                31,
+                0
+            ],
+            "Da Di Meng": [
+                31,
+                0
+            ]
+        },
+        "doctor": {
+            "TC Family Clinic Pte Ltd": [
+                788,
+                9
+            ],
+            "GMGW Massage Therapy": [
+                1462,
+                17
             ]
         }
-    }
+    },
+    "WOODLANDS CRES BLK 782B 732782": {
+        "school": {
+            "Admiralty Secondary School": [
+                92,
+                1
+            ],
+            "Riverside Primary School": [
+                242,
+                3
+            ]
+        },
+        "restaurant": {
+            "Char-grill Bar": [
+                652,
+                8
+            ],
+            "Dad's Corner": [
+                652,
+                8
+            ],
+            "FS_18": [
+                559,
+                7
+            ],
+            "Satay mantop": [
+                568,
+                7
+            ],
+            "Habib's Express": [
+                568,
+                7
+            ],
+            "FROST & AKC18 PARTNERS": [
+                384,
+                5
+            ],
+            "Warong Buk Ummii": [
+                1451,
+                17
+            ],
+            "Domino's Pizza Woodlands Rise": [
+                605,
+                7
+            ],
+            "Yakiniku Kura": [
+                612,
+                7
+            ],
+            "Taokingu Ramen \u6d9b\u8482\u30e9\u30fc\u30e1\u30f3": [
+                611,
+                7
+            ],
+            "Ma Ma Spin Pot": [
+                612,
+                7
+            ],
+            "Ten & Han Trading Pte Ltd": [
+                1318,
+                16
+            ],
+            "Feequl Corner": [
+                1885,
+                22
+            ],
+            "Journey To The West": [
+                1881,
+                22
+            ],
+            "Seafood Ban Mian": [
+                1026,
+                12
+            ],
+            "My Place Seafood": [
+                1026,
+                12
+            ]
+        },
+        "doctor": {
+            "DR NAH & LEE FAMILY CLINIC": [
+                456,
+                5
+            ],
+            "PR Orange SG": [
+                1288,
+                15
+            ],
+            "Big Boss Essential Oil": [
+                1288,
+                15
+            ],
+            "EH Medical Clinic (Woodlands)": [
+                567,
+                7
+            ]
+        }
+    },
+    "ADMIRALTY DR BLK 353C 753353": {
+        "bus_station": {
+            "Sembawang Int": [
+                1516,
+                18
+            ],
+            "Sembawang Interchange": [
+                1230,
+                15
+            ]
+        },
+        "subway_station": {
+            "Sembawang": [
+                416,
+                5
+            ]
+        },
+        "school": {
+            "Canberra Primary School": [
+                1705,
+                20
+            ],
+            "Joy Montessori Schoolhouse": [
+                1038,
+                12
+            ]
+        },
+        "restaurant": {
+            "Sushi Express @ Sun Plaza": [
+                1169,
+                14
+            ],
+            "White Restaurant": [
+                1169,
+                14
+            ],
+            "Pizza Hut Sun Plaza": [
+                1169,
+                14
+            ],
+            "Pot Addiction Sun Plaza": [
+                1278,
+                15
+            ],
+            "Swensen's": [
+                1204,
+                14
+            ],
+            "Broadway Food Centre": [
+                923,
+                11
+            ],
+            "Chang Cheng - Canberra Link": [
+                444,
+                5
+            ],
+            "Char-Grill Bar @ Canberra Link": [
+                444,
+                5
+            ],
+            "Ezan Satay": [
+                440,
+                5
+            ],
+            "KFC": [
+                1172,
+                14
+            ],
+            "McDonald's": [
+                1169,
+                14
+            ],
+            "Ya Kun Kaya Toast": [
+                1169,
+                14
+            ],
+            "Yu Kee Duck Rice": [
+                1173,
+                14
+            ],
+            "Danzai Noodles": [
+                1159,
+                14
+            ],
+            "Wok Story": [
+                1167,
+                14
+            ],
+            "Wen Jia Bao \u6e29\u5bb6\u9971": [
+                1167,
+                14
+            ],
+            "Kawan Station": [
+                1161,
+                14
+            ],
+            "Hugabo": [
+                1169,
+                14
+            ]
+        },
+        "doctor": {
+            "Thomson Women\u2019s Clinic": [
+                1169,
+                14
+            ]
+        }
+    },
+    "JURONG WEST ST 42 BLK 455 640455": {},
+    "ANG MO KIO AVE 1 BLK 208 560208": {}
 }
