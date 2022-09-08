@@ -156,7 +156,7 @@ def main():
     cwd = Path(__file__).parent.absolute()
     print(cwd)
     os.chdir(cwd)
-    df = pd.read_csv("flats.csv")
+    df = pd.read_csv("flats.csv") #flats.csv should be downloaded from data.gov.sg
     # select a month to update
     month = input("Enter a month to update (YYYY-MM): ")
     df = df[(df['month'] >= month)]  # select the latest month
