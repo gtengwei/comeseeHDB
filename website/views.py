@@ -113,6 +113,19 @@ def unfavourite():
             db.session.commit()
     return jsonify({"favourite_count": len(flat.favourites)})
 
+@views.route('/review_unfavourite', methods=['POST'])
+@login_required
+def review_unfavourite():
+    favourite = json.loads(request.data)
+    reviewID = favourite['reviewID']
+    review = Review.query.get(reviewID)
+    for review_favourite in current_user.review_favourites:
+        if review_favourite.review_id == reviewID:
+            db.session.delete(review_favourite)
+            review.numOfFavourites -= 1
+            db.session.commit()
+    return jsonify({"review_favourite_count": len(review.favourites)})
+
 
 @views.route('/favourite', methods=['POST'])
 @login_required
@@ -126,6 +139,18 @@ def favourite():
     db.session.commit()
     return jsonify({"favourite_count": len(flat.favourites)})
 
+@views.route('/review_favourite', methods=['POST'])
+@login_required
+def review_favourite():
+    review = json.loads(request.data)
+    reviewID = review['reviewID']
+    review = Review.query.get(reviewID)
+    new_favourites = ReviewFavourites(user_id=current_user.id, review_id=reviewID)
+    db.session.add(new_favourites)
+    review.numOfFavourites += 1
+    db.session.commit()
+    return jsonify({"review_favourite_count": len(review.favourites)})
+
 
 @views.route('/favourite_count', methods=['POST'])
 def favourite_count():
@@ -133,6 +158,13 @@ def favourite_count():
     flatID = flat['flatID']
     flat = Flat.query.get(flatID)
     return jsonify({"favourite_count": len(flat.favourites)})
+
+@views.route('/review_favourite_count', methods=['POST'])
+def review_favourite_count():
+    review = json.loads(request.data)
+    reviewID = review['reviewID']
+    review = Review.query.get(reviewID)
+    return jsonify({"favourite_count": len(review.favourites)})
 
 # Route for Home Page
 
@@ -347,7 +379,6 @@ def home():
     session.clear()
     # return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], favourites = Favourites.query.all(), random = RANDOM, image = image, image_id = image_id)
     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in data], favourites=Favourites.query.all(), random=RANDOM, image = [Flat.query.get(x).image for x in data])
-
 
 # Infinite Scrolling for Home Page
 @views.route('/load_home', methods=['GET', 'POST'])

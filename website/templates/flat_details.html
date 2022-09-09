@@ -479,6 +479,35 @@
 {% endif %}
 
 <ul class="list-group list-group-flush" id="reviews">
+  {% for review in flat.reviews|reverse %}
+  <li class="list-group-item">
+    <img src="{{ review.user.avatar(50) }}">
+    <b>{{review.user.username}}</b>
+    <div style="word-wrap: break-word; width:1000px">
+      <p>{{ review.data }}</p>
+          <div class="row justify-content-end">
+              <small class="text-muted mb-0"> Posted {{moment(review.date).fromNow() }}</small>
+          </div>
+    </div>
+    
+    {% if review.user == user %}
+    <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {% endif %}
+    {% if review.id in user.review_favourites|map(attribute="review_id")|list %}
+    <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_unfavourite({{ review.id }})">
+      <span id ="review_favourite_button_id{{review.id}}"><i class="fa-solid fa-heart"></i></span>
+    </button>
+    {% else %}
+    <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_favourite({{ review.id }})">
+      <span id ="review_favourite_button_id{{review.id}}"><i class="fa-regular fa-heart"></i></span>
+    </button>
+    {% endif %}
+    <span id="review_favourite_count{{review.id}}" class="favourite_count justify-content-end">{{review.favourites|length}}</span>
+  </li>
+  {% endfor %}
+</ul>
 {% for review in flat.reviews|sort(attribute='review_path') %}
     <!-- Begin review indentation -->
     {% if review.level() == 0 %}

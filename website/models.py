@@ -24,6 +24,10 @@ class Review(db.Model):
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'), nullable=False)
+    #user_id = db.Column(BIGINT, db.ForeignKey('user.id'), nullable=False) # for mysql
+    #flat_id = db.Column(BIGINT, db.ForeignKey('flat.id'), nullable=False) # for mysql
+    numOfFavourites = db.Column(db.Integer, default=0)
+    favourites = db.relationship('ReviewFavourites')
     review_path = db.Column(db.Text, index=True)
     parent_id = db.Column(db.Integer, db.ForeignKey('review.id'))
     reply = db.relationship('Review', cascade="all,delete", backref=db.backref('parent', remote_side=[id]), lazy='dynamic')
@@ -45,6 +49,11 @@ class Favourites(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'))
 
+class ReviewFavourites(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=False)
+
 # Table for User entity
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -57,6 +66,7 @@ class User(db.Model, UserMixin):
     email_verified = db.Column(db.Boolean(), nullable=False, default=False)
     email_verified_date = db.Column(db.DateTime(timezone=True), default = None)
     reviews = db.relationship('Review', backref = 'user', passive_deletes=True)
+    review_favourites = db.relationship('ReviewFavourites')
 
     def get_token(self,expires_sec=120):
         serial=Serializer(current_app.config['SECRET_KEY'],expires_in = expires_sec)
