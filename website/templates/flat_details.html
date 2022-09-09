@@ -485,15 +485,15 @@
     </button>
     {% endif %}
     {% if review.id in user.review_favourites|map(attribute="review_id")|list %}
-    <button class="favourite_button" id ="review_favourite_button{{review.id}}" type="button" onClick="review_unfavourite({{ review.id }})">
+    <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_unfavourite({{ review.id }})">
       <span id ="review_favourite_button_id{{review.id}}"><i class="fa-solid fa-heart"></i></span>
     </button>
     {% else %}
-    <button class="favourite_button" id ="review_favourite_button{{review.id}}" type="button" onClick="review_favourite({{ review.id }})">
+    <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_favourite({{ review.id }})">
       <span id ="review_favourite_button_id{{review.id}}"><i class="fa-regular fa-heart"></i></span>
     </button>
     {% endif %}
-    <span id="review_favourite_count{{review.id}}" class="favourite_count">{{review.favourites|length}}</span>
+    <span id="review_favourite_count{{review.id}}" class="favourite_count justify-content-end">{{review.favourites|length}}</span>
   </li>
   {% endfor %}
 </ul>

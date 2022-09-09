@@ -47,10 +47,10 @@ function favourite_count(flatID) {
   })
 }
 
-function review_unfavourite(favouriteID) {
-  document.getElementById("review_favourite_button_id" + favouriteID.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
-  document.getElementById("review_favourite_button" + favouriteID.toString()).setAttribute( 'onClick', ("review_favourite(" + favouriteID.toString() + ")"));
-  const fav_count = document.getElementById("review_favourite_count" + favouriteID.toString());
+function review_unfavourite(reviewID) {
+  document.getElementById("review_favourite_button_id" + reviewID.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
+  document.getElementById("review_favourite_button" + reviewID.toString()).setAttribute( 'onClick', ("review_favourite(" + reviewID.toString() + ")"));
+  const fav_count = document.getElementById("review_favourite_count" + reviewID.toString());
   fetch("/review_unfavourite",{
     method: "POST",
     body: JSON.stringify({ reviewID:reviewID }) })
@@ -58,13 +58,13 @@ function review_unfavourite(favouriteID) {
     .then((data) => { 
     fav_count.innerHTML = data["review_favourite_count"];
   })
-  .catch((e) => alert("Unable to Favourite"));
+  .catch((e) => alert("Unable to UnFavourite"));
 }
 
-function review_favourite(flatID) {
-  document.getElementById("review_favourite_button_id" + flatID.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
-  document.getElementById("review_favourite_button" + flatID.toString()).setAttribute( 'onClick', ("review_unfavourite(" + flatID.toString() + ")"));
-  const fav_count = document.getElementById("review_favourite_count" + flatID.toString());
+function review_favourite(reviewID) {
+  document.getElementById("review_favourite_button_id" + reviewID.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
+  document.getElementById("review_favourite_button" + reviewID.toString()).setAttribute( 'onClick', ("review_unfavourite(" + reviewID.toString() + ")"));
+  const fav_count = document.getElementById("review_favourite_count" + reviewID.toString());
   fetch("/review_favourite",{
     method: "POST",
     body: JSON.stringify({ reviewID:reviewID }) })
@@ -75,8 +75,8 @@ function review_favourite(flatID) {
   .catch((e) => alert("Unable to Favourite"));
 }
 
-function review_favourite_count(flatID) {
-  const fav_count = document.getElementById("review_favourite_count" + flatID.toString());
+function review_favourite_count(reviewID) {
+  const fav_count = document.getElementById("review_favourite_count" + reviewID.toString());
   fetch("/review_favourite_count",{
     method: "POST",
     body: JSON.stringify({ reviewID:reviewID }) })

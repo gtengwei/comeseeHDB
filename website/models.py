@@ -26,6 +26,7 @@ class Review(db.Model):
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'), nullable=False)
     #user_id = db.Column(BIGINT, db.ForeignKey('user.id'), nullable=False) # for mysql
     #flat_id = db.Column(BIGINT, db.ForeignKey('flat.id'), nullable=False) # for mysql
+    numOfFavourites = db.Column(db.Integer, default=0)
     favourites = db.relationship('ReviewFavourites')
 
 class Favourites(db.Model):

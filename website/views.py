@@ -104,7 +104,7 @@ def review_unfavourite():
     review = Review.query.get(reviewID)
     for review_favourite in current_user.review_favourites:
         if review_favourite.review_id == reviewID:
-            db.session.delete(favourite)
+            db.session.delete(review_favourite)
             review.numOfFavourites -= 1
             db.session.commit()
     return jsonify({"review_favourite_count": len(review.favourites)})
