@@ -5,13 +5,12 @@ from sqlalchemy.sql import func
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from hashlib import md5
-from sqlalchemy import Column, Integer, Float, Date, String
+from sqlalchemy import Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 import pandas as pd
 import os
 from pathlib import Path
-from sqlalchemy.dialects.mysql import BIGINT
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -84,7 +83,7 @@ class User(db.Model, UserMixin):
 
 #Base = declarative_base()
 class Flat(db.Model):
-    #tell SQLAlchemy the name of column and its attributes:
+    # Inform SQLAlchemy of the column names and its attributes
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     month = db.Column(db.String(150)) 
     town = db.Column(db.String(150))
@@ -118,5 +117,4 @@ def create_Flat_table():
     os.chdir(cwd)
     df = pd.read_csv('merged.csv')
     df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
-
 

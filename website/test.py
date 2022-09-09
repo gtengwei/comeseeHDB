@@ -1,40 +1,20 @@
-from sqlalchemy import Column, Integer, Float, Date, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 import pandas as pd
 import os
-import mysql.connector
 import csv
-import pymysql
 from pathlib import Path
+from models import User
+from werkzeug.security import generate_password_hash
+from models import db
+from datetime import datetime
 
 Base = declarative_base()
-
-
-class HDB_Flats(Base):
-    # Tell SQLAlchemy what the table name is and if there's any table-specific arguments it should know about
-    __tablename__ = 'HDB_Flats'
-    __table_args__ = {'sqlite_autoincrement': True}
-    # tell SQLAlchemy the name of column and its attributes:
-    id = Column(Integer, primary_key=True, nullable=False)
-    month = Column(Integer)
-    town = Column(String)
-    flat_type = Column(String)
-    block = Column(String)
-    street_name = Column(String)
-    storey_range = Column(String)
-    floor_area_sqm = Column(Float)
-    flat_model = Column(String)
-    lease_commence_date = Column(Date)
-    remaining_lease = Column(Float)
-    resale_price = Column(Float)
-
 
 def create_HDB_Flats_table():
     # This will create the table in the database
     engine = create_engine('sqlite:///website/database.db')
     Base.metadata.create_all(engine)
-    file_name = 'test.csv'
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
     df = pd.read_csv('merged.csv')
@@ -54,25 +34,6 @@ def create_HDB_Flats_table():
     df.sort_values(by=['address'], ascending=True, inplace=True)
     df.to_csv("merged.csv", index=False)
 
-
-
-def create_mysql_database():
-    database = pymysql.connect(
-        host="localhost",
-        user="root",
-        passwd="Clutch123!"
-    )
-    cursor = database.cursor()
-    cursor.execute("CREATE DATABASE IF NOT EXISTS mysql_database")
-
-def create_flat_csv(): 
-    engine = create_engine('mysql+pymysql://root:Clutch123!@localhost/mysql_database?charset=utf8') # enter your password and database names here
-    #Base.metadata.create_all(engine)
-    cwd = Path(__file__).parent.absolute()
-    os.chdir(cwd)
-    df = pd.read_csv('merged.csv')    
-    df.to_sql(con=engine, index_label='id', name="flat", if_exists='replace')
-
 def append_image():
     # read csv
     df = pd.read_csv('merged.csv')
@@ -84,7 +45,22 @@ def append_image():
     #df.drop('Unnamed: 0', axis=1, inplace=True)
     df.to_csv('merged.csv', index=False)
 
+def create_user():
+    email = 'test@gmail.com'
+    username = 'test'
+    postal_code = 75
+    password1 = '12345678'
+
+    new_user = User(email=email, username = username, postal_code = postal_code,
+                password=generate_password_hash(password1, method='sha256'), email_verified = True,
+                email_verified_date = datetime.now())
+    db.session.add(new_user)
+    db.session.commit()
+    return
+
+create_user()
 if __name__ == "__main__":
     # main()
     #create_database()
-    create_flat_csv()
+    #create_HDB_Flats_table()
+    create_user()
