@@ -24,8 +24,6 @@ class Review(db.Model):
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'), nullable=False)
-    #user_id = db.Column(BIGINT, db.ForeignKey('user.id'), nullable=False) # for mysql
-    #flat_id = db.Column(BIGINT, db.ForeignKey('flat.id'), nullable=False) # for mysql
     numOfFavourites = db.Column(db.Integer, default=0)
     favourites = db.relationship('ReviewFavourites')
     review_path = db.Column(db.Text, index=True)
