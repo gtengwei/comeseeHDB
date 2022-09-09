@@ -59,22 +59,44 @@ def flat_details(flatId):
 
     if request.method == 'POST':
         review = request.form.get('review')
+        reply = request.form.get('reply')
+        if reply:
+            parent_id = request.form.get('parent_id')
+            if len(reply) < 1:
+                flash('reply is too short!', category='error')
+            elif len(reply) > 500:
+                flash(
+                    'reply is too long! Maximum length for a reply is 500 characters', category='error')
+            elif str(current_user.postal_code) != flat.postal_sector:
+                print(type(flat.postal_sector))
+                flash('You cannot reply this flat! You can only reply flats in your own postal district!', category='error')
+            else:
+                new_reply= Review(
+                    data=reply, user_id=current_user.id, flat_id=flatId, parent_id = parent_id)
+                new_reply.save()
+                #print(parent_path)
+                flash('Reply added!', category='success')
+        if review:
+            if len(review) < 1:
+                flash('Review is too short!', category='error')
+            elif len(review) > 500:
+                flash(
+                    'Review is too long! Maximum length for a review is 500 characters', category='error')
+            elif str(current_user.postal_code) != flat.postal_sector:
+                print(type(flat.postal_sector))
+                flash('You cannot review this flat! You can only review flats in your own postal district!', category='error')
+            else:
+                new_review = Review(
+                    data=review, user_id=current_user.id, flat_id=flatId)
+                new_review.save()
+                flash('Review added!', category='success')
+    amenity = get_amenity(flatId)
+    # f = open('testing.json') #FOR TESTING CAUSE EXPENSIVE
+    # amenity = json.load(f)
+    # amenity = amenity
+    return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity, latitude=latitude, longitude=longitude)
 
-        if len(review) < 1:
-            flash('Review is too short!', category='error')
-        elif len(review) > 500:
-            flash(
-                'Review is too long! Maximum length for a review is 500 characters', category='error')
-        elif current_user.postal_code != flat.postal_sector:
-            flash('You cannot review this flat! You can only review flats in your own postal district!', category='error')
-        else:
-            new_review = Review(
-                data=review, user_id=current_user.id, flat_id=flatId)
-            db.session.add(new_review)
-            db.session.commit()
-            flash('Review added!', category='success')
-    return render_template("flat_details.html", user=current_user, flat=flat, image = url)
-    
+
 @views.route('/unfavourite', methods=['POST'])
 @login_required
 def unfavourite():
@@ -123,7 +145,6 @@ def home():
     os.chdir(cwd)
     # print(os.getcwd())
     conn = sqlite3.connect("database.db")
-    #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     myquery = (
         "SELECT id FROM Flat ORDER BY numOfFavourites DESC;")
@@ -150,16 +171,12 @@ def home():
             address = "%{}%".format(address)
 
         if price:
-            #minPrice = int(price[0])
-            #maxPrice = minPrice + 100000
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i%2 == 0:
                     data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
-                    #print(searchedFlats)
-            #print(data[0])                
-            #return render_template("search.html", user=current_user, flats=data[:INDEX])
+
             
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -339,7 +356,6 @@ def home():
 def load_home():
     # In order to load sorted flats faster
     conn = sqlite3.connect("database.db")
-    #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
     c = conn.cursor()
     criteria = session.get('criteria')
     if criteria:
@@ -592,8 +608,6 @@ def search(address):
             address = "%{}%".format(address)
 
         if price:
-            #minPrice = int(price[0])
-            #maxPrice = minPrice + 100000
             data = []
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
@@ -601,9 +615,6 @@ def search(address):
                 if i % 2 == 0:
                     data = list(itertools.chain(Flat.query.filter(
                         Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
-                    # print(searchedFlats)
-            # print(data[0])
-            # return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -761,9 +772,8 @@ def search(address):
 
     return render_template('search.html', user=current_user, address=address, random=RANDOM)
 
+
 # Infinite Scrolling for Search Page
-
-
 @views.route('/load_search', methods=['GET', 'POST'])
 def load_search():
     data = []
@@ -777,17 +787,12 @@ def load_search():
         address = "%{}%".format(address)
 
     if price:
-        #minPrice = int(price[0])
-        #maxPrice = minPrice + 100000
         price_range = [word for line in price for word in line.split('-')]
         for i in range(len(price_range)):
             price_range[i] = int(price_range[i])
             if i % 2 == 0:
                 data_price = list(itertools.chain(Flat.query.filter(
                     Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
-                # print(searchedFlats)
-        # print(data_price[0])
-        # return render_template("search.html", user=current_user, flats=data_price[:INDEX])
 
         if address and flat_types and amenities and towns:
             searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -967,17 +972,12 @@ def sort(criteria):
             address = "%{}%".format(address)
 
         if price:
-            #minPrice = int(price[0])
-            #maxPrice = minPrice + 100000
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i % 2 == 0:
                     data.extend(Flat.query.filter(Flat.resale_price.between(
                         price_range[i], price_range[i+1])).all())
-                    # print(searchedFlats)
-            # print(data[0])
-            # return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -1130,17 +1130,12 @@ def sort(criteria):
             address = "%{}%".format(address)
 
         if price:
-            #minPrice = int(price[0])
-            #maxPrice = minPrice + 100000
-
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
                 if i % 2 == 0:
                     data.extend(Flat.query.filter(Flat.resale_price.between(
                         price_range[i], price_range[i+1])).all())
-                    # print(searchedFlats)
-            # return render_template("search.html", user=current_user, flats=data[:INDEX])
 
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -1311,7 +1306,6 @@ def sort(criteria):
                 cwd = Path(__file__).parent.absolute()
                 os.chdir(cwd)
                 conn = sqlite3.connect("database.db")
-                #conn = pymysql.connect(host="localhost", user="root", passwd="Clutch123!", database="mysql_database")
                 c = conn.cursor()
 
                 if criteria == 'price_high':
@@ -1442,8 +1436,6 @@ def load_sort():
         address = '%{}%'.format(address)
 
     if price:
-        #minPrice = int(price[0])
-        #maxPrice = minPrice + 100000
         data = []
         price_range = [word for line in price for word in line.split('-')]
         for i in range(len(price_range)):
@@ -1451,7 +1443,6 @@ def load_sort():
             if i % 2 == 0:
                 data.extend(Flat.query.filter(Flat.resale_price.between(
                     price_range[i], price_range[i+1])).all())
-        # return render_template("search.html", user=current_user, flats=data[:INDEX])
         if flat_types:
             searchedFlats = Flat.query.filter(
                 Flat.flat_type.in_(flat_types)).all()
@@ -1600,7 +1591,6 @@ def filter():
         towns = request.form.getlist('town')
         flat_types = request.form.getlist('flat_type')
         amenities = request.form.getlist('amenity')
-        #flat = Flat.query.filter(Flat.town.in_(towns)).filter(Flat.flat_type.in_(flat_types)).filter(Flat.amenity.in_(amenities)).all()
         if towns:
             if flat_types:
                 if amenities:
@@ -1625,7 +1615,6 @@ def filter():
             flat = Flat.query.filter(Flat.amenity.in_(amenities)).all()
 
         return render_template('filter.html', user=current_user, flats=flat[:INDEX])
-        # return render_template('sort.html', user=current_user, flats=flat)
 
     return render_template('filter.html', user=current_user)
 
@@ -1686,4 +1675,67 @@ def view_image(flatId):
                 photoRef.append(0)
 
         return photoRef
-        #by right should return an array of photo references only, and use these references to get the photo
+
+
+def get_amenity(flatId):
+    cwd = Path(__file__).parent.absolute()
+    os.chdir(cwd)
+
+    flat = Flat.query.filter_by(id=flatId).first_or_404()
+    flat = Flat.query.get(flatId)
+    latitude = flat.latitude
+    longitude = flat.longitude
+    address = flat.address
+    filename = 'amenity_database.json'
+
+    with open(filename, 'r') as f:
+        data = json.load(f)
+        if address in data.keys():
+            return data.get(address)
+        else:
+            API_KEY = "AIzaSyAihwKNj-07whXNy0_nKDqkxN4QxCA-3uI"
+            API_KEY2 = 'Ag6YKlKz_hSG8Drz9iLXx1n3-8r4qRW6XJSt2haPIuZr51AzdiGYq54G5amxfusp'
+
+            specificamenity = {}  # specific amenity
+            amenitydict = {}  # dictionaries of amenities
+            amenity_list = ['bus_station', 'subway_station',
+                            'school', 'restaurant', 'doctor']
+            #amenity_list = ['school']
+            for amenity in amenity_list:
+                specificamenity = {}  # specific amenity
+                url1 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + \
+                    str(latitude) + "%2C" + str(longitude) + \
+                    "&radius=500&type="+amenity+"&key=" + API_KEY
+                payload = {}
+                headers = {}
+
+                response1 = requests.request(
+                    "GET", url1, headers=headers, data=payload).json()
+                length = response1["results"]
+                for i in range(len(length)):
+                    name = response1["results"][i]['name']
+                    if len(name) > 30:
+                        continue
+                    if (amenity == 'school') and ('School' not in name):
+                        continue
+                    lat_of_nearby = response1['results'][i]['geometry']['location']['lat']
+                    lon_of_nearby = response1['results'][i]['geometry']['location']['lng']
+                    url2 = "https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins="+str(latitude)+","+str(longitude)+"&destinations="+str(lat_of_nearby)+"," + \
+                        str(lon_of_nearby)+"&travelMode=walking&timeUnit=minute&distanceUnit=km&key=Ag6YKlKz_hSG8Drz9iLXx1n3-8r4qRW6XJSt2haPIuZr51AzdiGYq54G5amxfusp"
+                    payload = {}
+                    headers = {}
+                    response2 = requests.request(
+                        "GET", url2, headers=headers, data=payload).json()
+                    nearby_distance = round((response2['resourceSets'][0]['resources'][0]
+                                             ['results'][0]['travelDistance'])*1000)  # get distance in metres
+                    nearby_duration = round(response2['resourceSets'][0]['resources']
+                                            [0]['results'][0]['travelDuration'])  # get duration in minutes
+                    specificamenity[name] = [nearby_distance, nearby_duration]
+                    amenitydict[amenity] = specificamenity
+
+                print(amenitydict)
+        data[address] = amenitydict
+        with open('amenity_database.json', 'w') as f:
+            json.dump(data, f, indent=4)
+
+    return amenitydict

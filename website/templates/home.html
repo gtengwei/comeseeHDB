@@ -9,16 +9,35 @@
   <script>
     $(document).ready(function(){
         $('.favourite_button').click(function(){
-          $("#changePostalCodeModal").modal('show');
+          $("#createAccountModal").modal('show');
         }); 
     });
   </script>
 
   <script>
     $(document).ready(function(){
-        $('.bottom-left').click(function(){
+        $('#helpBtn').click(function(){
           $("#helpModal").modal('show');
         }); 
+    });
+  </script>
+
+  <script>
+    $(document).ready(function() {
+      $(window).scroll(function() {
+        if ($(this).scrollTop() > 20) {
+          $('#toTopBtn').fadeIn();
+        } else {
+          $('#toTopBtn').fadeOut();
+        }
+      });
+
+      $('#toTopBtn').click(function() {
+        $("html, body").animate({
+          scrollTop: 0
+        }, 1000);
+        return false;
+      });
     });
   </script>
 </head> 
@@ -144,7 +163,6 @@
 
 
 <body class="bg">
-
   <div id="properties" class="card-body mx-auto bg-pink">
     {% for i in range(0, (flats|length)|int, 2) %}
     <div class="row">
@@ -167,7 +185,7 @@
               <span id ="favourite_button_id{{flats[i].id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
             <div class = "guest_error">
-              <div class="modal fade" id="changePostalCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+              <div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -235,7 +253,7 @@
               <span id ="favourite_button_id{{flats[i+1].id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
             <div class = "guest_error">
-              <div class="modal fade" id="changePostalCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+              <div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -289,13 +307,24 @@
   
   </div>
 
-<div class = 'bottom-left'>
-  <div class = 'fixed-bottom'>
-    <button class="btn btn-primary btn-circle" type= "button" >
+<div class = 'bottom-right'>
+    <div class = 'fixed-bottom-right'>
+      <button id="toTopBtn" class="btn btn-primary btn-circle cd-top text-replace js-cd-top cd-top--is-visible cd-top--fade-out" 
+      type= "button" style="display:none;">
+        <i class="fa fa-arrow-up"></i>
+      </button>
+    </div>
+</div>  
+
+<div  class = 'bottom-left'>
+  <div class = 'fixed-bottom-left'>
+      <button id="helpBtn" class="btn btn-primary btn-circle cd-top" type= "button" >
       <i class="fa fa-question"></i>
     </button>
   </div>
-</div>      
+</div>    
+
+
     
 <meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">
 
