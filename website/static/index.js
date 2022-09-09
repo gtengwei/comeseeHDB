@@ -110,3 +110,17 @@ window.onload = function initialize() {
 
   map.setStreetView(panorama);
 }
+
+function reply(reviewId){
+  var x = document.getElementById(`reply-${reviewId}`);
+  var y = document.getElementById(`reply_submit_button-${reviewId}`);
+  //console.log(review)
+  //console.log(x);
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    y.style.display = "block";
+  } else {
+    x.style.display = "none";
+    y.style.display = "none";
+  }
+}
