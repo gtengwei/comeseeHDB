@@ -61,8 +61,8 @@ button[class^="favourite_button"] {
     line-height: 1.33;
 }
 
-.fixed-bottom{
-    padding: 10px 10px
+.fixed-bottom-left{
+    padding: 50px 0px;
 }
 
 #properties{
