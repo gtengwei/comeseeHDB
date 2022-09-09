@@ -34,6 +34,11 @@
   });
 </script>
 
+<script>
+  var x = document.getElementById("review_favourite_count");
+  console.log(x);
+  x.style = "display: inline-flex, align-self: flex-start, padding-top:6px;"
+</script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
 
@@ -48,7 +53,15 @@
       outline:none;
       color: red;
       align-self: flex-start;
+      padding-top:6px;
     }
+    
+    .favourite_count{
+      display: inline-flex;
+      align-self: flex-start;
+      padding-top:6px;
+    }
+    
     .carousel{
       width: 50%;
       float: left;
@@ -479,70 +492,80 @@
 {% endif %}
 
 <ul class="list-group list-group-flush" id="reviews">
-{% for review in flat.reviews|sort(attribute='review_path') %}
-    <!-- Begin review indentation -->
-    {% if review.level() == 0 %}
-    <div class="col-sm-12" >
-        {% elif review.level() == 1 %}
-        <div class="col-sm-11 offset-1">
-            {% elif review.level() == 2 %}
-            <div class="col-sm-10 offset-2 ">
-                {% elif review.level() == 3 %}
-                <div class="col-sm-9 offset-3 ">
-                    {% elif review.level() == 4 %}
-                    <div class="col-sm-8 offset-4">
-                        {% else %}
-                        <div class="col-sm-7 offset-5 ">
-                            {% endif %}
-                            <!-- End review indentation -->
-                              <li class="list-group-item">
-                                <img src="{{ review.user.avatar(50) }}">
-                                <b>{{review.user.username}}</b>
-                                <div style="word-wrap: break-word; width:100%">
-                                  <p>{{ review.data }}</p>
-                                      <div class="row justify-content-end">
-                                        <span id="reply_button-{{review.id}}">
-                                        <button type="button" class="btn btn-link btn-sm" id="reply_button-{{review.id}}" onClick=reply({{review.id}})>Reply</button>
-                                      </span>
-                                          <small class="text-muted"> Posted {{moment(review.date).fromNow() }}</small>
-                                          {% if review.user == user %}
-                                          <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
-                                            <span aria-hidden="true">&times;</span>
-                                          </button>
-                                          {% endif %}
-                                      </div>
-                                </div>
-                                
-                              </li>
-                              <div>
-                            {% if user.is_authenticated %}
-                            <form method="POST">
-                              <span class="input-group-append" style="padding-left:18px;">
+  {% for review in flat.reviews|sort(attribute='review_path') %}
+      <!-- Begin review indentation -->
+      {% if review.level() == 0 %}
+      <div class="col-sm-12" >
+          {% elif review.level() == 1 %}
+          <div class="col-sm-11 offset-1">
+              {% elif review.level() == 2 %}
+              <div class="col-sm-10 offset-2 ">
+                  {% elif review.level() == 3 %}
+                  <div class="col-sm-9 offset-3 ">
+                      {% elif review.level() == 4 %}
+                      <div class="col-sm-8 offset-4">
+                          {% else %}
+                          <div class="col-sm-7 offset-5 ">
+                              {% endif %}
+                              <!-- End review indentation -->
+                                <li class="list-group-item">
+                                  <img src="{{ review.user.avatar(50) }}">
+                                  <b>{{review.user.username}}</b>
+                                  <div style="word-wrap: break-word; width:100%">
+                                    <p>{{ review.data }}</p>
+                                        <div class="row justify-content-end">
+                                          <span id="reply_button-{{review.id}}">
+                                          <button type="button" class="btn btn-link btn-sm" id="reply_button-{{review.id}}" onClick=reply({{review.id}})>Reply</button>
+                                        </span>
+                                            <small class="text-muted"> Posted {{moment(review.date).fromNow() }}</small>
+                                            {% if review.user == user %}
+                                            <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            {% endif %}
+                                            {% if review.id in user.review_favourites|map(attribute="review_id")|list %}
+                                            <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_unfavourite({{ review.id }})" >
+                                              <span id ="review_favourite_button_id{{review.id}}"><i class="fa-solid fa-heart" ></i></span>
+                                            </button>
+                                            {% else %}
+                                            <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_favourite({{ review.id }})">
+                                              <span id ="review_favourite_button_id{{review.id}}"><i class="fa-regular fa-heart"></i></span>
+                                            </button>
+                                            {% endif %}
+                                            <span id="review_favourite_count{{review.id}}" class="favourite_count justify-content-end">{{review.favourites|length}}</span>
+                                        </div>
+                                  </div>
+                                  
+                                </li>
+                                <div>
+                              {% if user.is_authenticated %}
+                              <form method="POST">
+                                <span class="input-group-append" style="padding-left:18px;">
+                                  <textarea name="reply" id="reply-{{review.id}}" class="form-control" style ="height: 50px; display: none;" placeholder="Write your reply here!"></textarea>
+                                  <br />
+                                  <div align="center">
+                                    <input type="hidden" name="parent_id" id="parent_id" value={{review['id']}} />
+                                    <button type="submit" id="reply_submit_button-{{review.id}}" class="btn btn-primary btn-sm" style="display:none;">Add reply</button>  
+                                  </div>
+                                </span>
+                              </form>
+  
+                              {% else %}
+  
+                              <span class="input-group-append ">
                                 <textarea name="reply" id="reply-{{review.id}}" class="form-control" style ="height: 50px; display: none;" placeholder="Write your reply here!"></textarea>
                                 <br />
                                 <div align="center">
-                                  <input type="hidden" name="parent_id" id="parent_id" value={{review['id']}} />
-                                  <button type="submit" id="reply_submit_button-{{review.id}}" class="btn btn-primary btn-sm" style="display:none;">Add reply</button>  
+                                  <div class = "reply_button">
+                                    <button class="btn btn-primary btn-sm" id="reply_submit_button-{{review.id}}" class="reply_button" style="display:none;">Login to add reply</a>
+                                  </div> 
                                 </div>
                               </span>
-                            </form>
-
-                            {% else %}
-
-                            <span class="input-group-append ">
-                              <textarea name="reply" id="reply-{{review.id}}" class="form-control" style ="height: 50px; display: none;" placeholder="Write your reply here!"></textarea>
-                              <br />
-                              <div align="center">
-                                <div class = "reply_button">
-                                  <button class="btn btn-primary btn-sm" id="reply_submit_button-{{review.id}}" class="reply_button" style="display:none;">Login to add reply</a>
-                                </div> 
-                              </div>
-                            </span>
-                            {% endif %}
-                          </div>
-                    </div>
-                    {% endfor %}
-                  </ul>
+                              {% endif %}
+                            </div>
+                      </div>
+                      {% endfor %}
+                    </ul>
 
 </body>
 {% endblock %}
