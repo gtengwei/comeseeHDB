@@ -6,11 +6,17 @@
     background-color: white;
 
 }
+
 .card-header {
     background-color: #ffcad4;
     display: inline-flex;
-
+    font-size: 1.1rem;
 }
+
+.card-header a {
+    color: #4c4646;
+}
+
 .card-body {
     background-color: white;  
 }
@@ -77,4 +83,51 @@ button[class^="favourite_button"] {
     padding-top: 7px; 
     padding-right:10px;
 
+}
+
+
+/* login.html */
+.user-acc {
+    background-color: #ffd7df;
+    margin:15px auto;
+    width: 80%;
+    border-radius: 10px;
+    padding-bottom: 10px;
+}
+
+form h3 {
+    padding-top: 10px;
+    font-size: 3rem;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 700;
+}
+
+.form-group {
+    padding: 0 40px;
+    font-size: 1.3rem;
+}
+
+.form-group label{
+    font: 3rem;
+}
+
+form button:hover {
+    background-color: #ffffff !important;
+    color: #f59090 !important;
+}
+
+.other {
+    text-align: center;
+    font-style: italic;
+}
+
+/* search */
+.search-bar button:hover {
+    color: #ffffff !important;
+    background-color: #fc9483 !important;
+}
+
+#dice:hover {
+    color: #ffffff !important;
+    background-color: #fc9483 !important;
 }

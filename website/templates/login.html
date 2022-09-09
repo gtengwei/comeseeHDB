@@ -1,8 +1,8 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} 
 
 {% block content %}
-<form method="POST">
-  <h3 align="center">Login</h3>
+<form class="user-acc" method="POST">
+  <h3 align="center">Log In</h3>
   <div class="form-group">
     <label for="email">Email Address</label>
     <input
@@ -24,11 +24,18 @@
     />
   </div>
   <br />
-  <button type="submit" class="btn btn-primary">Login</button>
+  <button type="submit" class="btn btn-primary" 
+  style="background-color: #f59090; font-size: 1.5rem; padding:0.5% 3%;
+  border: 0; display: block; margin: 0 auto;">Login</button>
   <br/>
-  <br/>
-  <a href="/forgot-password">Forgot Password?</a>
-  <br/>
-  <a href="/verify-email">Send Verification Email</a>
+  <div class = "other">
+    <a href="/forgot-password" style="color:#000000;">Forgot Password?</a>
+    <br/>
+    <a href="/verify-email" style="color:#000000;">Send Verification Email</a>
+  </div>
 </form>
+
+<div class="container-fluid px-0">
+  <img style="width: 100%" src="\static\bottom_img.png"/>
+</div>
 {% endblock %}
