@@ -1,0 +1,493 @@
+{% extends "base.html" %}
+    
+{% block title %}Flat Details{% endblock %}
+    
+{% block content %}
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script type="text/javascript" src="/static/index.js"></script>
+  <script 
+    {{ moment.include_moment() }}
+    ></script>
+ <script>
+  $(document).ready(function(){
+      $('.favourite_button').click(function(){
+        $("#createAccountModal").modal('show');
+      }); 
+  });
+</script>
+<script>
+  $(document).ready(function(){
+      $('.review_button').click(function(){
+        $("#createAccountModal").modal('show');
+      }); 
+  });
+</script>
+<script>
+  $(document).ready(function(){
+      $('.reply_button').click(function(){
+        $("#createAccountModal").modal('show');
+      }); 
+  });
+</script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+  <style>
+    .street_name {
+      display: inline-flex;
+    }
+
+    button[class^="favourite_button"] {
+      background-color: white;
+      border:none;
+      outline:none;
+      color: red;
+      align-self: flex-start;
+    }
+    .carousel{
+      width: 50%;
+      float: left;
+    }
+    .map{
+      width: 48%;
+      margin-left: 0.5cm;
+      float: right;
+    }
+    .clearfix{
+      clear:both
+    }
+
+    
+  </style>
+</head>
+
+<body>
+  <div class="row">
+    <div class = "column">
+      <div id="map" style="width:500px; height:400px;"></div>
+    </div>
+    <div class = "column">
+      <div id="pano" style="width:500px; height:400px;"></div>
+    </div>
+</div>
+  <!-- And lastly, add the script to load the Google map API. 
+  		  Don't forget to replace the API key with your own. --> 
+  		  
+  <script
+    
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY&callback=initialize&v=weekly"
+  ></script>
+
+
+
+
+
+
+
+<div class="street_name">
+  <h1>{{flat.address_no_postal_code}}</h1>
+  {% if user.is_authenticated %}
+        {% if flat.id in user.favourites|map(attribute="flat_id")|list %}
+        <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="unfavourite({{ flat.id }})">
+          <span id ="favourite_button_id{{flat.id}}"><i class="fa-solid fa-heart"></i></span>
+        </button>
+        {% else %}
+        <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="favourite({{ flat.id }})">
+          <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
+        </button>
+        {% endif %}
+  {% else %}
+      <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button">
+        <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
+      </button>
+      <div class = "guest_error">
+        <div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Login Feature</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+    
+              <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                  <a href='/sign-up'<h5> Create an account to use this feature!</h5></a> 
+                </div>
+    
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    {% endif %}
+  <span id="favourite_count{{flat.id}}" class="favourite_count">{{flat.favourites|length}}</span>
+  
+</div>
+
+<div id="latitude" style="display:none;">
+  {{flat.latitude}}
+</div>
+<div id="longitude" style="display:none;">
+  {{flat.longitude}}
+</div>
+
+<div class="row"> 
+  <div class="col-sm-3">
+      <p class="mb-0">Price</p>
+  </div>
+  <div class="col-sm-3 border-right">
+      <p class="text-muted mb-0">${{flat.resale_price}}</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="mb-0">Block</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="text-muted mb-0">{{flat.block}}</p>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-sm-3">
+      <p class="mb-0">Flat Type</p>
+  </div>
+  <div class="col-sm-3 border-right">
+      <p class="text-muted mb-0">{{flat.flat_type}}</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="mb-0">Floor Area(Metre Square)</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="text-muted mb-0">{{flat.floor_area_sqm}}</p>
+  </div>
+</div>
+<hr>
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Storey Range</p>
+</div>
+<div class="col-sm-3 border-right">
+    <p class="text-muted mb-0">{{flat.storey_range}}</p>
+</div>
+<div class="col-sm-3">
+    <p class="mb-0">Price per Square Metre</p>
+</div>
+<div class="col-sm-3">
+    <p class="text-muted mb-0">${{flat.price_per_sqm}}</p>
+</div>
+</div>
+<hr>
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Sold Date</p>
+</div>
+<div class="col-sm-3 border-right">
+    <p class="text-muted mb-0">{{flat.month}}</p>
+</div>
+<div class="col-sm-3">
+    <p class="mb-0">Flat Model</p>
+</div>
+<div class="col-sm-3">
+    <p class="text-muted mb-0">{{flat.flat_model}}</p>
+</div>
+</div>
+<hr>
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Town</p>
+</div>
+<div class="col-sm-3 border-right">
+    <p class="text-muted mb-0">{{flat.town}}</p>
+</div>
+<div class="col-sm-3">
+    <p class="mb-0">Remaining Lease</p>
+</div>
+<div class="col-sm-3">
+    <p class="text-muted mb-0">{{flat.remaining_lease}}</p>
+</div>
+</div>
+<hr>
+<div class="row">
+<div class="col-sm-3">
+    <p class="mb-0">Postal District</p>
+</div>
+<div class="col-sm-3 border-right">
+    <p class="text-muted mb-0">{{flat.postal_sector}}</p>
+</div>
+<div class="col-sm-3">
+    <p class="mb-0">Postal Code</p>
+</div>
+<div class="col-sm-3">
+    <p class="text-muted mb-0">{{flat.postal_code}}</p>
+</div>
+</div>
+
+<br>
+<h3> Amenities </h3>
+<hr>
+<style>
+  button[class^="amenities_btn"] {
+      color:black;
+      background-color: pink;
+      border-color:black;
+      border-width: 1px;
+      outline:none;
+      border-radius: 5px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-sm-3">
+      <div class="row">
+      <button class="amenities_btn" type="button" disabled>
+        <p class="mb-0">Bus Stop 
+        <i class="fa-solid fa-bus"></i>
+        </p>
+      </button>
+      &nbsp;
+      <button class="amenities_btn" type="button" disabled>
+        <p class="mb-0">Train Station 
+          <i class="fa-solid fa-train-subway"></i>
+        </p>
+      </button>
+      </div>
+      <br>
+      <table style="width:100%">
+      {%if amenities['bus_station']|length != 0 %}
+      {%for key1,value1 in amenities["bus_station"].items()%}
+      <tr>
+        <td><div style="width:400px"><p class="text-muted mb-0">
+          {{key1}}
+        </p></div></td>
+        
+        <td><div style="width:80px"><p class="text-muted mb-0">
+          {{value1[0]}}m 
+        </p></td>
+        <td><div style="width:50px"><p class="text-muted mb-0">
+          {{value1[1]}}min
+           </p></td>
+        </tr>
+      {% endfor %}
+      {%endif%}
+    
+      {%if amenities['subway_station']|length !=0 %}
+      {%for key1,value1 in amenities["subway_station"].items()%}
+      <tr>
+        <td><div style="width:400px"><p class="text-muted mb-0">
+          {{key1}}
+        </p></td>
+        <td><div style="width:80px"><p class="text-muted mb-0">
+          {{value1[0]}}m 
+        </p></td>
+        <td><div style="width:50px"><p class="text-muted mb-0">
+          {{value1[1]}}min
+           </p></td>
+        </tr>
+      {% endfor %}
+      {%endif%}
+    
+        </table>
+      
+        
+    </div>
+    <div class="col-sm-3 border-right"></div>
+    
+    <div class="col-sm-3">
+      <button class="amenities_btn" type="button" disabled>
+        <p class="mb-0"> School
+          <i class="fa-solid fa-school"></i>    
+        </p>
+      </button>
+      <br>
+      <br>
+      <table style="width:100%">
+        {%if amenities['school']|length !=0 %}
+        {%for key1,value1 in amenities["school"].items()%}
+        <tr>
+          <td><div style="width:400px"><p class="text-muted mb-0">
+            {{key1}}
+          </p></td>
+          <td><div style="width:80px"><p class="text-muted mb-0">
+            {{value1[0]}}m 
+          </p></td>
+          <td><div style="width:50px"><p class="text-muted mb-0">
+            {{value1[1]}}min
+             </p></td>
+          </tr>
+        {% endfor %}
+        {%endif%}
+      </table>
+    </div>
+    
+    </div>
+    
+    
+    <hr>
+    
+    <div class="row">
+      <div class="col-sm-3">
+        <button class="amenities_btn" type="button" disabled>
+          <p class="mb-0">Food
+            <i class="fa-solid fa-utensils"></i>
+          </p>
+        </button>
+        <br>
+        <br>
+        <table style="width:100%">
+          {%if amenities['restaurant']|length !=0 %}
+        {%for key1,value1 in amenities["restaurant"].items()%}
+          <tr>
+            <td><div style="width:400px"><p class="text-muted mb-0">
+              {{key1}}
+            </p></td>
+            <td><div style="width:80px"><p class="text-muted mb-0">
+              {{value1[0]}}m 
+            </p></td>
+            <td><div style="width:50px"><p class="text-muted mb-0">
+              {{value1[1]}}min
+               </p></td>
+            </tr>
+          {% endfor %}
+          {%endif%}
+        </table>
+        </div>
+        <div class="col-sm-3 border-right"></div>
+      <div class="col-sm-3">
+        <button class="amenities_btn " type="button" disabled>
+          <p class="mb-0">Clinic
+            <i class="fa-solid fa-clinic-medical"></i>    
+          </p>
+        </button>
+        <br>
+        <br>
+        <table style="width:100%">
+          {%if amenities['doctor']|length !=0 %}
+        {%for key1,value1 in amenities["doctor"].items()%}
+          <tr>
+            <td><div style="width:400px"><p class="text-muted mb-0">
+              {{key1}}
+            </p></td>
+            <td><div style="width:80px"><p class="text-muted mb-0">
+              {{value1[0]}}m 
+            </p></td>
+            <td><div style="width:50px"><p class="text-muted mb-0">
+              {{value1[1]}}min
+               </p></td>
+            </tr>
+          {% endfor %}
+          {%endif%}
+        </table>
+        
+    
+      </div>
+    </div>
+<br>
+{% if user.is_authenticated %}
+<form method="POST">
+  <span class="input-group-append ">
+    <textarea name="review" id="review" class="form-control" style ="height: 50px" placeholder="Write your review here!"></textarea>
+    <br />
+    <div align="center">
+      <button type="submit" class="btn btn-primary btn-sm">Add Review</button>  
+    </div>
+  </span>
+</form>
+
+{% else %}
+
+<span class="input-group-append ">
+  <textarea name="review" id="review" class="form-control" style ="height: 50px" placeholder="Write your review here!"></textarea>
+  <br />
+  <div align="center">
+    <div class = "review_button">
+      <button  class="btn btn-primary btn-sm" class = "review_button">Login to add review</a>
+    </div> 
+  </div>
+</span>
+{% endif %}
+
+<h1 align="center">Reviews</h1>
+
+<br>
+
+{% if flat.reviews|length == 0 %}
+  <h3 class="text-muted mb-0" align="center">No reviews yet!</h3>
+{% else %}
+  <h3 class="text-muted mb-0" align="right">{{flat.reviews|length}} Reviews Posted</h3>
+{% endif %}
+
+<ul class="list-group list-group-flush" id="reviews">
+{% for review in flat.reviews|sort(attribute='review_path') %}
+    <!-- Begin review indentation -->
+    {% if review.level() == 0 %}
+    <div class="col-sm-12" >
+        {% elif review.level() == 1 %}
+        <div class="col-sm-11 offset-1">
+            {% elif review.level() == 2 %}
+            <div class="col-sm-10 offset-2 ">
+                {% elif review.level() == 3 %}
+                <div class="col-sm-9 offset-3 ">
+                    {% elif review.level() == 4 %}
+                    <div class="col-sm-8 offset-4">
+                        {% else %}
+                        <div class="col-sm-7 offset-5 ">
+                            {% endif %}
+                            <!-- End review indentation -->
+                              <li class="list-group-item">
+                                <img src="{{ review.user.avatar(50) }}">
+                                <b>{{review.user.username}}</b>
+                                <div style="word-wrap: break-word; width:100%">
+                                  <p>{{ review.data }}</p>
+                                      <div class="row justify-content-end">
+                                        <span id="reply_button-{{review.id}}">
+                                        <button type="button" class="btn btn-link btn-sm" id="reply_button-{{review.id}}" onClick=reply({{review.id}})>Reply</button>
+                                      </span>
+                                          <small class="text-muted"> Posted {{moment(review.date).fromNow() }}</small>
+                                          {% if review.user == user %}
+                                          <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                          {% endif %}
+                                      </div>
+                                </div>
+                                
+                              </li>
+                              <div>
+                            {% if user.is_authenticated %}
+                            <form method="POST">
+                              <span class="input-group-append" style="padding-left:18px;">
+                                <textarea name="reply" id="reply-{{review.id}}" class="form-control" style ="height: 50px; display: none;" placeholder="Write your reply here!"></textarea>
+                                <br />
+                                <div align="center">
+                                  <input type="hidden" name="parent_id" id="parent_id" value={{review['id']}} />
+                                  <button type="submit" id="reply_submit_button-{{review.id}}" class="btn btn-primary btn-sm" style="display:none;">Add reply</button>  
+                                </div>
+                              </span>
+                            </form>
+
+                            {% else %}
+
+                            <span class="input-group-append ">
+                              <textarea name="reply" id="reply-{{review.id}}" class="form-control" style ="height: 50px; display: none;" placeholder="Write your reply here!"></textarea>
+                              <br />
+                              <div align="center">
+                                <div class = "reply_button">
+                                  <button class="btn btn-primary btn-sm" id="reply_submit_button-{{review.id}}" class="reply_button" style="display:none;">Login to add reply</a>
+                                </div> 
+                              </div>
+                            </span>
+                            {% endif %}
+                          </div>
+                    </div>
+                    {% endfor %}
+                  </ul>
+
+</body>
+{% endblock %}
