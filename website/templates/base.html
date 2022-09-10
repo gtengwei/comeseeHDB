@@ -109,5 +109,9 @@
       type="text/javascript"
       src="{{ url_for('static', filename='index.js') }}"
     ></script>
+
+    <script 
+    {{ moment.include_moment() }}
+    ></script>
   </body>
 </html>

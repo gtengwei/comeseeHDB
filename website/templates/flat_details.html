@@ -9,9 +9,7 @@
   <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <script type="text/javascript" src="/static/index.js"></script>
-  <script 
-    {{ moment.include_moment() }}
-    ></script>
+  
  <script>
   $(document).ready(function(){
       $('.favourite_button').click(function(){
@@ -513,19 +511,47 @@
                                           <button type="button" class="btn btn-link btn-sm" id="reply_button-{{review.id}}" onClick=reply({{review.id}})>Reply</button>
                                         </span>
                                             <small class="text-muted"> Posted {{moment(review.date).fromNow() }}</small>
-                                            {% if review.user == user %}
-                                            <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
-                                              <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            {% endif %}
-                                            {% if review.id in user.review_favourites|map(attribute="review_id")|list %}
-                                            <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_unfavourite({{ review.id }})" >
-                                              <span id ="review_favourite_button_id{{review.id}}"><i class="fa-solid fa-heart" ></i></span>
-                                            </button>
-                                            {% else %}
-                                            <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_favourite({{ review.id }})">
-                                              <span id ="review_favourite_button_id{{review.id}}"><i class="fa-regular fa-heart"></i></span>
-                                            </button>
+                                              {% if review.user == user %}
+                                              <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                              {% endif %}
+                                              {% if user.is_authenticated %}
+                                                {% if review.id in user.review_favourites|map(attribute="review_id")|list %}
+                                                <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_unfavourite({{ review.id }})" >
+                                                  <span id ="review_favourite_button_id{{review.id}}"><i class="fa-solid fa-heart" ></i></span>
+                                                </button>
+                                                {% else %}
+                                                <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_favourite({{ review.id }})">
+                                                  <span id ="review_favourite_button_id{{review.id}}"><i class="fa-regular fa-heart"></i></span>
+                                                </button>
+                                                {% endif %}
+                                              {% else %}
+                                              <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" 
+                                                <span id ="review_favourite_button_id{{review.id}}"><i class="fa-regular fa-heart"></i></span>
+                                              </button>
+                                              <div class = "guest_error">
+                                                <div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                                  aria-hidden="true">
+                                                  <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header text-center">
+                                                        <h4 class="modal-title w-100 font-weight-bold">Login Feature</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                      </div>
+                                            
+                                                      <div class="modal-body mx-3">
+                                                        <div class="md-form mb-5">
+                                                          <a href='/sign-up'<h5> Create an account to use this feature!</h5></a> 
+                                                        </div>
+                                            
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                            </div>
                                             {% endif %}
                                             <span id="review_favourite_count{{review.id}}" class="favourite_count justify-content-end">{{review.favourites|length}}</span>
                                         </div>
