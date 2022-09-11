@@ -9,7 +9,7 @@ print(cwd)
 os.chdir(cwd)
 flat = pd.read_csv('merged.csv')
 flat = flat.drop_duplicates(subset=['address'])
-ind_list = [i for i in range(5500, 6000)]
+ind_list = [i for i in range(3000, 3500)]
 flat = flat.iloc[ind_list]
 print(flat)
 for i in range(len(flat)):

@@ -3,8 +3,13 @@ import socket
 import requests
 from urllib3.util import connection as urllib3_cn
 import sqlite3
+from time import sleep
 from pathlib import Path
 import os
+import json
+cwd = Path(__file__).parent.absolute()
+print(cwd)
+os.chdir(cwd)
 
 
 def allowed_gai_family():
@@ -144,7 +149,75 @@ def update_values(update, old):
     return old
 
 
-def database():  # update the database
+def nearby_amenities(flat):
+    for i in range(len(flat)):
+        print(f"{i} out of {len(flat)} flats")
+        latitude = flat['latitude'].values[i]
+        longitude = flat['longitude'].values[i]
+        address = flat['address'].values[i]
+        print(
+            f"latitude: {latitude}, longitude: {longitude}, address: {address}")
+        filename = 'amenity_database.json'
+
+        with open(filename, 'r') as f:
+            data = json.load(f)
+            # print(address)
+            # print(data.get(address))
+            if address in data.keys():
+                print("already in database!")
+                continue
+            else:
+                API_KEY = "AIzaSyDwS329iP0ud2pCuOYmZ9Rw2dgBOPOF2Ro"
+                API_KEY2 = 'AkdzD3AqL25FORSLfIYA5qiByFYP88BJnnzGnKHag6k-GkNRA9wSLdbn-KjhC_fU'
+
+                specificamenity = {}  # specific amenity
+                amenitydict = {}  # dictionaries of amenities
+                amenity_list = ['bus_station', 'subway_station',
+                                'school', 'restaurant', 'doctor']
+                #amenity_list = ['school']
+                for amenity in amenity_list:
+                    specificamenity = {}  # specific amenity
+                    url1 = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + \
+                        str(latitude) + "%2C" + str(longitude) + \
+                        "&radius=500&type="+amenity+"&key=" + API_KEY
+                    print(url1)
+                    payload = {}
+                    headers = {}
+
+                    response1 = requests.request(
+                        "GET", url1, headers=headers, data=payload).json()
+                    length = response1["results"]
+                    for i in range(len(length)):
+                        name = response1["results"][i]['name']
+                        print(name)
+                        if len(name) > 30:
+                            continue
+                        if (amenity == 'school') and ('School' not in name):
+                            continue
+                        lat_of_nearby = response1['results'][i]['geometry']['location']['lat']
+                        lon_of_nearby = response1['results'][i]['geometry']['location']['lng']
+                        url2 = "https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?origins="+str(latitude)+","+str(longitude)+"&destinations="+str(lat_of_nearby)+"," + \
+                            str(lon_of_nearby) + \
+                            "&travelMode=walking&timeUnit=minute&distanceUnit=km&key="+API_KEY2
+                        payload = {}
+                        headers = {}
+                        response2 = requests.request(
+                            "GET", url2, headers=headers, data=payload).json()
+                        nearby_distance = round((response2['resourceSets'][0]['resources'][0]
+                                                ['results'][0]['travelDistance'])*1000)  # get distance in metres
+                        nearby_duration = round(response2['resourceSets'][0]['resources']
+                                                [0]['results'][0]['travelDuration'])  # get duration in minutes
+                        specificamenity[name] = [
+                            nearby_distance, nearby_duration]
+                        amenitydict[amenity] = specificamenity
+
+                    print(amenitydict)
+            data[address] = amenitydict
+            with open('amenity_database.json', 'w') as f:
+                json.dump(data, f, indent=4)
+
+
+def database():
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("DROP TABLE flat")
@@ -153,10 +226,7 @@ def database():  # update the database
 
 
 def main():
-    cwd = Path(__file__).parent.absolute()
-    print(cwd)
-    os.chdir(cwd)
-    df = pd.read_csv("flats.csv") #flats.csv should be downloaded from data.gov.sg
+    df = pd.read_csv("flats.csv")
     # select a month to update
     month = input("Enter a month to update (YYYY-MM): ")
     df = df[(df['month'] >= month)]  # select the latest month
@@ -178,6 +248,9 @@ def main():
     print("database_csv:", database_csv)
     database_csv.to_csv('merged.csv', index=False)
     database()
+    print("Database has been updated! Nearby amenities will be updating now.")
+    sleep(10)
+    nearby_amenities(update)
 
 
 if __name__ == "__main__":
