@@ -4,6 +4,10 @@
 {% block content %}
 <h1 align="center">Profile</h1>
 
+{% if current_user.access_id == 1%}
+<h1>THIS IS AN AGENT ACCOUTN IN DEVELOPMENT</h1>
+{% endif %}
+
 <section style="background-color: rgba(255, 182, 193, 0.178);">
       <div class="row">
         <div class="col-lg-4">
@@ -13,8 +17,11 @@
               <h5 class="my-3">{{user.username}}</h5>
 
               <div class="d-flex justify-content-center mb-2">
-                <a <button type="button" class="btn btn-primary" href="{{ url_for('user.profile', username=current_user.username) }}">Personal Information</button></a> 
-                <a <button type="button" class="btn btn-outline-primary ms-1" href="{{ url_for('user.favourites', username=current_user.username) }}">Favourites</button></a>
+                <a class="m-1" href="{{ url_for('user.profile', username=current_user.username) }}"> <button type="button" class="btn btn-outline-primary ms-1">Personal Information</button></a> 
+                <a class="m-1" href="{{ url_for('user.favourites', username=current_user.username) }}"> <button type="button" class="btn btn-primary">Favourites</button></a>
+                {% if current_user.access_id == 1 %}
+                <a class="m-1" href="\"> <button type="button" class="btn btn-primary">Property</button></a>          
+                {% endif %}    
               </div>
             </div>
           </div>

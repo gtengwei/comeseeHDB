@@ -14,6 +14,30 @@ auth = Blueprint('auth', __name__)
 ## Route for Login Page
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    if User.query.filter_by(email="test@gmail.com").first() is None:
+        new_user = User(email = "test@gmail.com" ,
+                        username = "test12345",
+                        password = generate_password_hash("12345678", method="sha256"),
+                        access_id = 0,
+                        postal_code = 12,
+                        email_verified = True,
+                        email_verified_date = datetime.now())
+        db.session.add(new_user)
+        db.session.commit()
+        print("test12345 added!")
+        
+    if User.query.filter_by(email="agent@gmail.com").first() is None:
+        new_user = User(email = "agent@gmail.com" ,
+                        username = "agent12345",
+                        password = generate_password_hash("12345678", method="sha256"),
+                        access_id = 1,
+                        postal_code = 12,
+                        email_verified = True,
+                        email_verified_date = datetime.now())
+        db.session.add(new_user)
+        db.session.commit()
+        print("agent12345 added!")
+
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')

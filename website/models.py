@@ -58,6 +58,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     username = db.Column(db.String(150))
+    access_id = db.Column(db.Integer(), nullable=False, default=0)
     postal_code = db.Column(db.Integer)
     postal_code_change = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
     favourites = db.relationship('Favourites')
