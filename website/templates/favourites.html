@@ -18,8 +18,8 @@
               <img src="{{ user.avatar(100) }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
               <h5 class="my-3">{{user.username}}</h5>
               <div class="d-flex justify-content-center mb-2">
-                <a <button type="button" class="btn btn-outline-primary ms-1" href="{{ url_for('user.profile', username=current_user.username) }}">Personal Information</button></a> 
-                <a <button type="button" class="btn btn-primary" href="{{ url_for('user.favourites', username=current_user.username) }}">Favourites</button></a>
+                <a class="m-1" href="{{ url_for('user.profile', username=current_user.username) }}"> <button type="button" class="btn btn-outline-primary ms-1">Personal Information</button></a> 
+                <a class="m-1" href="{{ url_for('user.favourites', username=current_user.username) }}"> <button type="button" class="btn btn-primary">Favourites</button></a>
               </div>
             </div> 
           </div>
