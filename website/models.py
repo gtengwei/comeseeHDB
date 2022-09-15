@@ -66,6 +66,7 @@ class User(db.Model, UserMixin):
     email_verified_date = db.Column(db.DateTime(timezone=True), default = None)
     reviews = db.relationship('Review', backref = 'user', passive_deletes=True)
     review_favourites = db.relationship('ReviewFavourites')
+    property = db.relationship('Property', backref = 'user', passive_deletes=True)
 
     def get_token(self,expires_sec=120):
         serial=Serializer(current_app.config['SECRET_KEY'],expires_in = expires_sec)
@@ -127,3 +128,25 @@ def create_Flat_table():
     df = pd.read_csv('merged.csv')
     df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
 
+class Property(db.Model):
+    # Inform SQLAlchemy of the column names and its attributes
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    agent_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) 
+    town = db.Column(db.String(150))
+    flat_type = db.Column(db.String(150))
+    flat_model = db.Column(db.String(150))
+    address = db.Column(db.String(150))
+    block = db.Column(db.String(150))
+    street_name = db.Column(db.String(150))
+    floor_area_sqm = db.Column(db.Float)
+    price = db.Column(Float) 
+    #numOfFavourites = db.Column(db.Integer, default=0)
+    #latitude = db.Column(db.Float)
+    #longitude = db.Column(db.Float)
+    postal_code = db.Column(db.Integer)
+    postal_sector = db.Column(db.Integer)
+    address_no_postal_code = db.Column(db.String(150))
+    image = db.Column(db.String(150))
+    time = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
+    #reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
+    #favourites = db.relationship('Favourites', backref = 'flat', passive_deletes=True)   

@@ -20,7 +20,7 @@
                 <a class="m-1" href="{{ url_for('user.profile', username=current_user.username) }}"> <button type="button" class="btn btn-outline-primary ms-1">Personal Information</button></a> 
                 <a class="m-1" href="{{ url_for('user.favourites', username=current_user.username) }}"> <button type="button" class="btn btn-primary">Favourites</button></a>
                 {% if current_user.access_id == 1 %}
-                <a class="m-1" href="\"> <button type="button" class="btn btn-primary">Property</button></a>          
+                <a class="m-1" href="{{ url_for('user.property', username=current_user.username) }}"> <button type="button" class="btn btn-primary">Property</button></a>          
                 {% endif %}    
               </div>
             </div>

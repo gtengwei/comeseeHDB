@@ -1,4 +1,5 @@
 ## Everything related to the user
+from ssl import VERIFY_ALLOW_PROXY_CERTS
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify, session
 from .models import *
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -53,6 +54,7 @@ def request_password_change(username):
 def change_username(username):
     user = User.query.filter_by(username=username).first_or_404()
     if request.method == 'POST':
+            print(request)
             username = request.form.get('username')
             check_username = User.query.filter_by(username=username).first()
             if username == current_user.username:
@@ -124,6 +126,85 @@ def favourites(username):
             
     return render_template("favourites.html", user=current_user, flats = [Flat.query.get(x) for x in fav_list])
 
+
+#Allow AGENT to see his/her property
+#Including basic oprations such as INSERT,DELETE,UPDATE
+@user.route("/property/<username>", methods=['GET','POST'])
+@login_required
+def property(username):
+    if current_user.access_id != 1:
+        flash("An error has occured. Please contact us!", category='error')
+        return render_template("home.html", user=current_user)
+        if request.method == 'POST':
+            address = request.form.get('searchFavourites')
+            print(address)
+            address = "%{}%".format(address)
+            flats = Flat.query.join(Favourites, Favourites.flat_id == Flat.id)\
+            .filter(Favourites.user_id == current_user.id)\
+            .filter(Flat.address.like(address)).all()
+            if flats:
+                return render_template("favourites.html", user=current_user, flats=flats)
+            else:
+                flash('No results found.', category='error')
+                return render_template("favourites.html", user=current_user, flats=[])
+            
+    property_list = []
+    for x in current_user.property:
+        property_list.append(x.id)
+
+    return render_template("property.html", user=current_user, property = [Property.query.get(x) for x in property_list])
+
+@user.route("/property/<username>/add-property", methods=['GET','POST'])
+@login_required
+def add_property(username):
+    if current_user.access_id != 1:
+        flash("An error has occured. Please contact us!", category='error')
+        return render_template("home.html", user=current_user)
+        if request.method == 'POST':
+            address = request.form.get('searchFavourites')
+            print(address)
+            address = "%{}%".format(address)
+            flats = Flat.query.join(Favourites, Favourites.flat_id == Flat.id)\
+            .filter(Favourites.user_id == current_user.id)\
+            .filter(Flat.address.like(address)).all()
+            if flats:
+                return render_template("favourites.html", user=current_user, flats=flats)
+            else:
+                flash('No results found.', category='error')
+                return render_template("favourites.html", user=current_user, flats=[])
+
+    property_list = []
+    for x in current_user.property:
+        property_list.append(x.id)   
+
+    if request.method == 'POST':
+        address_no_postal_code = request.form.get('address_no_postal_code')  
+        town = request.form.get('town')     
+        flat_type = request.form.get('flat_type')
+        block = request.form.get('block')
+        price = request.form.get('price')
+
+        new_property = Property(
+            agent_id = current_user.id,
+            town = town,
+            flat_type = flat_type,
+            #flat_model
+            #address
+            block = block,
+            #street_name
+            #floor_area_sqm
+            price = price,
+            #postal_code&sector
+            address_no_postal_code = address_no_postal_code,
+            image = "hdb_image0.jpg",
+            time = datetime.now()
+        )
+        db.session.add(new_property)
+        db.session.commit()
+        return redirect(url_for('user.property', username=current_user.username))
+            
+
+    return render_template("property_add.html", user=current_user, property = [Property.query.get(x) for x in property_list])
 
 
 

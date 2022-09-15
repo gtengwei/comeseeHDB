@@ -1,0 +1,124 @@
+{% include "property.html" %}
+
+{% block content %}
+
+<script>
+    $(document).ready(function(){
+        $("#addPropertyModal").modal('show');
+    });
+
+    $(document).ready(function () {
+      $('select').selectize({
+          sortField: 'text'
+      });
+     });
+</script>
+
+<form method="POST">
+    <div class="modal fade" id="addPropertyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h4 class="modal-title w-100 font-weight-bold">Add Property</h4>
+            <a href="{{  url_for('user.property', username = current_user.username) }}">
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </a>
+          </div>
+    
+          <div class="modal-body mx-3">
+            <div class="md-form mb-3">
+                <label for="address_no_postal_code">Address</label>
+                <input
+                type="text"
+                class="form-control"
+                id="address_no_postal_code"
+                name="address_no_postal_code"
+                placeholder="Enter Property's Address">
+                <div class="form-text small">e.g ADMIRALTY DR BLK 353A
+                </div>
+              </div>
+
+            <div class="md-form mb-3">
+                <label for="town">Town</label><br>
+                <select required id="town" name="town" class="form-select" aria-label="Default select example" aria-placeholder="Choose a town">
+                    <option value="ANG MO KIO">Ang Mo Kio</option>
+                    <option value="BEDOK">Bedok</option>
+                    <option value="BISHAN">Bishan</option>
+                    <option value="BUKIT BATOK">Bukit Batok</option>
+                    <option value="BUKIT MERAH">Bukit Merah</option>
+                    <option value="BUKIT PANJANG">Bukit Panjang</option>
+                    <option value="BUKIT TIMAH">Bukit Timah</option>
+                    <option value="CENTRAL AREA">Central Area</option>
+                    <option value="CHOA CHU KANG">Choa Chu Kang</option>
+                    <option value="CLEMENTI">Clementi</option>
+                    <option value="GEYLANG">Geylang</option>
+                    <option value="HOUGANG">Hougang</option>
+                    <option value="JURONG EAST">Jurong East</option>
+                    <option value="JURONG WEST">Jurong West</option>
+                    <option value="KALLANG/WHAMPOA">Kallang / whampoa</option>
+                    <option value="PASIR RIS">Pasir Ris</option>
+                    <option value="PUNGGOL">Punggol</option>
+                    <option value="QUEENSTOWN">Queenstown</option>
+                    <option value="SEMBAWANG">Sembawang</option>
+                    <option value="SENGKANG">Sengkang</option>
+                    <option value="SERANGOON">Serangoon</option>
+                    <option value="TAMPINES">Tampines</option>
+                    <option value="TOA PAYOH">Toa Payoh</option>
+                    <option value="WOODLANDS">Woodlands</option>
+                    <option value="YISHUN">Yishun</option>
+                </select>
+            </div>
+
+            <div class="md-form mb-3">
+                <label for="flat_type">Flat Type</label><br>
+                <select required id="flat_type" name="flat_type" class="form-select" aria-label="Default select example" aria-placeholder="Choose a flat type">
+                    <option value="2 ROOM">2 Room</option>
+                    <option value="3 ROOM">3 Room</option>
+                    <option value="4 ROOM">4 Room</option>
+                    <option value="5 ROOM">5 Room</option>
+                    <option value="EXECUTIVE">Executive</option>
+                </select>
+            </div>
+
+            <!-- flat-model -->
+
+            <!-- address -->
+
+            <div class="md-form mb-3">
+                <label for="block">Block</label>
+                <input  type="text"
+                        class="form-control"
+                        id="block"
+                        name= "block"
+                        placeholder="Enter Property's Block">
+            </div>
+
+            <!-- street-name-->
+
+            <!-- floor_area_sqm -->
+
+            <div class="md-form mb-3">
+                <label for="price">Price</label>
+                <input  type="number"
+                        min="1000"
+                        step="any"
+                        class="form-control"
+                        id="price"
+                        name="price"
+                        placeholder="Enter Property's Price">
+            </div> 
+
+            <!-- postal code & sector -->
+        
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <button type = "submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</form>
+{% endblock %}
