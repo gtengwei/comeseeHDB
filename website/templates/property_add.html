@@ -29,18 +29,7 @@
           </div>
     
           <div class="modal-body mx-3">
-            <div class="md-form mb-3">
-                <label for="address_no_postal_code">Address</label>
-                <input
-                type="text"
-                class="form-control"
-                id="address_no_postal_code"
-                name="address_no_postal_code"
-                placeholder="Enter Property's Address">
-                <div class="form-text small">e.g ADMIRALTY DR BLK 353A
-                </div>
-              </div>
-
+            <!-- Town -->
             <div class="md-form mb-3">
                 <label for="town">Town</label><br>
                 <select required id="town" name="town" class="form-select" aria-label="Default select example" aria-placeholder="Choose a town">
@@ -72,6 +61,31 @@
                 </select>
             </div>
 
+            <!-- STREET NAME -->
+            <div class="md-form mb-3">
+              <label for="street_name">Street</label>
+              <input  type="text"
+                      class="form-control"
+                      id="street_name"
+                      name="street_name"
+                      placeholder="Enter Property's Street">
+              <div class="form-text small">e.g ADMIRALTY DR, ANCHORVALE CRES
+              </div>
+            </div>
+
+            <!-- BLOCK -->
+            <div class="md-form mb-3">
+              <label for="block">Block</label>
+              <input  type="text"
+                      class="form-control"
+                      id="block"
+                      name= "block"
+                      placeholder="Enter Property's Block">
+              <div class="form-text small">e.g 353A, 190B
+              </div>
+            </div>
+
+            <!-- FLAT TYPE-->
             <div class="md-form mb-3">
                 <label for="flat_type">Flat Type</label><br>
                 <select required id="flat_type" name="flat_type" class="form-select" aria-label="Default select example" aria-placeholder="Choose a flat type">
@@ -83,27 +97,36 @@
                 </select>
             </div>
 
-            <!-- flat-model -->
+            <!-- FLAT MODEL -->
+            <div class="md-form mb-3">
+              <label for="flat_model">Flat MODEL</label><br>
+              <select required id="flat_model" name="flat_model" class="form-select" aria-label="Default select example" aria-placeholder="Choose a flat model">
+                  <option value="Model A">Model A</option>
+                  <option value="Improved">Improved</option>
+                  <option value="Apartment">Apartment</option>
+                  <option value="Premium Apartment">Premium Apartment</option>
+              </select>
+            </div>
 
             <!-- address -->
 
+            <!-- Floor Area Square Meter-->
             <div class="md-form mb-3">
-                <label for="block">Block</label>
-                <input  type="text"
-                        class="form-control"
-                        id="block"
-                        name= "block"
-                        placeholder="Enter Property's Block">
-            </div>
+              <label for="floor_area_sqm">Size</label>
+              <input  type="number"
+                      min="10000"
+                      step="any"
+                      class="form-control"
+                      id="floor_area_sqm"
+                      name= "floor_area_sqm"
+                      placeholder="Enter Property's Area">
+          </div>
 
-            <!-- street-name-->
-
-            <!-- floor_area_sqm -->
-
+            <!-- Price -->
             <div class="md-form mb-3">
                 <label for="price">Price</label>
                 <input  type="number"
-                        min="1000"
+                        min="10000"
                         step="any"
                         class="form-control"
                         id="price"
@@ -112,6 +135,8 @@
             </div> 
 
             <!-- postal code & sector -->
+
+            <!-- image -->
         
           </div>
           <div class="modal-footer d-flex justify-content-center">
