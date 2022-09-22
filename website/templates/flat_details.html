@@ -5,7 +5,7 @@
 {% block content %}
 <head>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <script type="text/javascript" src="/static/index.js"></script>
@@ -31,6 +31,11 @@
       }); 
   });
 </script>
+<div hidden="hidden">
+<script 
+  {{ moment.include_moment() }}
+></script>
+</div>
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
