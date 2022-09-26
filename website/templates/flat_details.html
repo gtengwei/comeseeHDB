@@ -88,9 +88,7 @@
 </div>
   <!-- And lastly, add the script to load the Google map API. 
   		  Don't forget to replace the API key with your own. --> 
-  		  <div id = 'latitude' style = "display:none;">{{flat.latitude}}</div>
-        <div id = 'longitude' style = "display:none;">{{flat.longitude}}</div>
-
+  		  
   <script
     
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY&callback=initialize&v=weekly"
@@ -157,7 +155,7 @@
       <p class="mb-0">Price</p>
   </div>
   <div class="col-sm-3 border-right">
-      <p class="text-muted mb-0">${{flat.resale_price}}..........</p>
+      <p class="text-muted mb-0">${{flat.resale_price}}</p>
   </div>
   <div class="col-sm-3">
       <p class="mb-0">Block</p>
@@ -257,205 +255,150 @@
 </style>
 
 <div class="row">
-<div class="col-sm-4">
-  <div class="row">
-  <button class="amenities_btn" type="button" disabled>
-    <p class="mb-0">Bus Stop 
-    <i class="fa-solid fa-bus"></i>
-    </p>
-  </button>
-  &nbsp;
-  <button class="amenities_btn" type="button" disabled>
-    <p class="mb-0">Train Station 
-      <i class="fa-solid fa-train-subway"></i>
-    </p>
-  </button>
-  </div>
-  <br>
-  {%if amenities['bus_station']|length != 0 %}
-  {%for key1,value1 in amenities["bus_station"].items()%}
-  <p class="text-muted mb-0">
-  {{key1}} 
-  </p>
-  {% endfor %}
-  {%endif%}
-  {%if amenities['subway_station']|length !=0 %}
-  {%for key1,value1 in amenities["subway_station"].items()%}
-  <p class="text-muted mb-0">
-  {{key1}} Station
-  </p>
-  {% endfor %}
-  {%endif%}
-
-</div>
-
-<div class="col-sm-2 border-right" id="right">
-  <br>
-  <br>
-  <div class = "row">
-    <div class = "col-sm-4" >
-      {%if amenities['bus_station']|length !=0 %}
-  {%for key1,value1 in amenities["bus_station"].items()%}
-      <p  class = "text-muted mb-0" >
-        {{value1[0]}}m 
-      </p>
-      {% endfor%}
+    <div class="col-sm-3">
+      <div class="row">
+      <button class="amenities_btn" type="button" disabled>
+        <p class="mb-0">Bus Stop 
+        <i class="fa-solid fa-bus"></i>
+        </p>
+      </button>
+      &nbsp;
+      <button class="amenities_btn" type="button" disabled>
+        <p class="mb-0">Train Station 
+          <i class="fa-solid fa-train-subway"></i>
+        </p>
+      </button>
+      </div>
+      <br>
+      <table style="width:100%">
+      {%if amenities['bus_station']|length != 0 %}
+      {%for key1,value1 in amenities["bus_station"].items()%}
+      <tr>
+        <td><div style="width:400px"><p class="text-muted mb-0">
+          {{key1}}
+        </p></div></td>
+        
+        <td><div style="width:80px"><p class="text-muted mb-0">
+          {{value1[0]}}m 
+        </p></td>
+        <td><div style="width:50px"><p class="text-muted mb-0">
+          {{value1[1]}}min
+           </p></td>
+        </tr>
+      {% endfor %}
       {%endif%}
+    
       {%if amenities['subway_station']|length !=0 %}
       {%for key1,value1 in amenities["subway_station"].items()%}
-      <p  class = "text-muted mb-0" >
-        {{value1[0]}}m 
-      </p>
-      {% endfor%}
+      <tr>
+        <td><div style="width:400px"><p class="text-muted mb-0">
+          {{key1}}
+        </p></td>
+        <td><div style="width:80px"><p class="text-muted mb-0">
+          {{value1[0]}}m 
+        </p></td>
+        <td><div style="width:50px"><p class="text-muted mb-0">
+          {{value1[1]}}min
+           </p></td>
+        </tr>
+      {% endfor %}
       {%endif%}
-     </div>
-     
-     <div class = "col-sm-2 border-none" >
-      {%if amenities['bus_station']|length !=0 %}
-    {%for key1,value1 in amenities["bus_station"].items()%}
-    <p class = "text-muted mb-0">
-    {{value1[1]}}min
-     </p>
-     {% endfor%}
-     {%endif%}
-     {%if amenities['subway_station']|length !=0 %}
-     {%for key1,value1 in amenities["subway_station"].items()%}
-    <p class = "text-muted mb-0">
-    {{value1[1]}}min
-     </p>
-     {% endfor%}
-     {%endif%}
+    
+        </table>
+      
+        
+    </div>
+    <div class="col-sm-3 border-right"></div>
+    
+    <div class="col-sm-3">
+      <button class="amenities_btn" type="button" disabled>
+        <p class="mb-0"> School
+          <i class="fa-solid fa-school"></i>    
+        </p>
+      </button>
+      <br>
+      <br>
+      <table style="width:100%">
+        {%if amenities['school']|length !=0 %}
+        {%for key1,value1 in amenities["school"].items()%}
+        <tr>
+          <td><div style="width:400px"><p class="text-muted mb-0">
+            {{key1}}
+          </p></td>
+          <td><div style="width:80px"><p class="text-muted mb-0">
+            {{value1[0]}}m 
+          </p></td>
+          <td><div style="width:50px"><p class="text-muted mb-0">
+            {{value1[1]}}min
+             </p></td>
+          </tr>
+        {% endfor %}
+        {%endif%}
+      </table>
     </div>
     
     </div>
-</div>
-
-
-<div class="col-sm-4">
-  <button class="amenities_btn" type="button" disabled>
-    <p class="mb-0"> School
-      <i class="fa-solid fa-school"></i>    
-    </p>
-  </button>
-  <br>
-  <br>
-  {%if amenities['school']|length !=0 %}
-    {%for key1,value1 in amenities["school"].items()%}
-    <p class = "text-muted mb-0">{{key1}}</p>
-    {% endfor %}
-</div>
-
-<div class="col-sm-2 border-none">
-  <br>
-  <br>
-  <div class = "row">
-    <div class = 'col-sm-4'>
-    {%for key1,value1 in amenities["school"].items()%}
-    <p class = "text-muted mb-0">{{value1[0]}}m</p>
-      {% endfor %}
-    </div>
-    <div class = "col-sm-2 border-none">
-      {%for key1,value1 in amenities["school"].items()%}
-      <p class = "text-muted mb-0">{{value1[1]}}min</p>
-      {% endfor %}
-    </div>
-
-  {% else %}
-     <div>
-      <p class = "text-muted mb-0">None</p>
-      </div>
-
-    <div class="col-sm-2 border-none">
-      <br>
-      <br>
-      <div class = "row">
-        <div class = 'col-sm-4'>
-          <p class = "text-muted mb-0" style="display:none;">0 m</p>
-        </div>
-        <div class = "col-sm-2 border-none">
-          <p class = "text-muted mb-0" style="display:none;">0min</p>
-        </div>
-      </div>
-      {%endif%}
-    </div>
-</div>
-
-</div>
-
-
-<hr>
-
-<div class="row">
-  <div class="col-sm-4">
-    <button class="amenities_btn" type="button" disabled>
-      <p class="mb-0">Food
-        <i class="fa-solid fa-utensils"></i>
-      </p>
-    </button>
-    <br>
-    <br>
-    {%if amenities['restaurant']|length !=0 %}
-    {%for key1,value1 in amenities["restaurant"].items()%}
-  <p class="text-muted mb-0">
-  {{key1}} 
-  </p>
-  {% endfor %}
-  </div>
-  <div class="col-sm-2 border-right">
-    <br>
-    <br>
-    <div class ="row">
-    <div class = "col-sm-4">
-    {%for key1,value1 in amenities["restaurant"].items()%}
-    <p class = "text-muted mb-0">{{value1[0]}}m</p>
-      {% endfor %}
-  </div>
-  <div class = "col-sm-2 border-none">
-    {%for key1,value1 in amenities["restaurant"].items()%}
-    <p class = "text-muted mb-0">{{value1[1]}}min</p>
-      {% endfor %}
-      {%endif%}
-  </div>
-  </div>
-  </div>
-
-
-  <div class="col-sm-4">
-    <button class="amenities_btn " type="button" disabled>
-      <p class="mb-0">Clinic
-        <i class="fa-solid fa-clinic-medical"></i>    
-      </p>
-    </button>
-    <br>
-    <br>
-    {%if amenities['doctor']|length !=0 %}
-    {%for key1,value1 in amenities["doctor"].items()%}
-  <p class="text-muted mb-0">
-  {{key1}} 
-  </p>
-  {% endfor %}
-      </div>
-
-      <div class="col-sm-2 border-none">
+    
+    
+    <hr>
+    
+    <div class="row">
+      <div class="col-sm-3">
+        <button class="amenities_btn" type="button" disabled>
+          <p class="mb-0">Food
+            <i class="fa-solid fa-utensils"></i>
+          </p>
+        </button>
         <br>
         <br>
-        <div class = "row">
-          <div class = "col-sm-4">
-        {%for key1,value1 in amenities["doctor"].items()%}
-        <p class = "text-muted mb-0">{{value1[0]}}m </p>
-          {% endfor %}
-      </div>
-      <div class = "col-sm-2 border-none">
-      {%for key1,value1 in amenities["doctor"].items()%}
-        <p class = "text-muted mb-0">{{value1[1]}}min</p>
+        <table style="width:100%">
+          {%if amenities['restaurant']|length !=0 %}
+        {%for key1,value1 in amenities["restaurant"].items()%}
+          <tr>
+            <td><div style="width:400px"><p class="text-muted mb-0">
+              {{key1}}
+            </p></td>
+            <td><div style="width:80px"><p class="text-muted mb-0">
+              {{value1[0]}}m 
+            </p></td>
+            <td><div style="width:50px"><p class="text-muted mb-0">
+              {{value1[1]}}min
+               </p></td>
+            </tr>
           {% endfor %}
           {%endif%}
-          </div>
-          </div>
+        </table>
         </div>
-
-  </div>
-
+        <div class="col-sm-3 border-right"></div>
+      <div class="col-sm-3">
+        <button class="amenities_btn " type="button" disabled>
+          <p class="mb-0">Clinic
+            <i class="fa-solid fa-clinic-medical"></i>    
+          </p>
+        </button>
+        <br>
+        <br>
+        <table style="width:100%">
+          {%if amenities['doctor']|length !=0 %}
+        {%for key1,value1 in amenities["doctor"].items()%}
+          <tr>
+            <td><div style="width:400px"><p class="text-muted mb-0">
+              {{key1}}
+            </p></td>
+            <td><div style="width:80px"><p class="text-muted mb-0">
+              {{value1[0]}}m 
+            </p></td>
+            <td><div style="width:50px"><p class="text-muted mb-0">
+              {{value1[1]}}min
+               </p></td>
+            </tr>
+          {% endfor %}
+          {%endif%}
+        </table>
+        
+    
+      </div>
+    </div>
 <br>
 {% if user.is_authenticated %}
 <form method="POST">
