@@ -4,7 +4,7 @@
 {% block content %}
 <head>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
   <script>
     $(document).ready(function(){
@@ -338,11 +338,18 @@
     var window_height = $(window).height();
     var document_height = $(document).height();
     
+    console.log("current_y+ window_height: ", current_y + window_height);
+    console.log("document_height: ", document_height);
     if (current_y + window_height >= (document_height-1)) {
       downloadContent(index, limit);
       index += 20
     }
-    
+    // console.log("window.innerHeight + window.pageYOffset: ", window.innerHeight + window.pageYOffset);
+    // console.log("document.body.offsetHeight: ", document.body.offsetHeight);
+    // if (current_y + window_height >= document.body.offsetHeight-1){
+    //   downloadContent(index, limit);
+    //   index += 20
+    // }
     /*var scrollPercent = (current_y / (document_height)) * 100;
 
     if (scrollPercent > 90) {
@@ -519,9 +526,7 @@
   
   {% else %}
   
-    <div class="fa-3x d-flex justify-content-center" id ="end_page">
-      <i class="fas fa-circle-notch fa-spin"></i>
-    </div>
+    
   {% endif %}
 
 
