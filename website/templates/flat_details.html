@@ -88,7 +88,9 @@
 </div>
   <!-- And lastly, add the script to load the Google map API. 
   		  Don't forget to replace the API key with your own. --> 
-  		  
+  		  <div id = 'latitude' style = "display:none;">{{flat.latitude}}</div>
+        <div id = 'longitude' style = "display:none;">{{flat.longitude}}</div>
+
   <script
     
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY&callback=initialize&v=weekly"
@@ -155,7 +157,7 @@
       <p class="mb-0">Price</p>
   </div>
   <div class="col-sm-3 border-right">
-      <p class="text-muted mb-0">${{flat.resale_price}}</p>
+      <p class="text-muted mb-0">${{flat.resale_price}}..........</p>
   </div>
   <div class="col-sm-3">
       <p class="mb-0">Block</p>
