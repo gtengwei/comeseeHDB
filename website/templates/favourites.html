@@ -19,8 +19,9 @@
               <h5 class="my-3">{{user.username}}</h5>
               <div class="d-flex justify-content-center mb-2">
                 <a class="m-1" href="{{ url_for('user.profile', username=current_user.username) }}"> <button type="button" class="btn btn-primary">Personal Information</button></a> 
+                {% if current_user.access_id == 0 %}
                 <a class="m-1" href="{{ url_for('user.favourites', username=current_user.username) }}"> <button type="button" class="btn btn-outline-primary ms-1">Favourites</button></a>
-                {% if current_user.access_id == 1 %}
+                {% elif current_user.access_id == 1 %}
                 <a class="m-1" href="{{ url_for('user.property', username=current_user.username) }}"> <button type="button" class="btn btn-primary">Property</button></a>          
                 {% endif %}  
               </div>

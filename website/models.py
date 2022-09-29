@@ -137,7 +137,7 @@ class Property(db.Model):
     flat_model = db.Column(db.String(150))
     address = db.Column(db.String(150))
     block = db.Column(db.String(150))
-    #storey_range = db.Column(db.String(150))
+    storey_range = db.Column(db.String(150))
     street_name = db.Column(db.String(150))
     floor_area_sqm = db.Column(db.Float)
     price = db.Column(Float) 

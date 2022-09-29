@@ -14,10 +14,10 @@
      });
 </script>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     <div class="modal fade" id="addPropertyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
       aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
           <div class="modal-header text-center">
             <h4 class="modal-title w-100 font-weight-bold">Add Property</h4>
@@ -85,6 +85,18 @@
               </div>
             </div>
 
+            <!--STOREY RANGE-->
+            <div class="md-form mb-3">
+              <label for="storey_range">Storey Range</label>
+              <input  type="text"
+                      class="form-control"
+                      id="storey_range"
+                      name= "storey_range"
+                      placeholder="Enter Property's Floor">
+              <div class="form-text small">e.g 1, 4-9
+              </div>
+            </div>
+
             <!-- FLAT TYPE-->
             <div class="md-form mb-3">
                 <label for="flat_type">Flat Type</label><br>
@@ -99,7 +111,7 @@
 
             <!-- FLAT MODEL -->
             <div class="md-form mb-3">
-              <label for="flat_model">Flat MODEL</label><br>
+              <label for="flat_model">Flat Model</label><br>
               <select required id="flat_model" name="flat_model" class="form-select" aria-label="Default select example" aria-placeholder="Choose a flat model">
                   <option value="Model A">Model A</option>
                   <option value="Improved">Improved</option>
@@ -120,7 +132,7 @@
                       id="floor_area_sqm"
                       name= "floor_area_sqm"
                       placeholder="Enter Property's Area">
-          </div>
+            </div>
 
             <!-- Price -->
             <div class="md-form mb-3">
@@ -135,9 +147,28 @@
             </div> 
 
             <!-- postal code & sector -->
+            <div class="md-form mb-3">
+              <label for="postal_code">Postal Code</label>
+              <input  type="number"
+                      min="100000"
+                      max="999999"
+                      step="1"
+                      class="form-control"
+                      id="postal_code"
+                      name="postal_code"
+                      placeholder="Enter Property's Six Digits Postal Code">
+            </div> 
 
             <!-- image -->
-        
+            <div class="md-form mb-3">
+              <label for="images">Image</label><br>
+              <input  type="file"
+                      accept="image/*" 
+                      id="images"
+                      name="images" 
+                      multiple>
+              <div class="form-text small">You can choose maximum of 3 images</div>
+            </div>
           </div>
           <div class="modal-footer d-flex justify-content-center">
             <button type = "submit" class="btn btn-primary">Submit</button>

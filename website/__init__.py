@@ -40,6 +40,9 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'cz3002.clutch@gmail.com'
 app.config['MAIL_PASSWORD'] = 'zmexsqegkpavaovi'
 
+# To save the property's images in file system
+app.config['UPLOAD_FOLDER'] = "static/images/"
+
 moment = Moment(app)
 login_manager.init_app(app)
 db.init_app(app)
