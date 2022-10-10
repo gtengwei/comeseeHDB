@@ -435,7 +435,7 @@
 {% endif %}
 
 <ul class="list-group list-group-flush" id="reviews">
-  {% for review in flat.reviews|sort(attribute='review_path') %}
+  {% for review in review1.items|sort(attribute='review_path') %}
       <!-- Begin review indentation -->
       {% if review.level() == 0 %}
       <div class="col-sm-12" >
@@ -538,5 +538,66 @@
                       {% endfor %}
                     </ul>
 
+<style>
+  .pagebutton {
+    border: 2px solid #ffc0cb;
+    background-color: white;
+    color: black;
+    padding: 10px 15px;
+    font-size: 11px;
+    cursor: pointer;
+}
+  .btn-others{
+    border-color: #ffc0cb;
+    color: black;
+  }
+  .btn-others:hover{
+    background-color: #ffc0cb;
+    color: black;
+  }
+  .btn-dark{
+    background-color: #ffc0cb;
+    color: #fff;
+  }
+  .btn-dark:hover {
+  background-color: #de8897;
+  border-color: #ffc0cb;
+  color: white;
+}
+</style>
+<div class="text-right">
+  <a href="{{ url_for('views.flat_details', flatId=flat.id, page=review1.prev_num) }}"
+     class="pagebutton btn-others
+     {% if review1.page == 1 %}disabled{% endif %}">
+      &laquo;
+  </a>
+<!-- Loop through the number of pages to display a link for each-->
+  {% for page_num in review1.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+{% if page_num %}
+<!-- Check for the active page and set the link to "Active"-->
+          {% if review1.page == page_num %}
+          <a href="{{ url_for('views.flat_details', flatId=flat.id, page=page_num) }}"
+             class="pagebutton btn-dark">
+              {{ page_num }}
+          </a>
+          {% else %}
+          <a href="{{ url_for('views.flat_details', flatId=flat.id, page=page_num) }}"
+             class="pagebutton btn-others">
+              {{ page_num }}
+          </a>
+          {% endif %}
+      {% else %}
+          ...
+      {% endif %}
+  {% endfor %}
+  <a href="{{ url_for('views.flat_details', flatId=flat.id, page=review1.next_num) }}"
+     class="pagebutton btn-others 
+     {% if review1.page == review1.pages %}disabled{% endif %}">
+      &raquo;
+  </a>
+</div>
+<p class="text-right mt-3">
+ Showing page {{ review1.page }} of {{ review1.pages }}
+</p>
 </body>
 {% endblock %}
