@@ -14,6 +14,10 @@
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <style>
       /* Modify the background color */
 
@@ -25,6 +29,16 @@
       .navbar-custom .navbar-brand,
       .navbar-custom .navbar-text {
         color: rgb(0, 0, 0);
+      }
+
+      * {
+          scroll-behavior: smooth;
+      }
+
+      #home, #login, #sign-up {
+          margin: 0 1.5rem;
+          font-size: 1.2rem;
+          font-weight: 700;
       }
 
     </style>
@@ -43,14 +57,14 @@
       </button>
       <a href="/" class="navbar-nav mx-auto" title="comeseeHDB logo">
         <img
-          style="max-width: 150px; margin-top: -7px"
+          style="max-width: 200px; margin-top: -7px"
           src="\static\logo.png"
       /></a>
 
       <div class="collapse navbar-collapse" id="navbar">
         <div class="navbar-nav ml-auto">
           {% if user.is_authenticated %}
-          <a class="nav-item nav-link" id="home" href="/">Home</a>
+          <a class="nav-item nav-link" id="home" href="/home">Home</a>
           <a
             class="nav-item nav-link"
             id="profile"
@@ -59,7 +73,7 @@
           >
           <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
           {% else %}
-          <a class="nav-item nav-link" id="home" href="/">Home</a>
+          <a class="nav-item nav-link" id="home" href="/home">Home</a>
           <a class="nav-item nav-link" id="login" href="/login">Login</a>
           <a class="nav-item nav-link" id="sign-up" href="/sign-up">Sign Up</a>
           {% endif %}

@@ -35,31 +35,31 @@ def delete_review():
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
 def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
-    photo = view_image(flatId)
+    #photo = view_image(flatId)
 
     latitude = str(flat.latitude)
     longitude = str(flat.longitude)
-
+    
     url1 = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference="
     url2 = "&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
     url_staticimage = []
-    if photo:
-        length = len(photo)
-        cur = 0
-        url = []
-        while (cur < length):
-            if photo[cur] == 0:
-                url.append("\static\logo.png")
-            else:
-                temp = url1 + photo[cur] + url2
-                url.append(temp)
-            cur = cur + 1
+    # if photo:
+    #     length = len(photo)
+    #     cur = 0
+    #     url = []
+    #     while (cur < length):
+    #         if photo[cur] == 0:
+    #             url.append("\static\logo.png")
+    #         else:
+    #             temp = url1 + photo[cur] + url2
+    #             url.append(temp)
+    #         cur = cur + 1
 
-    else:
-        url_staticimage = "https://maps.googleapis.com/maps/api/streetview?size=300x200&location=" + \
-            latitude+","+longitude + \
-            "&fov=80&heading=70&pitch=0&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
-        url = [url_staticimage, url_staticimage, url_staticimage]
+    # else:
+    #     url_staticimage = "https://maps.googleapis.com/maps/api/streetview?size=300x200&location=" + \
+    #         latitude+","+longitude + \
+    #         "&fov=80&heading=70&pitch=0&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+    #     url = [url_staticimage, url_staticimage, url_staticimage]
 
     if request.method == 'POST':
         review = request.form.get('review')
@@ -105,7 +105,7 @@ def flat_details(flatId):
     page = request.args.get('page', 1, type=int)
     review1 = Review.query.filter(Review.flat_id == flatId).order_by(
         Review.review_path).paginate(page=page, per_page=10)
-    return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity, latitude=latitude, longitude=longitude, review1=review1)
+    return render_template("flat_details.html", user=current_user, flat=flat, amenities=amenity, latitude=latitude, longitude=longitude, review1=review1)
 
 
 @views.route('/unfavourite', methods=['POST'])
@@ -178,10 +178,15 @@ def review_favourite_count():
     review = Review.query.get(reviewID)
     return jsonify({"favourite_count": len(review.favourites)})
 
+# Route for Landing Page
+@views.route('/', methods=['GET','POST'])
+def landing():
+    cwd = Path(__file__).parent.absolute()
+    os.chdir(cwd)
+    return render_template("landing.html", user=current_user)
+
 # Route for Home Page
-
-
-@views.route('/', methods=['GET', 'POST'])
+@views.route('/home', methods=['GET', 'POST'])
 def home():
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)

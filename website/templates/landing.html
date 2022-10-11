@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
+    <style>
+      /* Modify the background color */
+
+      .navbar-custom {
+        background-color: #ffcad4;
+      }
+      /* Modify brand and text color */
+
+      .navbar-custom .navbar-brand,
+      .navbar-custom .navbar-text {
+        color: rgb(0, 0, 0);
+      }
+
+      * {
+          scroll-behavior: smooth;
+      }
+
+      #home, #login, #sign-up {
+          margin: 0 1.5rem;
+          font-size: 1.2rem;
+          font-weight: 700;
+      }
+
+      @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+
+      #top_image {
+      -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+      }
+
+    </style>
+
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-custom navbar-light">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a href="/" class="navbar-nav mx-auto" title="comeseeHDB logo">
+        <img
+          style="max-width: 200px; margin-top: -7px"
+          src="\static\logo.png"
+      /></a>
+
+      <div class="collapse navbar-collapse" id="navbar">
+        <div class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+          <a class="nav-item nav-link" id="home" href="/home">Home</a>
+          <a
+            class="nav-item nav-link"
+            id="profile"
+            href="{{ url_for('user.profile', username=current_user.username) }}"
+            >Profile</a
+          >
+          <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+          {% else %}
+          <a class="nav-item nav-link" id="home" href="/home">Home</a>
+          <a class="nav-item nav-link" id="login" href="/login">Login</a>
+          <a class="nav-item nav-link" id="sign-up" href="/sign-up">Sign Up</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %} 
+    {% for category, message in messages %} 
+    {% if category == 'error' %}
+    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+
+    <div class="container">{% block content %} {% endblock %}</div>
+
+    <!-- landing -->
+    <div class="container-fluid px-0">
+        <img id="top_image" src="static/landing_top.jpg" alt="landing page" style="width:100%">
+        <div class="landing_title" 
+        style="position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); 
+        font-size: 8rem; animation: fadeIn 5s; font-style: italic;
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+        comeseeHDB</div>
+        <a class="landing_text" href="#intro_flat"
+        style="position: absolute; top: 85%; left: 50%; transform: translate(-50%, -50%);
+        color: #000000; font-weight: 500; font-size: 1.5rem;">
+        Explore now</a>
+    </div>
+
+    <div class="intro-container" id="intro_flat">
+        <h1 style="text-align: center; font-size: 3rem; padding-top: 10%;">
+            Explore resale HDB in Singapore</h1>
+        <a href="/home">
+          <div class="container-fluid px-0">
+              <img src="static/landing_4.png" alt="hdb"
+              style="width: 100%; padding-top: 4%;"></img>
+          </div>
+        </a>
+    </div>
+
+    <div class="intro-container" id="intro_search">
+      <h1 style="text-align: center; font-size: 3rem; padding-top: 3rem;">Looking for something?</h1>
+      <br>
+      <div style="background-image: url('static/hdb_image6.jpg'); background-size: cover; height: 700px; background-attachment: fixed;">
+        <a href="/home" style="font-size: 8rem;">
+          <div style="padding-top: 8rem; color:#ffffff; font-style: italic; text-shadow:  5px 10px 0 #000000; background-color: #ffcad457; height: 700px">
+            <div style="padding-left: 10rem; font-weight: 700; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+              Search for
+            </div>
+            <div style="text-align: center; font-weight: 700; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"">
+              the ideal flat
+            </div>
+          </div>
+        </a>
+        <!--
+        <div class="container-fluid px-0" style="text-align: center;">
+            <video id="search_demo" src="static/search_vid.mov" autoplay muted loop 
+            style="width: 60%;"></video>
+        </div>
+        -->
+      </div>
+    </div>
+
+    <div class="intro-container" id="intro_func">
+        <h1 style="text-align: center; font-size: 3rem; padding-top: 3rem;">Like and comment a flat</h1>
+    </div>
+
+    <div class="intro-container" id="intro_sign-up">
+        <h1 style="text-align: center; font-size: 3rem; padding-top: 3rem;">Login to your account now</h1>
+        <h2 style="text-align: center; font-size: 2rem;">Login to unlock more features</h2>
+        <br>
+        </div>
+        <div class="container-fluid px-0" style="text-align: center;">
+          <video id="login_direct" src="static/scroll2_vid.mov" autoplay muted loop
+          style="width: 100%;"></video>
+        </div>
+        <div style="text-align:center; margin-bottom: 0;">
+            <a href="/login" 
+            style="background-color: #efb3be; text-decoration: none; color:#000000;
+            font-size: 2rem; padding: 0.8rem 1.3rem; border-radius: 10px; position: relative; 
+            top: -10rem">Log in</a>
+        </div>
+        <p style="font-size: 1.5rem; text-align: center;">Do not have an account?</p>
+        <div style="text-align:center">
+            <a href="/sign-up" style="text-decoration: none; color:#000000; font-size: 1.25rem; font-weight: 800; text-decoration: underline;">Sign up now</a>
+        </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='index.js') }}"
+    ></script>
+    
+  </body>
+
+<footer style="font-size: 1.5rem; margin-top: 30px; text-align: center; background-color: #ffcad4;">
+    <p style="font-weight: 600;"> Contact us </p>
+    <i class="fa-solid fa-envelope"></i> 
+    <p><a href="mailto:cz3002.clutch@gmail.com"> cz3002.clutch@gmail.com </a></p>
+    <i class="fa-solid fa-phone"></i>
+    <p style="margin:0%"> <a href = +6569661234> 6966 1234</a> </p>
+  </div>
+</footer>
+</html>
