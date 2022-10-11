@@ -15,6 +15,10 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
     <style>
       /* Modify the background color */
 
@@ -135,16 +139,25 @@
     </div>
 
     <div class="intro-container" id="intro_search">
-      <h1 style="text-align: center; font-size: 3rem; padding-top: 3rem;">Search for the ideal HDB</h1>
+      <h1 style="text-align: center; font-size: 3rem; padding-top: 3rem;">Looking for something?</h1>
       <br>
-      <a href="/home" style="text-align: center;">
-        <div class="container-fluid px-0">
-            <img src="static/search_bar.jpg" alt="search bar" style="width: 40%; padding-bottom: 1rem;"></img>
+      <div style="background-image: url('static/hdb_image6.jpg'); background-size: cover; height: 700px; background-attachment: fixed;">
+        <a href="/home" style="font-size: 8rem;">
+          <div style="padding-top: 8rem; color:#ffffff; font-style: italic; text-shadow:  5px 10px 0 #000000; background-color: #ffcad457; height: 700px">
+            <div style="padding-left: 10rem; font-weight: 700; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+              Search for
+            </div>
+            <div style="text-align: center; font-weight: 700; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"">
+              the ideal flat
+            </div>
+          </div>
+        </a>
+        <!--
+        <div class="container-fluid px-0" style="text-align: center;">
+            <video id="search_demo" src="static/search_vid.mov" autoplay muted loop 
+            style="width: 60%;"></video>
         </div>
-      </a>
-      <div class="container-fluid px-0" style="text-align: center;">
-          <video id="search_demo" src="static/search_vid.mov" autoplay muted loop 
-          style="width: 60%;"></video>
+        -->
       </div>
     </div>
 
@@ -158,8 +171,8 @@
         <br>
         </div>
         <div class="container-fluid px-0" style="text-align: center;">
-          <video id="login_direct" src="static/scroll_vid.mov" autoplay muted loop 
-          style="width: 60%;"></video>
+          <video id="login_direct" src="static/scroll2_vid.mov" autoplay muted loop
+          style="width: 100%;"></video>
         </div>
         <div style="text-align:center; margin-bottom: 0;">
             <a href="/login" 
@@ -169,7 +182,7 @@
         </div>
         <p style="font-size: 1.5rem; text-align: center;">Do not have an account?</p>
         <div style="text-align:center">
-            <a href="/sign-up" style="text-decoration: none; color:#000000;">Sign up now</a>
+            <a href="/sign-up" style="text-decoration: none; color:#000000; font-size: 1.25rem; font-weight: 800; text-decoration: underline;">Sign up now</a>
         </div>
     </div>
 
@@ -195,8 +208,15 @@
       type="text/javascript"
       src="{{ url_for('static', filename='index.js') }}"
     ></script>
-    <script 
-    {{ moment.include_moment() }}
-    ></script>
+    
   </body>
+
+<footer style="font-size: 1.5rem; margin-top: 30px; text-align: center; background-color: #ffcad4;">
+    <p style="font-weight: 600;"> Contact us </p>
+    <i class="fa-solid fa-envelope"></i> 
+    <p> cz3002.clutch@gmail.com </p>
+    <i class="fa-solid fa-phone"></i>
+    <p> 6966 1234 </p>
+  </div>
+</footer>
 </html>

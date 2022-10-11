@@ -1,5 +1,6 @@
 * {
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family:'Montserrat';
+    font-weight: 400;
 }
 
 .card {
@@ -87,10 +88,11 @@ button[class^="favourite_button"] {
 
 
 /* login.html */
+
 .user-acc {
     background-color: #ffd7df;
     margin:15px auto;
-    width: 80%;
+    width: 90%;
     border-radius: 10px;
     padding-bottom: 10px;
 }
@@ -98,7 +100,6 @@ button[class^="favourite_button"] {
 form h3 {
     padding-top: 10px;
     font-size: 3rem;
-    font-family: 'Times New Roman', Times, serif;
     font-weight: 700;
 }
 

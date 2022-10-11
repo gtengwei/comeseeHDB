@@ -34,28 +34,28 @@ def delete_review():
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
 def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
-    photo = view_image(flatId)
+    #photo = view_image(flatId)
 
     url1 = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference="
     url2 = "&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
     url_staticimage = []
-    if photo:
-        length = len(photo)
-        cur = 0
-        url = []
-        while (cur < length):
-            if photo[cur] == 0:
-                url.append("\static\logo.png")
-            else:
-                temp = url1 + photo[cur] + url2
-                url.append(temp)
-            cur = cur + 1
+    # if photo:
+    #     length = len(photo)
+    #     cur = 0
+    #     url = []
+    #     while (cur < length):
+    #         if photo[cur] == 0:
+    #             url.append("\static\logo.png")
+    #         else:
+    #             temp = url1 + photo[cur] + url2
+    #             url.append(temp)
+    #         cur = cur + 1
 
-    else:
-        url_staticimage = "https://maps.googleapis.com/maps/api/streetview?size=300x200&location=" + \
-            latitude+","+longitude + \
-            "&fov=80&heading=70&pitch=0&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
-        url = [url_staticimage, url_staticimage, url_staticimage]
+    # else:
+    #     url_staticimage = "https://maps.googleapis.com/maps/api/streetview?size=300x200&location=" + \
+    #         latitude+","+longitude + \
+    #         "&fov=80&heading=70&pitch=0&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+    #     url = [url_staticimage, url_staticimage, url_staticimage]
 
     if request.method == 'POST':
         review = request.form.get('review')
@@ -94,7 +94,7 @@ def flat_details(flatId):
     # f = open('testing.json') #FOR TESTING CAUSE EXPENSIVE
     # amenity = json.load(f)
     # amenity = amenity
-    return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity, latitude=latitude, longitude=longitude)
+    return render_template("flat_details.html", user=current_user, flat=flat, amenities=amenity)
 
 
 @views.route('/unfavourite', methods=['POST'])
