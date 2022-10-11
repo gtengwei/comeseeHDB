@@ -31,34 +31,35 @@ def delete_review():
 
 # Route for every flat
 
+
 @views.route('/flat-details/<flatId>', methods=['GET', 'POST'])
 def flat_details(flatId):
     flat = Flat.query.filter_by(id=flatId).first_or_404()
-    photo = view_image(flatId)
+    #photo = view_image(flatId)
 
     latitude = str(flat.latitude)
     longitude = str(flat.longitude)
-
+    
     url1 = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference="
     url2 = "&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
     url_staticimage = []
-    if photo:
-        length = len(photo)
-        cur = 0
-        url = []
-        while (cur < length):
-            if photo[cur] == 0:
-                url.append("\static\logo.png")
-            else:
-                temp = url1 + photo[cur] + url2
-                url.append(temp)
-            cur = cur + 1
+    # if photo:
+    #     length = len(photo)
+    #     cur = 0
+    #     url = []
+    #     while (cur < length):
+    #         if photo[cur] == 0:
+    #             url.append("\static\logo.png")
+    #         else:
+    #             temp = url1 + photo[cur] + url2
+    #             url.append(temp)
+    #         cur = cur + 1
 
-    else:
-        url_staticimage = "https://maps.googleapis.com/maps/api/streetview?size=300x200&location=" + \
-            latitude+","+longitude + \
-            "&fov=80&heading=70&pitch=0&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
-        url = [url_staticimage, url_staticimage, url_staticimage]
+    # else:
+    #     url_staticimage = "https://maps.googleapis.com/maps/api/streetview?size=300x200&location=" + \
+    #         latitude+","+longitude + \
+    #         "&fov=80&heading=70&pitch=0&key=AIzaSyBuAJYgULaIj-T8j4-HXP8mTR9iHf3rOKY"
+    #     url = [url_staticimage, url_staticimage, url_staticimage]
 
     if request.method == 'POST':
         review = request.form.get('review')
@@ -72,12 +73,13 @@ def flat_details(flatId):
                     'reply is too long! Maximum length for a reply is 500 characters', category='error')
             elif str(current_user.postal_code) != flat.postal_sector:
                 print(type(flat.postal_sector))
-                flash('You cannot reply this flat! You can only reply flats in your own postal district!', category='error')
+                flash(
+                    'You cannot reply this flat! You can only reply flats in your own postal district!', category='error')
             else:
-                new_reply= Review(
-                    data=reply, user_id=current_user.id, flat_id=flatId, parent_id = parent_id)
+                new_reply = Review(
+                    data=reply, user_id=current_user.id, flat_id=flatId, parent_id=parent_id)
                 new_reply.save()
-                #print(parent_path)
+                # print(parent_path)
                 flash('Reply added!', category='success')
         if review:
             if len(review) < 1:
@@ -87,7 +89,8 @@ def flat_details(flatId):
                     'Review is too long! Maximum length for a review is 500 characters', category='error')
             elif str(current_user.postal_code) != flat.postal_sector:
                 print(type(flat.postal_sector))
-                flash('You cannot review this flat! You can only review flats in your own postal district!', category='error')
+                flash(
+                    'You cannot review this flat! You can only review flats in your own postal district!', category='error')
             else:
                 new_review = Review(
                     data=review, user_id=current_user.id, flat_id=flatId)
@@ -97,7 +100,12 @@ def flat_details(flatId):
     # f = open('testing.json') #FOR TESTING CAUSE EXPENSIVE
     # amenity = json.load(f)
     # amenity = amenity
-    return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity, latitude=latitude, longitude=longitude)
+
+    # PAGINATION
+    page = request.args.get('page', 1, type=int)
+    review1 = Review.query.filter(Review.flat_id == flatId).order_by(
+        Review.review_path).paginate(page=page, per_page=10)
+    return render_template("flat_details.html", user=current_user, flat=flat, amenities=amenity, latitude=latitude, longitude=longitude, review1=review1)
 
 
 @views.route('/unfavourite', methods=['POST'])
@@ -112,6 +120,7 @@ def unfavourite():
             flat.numOfFavourites -= 1
             db.session.commit()
     return jsonify({"favourite_count": len(flat.favourites)})
+
 
 @views.route('/review_unfavourite', methods=['POST'])
 @login_required
@@ -139,13 +148,15 @@ def favourite():
     db.session.commit()
     return jsonify({"favourite_count": len(flat.favourites)})
 
+
 @views.route('/review_favourite', methods=['POST'])
 @login_required
 def review_favourite():
     review = json.loads(request.data)
     reviewID = review['reviewID']
     review = Review.query.get(reviewID)
-    new_favourites = ReviewFavourites(user_id=current_user.id, review_id=reviewID)
+    new_favourites = ReviewFavourites(
+        user_id=current_user.id, review_id=reviewID)
     db.session.add(new_favourites)
     review.numOfFavourites += 1
     db.session.commit()
@@ -159,6 +170,7 @@ def favourite_count():
     flat = Flat.query.get(flatID)
     return jsonify({"favourite_count": len(flat.favourites)})
 
+
 @views.route('/review_favourite_count', methods=['POST'])
 def review_favourite_count():
     review = json.loads(request.data)
@@ -166,10 +178,15 @@ def review_favourite_count():
     review = Review.query.get(reviewID)
     return jsonify({"favourite_count": len(review.favourites)})
 
+# Route for Landing Page
+@views.route('/', methods=['GET','POST'])
+def landing():
+    cwd = Path(__file__).parent.absolute()
+    os.chdir(cwd)
+    return render_template("landing.html", user=current_user)
+
 # Route for Home Page
-
-
-@views.route('/', methods=['GET', 'POST'])
+@views.route('/home', methods=['GET', 'POST'])
 def home():
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
@@ -204,10 +221,10 @@ def home():
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
                 price_range[i] = int(price_range[i])
-                if i%2 == 0:
-                    data = list(itertools.chain(Flat.query.filter(Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
+                if i % 2 == 0:
+                    data = list(itertools.chain(Flat.query.filter(
+                        Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
 
-            
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
                     flat_types), Flat.amenities.in_(amenities), Flat.town.in_(towns)).all()
@@ -378,9 +395,12 @@ def home():
 
     session.clear()
     # return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], favourites = Favourites.query.all(), random = RANDOM, image = image, image_id = image_id)
-    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in data], favourites=Favourites.query.all(), random=RANDOM, image = [Flat.query.get(x).image for x in data])
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in data], favourites=Favourites.query.all(), random=RANDOM, image=[Flat.query.get(x).image for x in data])
+
 
 # Infinite Scrolling for Home Page
+
+
 @views.route('/load_home', methods=['GET', 'POST'])
 def load_home():
     # In order to load sorted flats faster
