@@ -18,7 +18,7 @@ function unfavourite(favouriteID) {
     .then((data) => { 
     fav_count.innerHTML = data["favourite_count"];
   })
-  .catch((e) => alert("Unable to Favourite"));
+  .catch((e) => click_favourite_button());
 }
 
 function favourite(flatID) {
@@ -32,7 +32,7 @@ function favourite(flatID) {
     .then((data) => { 
     fav_count.innerHTML = data["favourite_count"];
   })
-  .catch((e) => alert("Unable to Favourite"));
+  .catch((e) => click_favourite_button());
 }
 
 function favourite_count(flatID) {
@@ -123,4 +123,10 @@ function reply(reviewId){
     x.style.display = "none";
     y.style.display = "none";
   }
+}
+
+function click_favourite_button(){
+  $('.favourite_button').click(function(){
+    $("#createAccountModal").modal('show');
+  });
 }
