@@ -100,8 +100,11 @@ def flat_details(flatId):
     # f = open('testing.json') #FOR TESTING CAUSE EXPENSIVE
     # amenity = json.load(f)
     # amenity = amenity
+
+    # PAGINATION
     page = request.args.get('page', 1, type=int)
-    review1 = Review.query.paginate(page=page, per_page=10)
+    review1 = Review.query.filter(Review.flat_id == flatId).order_by(
+        Review.review_path).paginate(page=page, per_page=10)
     return render_template("flat_details.html", user=current_user, flat=flat, image=url, amenities=amenity, latitude=latitude, longitude=longitude, review1=review1)
 
 
@@ -388,17 +391,6 @@ def home():
     session.clear()
     # return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], favourites = Favourites.query.all(), random = RANDOM, image = image, image_id = image_id)
     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in data], favourites=Favourites.query.all(), random=RANDOM, image=[Flat.query.get(x).image for x in data])
-
-# Pagination for Reviews
-
-
-@views.route('/load_review', methods=['GET', 'POST'])
-def load_review():
-    # Get the data from the database
-    page = request.args.get('page', 1, type=int)
-
-    review1 = Review.query.paginate(page=page, per_page=3)
-    return render_template('flat_details.html', review1=review1)
 
 
 # Infinite Scrolling for Home Page
