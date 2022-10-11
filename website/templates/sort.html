@@ -3,7 +3,8 @@
 
 {% block content %}
 <head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
     <script>
@@ -619,9 +620,6 @@
   
 {% else %}
 
-  <div class="fa-3x d-flex justify-content-center" id ="end_page">
-    <i class="fas fa-circle-notch fa-spin"></i>
-  </div>
 {% endif %}
 
 

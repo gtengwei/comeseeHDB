@@ -47,6 +47,46 @@ function favourite_count(flatID) {
   })
 }
 
+function review_unfavourite(reviewID) {
+  document.getElementById("review_favourite_button_id" + reviewID.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
+  document.getElementById("review_favourite_button" + reviewID.toString()).setAttribute( 'onClick', ("review_favourite(" + reviewID.toString() + ")"));
+  const fav_count = document.getElementById("review_favourite_count" + reviewID.toString());
+  fetch("/review_unfavourite",{
+    method: "POST",
+    body: JSON.stringify({ reviewID:reviewID }) })
+    .then((res) => res.json())
+    .then((data) => { 
+    fav_count.innerHTML = data["review_favourite_count"];
+  })
+  .catch((e) => alert("Unable to UnFavourite"));
+}
+
+function review_favourite(reviewID) {
+  document.getElementById("review_favourite_button_id" + reviewID.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
+  document.getElementById("review_favourite_button" + reviewID.toString()).setAttribute( 'onClick', ("review_unfavourite(" + reviewID.toString() + ")"));
+  const fav_count = document.getElementById("review_favourite_count" + reviewID.toString());
+  fetch("/review_favourite",{
+    method: "POST",
+    body: JSON.stringify({ reviewID:reviewID }) })
+    .then((res) => res.json())
+    .then((data) => { 
+    fav_count.innerHTML = data["review_favourite_count"];
+  })
+  .catch((e) => alert("Unable to Favourite"));
+}
+
+function review_favourite_count(reviewID) {
+  const fav_count = document.getElementById("review_favourite_count" + reviewID.toString());
+  fetch("/review_favourite_count",{
+    method: "POST",
+    body: JSON.stringify({ reviewID:reviewID }) })
+    .then((res) => res.json())
+    .then((data) => { 
+    fav_count.innerHTML = data["review_favourite_count"];
+    console.log("onload print this");
+  })
+}
+
 window.onload = function initialize() {
   console.log(parseFloat(document.getElementById("latitude").innerHTML));
   var latitude = parseFloat(document.getElementById("latitude").innerHTML);

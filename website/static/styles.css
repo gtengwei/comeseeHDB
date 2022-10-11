@@ -87,6 +87,47 @@ button[class^="favourite_button"] {
 }
 
 
+.bottom-right{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px 10px;
+    border-radius: 60px;
+    font-size: 15px;
+    
+}
+
+.fixed-bottom-right{
+    padding: 50px 50px
+}
+.scroll{
+    color:#fff;
+}
+
+
+.js .cd-top--fade-out {
+    opacity: .5;
+}
+
+.js .cd-top--is-visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.js .cd-top {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .3s,visibility .3s,background-color .3s;
+}
+
+.cd-top {
+    position: fixed;
+    box-shadow: 0 0 10px rgba(0,0,0,.05) !important;
+}
+
+.height{
+    height:3000px;
+}
 /* login.html */
 
 .user-acc {
