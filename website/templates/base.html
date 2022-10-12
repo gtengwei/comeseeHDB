@@ -58,7 +58,16 @@
           style="max-width: 200px; margin-top: -7px"
           src="\static\logo.png"
       /></a>
-
+      <div class="navbar-nav mx-auto" style="padding-left:15px;">
+        <div class="one-quarter" id="switch">
+          <input type="checkbox" class="checkbox" id="chk" />
+          <label class="label" for="chk">
+              <i class="fas fa-moon"></i>
+              <i class="fas fa-sun"></i>
+              <div class="ball"></div>
+          </label>
+        </div>
+        </div>
       <div class="collapse navbar-collapse" id="navbar">
         <div class="navbar-nav ml-auto">
           {% if user.is_authenticated %}
@@ -78,6 +87,7 @@
         </div>
       </div>
     </nav>
+    <!-- previous location
     <div class="sticky-top dark-btn">
       <div class="one-quarter" id="switch">
         <input type="checkbox" class="checkbox" id="chk" />
@@ -88,6 +98,7 @@
         </label>
       </div>
       </div>
+    -->
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %} 
     {% for category, message in messages %} 
@@ -167,11 +178,9 @@
 
         }
       });
-        
-
-      
     });
     </script>
-    
+    <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
+
   </body>
 </html>
