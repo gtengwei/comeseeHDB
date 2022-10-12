@@ -78,7 +78,16 @@
         </div>
       </div>
     </nav>
-
+    <div class="sticky-top dark-btn">
+      <div class="one-quarter" id="switch">
+        <input type="checkbox" class="checkbox" id="chk" />
+        <label class="label" for="chk">
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
+            <div class="ball"></div>
+        </label>
+      </div>
+      </div>
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %} 
     {% for category, message in messages %} 
@@ -99,6 +108,7 @@
     {% endif %} {% endfor %} {% endif %} {% endwith %}
 
     <div class="container">{% block content %} {% endblock %}</div>
+    
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -122,6 +132,46 @@
       src="{{ url_for('static', filename='index.js') }}"
     ></script>
 
+    <script>
+     document.addEventListener("DOMContentLoaded", function () {
+
+      console.log(localStorage.getItem('dark-mode'))
+      var darkMode = localStorage.getItem('dark-mode');
+
+      if (darkMode === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('chk').checked = true;
+        console.log(document.body.classList)
+        console.log('dark mode')
+        
+      } else{
+        document.body.classList.remove('dark-mode');
+        console.log('light mode')
+        document.getElementById('chk').checked = false;
+      }
+
+      const chk = document.getElementById('chk');
+
+      
+      chk.addEventListener('change', () => {
+        document.body.classList.toggle('dark-mode');
+
+        if (document.body.classList.contains('dark-mode')){
+          localStorage.setItem('dark-mode', true);
+          var checkbox = document.getElementById('chk');
+          checkbox.checked = true;
+        } else {
+          localStorage.setItem('dark-mode', false);
+          var checkbox = document.getElementById('chk');
+          checkbox.checked = false;
+
+        }
+      });
+        
+
+      
+    });
+    </script>
     
   </body>
 </html>
