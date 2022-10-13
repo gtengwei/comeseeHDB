@@ -1,5 +1,6 @@
 ## To create relational schema and the attributes of the schema
 
+from tkinter import CASCADE
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -135,7 +136,7 @@ class Property(db.Model):
     town = db.Column(db.String(150))
     flat_type = db.Column(db.String(150))
     flat_model = db.Column(db.String(150))
-    address = db.Column(db.String(150))
+    #address = db.Column(db.String(150))
     block = db.Column(db.String(150))
     storey_range = db.Column(db.String(150))
     street_name = db.Column(db.String(150))
@@ -147,7 +148,17 @@ class Property(db.Model):
     postal_code = db.Column(db.Integer)
     postal_sector = db.Column(db.Integer)
     address_no_postal_code = db.Column(db.String(150))
-    image = db.Column(db.String(150))
     time = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
+    images = db.relationship('PropertyImage', backref = 'property', cascade="all,delete")
+    description = db.Column(db.String(3000))
     #reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
     #favourites = db.relationship('Favourites', backref = 'flat', passive_deletes=True)   
+
+class PropertyImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    property_id = db.Column(db.Integer, db.ForeignKey('property.id', ondelete='CASCADE'))
+    url = db.Column(db.String(256))
+    upload_time = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
+
+    def address(self):
+        return self.url

@@ -1,6 +1,8 @@
 ## Everything related to the user
+from fileinput import filename
 from ssl import VERIFY_ALLOW_PROXY_CERTS
-from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify, session
+from unicodedata import category
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify, session, current_app, send_from_directory
 from .models import *
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
@@ -178,34 +180,132 @@ def add_property(username):
         property_list.append(x.id)   
 
     if request.method == 'POST':
+        if len(request.files.getlist("images")) > 3 :
+            flash("Each property can only contain maximum 3 photos. Please try again!", category="error")
+            return redirect(url_for('user.property', username=current_user.username))
+        
         address_no_postal_code = request.form.get('address_no_postal_code')  
         town = request.form.get('town')     
         flat_type = request.form.get('flat_type')
+        flat_model = request.form.get('flat_model')
         block = request.form.get('block')
+        street_name = request.form.get('street_name')
+        floor_area_sqm = request.form.get('floor_area_sqm')
         price = request.form.get('price')
+        postal_code = request.form.get('postal_code')
+        storey_range = request.form.get('storey_range')
+        description = request.form.get('description')
 
         new_property = Property(
             agent_id = current_user.id,
             town = town,
             flat_type = flat_type,
-            #flat_model
-            #address
+            flat_model = flat_model,
+            storey_range = storey_range,
             block = block,
-            #street_name
-            #floor_area_sqm
+            street_name = street_name,
+            floor_area_sqm = floor_area_sqm,
             price = price,
-            #postal_code&sector
-            address_no_postal_code = address_no_postal_code,
-            image = "hdb_image0.jpg",
-            time = datetime.now()
+            postal_code = postal_code,
+            postal_sector = postal_code[:2],
+            address_no_postal_code = f'{street_name} BLK {block}',
+            time = datetime.now(),
+
+            description = description
         )
         db.session.add(new_property)
+        db.session.commit()
+
+        print(new_property.id)
+        if 'images' not in request.files:
+            new_image = PropertyImage(
+                property_id = new_property.id,
+                url = "hdb_image0.jpg"
+            )
+            db.session.add(new_image)
+            db.session.commit()
+        else:
+            num = 1
+            for file in request.files.getlist("images"):
+                if file.filename == '':
+                    new_image = PropertyImage(
+                    property_id = new_property.id,
+                    url = "hdb_image0.jpg"
+                    )
+                    db.session.add(new_image)
+                    db.session.commit()
+                else:
+                    extension = file.filename.split('.')[-1]
+                    new_filename = "property{}-{}-{}.{}".format(
+                        new_property.id, datetime.now().date(), num, extension
+                    )
+                    num += 1
+                    print(new_filename)
+                    file.save(os.path.abspath(os.path.join(current_app.root_path, current_app.config.get('UPLOAD_FOLDER'),new_filename)))
+                    new_image = PropertyImage(
+                        property_id = new_property.id,
+                        url = new_filename
+                    )
+                    db.session.add(new_image)
+                    db.session.commit()
+    
         db.session.commit()
         return redirect(url_for('user.property', username=current_user.username))
             
 
     return render_template("property_add.html", user=current_user, property = [Property.query.get(x) for x in property_list])
 
+@user.route("/property/delete-property/<property_id>", methods=['GET'])
+@login_required
+def delete_property(property_id):
+    property = Property.query.filter_by(id = property_id).first()
+
+    if property is None:
+        flash("The property do not exist in the system!", category='error')
+    elif current_user.id != property.agent_id:
+        flash("This user don't have the access selected property", category='error')
+    else:
+        print(property_id)
+        for image in property.images:
+            if image.address != "hdb_image0.jpg":
+                os.remove(os.path.abspath(os.path.join(current_app.root_path, current_app.config.get('UPLOAD_FOLDER'),image.address())))
+        db.session.delete(property)
+        db.session.commit()
+
+    property_list = []
+    for x in current_user.property:
+        #print(x.id)
+        property_list.append(x.id)
+
+    return redirect(url_for('user.property', username = current_user.username))
 
 
+@user.route('/retrieve_main_picture/<property_id>')
+def retrieve_main_picture(property_id):
+    filename = PropertyImage.query.filter_by(property_id=property_id).first()
+    if filename is not None:
+        url = filename.address()
+        return send_from_directory(os.path.join(current_app.config.get('UPLOAD_FOLDER')), url)
+    else:
+        return send_from_directory(os.path.join(current_app.config.get('UPLOAD_FOLDER')), 'hdb_image0.jpg')
+
+@user.route('/retrieve_picture/<image_id>')
+def retrieve_picture(image_id):
+    filename = PropertyImage.query.filter_by(id=image_id).first()
+    if filename is not None:
+        url = filename.address()
+        return send_from_directory(os.path.join(current_app.config.get('UPLOAD_FOLDER')), url)
+    else:
+        return send_from_directory(os.path.join(current_app.config.get('UPLOAD_FOLDER')), 'hdb_image0.jpg')
+
+@user.route('/property/<property_id>/property_details')
+@login_required
+def property_details(property_id):
+    property = Property.query.filter_by(id = property_id).first()
+    if property is not None:
+        images = PropertyImage.query.filter_by(property_id=property_id).all()
+        return render_template("property_details.html", property = property, user=current_user, images=images, flat = property)
+    else:
+        flash('Invalid Access!', category='error')
+        return redirect(url_for('views.home'))
 

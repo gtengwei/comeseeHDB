@@ -67,8 +67,10 @@
               <input  type="text"
                       class="form-control"
                       id="street_name"
+                      maxlength="300"
                       name="street_name"
-                      placeholder="Enter Property's Street">
+                      placeholder="Enter Property's Street"
+                      required>
               <div class="form-text small">e.g ADMIRALTY DR, ANCHORVALE CRES
               </div>
             </div>
@@ -79,8 +81,10 @@
               <input  type="text"
                       class="form-control"
                       id="block"
+                      maxlength="300"
                       name= "block"
-                      placeholder="Enter Property's Block">
+                      placeholder="Enter Property's Block"
+                      required>
               <div class="form-text small">e.g 353A, 190B
               </div>
             </div>
@@ -91,8 +95,10 @@
               <input  type="text"
                       class="form-control"
                       id="storey_range"
+                      maxlength="100"
                       name= "storey_range"
-                      placeholder="Enter Property's Floor">
+                      placeholder="Enter Property's Floor"
+                      required>
               <div class="form-text small">e.g 1, 4-9
               </div>
             </div>
@@ -131,7 +137,8 @@
                       class="form-control"
                       id="floor_area_sqm"
                       name= "floor_area_sqm"
-                      placeholder="Enter Property's Area">
+                      placeholder="Enter Property's Area"
+                      required>
             </div>
 
             <!-- Price -->
@@ -143,7 +150,8 @@
                         class="form-control"
                         id="price"
                         name="price"
-                        placeholder="Enter Property's Price">
+                        placeholder="Enter Property's Price"
+                        required>
             </div> 
 
             <!-- postal code & sector -->
@@ -156,7 +164,8 @@
                       class="form-control"
                       id="postal_code"
                       name="postal_code"
-                      placeholder="Enter Property's Six Digits Postal Code">
+                      placeholder="Enter Property's Six Digits Postal Code"
+                      required>
             </div> 
 
             <!-- image -->
@@ -169,9 +178,22 @@
                       multiple>
               <div class="form-text small">You can choose maximum of 3 images</div>
             </div>
+
+            <!-- Description -->
+            <div>
+              <label for="description">Description</label>
+              <textarea class="form-control"
+                        id="description"
+                        maxlength="3000"
+                        name="description"
+                        placeholder="Enter Property's Description">
+              </textarea>
+              <div class="form-text small">You can only input maximum 3000 characters
+              </div>
+            </div>
           </div>
           <div class="modal-footer d-flex justify-content-center">
-            <button type = "submit" class="btn btn-primary">Submit</button>
+            <input type="submit" class="btn btn-primary">
           </div>
         </div>
       </div>

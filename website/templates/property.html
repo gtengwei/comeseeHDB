@@ -1,8 +1,6 @@
 {% extends "profile.html" %} {% block title %}Your Property{% endblock %} 
 
 {% block content%}
-<h1> DEVELOPMENT IN PROGRESS</h1>
-
 <head>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -10,6 +8,39 @@
 
 </head>
 <h1 align="center">Property</h1>
+
+<!-- <script>
+  $(document).ready(function(){
+      $("#deletePropertyConfirmationModal").modal('show');
+  });
+</script> -->
+
+<form method="POST" enctype="multipart/form-data">
+  <div class="modal fade" id="deletePropertyConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Delete Property</h4>
+          <a href="{{  url_for('user.property', username = current_user.username) }}">
+              <button type="button" class="close" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </a>
+        </div>
+  
+        <div class="modal-body mx-3">
+          <p>Are you sure?</p>
+        </div>
+
+        <div class="modal-footer d-flex justify-content-center">
+          <button type ="button" class="btn btn-primary">Confirm</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
 
 <section style="background-color: rgba(255, 182, 193, 0.178);">
       <div class="row">
@@ -52,25 +83,59 @@
           <div class="card mb-4">
             {% for prop in property %}
             <div class="card mb-3">
-                <div class="card-header">
-                    <strong><a href ="#" target = "_blank">{{prop.address_no_postal_code}}</strong></a>
+              <div class="card-header">
+                  <strong><a href ="{{url_for('user.property_details', property_id = prop.id) }}" target = "_blank">{{prop.address_no_postal_code}}</strong></a>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <img src="{{ url_for('user.retrieve_main_picture', property_id = prop.id)}}" class="img-thumbnail">
+                  </div>
+                  <div class="col">
+                    <p><strong>Price    : </strong>${{prop.price}}</p>
+                    <br/>
+                    <p><strong>Flat Type: </strong>{{prop.flat_type}}</p>
+                    <br/>
+                    <p><strong>Block    : </strong>{{prop.block}}</p>
+                    <br/>
+                    <p><strong>Date     : </strong>{{prop.time.date()}}</p>
+                  </div>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <img src="{{ url_for('static', filename = prop.image)}}" class="img-thumbnail">
+              </div>
+              <div class="card-footer">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmationModal{{prop.id}}">
+                  <i class="fa-solid fa-trash-can"></i> Delete
+                </button>
+                <!-- Modal -->
+                <form method="POST" enctype="multipart/form-data">
+                  <div class="modal fade" id="deleteConfirmationModal{{prop.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header text-center">
+                          <h4 class="modal-title w-100 font-weight-bold">Delete Property</h4>
+                          <a href="{{  url_for('user.property', username = current_user.username) }}">
+                              <button type="button" class="close" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </a>
                         </div>
-                        <div class="col">
-                            <p><strong>Price    : </strong>${{prop.price}}</p>
-                            <br/>
-                            <p><strong>Flat Type: </strong>{{prop.flat_type}}</p>
-                            <br/>
-                            <p><strong>Block    : </strong>{{prop.block}}</p>
-                            <br/>
-                            <p><strong>Date     : </strong>{{prop.time}}</p>
+                  
+                        <div class="modal-body mx-3">
+                          <p>Are you sure to delete {{prop.address_no_postal_code}}?</p>
                         </div>
+                
+                        <div class="modal-footer d-flex justify-content-center">
+                          <a href="{{  url_for('user.delete_property', property_id = prop.id) }}">
+                            <button type ="button" class="btn btn-primary">Confirm</button>
+                          </a>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
                     </div>
-                </div>
+                  </div>
+                </form>
+              </div>
             </div>
             {% endfor %}
           </div>
