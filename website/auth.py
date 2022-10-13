@@ -37,7 +37,7 @@ def login():
         db.session.add(new_user)
         db.session.commit()
         print("agent12345 added!")
-
+        
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')

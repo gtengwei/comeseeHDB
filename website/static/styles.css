@@ -1,12 +1,23 @@
+* {
+    font-family:'Montserrat';
+    font-weight: 400;
+}
+
 .card {
     background-color: white;
 
 }
+
 .card-header {
     background-color: #ffcad4;
     display: inline-flex;
-
+    font-size: 1.1rem;
 }
+
+.card-header a {
+    color: #4c4646;
+}
+
 .card-body {
     background-color: white;  
 }
@@ -40,7 +51,8 @@ button[class^="favourite_button"] {
     overflow: hidden;
     position: relative;
 }
-  
+
+/* Back to top button */
 .bottom-left{
     position: absolute;
     bottom: 0;
@@ -116,4 +128,148 @@ button[class^="favourite_button"] {
 
 .height{
     height:3000px;
+}
+/* login.html */
+
+.user-acc {
+    background-color: #ffd7df;
+    margin:15px auto;
+    width: 90%;
+    border-radius: 10px;
+    padding-bottom: 10px;
+}
+
+form h3 {
+    padding-top: 10px;
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.form-group {
+    padding: 0 40px;
+    font-size: 1.3rem;
+}
+
+.form-group label{
+    font: 3rem;
+}
+
+form button:hover {
+    background-color: #ffffff !important;
+    color: #f59090 !important;
+}
+
+.other {
+    text-align: center;
+    font-style: italic;
+}
+
+/* search */
+.search-bar button:hover {
+    color: #ffffff !important;
+    background-color: #fc9483 !important;
+}
+
+#dice:hover {
+    color: #ffffff !important;
+    background-color: #fc9483 !important;
+}
+
+
+/* dark mode */
+body{
+    transition: background 0.2s linear;
+}
+body.dark-mode {
+	background: #2e3842;
+}
+
+body.dark-mode .card-body{
+    background-color: #2e3842;
+}
+
+body.dark-mode p{
+    color: #fff;
+}
+
+body.dark-mode h1{
+    color: #fff;
+}
+body.dark-mode h3{
+    color: #fff;
+}
+
+body.dark-mode h4{
+    color: #fff;
+}
+
+body.dark-mode h5{
+    color: #fff;
+}
+
+body.dark-mode a h5{
+    color: #fff;
+}
+body.dark-mode.p .text-muted{
+    color: #fff;
+}
+
+body.dark-mode .modal-content{
+    background-color: #2e3842;
+}
+
+body.dark-mode .input-group-append{
+    color: #292C35
+}
+
+
+.checkbox {
+	opacity: 0;
+	position: absolute;
+}
+
+.label {
+	background-color: #111;
+	border-radius: 50px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 5px;
+	position: relative;
+	height: 26px;
+	width: 50px;
+	transform: scale(1.5);
+}
+
+.label .ball {
+	background-color: #fff;
+	border-radius: 50%;
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	height: 22px;
+	width: 22px;
+	transform: translateX(0px);
+	transition: transform 0.2s linear;
+}
+
+.checkbox:checked + .label .ball {
+	transform: translateX(24px);
+}
+
+
+.fa-moon {
+	color: #f1c40f;
+}
+
+.fa-sun {
+	color: #f39c12;
+}
+
+.dark-btn{
+    position: fixed;
+    top: 0px;
+    padding: 90px 20px;
+    padding-left:-30vh;
 }

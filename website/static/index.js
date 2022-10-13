@@ -1,3 +1,4 @@
+// To delete reviews
 function deleteReview(reviewId,flatId) {
   fetch("/delete-review", {
     method: "POST",
@@ -7,9 +8,9 @@ function deleteReview(reviewId,flatId) {
   });
 }
 
+
+// To unlike a flat
 function unfavourite(favouriteID) {
-  document.getElementById("favourite_button_id" + favouriteID.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
-  document.getElementById("favourite_button" + favouriteID.toString()).setAttribute( 'onClick', ("favourite(" + favouriteID.toString() + ")"));
   const fav_count = document.getElementById("favourite_count" + favouriteID.toString());
   fetch("/unfavourite",{
     method: "POST",
@@ -17,13 +18,15 @@ function unfavourite(favouriteID) {
     .then((res) => res.json())
     .then((data) => { 
     fav_count.innerHTML = data["favourite_count"];
+    document.getElementById("favourite_button_id" + favouriteID.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
+    document.getElementById("favourite_button" + favouriteID.toString()).setAttribute( 'onClick', ("favourite(" + favouriteID.toString() + ")"));
   })
-  .catch((e) => alert("Unable to Favourite"));
+  .catch((e) => click_favourite_button());
 }
 
+
+// To like a flat
 function favourite(flatID) {
-  document.getElementById("favourite_button_id" + flatID.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
-  document.getElementById("favourite_button" + flatID.toString()).setAttribute( 'onClick', ("unfavourite(" + flatID.toString() + ")"));
   const fav_count = document.getElementById("favourite_count" + flatID.toString());
   fetch("/favourite",{
     method: "POST",
@@ -31,10 +34,14 @@ function favourite(flatID) {
     .then((res) => res.json())
     .then((data) => { 
     fav_count.innerHTML = data["favourite_count"];
+    document.getElementById("favourite_button_id" + flatID.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
+    document.getElementById("favourite_button" + flatID.toString()).setAttribute( 'onClick', ("unfavourite(" + flatID.toString() + ")"));
   })
-  .catch((e) => alert("Unable to Favourite"));
+  .catch((e) => click_favourite_button());
 }
 
+
+// To get the like count of a flat
 function favourite_count(flatID) {
   const fav_count = document.getElementById("favourite_count" + flatID.toString());
   fetch("/favourite_count",{
@@ -47,6 +54,8 @@ function favourite_count(flatID) {
   })
 }
 
+
+// To unlike a review
 function review_unfavourite(reviewID) {
   document.getElementById("review_favourite_button_id" + reviewID.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
   document.getElementById("review_favourite_button" + reviewID.toString()).setAttribute( 'onClick', ("review_favourite(" + reviewID.toString() + ")"));
@@ -61,6 +70,8 @@ function review_unfavourite(reviewID) {
   .catch((e) => alert("Unable to UnFavourite"));
 }
 
+
+// To like a review
 function review_favourite(reviewID) {
   document.getElementById("review_favourite_button_id" + reviewID.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
   document.getElementById("review_favourite_button" + reviewID.toString()).setAttribute( 'onClick', ("review_unfavourite(" + reviewID.toString() + ")"));
@@ -75,6 +86,8 @@ function review_favourite(reviewID) {
   .catch((e) => alert("Unable to Favourite"));
 }
 
+
+// To get the like count of a review
 function review_favourite_count(reviewID) {
   const fav_count = document.getElementById("review_favourite_count" + reviewID.toString());
   fetch("/review_favourite_count",{
@@ -87,6 +100,8 @@ function review_favourite_count(reviewID) {
   })
 }
 
+
+// Google Street View
 window.onload = function initialize() {
   console.log(parseFloat(document.getElementById("latitude").innerHTML));
   var latitude = parseFloat(document.getElementById("latitude").innerHTML);
@@ -111,6 +126,8 @@ window.onload = function initialize() {
   map.setStreetView(panorama);
 }
 
+
+// To display reply form
 function reply(reviewId){
   var x = document.getElementById(`reply-${reviewId}`);
   var y = document.getElementById(`reply_submit_button-${reviewId}`);
@@ -123,4 +140,10 @@ function reply(reviewId){
     x.style.display = "none";
     y.style.display = "none";
   }
+}
+
+
+// To display create account modal for guests
+function click_favourite_button(){
+  $("#createAccountModal").modal('show');
 }

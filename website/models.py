@@ -127,7 +127,7 @@ def create_Flat_table():
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
     df = pd.read_csv('merged.csv')
-    df.to_sql(con=engine, index_label='id', name=Flat.__tablename__, if_exists='replace')
+    df.to_sql(con=engine, name=Flat.__tablename__, if_exists='replace')
 
 class Property(db.Model):
     # Inform SQLAlchemy of the column names and its attributes
