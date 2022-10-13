@@ -11,8 +11,6 @@ function deleteReview(reviewId,flatId) {
 
 // To unlike a flat
 function unfavourite(favouriteID) {
-  document.getElementById("favourite_button_id" + favouriteID.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
-  document.getElementById("favourite_button" + favouriteID.toString()).setAttribute( 'onClick', ("favourite(" + favouriteID.toString() + ")"));
   const fav_count = document.getElementById("favourite_count" + favouriteID.toString());
   fetch("/unfavourite",{
     method: "POST",
@@ -20,6 +18,8 @@ function unfavourite(favouriteID) {
     .then((res) => res.json())
     .then((data) => { 
     fav_count.innerHTML = data["favourite_count"];
+    document.getElementById("favourite_button_id" + favouriteID.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
+    document.getElementById("favourite_button" + favouriteID.toString()).setAttribute( 'onClick', ("favourite(" + favouriteID.toString() + ")"));
   })
   .catch((e) => click_favourite_button());
 }
@@ -27,8 +27,6 @@ function unfavourite(favouriteID) {
 
 // To like a flat
 function favourite(flatID) {
-  document.getElementById("favourite_button_id" + flatID.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
-  document.getElementById("favourite_button" + flatID.toString()).setAttribute( 'onClick', ("unfavourite(" + flatID.toString() + ")"));
   const fav_count = document.getElementById("favourite_count" + flatID.toString());
   fetch("/favourite",{
     method: "POST",
@@ -36,6 +34,8 @@ function favourite(flatID) {
     .then((res) => res.json())
     .then((data) => { 
     fav_count.innerHTML = data["favourite_count"];
+    document.getElementById("favourite_button_id" + flatID.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
+    document.getElementById("favourite_button" + flatID.toString()).setAttribute( 'onClick', ("unfavourite(" + flatID.toString() + ")"));
   })
   .catch((e) => click_favourite_button());
 }
@@ -145,7 +145,5 @@ function reply(reviewId){
 
 // To display create account modal for guests
 function click_favourite_button(){
-  $('.favourite_button').click(function(){
-    $("#createAccountModal").modal('show');
-  });
+  $("#createAccountModal").modal('show');
 }
