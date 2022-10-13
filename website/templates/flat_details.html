@@ -5,13 +5,11 @@
 {% block content %}
 <head>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <script type="text/javascript" src="/static/index.js"></script>
-  <script 
-    {{ moment.include_moment() }}
-    ></script>
+  
  <script>
   $(document).ready(function(){
       $('.favourite_button').click(function(){
@@ -33,6 +31,11 @@
       }); 
   });
 </script>
+<div hidden="hidden">
+<script 
+  {{ moment.include_moment() }}
+></script>
+</div>
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
@@ -75,7 +78,7 @@
 </head>
 
 <body>
-  <div class="row">
+  <div class="row" style="margin: 0 auto;">
     <div class = "column">
       <div id="map" style="width:500px; height:400px;"></div>
     </div>
@@ -248,209 +251,155 @@
       border-width: 1px;
       outline:none;
       border-radius: 5px;
+      margin: 0 10px;
     }
 </style>
 
 <div class="row">
-<div class="col-sm-4">
-  <div class="row">
-  <button class="amenities_btn" type="button" disabled>
-    <p class="mb-0">Bus Stop 
-    <i class="fa-solid fa-bus"></i>
-    </p>
-  </button>
-  &nbsp;
-  <button class="amenities_btn" type="button" disabled>
-    <p class="mb-0">Train Station 
-      <i class="fa-solid fa-train-subway"></i>
-    </p>
-  </button>
-  </div>
-  <br>
-  {%if amenities['bus_station']|length != 0 %}
-  {%for key1,value1 in amenities["bus_station"].items()%}
-  <p class="text-muted mb-0">
-  {{key1}} 
-  </p>
-  {% endfor %}
-  {%endif%}
-  {%if amenities['subway_station']|length !=0 %}
-  {%for key1,value1 in amenities["subway_station"].items()%}
-  <p class="text-muted mb-0">
-  {{key1}} Station
-  </p>
-  {% endfor %}
-  {%endif%}
-
-</div>
-
-<div class="col-sm-2 border-right" id="right">
-  <br>
-  <br>
-  <div class = "row">
-    <div class = "col-sm-4" >
-      {%if amenities['bus_station']|length !=0 %}
-  {%for key1,value1 in amenities["bus_station"].items()%}
-      <p  class = "text-muted mb-0" >
-        {{value1[0]}}m 
-      </p>
-      {% endfor%}
+    <div class="col-sm-3">
+      <div class="row">
+      <button class="amenities_btn" type="button" disabled>
+        <p class="mb-0">Bus Stop 
+        <i class="fa-solid fa-bus"></i>
+        </p>
+      </button>
+      &nbsp;
+      <button class="amenities_btn" type="button" disabled>
+        <p class="mb-0">Train Station 
+          <i class="fa-solid fa-train-subway"></i>
+        </p>
+      </button>
+      </div>
+      <br>
+      <table style="width:100%">
+      {%if amenities['bus_station']|length != 0 %}
+      {%for key1,value1 in amenities["bus_station"].items()%}
+      <tr>
+        <td><div style="width:400px"><p class="text-muted mb-0">
+          {{key1}}
+        </p></div></td>
+        
+        <td><div style="width:80px"><p class="text-muted mb-0">
+          {{value1[0]}}m 
+        </p></td>
+        <td><div style="width:50px"><p class="text-muted mb-0">
+          {{value1[1]}}min
+           </p></td>
+        </tr>
+      {% endfor %}
       {%endif%}
+    
       {%if amenities['subway_station']|length !=0 %}
       {%for key1,value1 in amenities["subway_station"].items()%}
-      <p  class = "text-muted mb-0" >
-        {{value1[0]}}m 
-      </p>
-      {% endfor%}
+      <tr>
+        <td><div style="width:400px"><p class="text-muted mb-0">
+          {{key1}}
+        </p></td>
+        <td><div style="width:80px"><p class="text-muted mb-0">
+          {{value1[0]}}m 
+        </p></td>
+        <td><div style="width:50px"><p class="text-muted mb-0">
+          {{value1[1]}}min
+           </p></td>
+        </tr>
+      {% endfor %}
       {%endif%}
-     </div>
-     
-     <div class = "col-sm-2 border-none" >
-      {%if amenities['bus_station']|length !=0 %}
-    {%for key1,value1 in amenities["bus_station"].items()%}
-    <p class = "text-muted mb-0">
-    {{value1[1]}}min
-     </p>
-     {% endfor%}
-     {%endif%}
-     {%if amenities['subway_station']|length !=0 %}
-     {%for key1,value1 in amenities["subway_station"].items()%}
-    <p class = "text-muted mb-0">
-    {{value1[1]}}min
-     </p>
-     {% endfor%}
-     {%endif%}
+    
+        </table>
+      
+        
+    </div>
+    <div class="col-sm-3 border-right"></div>
+    
+    <div class="col-sm-3">
+      <button class="amenities_btn" type="button" disabled>
+        <p class="mb-0"> School
+          <i class="fa-solid fa-school"></i>    
+        </p>
+      </button>
+      <br>
+      <br>
+      <table style="width:100%">
+        {%if amenities['school']|length !=0 %}
+        {%for key1,value1 in amenities["school"].items()%}
+        <tr>
+          <td><div style="width:400px"><p class="text-muted mb-0">
+            {{key1}}
+          </p></td>
+          <td><div style="width:80px"><p class="text-muted mb-0">
+            {{value1[0]}}m 
+          </p></td>
+          <td><div style="width:50px"><p class="text-muted mb-0">
+            {{value1[1]}}min
+             </p></td>
+          </tr>
+        {% endfor %}
+        {%endif%}
+      </table>
     </div>
     
     </div>
-</div>
-
-
-<div class="col-sm-4">
-  <button class="amenities_btn" type="button" disabled>
-    <p class="mb-0"> School
-      <i class="fa-solid fa-school"></i>    
-    </p>
-  </button>
-  <br>
-  <br>
-  {%if amenities['school']|length !=0 %}
-    {%for key1,value1 in amenities["school"].items()%}
-    <p class = "text-muted mb-0">{{key1}}</p>
-    {% endfor %}
-</div>
-
-<div class="col-sm-2 border-none">
-  <br>
-  <br>
-  <div class = "row">
-    <div class = 'col-sm-4'>
-    {%for key1,value1 in amenities["school"].items()%}
-    <p class = "text-muted mb-0">{{value1[0]}}m</p>
-      {% endfor %}
-    </div>
-    <div class = "col-sm-2 border-none">
-      {%for key1,value1 in amenities["school"].items()%}
-      <p class = "text-muted mb-0">{{value1[1]}}min</p>
-      {% endfor %}
-    </div>
-
-  {% else %}
-     <div>
-      <p class = "text-muted mb-0">None</p>
-      </div>
-
-    <div class="col-sm-2 border-none">
-      <br>
-      <br>
-      <div class = "row">
-        <div class = 'col-sm-4'>
-          <p class = "text-muted mb-0" style="display:none;">0 m</p>
-        </div>
-        <div class = "col-sm-2 border-none">
-          <p class = "text-muted mb-0" style="display:none;">0min</p>
-        </div>
-      </div>
-      {%endif%}
-    </div>
-</div>
-
-</div>
-
-
-<hr>
-
-<div class="row">
-  <div class="col-sm-4">
-    <button class="amenities_btn" type="button" disabled>
-      <p class="mb-0">Food
-        <i class="fa-solid fa-utensils"></i>
-      </p>
-    </button>
-    <br>
-    <br>
-    {%if amenities['restaurant']|length !=0 %}
-    {%for key1,value1 in amenities["restaurant"].items()%}
-  <p class="text-muted mb-0">
-  {{key1}} 
-  </p>
-  {% endfor %}
-  </div>
-  <div class="col-sm-2 border-right">
-    <br>
-    <br>
-    <div class ="row">
-    <div class = "col-sm-4">
-    {%for key1,value1 in amenities["restaurant"].items()%}
-    <p class = "text-muted mb-0">{{value1[0]}}m</p>
-      {% endfor %}
-  </div>
-  <div class = "col-sm-2 border-none">
-    {%for key1,value1 in amenities["restaurant"].items()%}
-    <p class = "text-muted mb-0">{{value1[1]}}min</p>
-      {% endfor %}
-      {%endif%}
-  </div>
-  </div>
-  </div>
-
-
-  <div class="col-sm-4">
-    <button class="amenities_btn " type="button" disabled>
-      <p class="mb-0">Clinic
-        <i class="fa-solid fa-clinic-medical"></i>    
-      </p>
-    </button>
-    <br>
-    <br>
-    {%if amenities['doctor']|length !=0 %}
-    {%for key1,value1 in amenities["doctor"].items()%}
-  <p class="text-muted mb-0">
-  {{key1}} 
-  </p>
-  {% endfor %}
-      </div>
-
-      <div class="col-sm-2 border-none">
+    
+    
+    <hr>
+    
+    <div class="row">
+      <div class="col-sm-3">
+        <button class="amenities_btn" type="button" disabled>
+          <p class="mb-0">Food
+            <i class="fa-solid fa-utensils"></i>
+          </p>
+        </button>
         <br>
         <br>
-        <div class = "row">
-          <div class = "col-sm-4">
-        {%for key1,value1 in amenities["doctor"].items()%}
-        <p class = "text-muted mb-0">{{value1[0]}}m </p>
-          {% endfor %}
-      </div>
-      <div class = "col-sm-2 border-none">
-      {%for key1,value1 in amenities["doctor"].items()%}
-        <p class = "text-muted mb-0">{{value1[1]}}min</p>
+        <table style="width:100%">
+          {%if amenities['restaurant']|length !=0 %}
+        {%for key1,value1 in amenities["restaurant"].items()%}
+          <tr>
+            <td><div style="width:400px"><p class="text-muted mb-0">
+              {{key1}}
+            </p></td>
+            <td><div style="width:80px"><p class="text-muted mb-0">
+              {{value1[0]}}m 
+            </p></td>
+            <td><div style="width:50px"><p class="text-muted mb-0">
+              {{value1[1]}}min
+               </p></td>
+            </tr>
           {% endfor %}
           {%endif%}
-          </div>
-          </div>
+        </table>
         </div>
-
-  </div>
-
+        <div class="col-sm-3 border-right"></div>
+      <div class="col-sm-3">
+        <button class="amenities_btn " type="button" disabled>
+          <p class="mb-0">Clinic
+            <i class="fa-solid fa-clinic-medical"></i>    
+          </p>
+        </button>
+        <br>
+        <br>
+        <table style="width:100%">
+          {%if amenities['doctor']|length !=0 %}
+        {%for key1,value1 in amenities["doctor"].items()%}
+          <tr>
+            <td><div style="width:400px"><p class="text-muted mb-0">
+              {{key1}}
+            </p></td>
+            <td><div style="width:80px"><p class="text-muted mb-0">
+              {{value1[0]}}m 
+            </p></td>
+            <td><div style="width:50px"><p class="text-muted mb-0">
+              {{value1[1]}}min
+               </p></td>
+            </tr>
+          {% endfor %}
+          {%endif%}
+        </table>
+        
+    
+      </div>
+    </div>
 <br>
 {% if user.is_authenticated %}
 <form method="POST">
@@ -487,7 +436,7 @@
 {% endif %}
 
 <ul class="list-group list-group-flush" id="reviews">
-  {% for review in flat.reviews|sort(attribute='review_path') %}
+  {% for review in review1.items|sort(attribute='review_path') %}
       <!-- Begin review indentation -->
       {% if review.level() == 0 %}
       <div class="col-sm-12" >
@@ -513,19 +462,47 @@
                                           <button type="button" class="btn btn-link btn-sm" id="reply_button-{{review.id}}" onClick=reply({{review.id}})>Reply</button>
                                         </span>
                                             <small class="text-muted"> Posted {{moment(review.date).fromNow() }}</small>
-                                            {% if review.user == user %}
-                                            <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
-                                              <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            {% endif %}
-                                            {% if review.id in user.review_favourites|map(attribute="review_id")|list %}
-                                            <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_unfavourite({{ review.id }})" >
-                                              <span id ="review_favourite_button_id{{review.id}}"><i class="fa-solid fa-heart" ></i></span>
-                                            </button>
-                                            {% else %}
-                                            <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_favourite({{ review.id }})">
-                                              <span id ="review_favourite_button_id{{review.id}}"><i class="fa-regular fa-heart"></i></span>
-                                            </button>
+                                              {% if review.user == user %}
+                                              <button type="button" class="close" onClick="deleteReview({{ review.id }}, {{flat.id}})">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                              {% endif %}
+                                              {% if user.is_authenticated %}
+                                                {% if review.id in user.review_favourites|map(attribute="review_id")|list %}
+                                                <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_unfavourite({{ review.id }})" >
+                                                  <span id ="review_favourite_button_id{{review.id}}"><i class="fa-solid fa-heart" ></i></span>
+                                                </button>
+                                                {% else %}
+                                                <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_favourite({{ review.id }})">
+                                                  <span id ="review_favourite_button_id{{review.id}}"><i class="fa-regular fa-heart"></i></span>
+                                                </button>
+                                                {% endif %}
+                                              {% else %}
+                                              <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" 
+                                                <span id ="review_favourite_button_id{{review.id}}"><i class="fa-regular fa-heart"></i></span>
+                                              </button>
+                                              <div class = "guest_error">
+                                                <div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                                  aria-hidden="true">
+                                                  <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header text-center">
+                                                        <h4 class="modal-title w-100 font-weight-bold">Login Feature</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                      </div>
+                                            
+                                                      <div class="modal-body mx-3">
+                                                        <div class="md-form mb-5">
+                                                          <a href='/sign-up'<h5> Create an account to use this feature!</h5></a> 
+                                                        </div>
+                                            
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                            </div>
                                             {% endif %}
                                             <span id="review_favourite_count{{review.id}}" class="favourite_count justify-content-end">{{review.favourites|length}}</span>
                                         </div>
@@ -562,5 +539,66 @@
                       {% endfor %}
                     </ul>
 
+<style>
+  .pagebutton {
+    border: 2px solid #ffc0cb;
+    background-color: white;
+    color: black;
+    padding: 10px 15px;
+    font-size: 11px;
+    cursor: pointer;
+}
+  .btn-others{
+    border-color: #ffc0cb;
+    color: black;
+  }
+  .btn-others:hover{
+    background-color: #ffc0cb;
+    color: black;
+  }
+  .btn-dark{
+    background-color: #ffc0cb;
+    color: #fff;
+  }
+  .btn-dark:hover {
+  background-color: #de8897;
+  border-color: #ffc0cb;
+  color: white;
+}
+</style>
+<div class="text-right">
+  <a href="{{ url_for('views.flat_details', flatId=flat.id, page=review1.prev_num) }}"
+     class="pagebutton btn-others
+     {% if review1.page == 1 %}disabled{% endif %}">
+      &laquo;
+  </a>
+<!-- Loop through the number of pages to display a link for each-->
+  {% for page_num in review1.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+{% if page_num %}
+<!-- Check for the active page and set the link to "Active"-->
+          {% if review1.page == page_num %}
+          <a href="{{ url_for('views.flat_details', flatId=flat.id, page=page_num) }}"
+             class="pagebutton btn-dark">
+              {{ page_num }}
+          </a>
+          {% else %}
+          <a href="{{ url_for('views.flat_details', flatId=flat.id, page=page_num) }}"
+             class="pagebutton btn-others">
+              {{ page_num }}
+          </a>
+          {% endif %}
+      {% else %}
+          ...
+      {% endif %}
+  {% endfor %}
+  <a href="{{ url_for('views.flat_details', flatId=flat.id, page=review1.next_num) }}"
+     class="pagebutton btn-others 
+     {% if review1.page == review1.pages %}disabled{% endif %}">
+      &raquo;
+  </a>
+</div>
+<p class="text-right mt-3">
+ Showing page {{ review1.page }} of {{ review1.pages }}
+</p>
 </body>
 {% endblock %}

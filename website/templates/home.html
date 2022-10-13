@@ -4,8 +4,7 @@
 {% block content %}
 <head>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
     $(document).ready(function(){
         $('.favourite_button').click(function(){
@@ -42,21 +41,22 @@
   </script>
 </head> 
 
-<form method="POST">
+<form class="search-bar" method="POST">
   <div class="container py-2 ">
       <div class="row justify-content-center">
           <div class="input-group col-md-4" >
               <input class="form-control py-2 border-right-0 border" name="search" id="search" placeholder = "Search here!">
               <span class="input-group-append ">
-                  <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" >
+                  <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" style="color:#fc9483;">
                     <i class="fa fa-search"></i>
                   </button>
                   <a href= "{{ url_for('views.flat_details', flatId = random) }}" title="Click here for a random flat!"
-                  <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" >
+                  <button id="dice" class="btn btn-outline-primary border-left-0 border" type="submit" type="button" style="color: #fc9483;">
                     <i class="fa-solid fa-dice"></i>
                   </button> </a>
                   <div class="btn-group">
-                    <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+                    style="color: #fc9483; background-color: #ffffff; border-color: #e1e3e6; border-radius: 0;">
                       Sort
                     </button>
                     <div class="dropdown-menu">
@@ -74,7 +74,9 @@
                   </div> 
                 </span>
 
-                <button class="btn btn-outline-primary ms-1" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="filter">Filters<span class="fa fa-filter pl-1"></span></button>
+                <button class="btn btn-outline-primary ms-1" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="filter"
+                style="color: #fc9483; background-color: #ffffff; border-color: #e1e3e6; 
+                border-radius: 0 3px 3px 0;">Filters<span class="fa fa-filter pl-1"></span></button>
                 <div class="collapse" id="filter">
                     <div class="border-bottom pb-2 ml-2">
                         <h4 id="burgundy">Filter</h4>
@@ -338,11 +340,18 @@
     var window_height = $(window).height();
     var document_height = $(document).height();
     
+    // console.log("current_y+ window_height: ", current_y + window_height);
+    // console.log("document_height: ", document_height);
     if (current_y + window_height >= (document_height-1)) {
       downloadContent(index, limit);
       index += 20
     }
-    
+    // console.log("window.innerHeight + window.pageYOffset: ", window.innerHeight + window.pageYOffset);
+    // console.log("document.body.offsetHeight: ", document.body.offsetHeight);
+    // if (current_y + window_height >= document.body.offsetHeight-1){
+    //   downloadContent(index, limit);
+    //   index += 20
+    // }
     /*var scrollPercent = (current_y / (document_height)) * 100;
 
     if (scrollPercent > 90) {
@@ -470,7 +479,7 @@
 
             <div class="card-header">
               <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index+1][1] + `</strong></a>
-              <button class="favourite_button" id ="favourite_button`+data.data[index+1][0]+`" type="button" onClick="unfavourite(`+data.data[index+1][0]+`)">
+              <button class="favourite_button" id ="favourite_button`+data.data[index+1][0]+`" type="button" onClick="favourite(`+data.data[index+1][0]+`)">
                 <span id ="favourite_button_id`+data.data[index+1][0]+`"><i class="fa-regular fa-heart"></i></span>
               </button>
               <span id="favourite_count`+data.data[index+1][0]+`">`+data.data[index+1][7]+`</span>
@@ -519,9 +528,7 @@
   
   {% else %}
   
-    <div class="fa-3x d-flex justify-content-center" id ="end_page">
-      <i class="fas fa-circle-notch fa-spin"></i>
-    </div>
+    
   {% endif %}
 
 
