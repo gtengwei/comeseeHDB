@@ -195,6 +195,10 @@ body.dark-mode p{
 body.dark-mode h1{
     color: #fff;
 }
+
+body.dark-mode h2{
+    color: #fff;
+}
 body.dark-mode h3{
     color: #fff;
 }
@@ -207,6 +211,13 @@ body.dark-mode h5{
     color: #fff;
 }
 
+body.dark-mode h6{
+    color: #fff;
+}
+
+body.dark-mode label{
+    color: #fff;
+}
 body.dark-mode .modal-sign-up{
     color: #fff;
 }
@@ -262,6 +273,13 @@ body.dark-mode button.btn.btn-outline-primary.ms-1 {
 body.dark-mode .help-text{
     color: #ffffff;
 } 
+
+body .landing-text{
+    color: #000000;
+}
+body.dark-mode .landing-text{
+    color: #ffffff;
+}
 .checkbox {
 	opacity: 0;
 	position: absolute;
