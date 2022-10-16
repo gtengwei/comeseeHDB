@@ -207,7 +207,7 @@ body.dark-mode h5{
     color: #fff;
 }
 
-body.dark-mode a h5{
+body.dark-mode .modal-sign-up{
     color: #fff;
 }
 body.dark-mode.p .text-muted{
@@ -222,7 +222,46 @@ body.dark-mode .input-group-append{
     color: #292C35
 }
 
+body.dark-mode .street_name .favourite_button{
+    background-color: #2e3842;
+}
 
+body.dark-mode .favourite_button.justify-content-end {
+    background-color: #2e3842;
+}
+
+body.dark-mode .favourite_count.justify-content-end {
+    color: #ffffff;
+}
+
+body.dark-mode p.text-muted.mb-0 {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+}
+
+body.dark-mode .amenities_btn p{
+    color: #111;
+}
+
+body.dark-mode #reviews li{
+    background-color: #2e3842;
+}
+
+body.dark-mode .list-group-item b{
+    color: #ffffff;
+}
+
+body.dark-mode button.btn.btn-primary.btn-sm.dropdown-toggle {
+    background-color: #2e3842 !important;
+}
+
+body.dark-mode button.btn.btn-outline-primary.ms-1 {
+    background-color: #2e3842 !important;
+}
+
+body.dark-mode .help-text{
+    color: #ffffff;
+} 
 .checkbox {
 	opacity: 0;
 	position: absolute;

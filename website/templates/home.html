@@ -41,6 +41,7 @@
   </script>
 </head> 
 
+<body class="bg">
 <form class="search-bar" method="POST">
   <div class="container py-2 ">
       <div class="row justify-content-center">
@@ -163,8 +164,6 @@
   </div>
 </form>
 
-
-<body class="bg">
   <div id="properties" class="card-body mx-auto bg-pink">
     {% for i in range(0, (flats|length)|int, 2) %}
     <div class="row">
@@ -200,7 +199,7 @@
             
                     <div class="modal-body mx-3">
                       <div class="md-form mb-5">
-                          <a href='/sign-up'<h5> Create an account to use this feature!</h5></a>
+                          <a href='/sign-up' class ='modal-sign-up'> Create an account to use this feature!</a>
                       </div>
             
                     </div>
@@ -268,7 +267,7 @@
             
                     <div class="modal-body mx-3">
                       <div class="md-form mb-5">
-                          <a href='/sign-up'<h5> Create an account to use this feature!</h5></a>
+                          <a href='/sign-up' class='modal-sign-up'> Create an account to use this feature!</a>
                       </div>
             
                     </div>
@@ -551,6 +550,7 @@
 
         <div class="modal-body mx-3">
           <div class="md-form mb-5">
+            <div class="help-text">
             <h4> What is comeseeHDB?</h4>
             <p> <b>comeseeHDB</b> is a extensive search engine for resale HDB flats in Singapore. 
               <br>
@@ -593,6 +593,7 @@
               </ul>
               </p> 
           </div>
+        </div>
         </div>
       </div>
     </div>
