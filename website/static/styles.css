@@ -207,7 +207,7 @@ body.dark-mode h5{
     color: #fff;
 }
 
-body.dark-mode a h5{
+body.dark-mode .modal-sign-up{
     color: #fff;
 }
 body.dark-mode.p .text-muted{
@@ -259,6 +259,9 @@ body.dark-mode button.btn.btn-outline-primary.ms-1 {
     background-color: #2e3842 !important;
 }
 
+body.dark-mode .help-text{
+    color: #ffffff;
+} 
 .checkbox {
 	opacity: 0;
 	position: absolute;
