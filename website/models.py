@@ -25,6 +25,7 @@ class Review(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'), nullable=False)
     numOfLikes = db.Column(db.Integer, default=0)
+    numOfParentLikes = db.Column(db.Integer, default=0)
     likes = db.relationship('ReviewLikes')
     review_path = db.Column(db.Text, index=True)
     parent_id = db.Column(db.Integer, db.ForeignKey('review.id'))

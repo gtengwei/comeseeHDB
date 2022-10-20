@@ -434,7 +434,8 @@
 {% endif %}
 
 <ul class="list-group list-group-flush" id="reviews">
-  {% for review in review1.items|sort(attribute='review_path') %}
+  {% for review in review1.items %}
+  
       <!-- Begin review indentation -->
       {% if review.level() == 0 %}
       <div class="col-sm-12" >
@@ -595,8 +596,16 @@
       &raquo;
   </a>
 </div>
-<p class="text-right mt-3">
- Showing page {{ review1.page }} of {{ review1.pages }}
-</p>
+{% if review1.pages >= 1 %}
+  <div class="text-right mt-3">
+      <p>Page {{ review1.page }} of {{ review1.pages }}</p>
+  </div>
+
+{% else %}
+  <div class="text-right mt-3">
+      <p>Page 0 of {{ review1.pages }}</p>
+  </div>
+{% endif %}
+
 </body>
 {% endblock %}

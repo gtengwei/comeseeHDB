@@ -103,8 +103,8 @@ def flat_details(flatId):
 
     # PAGINATION
     page = request.args.get('page', 1, type=int)
-    review1 = Review.query.filter(Review.flat_id == flatId).order_by(
-        Review.review_path).paginate(page=page, per_page=10)
+    review1 = Review.query.filter(Review.flat_id == flatId).order_by(Review.numOfParentLikes.desc()).paginate(page=page, per_page=10)
+    #review1 = Review.query.filter(Review.flat_id == flatId).filter(Review.parent_id == None).order_by(Review.numOfLikes.desc()).paginate(page=page, per_page=10)
     return render_template("flat_details.html", user=current_user, flat=flat, amenities=amenity, latitude=latitude, longitude=longitude, review1=review1)
 
 @views.route('/flat_like', methods=['POST'])
@@ -142,6 +142,8 @@ def review_unlike():
     for review_like in current_user.review_likes:
         if review_like.review_id == reviewID:
             db.session.delete(review_like)
+            if review.parent_id == None:
+                review.numOfParentLikes -= 1
             review.numOfLikes -= 1
             db.session.commit()
     return jsonify({"review_like_count": len(review.likes)})
@@ -155,6 +157,8 @@ def review_like():
     new_likes = ReviewLikes(
         user_id=current_user.id, review_id=reviewID)
     db.session.add(new_likes)
+    if review.parent_id == None:
+        review.numOfParentLikes += 1
     review.numOfLikes += 1
     db.session.commit()
     return jsonify({"review_like_count": len(review.likes)})
