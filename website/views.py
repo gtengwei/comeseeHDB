@@ -107,76 +107,73 @@ def flat_details(flatId):
         Review.review_path).paginate(page=page, per_page=10)
     return render_template("flat_details.html", user=current_user, flat=flat, amenities=amenity, latitude=latitude, longitude=longitude, review1=review1)
 
-
-@views.route('/unfavourite', methods=['POST'])
+@views.route('/flat_like', methods=['POST'])
 @login_required
-def unfavourite():
-    favourite = json.loads(request.data)
-    flatID = favourite['favouriteID']
-    flat = Flat.query.get(flatID)
-    for favourite in current_user.favourites:
-        if favourite.flat_id == flatID:
-            db.session.delete(favourite)
-            flat.numOfFavourites -= 1
-            db.session.commit()
-    return jsonify({"favourite_count": len(flat.favourites)})
-
-
-@views.route('/review_unfavourite', methods=['POST'])
-@login_required
-def review_unfavourite():
-    favourite = json.loads(request.data)
-    reviewID = favourite['reviewID']
-    review = Review.query.get(reviewID)
-    for review_favourite in current_user.review_favourites:
-        if review_favourite.review_id == reviewID:
-            db.session.delete(review_favourite)
-            review.numOfFavourites -= 1
-            db.session.commit()
-    return jsonify({"review_favourite_count": len(review.favourites)})
-
-
-@views.route('/favourite', methods=['POST'])
-@login_required
-def favourite():
+def flat_like():
     flat = json.loads(request.data)
     flatID = flat['flatID']
     flat = Flat.query.get(flatID)
-    new_favourites = Favourites(user_id=current_user.id, flat_id=flatID)
-    db.session.add(new_favourites)
-    flat.numOfFavourites += 1
+    new_likes = FlatLikes(user_id=current_user.id, flat_id=flatID)
+    db.session.add(new_likes)
+    flat.numOfLikes += 1
     db.session.commit()
-    return jsonify({"favourite_count": len(flat.favourites)})
+    return jsonify({"like_count": len(flat.likes)})
 
-
-@views.route('/review_favourite', methods=['POST'])
+@views.route('/flat_unlike', methods=['POST'])
 @login_required
-def review_favourite():
+def flat_unlike():
+    like = json.loads(request.data)
+    flatID = like['likeID']
+    flat = Flat.query.get(flatID)
+    for like in current_user.likes:
+        if like.flat_id == flatID:
+            db.session.delete(like)
+            flat.numOfLikes -= 1
+            db.session.commit()
+    return jsonify({"like_count": len(flat.likes)})
+
+
+@views.route('/review_unlike', methods=['POST'])
+@login_required
+def review_unlike():
+    like = json.loads(request.data)
+    reviewID = like['reviewID']
+    review = Review.query.get(reviewID)
+    for review_like in current_user.review_likes:
+        if review_like.review_id == reviewID:
+            db.session.delete(review_like)
+            review.numOfLikes -= 1
+            db.session.commit()
+    return jsonify({"review_like_count": len(review.likes)})
+
+@views.route('/review_like', methods=['POST'])
+@login_required
+def review_like():
     review = json.loads(request.data)
     reviewID = review['reviewID']
     review = Review.query.get(reviewID)
-    new_favourites = ReviewFavourites(
+    new_likes = ReviewLikes(
         user_id=current_user.id, review_id=reviewID)
-    db.session.add(new_favourites)
-    review.numOfFavourites += 1
+    db.session.add(new_likes)
+    review.numOfLikes += 1
     db.session.commit()
-    return jsonify({"review_favourite_count": len(review.favourites)})
+    return jsonify({"review_like_count": len(review.likes)})
 
 
-@views.route('/favourite_count', methods=['POST'])
-def favourite_count():
+@views.route('/flat_like_count', methods=['POST'])
+def flat_like_count():
     flat = json.loads(request.data)
     flatID = flat['flatID']
     flat = Flat.query.get(flatID)
-    return jsonify({"favourite_count": len(flat.favourites)})
+    return jsonify({"like_count": len(flat.likes)})
 
 
-@views.route('/review_favourite_count', methods=['POST'])
-def review_favourite_count():
+@views.route('/review_like_count', methods=['POST'])
+def review_like_count():
     review = json.loads(request.data)
     reviewID = review['reviewID']
     review = Review.query.get(reviewID)
-    return jsonify({"favourite_count": len(review.favourites)})
+    return jsonify({"like_count": len(review.likes)})
 
 # Route for Landing Page
 @views.route('/', methods=['GET','POST'])
@@ -194,7 +191,7 @@ def home():
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     myquery = (
-        "SELECT id FROM Flat ORDER BY numOfFavourites DESC;")
+        "SELECT id FROM Flat ORDER BY numOfLikes DESC;")
     c.execute(myquery)
     data = list(c.fetchall())
     # random.shuffle(data)
@@ -394,8 +391,8 @@ def home():
                 return render_template('search.html', user=current_user, flats=[], random=RANDOM)
 
     session.clear()
-    # return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], favourites = Favourites.query.all(), random = RANDOM, image = image, image_id = image_id)
-    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in data], favourites=Favourites.query.all(), random=RANDOM, image=[Flat.query.get(x).image for x in data])
+    # return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], likes = likes.query.all(), random = RANDOM, image = image, image_id = image_id)
+    return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in data], likes=FlatLikes.query.all(), random=RANDOM, image=[Flat.query.get(x).image for x in data])
 
 
 # Infinite Scrolling for Home Page
@@ -421,7 +418,7 @@ def load_home():
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -442,7 +439,7 @@ def load_home():
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -462,7 +459,7 @@ def load_home():
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -482,7 +479,7 @@ def load_home():
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -502,7 +499,7 @@ def load_home():
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -522,7 +519,7 @@ def load_home():
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -542,7 +539,7 @@ def load_home():
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -562,7 +559,7 @@ def load_home():
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -570,9 +567,9 @@ def load_home():
             else:
                 return jsonify({'data': data})
 
-        elif criteria == 'favourites_high':
+        elif criteria == 'likes_high':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY numOfFavourites DESC;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY numOfLikes DESC;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -584,16 +581,16 @@ def load_home():
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
                 return jsonify({'data': data})
             else:
                 return jsonify({'data': data})
-        elif criteria == 'favourites_low':
+        elif criteria == 'likes_low':
             myquery = (
-                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY numOfFavourites;")
+                "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY numOfLikes;")
             c.execute(myquery)
             data = list(c.fetchall())
             if request.args:
@@ -605,7 +602,7 @@ def load_home():
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -615,7 +612,7 @@ def load_home():
 
     else:
         myquery = (
-            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY numOfFavourites DESC;")
+            "SELECT id, address_no_postal_code, resale_price,flat_type, storey_range, image, month FROM Flat ORDER BY numOfLikes DESC;")
         c.execute(myquery)
         data = list(c.fetchall())
         # random.shuffle(data)
@@ -629,7 +626,7 @@ def load_home():
                 tuple_x = data[x]
                 list_x = list(tuple_x)
                 flat_id = list_x[0]
-                list_x.append(len(Flat.query.get(flat_id).favourites))
+                list_x.append(len(Flat.query.get(flat_id).likes))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
 
@@ -991,7 +988,7 @@ def load_search():
             tuple_x = data[x]
             list_x = list(tuple_x)
             flat_id = list_x[0]
-            list_x.append(len(Flat.query.get(flat_id).favourites))
+            list_x.append(len(Flat.query.get(flat_id).likes))
             tuple_x = tuple(list_x)
             data[x] = tuple_x
 
@@ -1445,9 +1442,9 @@ def sort(criteria):
                         flat_id = data[x][0]
                         list_x.append(flat_id)
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
-                elif criteria == 'favourites_high':
+                elif criteria == 'likes_high':
                     myquery = (
-                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites DESC;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfLikes DESC;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria
@@ -1456,9 +1453,9 @@ def sort(criteria):
                         flat_id = data[x][0]
                         list_x.append(flat_id)
                     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], random=RANDOM)
-                elif criteria == 'favourites_low':
+                elif criteria == 'likes_low':
                     myquery = (
-                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfFavourites;")
+                        "SELECT id, address, resale_price,flat_type, storey_range FROM Flat ORDER BY numOfLikes;")
                     c.execute(myquery)
                     data = list(c.fetchall())
                     session['criteria'] = criteria

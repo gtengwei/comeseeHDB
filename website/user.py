@@ -101,28 +101,28 @@ def change_postal_code(username):
 
     return render_template("change_postal_code.html", user=current_user)
 
-## Display favourites for every unique user
+## Display like flats for every unique user
 ## To be completed
-@user.route('/favourites/<username>', methods=['GET', 'POST']) 
+@user.route('/likes/<username>', methods=['GET', 'POST']) 
 @login_required
-def favourites(username):
-    fav_list = []
-    for x in current_user.favourites:
-            fav_list.append(x.flat_id)
+def likes(username):
+    like_list = []
+    for x in current_user.likes:
+            like_list.append(x.flat_id)
     if request.method == 'POST':
-        address = request.form.get('searchFavourites')
+        address = request.form.get('searchLikes')
         print(address)
         address = "%{}%".format(address)
-        flats = Flat.query.join(Favourites, Favourites.flat_id == Flat.id)\
-        .filter(Favourites.user_id == current_user.id)\
+        flats = Flat.query.join(FlatLikes, FlatLikes.flat_id == Flat.id)\
+        .filter(FlatLikes.user_id == current_user.id)\
         .filter(Flat.address.like(address)).all()
         if flats:
-            return render_template("favourites.html", user=current_user, flats=flats)
+            return render_template("likes.html", user=current_user, flats=flats)
         else:
             flash('No results found.', category='error')
-            return render_template("favourites.html", user=current_user, flats=[])
+            return render_template("likes.html", user=current_user, flats=[])
             
-    return render_template("favourites.html", user=current_user, flats = [Flat.query.get(x) for x in fav_list])
+    return render_template("likes.html", user=current_user, flats = [Flat.query.get(x) for x in like_list])
 
 
 

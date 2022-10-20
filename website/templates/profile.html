@@ -13,8 +13,10 @@
               <h5 class="my-3">{{user.username}}</h5>
 
               <div class="d-flex justify-content-center mb-2">
-                <a <button type="button" class="btn btn-primary" href="{{ url_for('user.profile', username=current_user.username) }}">Personal Information</button></a> 
-                <a <button type="button" class="btn btn-outline-primary ms-1" href="{{ url_for('user.favourites', username=current_user.username) }}">Favourites</button></a>
+                <a <button type="button" id="solid-button" class="btn btn-primary" href="{{ url_for('user.profile', username=current_user.username) }}"
+                >Personal Information</button></a> 
+                <a <button type="button" id="outline-button" class="btn btn-outline-primary ms-1" href="{{ url_for('user.likes', username=current_user.username) }}"
+                >Likes</button></a>
               </div>
             </div>
           </div>
@@ -30,7 +32,7 @@
                 <div class="col-sm-9">
                     <p class="text-muted mb-0">{{user.username}}</p>
                         <div class="row justify-content-end">
-                            <a <button type="button" class="btn btn-secondary " href="{{ url_for('user.change_username', username=current_user.username) }}">Change Username</button></a>   
+                            <a <button type="button" class="btn btn-secondary" href="{{ url_for('user.change_username', username=current_user.username) }}">Change Username</button></a>   
                         </div>       
                 </div>
               </div>

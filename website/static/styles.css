@@ -22,14 +22,14 @@
     background-color: white;  
 }
 
-button[class^="favourite_button"] {
+button[class^="like_button"] {
     background-color: #ffcad4;
     border:none;
     outline:none;
     color: red;
 }
 
-.unfavourite_button {
+.unlike_button {
     background-color: #ffcad4;
     border:none;
     outline:none;
@@ -52,6 +52,13 @@ button[class^="favourite_button"] {
     position: relative;
 }
 
+.modal-sign-up{
+    color: black;
+}
+
+.modal-sign-up:hover{
+    color: black;
+}
 /* Back to top button */
 .bottom-left{
     position: absolute;
@@ -164,22 +171,30 @@ form button:hover {
     font-style: italic;
 }
 
-/* search */
-.search-bar button:hover {
+
+/* search and profile buttons */
+#solid-button{
+    color: #ffffff; 
+    background-color: #fc9483; 
+    border-color: #e1e3e6; 
+}
+
+#solid-button:hover{
+    color: #fc9483;
+    background-color: #ffffff;
+}
+#outline-button{
+    color: #fc9483; 
+    background-color: #ffffff; 
+    border-color: #fc9483; 
+}
+
+#outline-button:hover{
     color: #ffffff !important;
     background-color: #fc9483 !important;
 }
-
-#dice:hover {
-    color: #ffffff !important;
-    background-color: #fc9483 !important;
-}
-
-
 /* dark mode */
-body{
-    transition: background 0.2s linear;
-}
+
 body.dark-mode {
 	background: #2e3842;
 }
@@ -233,15 +248,15 @@ body.dark-mode .input-group-append{
     color: #292C35
 }
 
-body.dark-mode .street_name .favourite_button{
+body.dark-mode .street_name .like_button{
     background-color: #2e3842;
 }
 
-body.dark-mode .favourite_button.justify-content-end {
+body.dark-mode .like_button.justify-content-end {
     background-color: #2e3842;
 }
 
-body.dark-mode .favourite_count.justify-content-end {
+body.dark-mode .like_count.justify-content-end {
     color: #ffffff;
 }
 
@@ -273,6 +288,22 @@ body.dark-mode button.btn.btn-outline-primary.ms-1 {
 body.dark-mode .help-text{
     color: #ffffff;
 } 
+
+body.dark-mode small.text-muted{
+    color:#fff !important;
+}
+
+body.dark-mode .btn.btn-link.btn-sm{
+    color:#fff !important;
+}
+
+body.dark-mode .close{
+    color: #ffffff;
+}
+
+body.dark-mode #outline-button{
+    background-color: #2e3842; 
+}
 
 body .landing-text{
     color: #000000;
