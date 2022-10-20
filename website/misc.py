@@ -113,13 +113,13 @@ def sorting_criteria(criteria, flats = []):
         session['criteria'] = criteria
         return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
     
-    elif criteria == 'favourites_high':
-        flats.sort(key=lambda x: x.numOfFavourites, reverse=True)
+    elif criteria == 'likes_high':
+        flats.sort(key=lambda x: x.numOfLikes, reverse=True)
         session['criteria'] = criteria
         return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
-    elif criteria == 'favourites_low':
-        flats.sort(key=lambda x: x.numOfFavourites, reverse=False)
+    elif criteria == 'likes_low':
+        flats.sort(key=lambda x: x.numOfLikes, reverse=False)
         session['criteria'] = criteria
         return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
 
@@ -164,13 +164,13 @@ def sorting_criteria(criteria, flats = []):
             session['criteria'] = criteria
             return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
         
-        elif criteria == 'favourites_high':
-            flats = Flat.query.order_by(Flat.numOfFavourites.desc()).all()
+        elif criteria == 'likes_high':
+            flats = Flat.query.order_by(Flat.numOfLikes.desc()).all()
             session['criteria'] = criteria
             return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
         
-        elif criteria == 'favourites_low':
-            flats = Flat.query.order_by(Flat.numOfFavourites.asc()).all()
+        elif criteria == 'likes_low':
+            flats = Flat.query.order_by(Flat.numOfLikes.asc()).all()
             session['criteria'] = criteria
             return render_template('sort.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
     
@@ -195,7 +195,7 @@ def sorting_criteria_load(criteria, flats = []):
                 tuple_x = data[x]
                 list_x = list(tuple_x)
                 flat_id = list_x[0]
-                list_x.append(len(Flat.query.get(flat_id).favourites))
+                list_x.append(len(Flat.query.get(flat_id).likes))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
 
@@ -216,7 +216,7 @@ def sorting_criteria_load(criteria, flats = []):
                 tuple_x = data[x]
                 list_x = list(tuple_x)
                 flat_id = list_x[0]
-                list_x.append(len(Flat.query.get(flat_id).favourites))
+                list_x.append(len(Flat.query.get(flat_id).likes))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
             return jsonify({'data': data})
@@ -237,7 +237,7 @@ def sorting_criteria_load(criteria, flats = []):
                 tuple_x = data[x]
                 list_x = list(tuple_x)
                 flat_id = list_x[0]
-                list_x.append(len(Flat.query.get(flat_id).favourites))
+                list_x.append(len(Flat.query.get(flat_id).likes))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
 
@@ -258,7 +258,7 @@ def sorting_criteria_load(criteria, flats = []):
                 tuple_x = data[x]
                 list_x = list(tuple_x)
                 flat_id = list_x[0]
-                list_x.append(len(Flat.query.get(flat_id).favourites))
+                list_x.append(len(Flat.query.get(flat_id).likes))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
 
@@ -278,7 +278,7 @@ def sorting_criteria_load(criteria, flats = []):
                 tuple_x = data[x]
                 list_x = list(tuple_x)
                 flat_id = list_x[0]
-                list_x.append(len(Flat.query.get(flat_id).favourites))
+                list_x.append(len(Flat.query.get(flat_id).likes))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
 
@@ -299,7 +299,7 @@ def sorting_criteria_load(criteria, flats = []):
                 tuple_x = data[x]
                 list_x = list(tuple_x)
                 flat_id = list_x[0]
-                list_x.append(len(Flat.query.get(flat_id).favourites))
+                list_x.append(len(Flat.query.get(flat_id).likes))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
 
@@ -320,7 +320,7 @@ def sorting_criteria_load(criteria, flats = []):
                 tuple_x = data[x]
                 list_x = list(tuple_x)
                 flat_id = list_x[0]
-                list_x.append(len(Flat.query.get(flat_id).favourites))
+                list_x.append(len(Flat.query.get(flat_id).likes))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
 
@@ -341,7 +341,7 @@ def sorting_criteria_load(criteria, flats = []):
                 tuple_x = data[x]
                 list_x = list(tuple_x)
                 flat_id = list_x[0]
-                list_x.append(len(Flat.query.get(flat_id).favourites))
+                list_x.append(len(Flat.query.get(flat_id).likes))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
 
@@ -349,8 +349,8 @@ def sorting_criteria_load(criteria, flats = []):
         else:
             return jsonify({'data': data})
     
-    elif criteria == 'favourites_high':
-        flats.sort(key=lambda x: x.numOfFavourites, reverse=True)
+    elif criteria == 'likes_high':
+        flats.sort(key=lambda x: x.numOfLikes, reverse=True)
         for flat in flats:
             data.append(tuple(
                 [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
@@ -362,7 +362,7 @@ def sorting_criteria_load(criteria, flats = []):
                 tuple_x = data[x]
                 list_x = list(tuple_x)
                 flat_id = list_x[0]
-                list_x.append(len(Flat.query.get(flat_id).favourites))
+                list_x.append(len(Flat.query.get(flat_id).likes))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
 
@@ -370,8 +370,8 @@ def sorting_criteria_load(criteria, flats = []):
         else:
             return jsonify({'data': data})
     
-    elif criteria == 'favourites_low':
-        flats.sort(key=lambda x: x.numOfFavourites, reverse=False)
+    elif criteria == 'likes_low':
+        flats.sort(key=lambda x: x.numOfLikes, reverse=False)
         for flat in flats:
             data.append(tuple(
                 [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
@@ -383,7 +383,7 @@ def sorting_criteria_load(criteria, flats = []):
                 tuple_x = data[x]
                 list_x = list(tuple_x)
                 flat_id = list_x[0]
-                list_x.append(len(Flat.query.get(flat_id).favourites))
+                list_x.append(len(Flat.query.get(flat_id).likes))
                 tuple_x = tuple(list_x)
                 data[x] = tuple_x
 
@@ -407,7 +407,7 @@ def sorting_criteria_load(criteria, flats = []):
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -427,7 +427,7 @@ def sorting_criteria_load(criteria, flats = []):
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -447,7 +447,7 @@ def sorting_criteria_load(criteria, flats = []):
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -468,7 +468,7 @@ def sorting_criteria_load(criteria, flats = []):
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -488,7 +488,7 @@ def sorting_criteria_load(criteria, flats = []):
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -509,7 +509,7 @@ def sorting_criteria_load(criteria, flats = []):
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -530,7 +530,7 @@ def sorting_criteria_load(criteria, flats = []):
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -551,7 +551,7 @@ def sorting_criteria_load(criteria, flats = []):
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -559,9 +559,9 @@ def sorting_criteria_load(criteria, flats = []):
             else:
                 return jsonify({'data': data})
             
-        elif criteria == 'favourites_high':
-            flats = Flat.query.order_by(Flat.numOfFavourites.desc()).all()
-            flats.sort(key=lambda x: x.numOfFavourites, reverse=True)
+        elif criteria == 'likes_high':
+            flats = Flat.query.order_by(Flat.numOfLikes.desc()).all()
+            flats.sort(key=lambda x: x.numOfLikes, reverse=True)
             for flat in flats:
                 data.append(tuple(
                     [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
@@ -572,7 +572,7 @@ def sorting_criteria_load(criteria, flats = []):
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 
@@ -580,9 +580,9 @@ def sorting_criteria_load(criteria, flats = []):
             else:
                 return jsonify({'data': data})
         
-        elif criteria == 'favourites_low':
-            flats = Flat.query.order_by(Flat.numOfFavourites.asc()).all()
-            flats.sort(key=lambda x: x.numOfFavourites, reverse=False)
+        elif criteria == 'likes_low':
+            flats = Flat.query.order_by(Flat.numOfLikes.asc()).all()
+            flats.sort(key=lambda x: x.numOfLikes, reverse=False)
             for flat in flats:
                 data.append(tuple(
                     [flat.id, flat.address_no_postal_code, flat.resale_price, flat.flat_type, flat.storey_range, flat.image, flat.month]))
@@ -593,7 +593,7 @@ def sorting_criteria_load(criteria, flats = []):
                     tuple_x = data[x]
                     list_x = list(tuple_x)
                     flat_id = list_x[0]
-                    list_x.append(len(Flat.query.get(flat_id).favourites))
+                    list_x.append(len(Flat.query.get(flat_id).likes))
                     tuple_x = tuple(list_x)
                     data[x] = tuple_x
 

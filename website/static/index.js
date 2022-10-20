@@ -10,92 +10,92 @@ function deleteReview(reviewId,flatId) {
 
 
 // To unlike a flat
-function unfavourite(favouriteID) {
-  const fav_count = document.getElementById("favourite_count" + favouriteID.toString());
-  fetch("/unfavourite",{
+function flat_unlike(likeID) {
+  const fav_count = document.getElementById("like_count" + likeID.toString());
+  fetch("/flat_unlike",{
     method: "POST",
-    body: JSON.stringify({ favouriteID:favouriteID }) })
+    body: JSON.stringify({ likeID:likeID }) })
     .then((res) => res.json())
     .then((data) => { 
-    fav_count.innerHTML = data["favourite_count"];
-    document.getElementById("favourite_button_id" + favouriteID.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
-    document.getElementById("favourite_button" + favouriteID.toString()).setAttribute( 'onClick', ("favourite(" + favouriteID.toString() + ")"));
+    fav_count.innerHTML = data["like_count"];
+    document.getElementById("like_button_id" + likeID.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
+    document.getElementById("like_button" + likeID.toString()).setAttribute( 'onClick', ("flat_like(" + likeID.toString() + ")"));
   })
-  .catch((e) => click_favourite_button());
+  .catch((e) => click_like_button());
 }
 
 
 // To like a flat
-function favourite(flatID) {
-  const fav_count = document.getElementById("favourite_count" + flatID.toString());
-  fetch("/favourite",{
+function flat_like(flatID) {
+  const fav_count = document.getElementById("like_count" + flatID.toString());
+  fetch("/flat_like",{
     method: "POST",
     body: JSON.stringify({ flatID:flatID }) })
     .then((res) => res.json())
     .then((data) => { 
-    fav_count.innerHTML = data["favourite_count"];
-    document.getElementById("favourite_button_id" + flatID.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
-    document.getElementById("favourite_button" + flatID.toString()).setAttribute( 'onClick', ("unfavourite(" + flatID.toString() + ")"));
+    fav_count.innerHTML = data["like_count"];
+    document.getElementById("like_button_id" + flatID.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
+    document.getElementById("like_button" + flatID.toString()).setAttribute( 'onClick', ("flat_unlike(" + flatID.toString() + ")"));
   })
-  .catch((e) => click_favourite_button());
+  .catch((e) => click_like_button());
 }
 
 
 // To get the like count of a flat
-function favourite_count(flatID) {
-  const fav_count = document.getElementById("favourite_count" + flatID.toString());
-  fetch("/favourite_count",{
+function like_count(flatID) {
+  const fav_count = document.getElementById("like_count" + flatID.toString());
+  fetch("/flat_like_count",{
     method: "POST",
     body: JSON.stringify({ flatID:flatID }) })
     .then((res) => res.json())
     .then((data) => { 
-    fav_count.innerHTML = data["favourite_count"];
+    fav_count.innerHTML = data["like_count"];
     console.log("onload print this");
   })
 }
 
 
 // To unlike a review
-function review_unfavourite(reviewID) {
-  document.getElementById("review_favourite_button_id" + reviewID.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
-  document.getElementById("review_favourite_button" + reviewID.toString()).setAttribute( 'onClick', ("review_favourite(" + reviewID.toString() + ")"));
-  const fav_count = document.getElementById("review_favourite_count" + reviewID.toString());
-  fetch("/review_unfavourite",{
+function review_unlike(reviewID) {
+  document.getElementById("review_like_button_id" + reviewID.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
+  document.getElementById("review_like_button" + reviewID.toString()).setAttribute( 'onClick', ("review_like(" + reviewID.toString() + ")"));
+  const fav_count = document.getElementById("review_like_count" + reviewID.toString());
+  fetch("/review_unlike",{
     method: "POST",
     body: JSON.stringify({ reviewID:reviewID }) })
     .then((res) => res.json())
     .then((data) => { 
-    fav_count.innerHTML = data["review_favourite_count"];
+    fav_count.innerHTML = data["review_like_count"];
   })
-  .catch((e) => alert("Unable to UnFavourite"));
+  .catch((e) => alert("Unable to Unlike"));
 }
 
 
 // To like a review
-function review_favourite(reviewID) {
-  document.getElementById("review_favourite_button_id" + reviewID.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
-  document.getElementById("review_favourite_button" + reviewID.toString()).setAttribute( 'onClick', ("review_unfavourite(" + reviewID.toString() + ")"));
-  const fav_count = document.getElementById("review_favourite_count" + reviewID.toString());
-  fetch("/review_favourite",{
+function review_like(reviewID) {
+  document.getElementById("review_like_button_id" + reviewID.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
+  document.getElementById("review_like_button" + reviewID.toString()).setAttribute( 'onClick', ("review_unlike(" + reviewID.toString() + ")"));
+  const fav_count = document.getElementById("review_like_count" + reviewID.toString());
+  fetch("/review_like",{
     method: "POST",
     body: JSON.stringify({ reviewID:reviewID }) })
     .then((res) => res.json())
     .then((data) => { 
-    fav_count.innerHTML = data["review_favourite_count"];
+    fav_count.innerHTML = data["review_like_count"];
   })
-  .catch((e) => alert("Unable to Favourite"));
+  .catch((e) => alert("Unable to like"));
 }
 
 
 // To get the like count of a review
-function review_favourite_count(reviewID) {
-  const fav_count = document.getElementById("review_favourite_count" + reviewID.toString());
-  fetch("/review_favourite_count",{
+function review_like_count(reviewID) {
+  const fav_count = document.getElementById("review_like_count" + reviewID.toString());
+  fetch("/review_like_count",{
     method: "POST",
     body: JSON.stringify({ reviewID:reviewID }) })
     .then((res) => res.json())
     .then((data) => { 
-    fav_count.innerHTML = data["review_favourite_count"];
+    fav_count.innerHTML = data["review_like_count"];
     console.log("onload print this");
   })
 }
@@ -144,6 +144,6 @@ function reply(reviewId){
 
 
 // To display create account modal for guests
-function click_favourite_button(){
+function click_like_button(){
   $("#createAccountModal").modal('show');
 }

@@ -7,7 +7,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
     $(document).ready(function(){
-        $('.favourite_button').click(function(){
+        $('.like_button').click(function(){
           $("#createAccountModal").modal('show');
         }); 
     });
@@ -48,21 +48,21 @@
           <div class="input-group" style="width:44vh;" >
               <input class="form-control py-2 border-right-0 border" name="search" id="search" placeholder = "Search here!">
               <span class="input-group-append ">
-                  <button class="btn btn-outline-primary border-left-0 border" type="submit" type="button" style="color:#fc9483;">
+                  <button id="outline-button" class="btn btn-outline-primary border-left-0 border" type="submit" type="button">
                     <i class="fa fa-search"></i>
                   </button>
                   <a href= "{{ url_for('views.flat_details', flatId = random) }}" title="Click here for a random flat!"
-                  <button id="dice" class="btn btn-outline-primary border-left-0 border" type="submit" type="button" style="color: #fc9483;">
+                  <button id="outline-button" class="btn btn-outline-primary border" type="submit" type="button">
                     <i class="fa-solid fa-dice"></i>
                   </button> </a>
                   <div class="btn-group">
-                    <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+                    <button id="outline-button" class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
                     style="color: #fc9483; background-color: #ffffff; border-color: #e1e3e6; border-radius: 0;">
                       Sort
                     </button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" name = "favourites_high" id="favourites_high" href="{{ url_for('views.sort', criteria = 'favourites_high') }}">Favourites (High to Low)</a>
-                      <a class="dropdown-item" name = "favourites_low" id="favourites_low" href="{{ url_for('views.sort', criteria = 'favourites_low') }}">Favourites (Low to High)</a>
+                      <a class="dropdown-item" name = "likes_high" id="likes_high" href="{{ url_for('views.sort', criteria = 'likes_high') }}">Likes (High to Low)</a>
+                      <a class="dropdown-item" name = "likes_low" id="likes_low" href="{{ url_for('views.sort', criteria = 'likes_low') }}">Likes(Low to High)</a>
                       <a class="dropdown-item" name= "price_high" id = "price_high" href="{{ url_for('views.sort', criteria = 'price_high') }}">Price (High to Low)</a>
                       <a class="dropdown-item" name = "price_low" id="price_low" href="{{ url_for('views.sort', criteria = 'price_low') }}">Price (Low to High)</a>
                       <a class="dropdown-item" name = "remaining_lease_high" id="remaining_lease_high" href="{{ url_for('views.sort', criteria = 'remaining_lease_high') }}">Remaining Lease (High to Low)</a>
@@ -75,7 +75,7 @@
                   </div> 
                 </span>
 
-                <button class="btn btn-outline-primary ms-1" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="filter"
+                <button id="outline-button" class="btn btn-outline-primary ms-1" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="filter"
                 style="color: #fc9483; background-color: #ffffff; border-color: #e1e3e6; 
                 border-radius: 0 3px 3px 0;">Filters<span class="fa fa-filter pl-1"></span></button>
                 <div class="collapse" id="filter">
@@ -172,18 +172,18 @@
         <div class="card-header">
           <strong><a href ="{{ url_for('views.flat_details', flatId=flats[i].id) }}" target = "_blank">{{flats[i].address_no_postal_code}}</strong></a>
           {% if user.is_authenticated %}
-            {% if flats[i].id in user.favourites|map(attribute="flat_id")|list %}
-            <button class="favourite_button" id ="favourite_button{{flats[i].id}}" type="button" onClick="unfavourite({{ flats[i].id }})">
-              <span id ="favourite_button_id{{flats[i].id}}"><i class="fa-solid fa-heart"></i></span>
+            {% if flats[i].id in user.likes|map(attribute="flat_id")|list %}
+            <button class="like_button" id ="like_button{{flats[i].id}}" type="button" onClick="flat_unlike({{ flats[i].id }})">
+              <span id ="like_button_id{{flats[i].id}}"><i class="fa-solid fa-heart"></i></span>
             </button>
             {% else %}
-            <button class="favourite_button" id ="favourite_button{{flats[i].id}}" type="button" onClick="favourite({{ flats[i].id }})">
-              <span id ="favourite_button_id{{flats[i].id}}"><i class="fa-regular fa-heart"></i></span>
+            <button class="like_button" id ="like_button{{flats[i].id}}" type="button" onClick="flat_like({{ flats[i].id }})">
+              <span id ="like_button_id{{flats[i].id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
             {% endif %}
           {% else %}
-            <button class="favourite_button" id ="favourite_button{{flats[i].id}}" type="button">
-              <span id ="favourite_button_id{{flats[i].id}}"><i class="fa-regular fa-heart"></i></span>
+            <button class="like_button" id ="like_button{{flats[i].id}}" type="button">
+              <span id ="like_button_id{{flats[i].id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
             <div class = "guest_error">
               <div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -210,7 +210,7 @@
           
             
           {% endif %}
-          <span id="favourite_count{{flats[i].id}}">{{flats[i].favourites|length}}</span>
+          <span id="like_count{{flats[i].id}}">{{flats[i].likes|length}}</span>
 
         </div>
         <div class="card-body">
@@ -240,18 +240,18 @@
         <div class="card-header">
           <strong><a href ="{{ url_for('views.flat_details', flatId=flats[i+1].id) }}" target = "_blank">{{flats[i+1].address_no_postal_code}}</strong></a>
           {% if user.is_authenticated %}
-            {% if flats[i+1].id in user.favourites|map(attribute="flat_id")|list %}
-            <button class="favourite_button" id ="favourite_button{{flats[i+1].id}}" type="button" onClick="unfavourite({{ flats[i+1].id }})">
-              <span id ="favourite_button_id{{flats[i+1].id}}"><i class="fa-solid fa-heart"></i></span>
+            {% if flats[i+1].id in user.likes|map(attribute="flat_id")|list %}
+            <button class="like_button" id ="like_button{{flats[i+1].id}}" type="button" onClick="flat_unlike({{ flats[i+1].id }})">
+              <span id ="like_button_id{{flats[i+1].id}}"><i class="fa-solid fa-heart"></i></span>
             </button>
             {% else %}
-            <button class="favourite_button" id ="favourite_button{{flats[i+1].id}}" type="button" onClick="favourite({{ flats[i+1].id }})">
-              <span id ="favourite_button_id{{flats[i+1].id}}"><i class="fa-regular fa-heart"></i></span>
+            <button class="like_button" id ="like_button{{flats[i+1].id}}" type="button" onClick="flat_like({{ flats[i+1].id }})">
+              <span id ="like_button_id{{flats[i+1].id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
             {% endif %}
           {% else %}
-            <button class="favourite_button" id ="favourite_button{{flats[i+1].id}}" type="button">
-              <span id ="favourite_button_id{{flats[i+1].id}}"><i class="fa-regular fa-heart"></i></span>
+            <button class="like_button" id ="like_button{{flats[i+1].id}}" type="button">
+              <span id ="like_button_id{{flats[i+1].id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
             <div class = "guest_error">
               <div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -278,7 +278,7 @@
           
             
           {% endif %}
-          <span id="favourite_count{{flats[i+1].id}}">{{flats[i+1].favourites|length}}</span>
+          <span id="like_count{{flats[i+1].id}}">{{flats[i+1].likes|length}}</span>
 
         </div>
         <div class="card-body">
@@ -327,7 +327,7 @@
 
 
     
-<meta id="my-data" data-f="{{user.favourites|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">
+<meta id="my-data" data-f="{{user.likes|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">
 
 <script type="text/javascript">
 
@@ -364,11 +364,11 @@
   function downloadContent(index, limit) {
     $.get('/load_home?index=' + index + '&limit=' + limit, (data) => {
       for (var index = 0; index < data.data.length; index+=2) {
-        var favourite = $('#my-data').data().f;
+        var like = $('#my-data').data().f;
         var flat = "/flat-details/" + data.data[index][0]; 
         var image = "/static/" + data.data[index][5];
 
-        if (favourite.includes(data.data[index][0])) {
+        if (like.includes(data.data[index][0])) {
         var page = `
           <div class="row">
             <div class="col-md-6">
@@ -376,10 +376,10 @@
 
             <div class="card-header">
               <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-              <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="unfavourite(`+data.data[index][0]+`)">
-                <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
+              <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="flat_unlike(`+data.data[index][0]+`)">
+                <span id ="like_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
               </button>
-              <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
+              <span id="like_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
             </div>
             <div class="card-body">
               <div class="row">
@@ -409,10 +409,10 @@
 
             <div class="card-header">
               <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-              <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="unfavourite(`+data.data[index][0]+`)">
-                <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
+              <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="flat_unlike(`+data.data[index][0]+`)">
+                <span id ="like_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
               </button>
-              <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
+              <span id="like_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
             </div>
             <div class="card-body">
               <div class="row">
@@ -444,10 +444,10 @@
 
         <div class="card-header">
         <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-          <button class="favourite_button" id ="favourite_button`+data.data[index][0]+`" type="button" onClick="favourite(`+data.data[index][0]+`)">
-            <span id ="favourite_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
+          <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="flat_like(`+data.data[index][0]+`)">
+            <span id ="like_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
           </button>
-          <span id="favourite_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
+          <span id="like_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
         </div>
         <div class="card-body">
               <div class="row">
@@ -478,10 +478,10 @@
 
             <div class="card-header">
               <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index+1][1] + `</strong></a>
-              <button class="favourite_button" id ="favourite_button`+data.data[index+1][0]+`" type="button" onClick="favourite(`+data.data[index+1][0]+`)">
-                <span id ="favourite_button_id`+data.data[index+1][0]+`"><i class="fa-regular fa-heart"></i></span>
+              <button class="like_button" id ="like_button`+data.data[index+1][0]+`" type="button" onClick="flat_like(`+data.data[index+1][0]+`)">
+                <span id ="like_button_id`+data.data[index+1][0]+`"><i class="fa-regular fa-heart"></i></span>
               </button>
-              <span id="favourite_count`+data.data[index+1][0]+`">`+data.data[index+1][7]+`</span>
+              <span id="like_count`+data.data[index+1][0]+`">`+data.data[index+1][7]+`</span>
             </div>
             <div class="card-body">
               <div class="row">
@@ -571,10 +571,10 @@
                 e.g. <i><b>"Ang Mo Kio st 5 blk 5"</b></i> or <i><b>"Ang Mo Kio st 5"</b></i>
               </ul>
               </p>
-              <h5> 2. How to Favourite?</h5>
+              <h5> 2. How to like?</h5>
               <p>
                 <ul>
-                <li>You can favourite a flat by clicking on the heart icon at the side of the address.</li>
+                <li>You can like a flat by clicking on the heart icon at the side of the address.</li>
                 <li>You can only do this if you are logged in.</li>
               </ul>
               </p>
