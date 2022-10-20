@@ -67,14 +67,14 @@ def flat_details(flatId):
         if reply:
             parent_id = request.form.get('parent_id')
             if len(reply) < 1:
-                flash('reply is too short!', category='error')
+                flash('Reply is too short!', category='error')
             elif len(reply) > 500:
                 flash(
-                    'reply is too long! Maximum length for a reply is 500 characters', category='error')
+                    'Reply is too long! Maximum length for a reply is 500 characters', category='error')
             elif str(current_user.postal_code) != flat.postal_sector:
                 print(type(flat.postal_sector))
                 flash(
-                    'You cannot reply this flat! You can only reply flats in your own postal district!', category='error')
+                    'You cannot reply to this review! You can only reply to reviews in your own postal district!', category='error')
             else:
                 new_reply = Review(
                     data=reply, user_id=current_user.id, flat_id=flatId, parent_id=parent_id)
