@@ -16,7 +16,7 @@ auth = Blueprint('auth', __name__)
 def login():
     if User.query.filter_by(email="test@gmail.com").first() is None:
         new_user = User(email = "test@gmail.com" ,
-                        username = "test12345",
+                        username = "12345678",
                         password = generate_password_hash("12345678", method="sha256"),
                         access_id = 0,
                         postal_code = 12,

@@ -25,8 +25,9 @@ class Review(db.Model):
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'), nullable=False)
-    numOfFavourites = db.Column(db.Integer, default=0)
-    favourites = db.relationship('ReviewFavourites')
+    numOfLikes = db.Column(db.Integer, default=0)
+    numOfParentLikes = db.Column(db.Integer, default=0)
+    likes = db.relationship('ReviewLikes')
     review_path = db.Column(db.Text, index=True)
     parent_id = db.Column(db.Integer, db.ForeignKey('review.id'))
     reply = db.relationship('Review', cascade="all,delete", backref=db.backref('parent', remote_side=[id]), lazy='dynamic')
@@ -43,12 +44,12 @@ class Review(db.Model):
         return len(self.review_path) // self._N - 1
 
 
-class Favourites(db.Model):
+class FlatLikes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'))
 
-class ReviewFavourites(db.Model):
+class ReviewLikes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     review_id = db.Column(db.Integer, db.ForeignKey('review.id'), nullable=False)
@@ -62,11 +63,11 @@ class User(db.Model, UserMixin):
     access_id = db.Column(db.Integer(), nullable=False, default=0)
     postal_code = db.Column(db.Integer)
     postal_code_change = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
-    favourites = db.relationship('Favourites')
+    likes = db.relationship('FlatLikes')
     email_verified = db.Column(db.Boolean(), nullable=False, default=False)
     email_verified_date = db.Column(db.DateTime(timezone=True), default = None)
     reviews = db.relationship('Review', backref = 'user', passive_deletes=True)
-    review_favourites = db.relationship('ReviewFavourites')
+    review_likes = db.relationship('ReviewLikes')
     property = db.relationship('Property', backref = 'user', passive_deletes=True)
 
     def get_token(self,expires_sec=120):
@@ -110,7 +111,7 @@ class Flat(db.Model):
     price_per_sqm = db.Column(db.Integer)
     address = db.Column(db.String(150))
     resale_price = db.Column(Float)
-    numOfFavourites = db.Column(db.Integer, default=0)
+    numOfLikes = db.Column(db.Integer, default=0)
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
     postal_code = db.Column(db.Integer)
@@ -118,7 +119,7 @@ class Flat(db.Model):
     address_no_postal_code = db.Column(db.String(150))
     image = db.Column(db.String(150))
     reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
-    favourites = db.relationship('Favourites', backref = 'flat', passive_deletes=True)   
+    likes = db.relationship('FlatLikes', backref = 'flat', passive_deletes=True)   
 
 def create_Flat_table():
     #To create the table in the database (SQLite)

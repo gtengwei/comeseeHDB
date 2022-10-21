@@ -1,49 +1,249 @@
-{% extends "base.html" %} {% block title %}Login{% endblock %} 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
 
-{% block content %}
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="\static\tab_logo\apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="\static\tab_logo\apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="\static\tab_logo\apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="\static\tab_logo\apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="\static\tab_logo\apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="\static\tab_logo\apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="\static\tab_logo\apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="\static\tab_logo\apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="\static\tab_logo\favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="\static\tab_logo\favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="\static\tab_logo\favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="\static\tab_logo\favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="\static\tab_logo\favicon-128.png" sizes="128x128" />
+    <meta name="application-name" content="&nbsp;"/>
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="\static\tab_logo\mstile-144x144.png" />
+    <meta name="msapplication-square70x70logo" content="\static\tab_logo\mstile-70x70.png" />
+    <meta name="msapplication-square150x150logo" content="\static\tab_logo\mstile-150x150.png" />
+    <meta name="msapplication-wide310x150logo" content="\static\tab_logo\mstile-310x150.png" />
+    <meta name="msapplication-square310x310logo" content="\static\tab_logo\mstile-310x310.png" />
+    <style>
+      /* Modify the background color */
 
-<div>
-  <div class="row">
-  <img style="height: 100vh; width: 60%;" src="\static\hdb_image8.jpg"/ style="display: inline-block;">
+      .navbar-custom {
+        background-color: #ffcad4;
+      }
+      /* Modify brand and text color */
 
-<div class="col" style="padding-top: 5vh;">
-  <form class="user-acc" method="POST">
-    <h3 align="center">Log In</h3>
-    <div class="form-group">
-      <label for="email">Email Address</label>
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        name="email"
-        placeholder="Enter email"
-      />
+      .navbar-custom .navbar-brand,
+      .navbar-custom .navbar-text {
+        color: rgb(0, 0, 0);
+      }
+
+      
+
+      #home, #login, #sign-up, #logout, #profile {
+          margin: 0 1.5rem;
+          font-size: 1.2rem;
+          font-weight: 700;
+      }
+
+    </style>
+
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-custom navbar-light">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a href="/" class="navbar-nav mx-auto" title="comeseeHDB logo">
+        <img
+          style="max-width: 200px; margin-top: -7px"
+          src="\static\logo.png"
+      /></a>
+      <div class="navbar-nav mx-auto" style="padding-left:15px;">
+        <div class="one-quarter" id="switch">
+          <input type="checkbox" class="checkbox" id="chk" />
+          <label class="label" for="chk">
+              <i class="fas fa-moon"></i>
+              <i class="fas fa-sun"></i>
+              <div class="ball"></div>
+          </label>
+        </div>
+        </div>
+      <div class="collapse navbar-collapse" id="navbar">
+        <div class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+          <a class="nav-item nav-link" id="home" href="/home">Home</a>
+          <a
+            class="nav-item nav-link"
+            id="profile"
+            href="{{ url_for('user.profile', username=current_user.username) }}"
+            >Profile</a
+          >
+          <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+          {% else %}
+          <a class="nav-item nav-link" id="home" href="/home">Home</a>
+          <a class="nav-item nav-link" id="login" href="/login">Login</a>
+          <a class="nav-item nav-link" id="sign-up" href="/sign-up">Sign Up</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+    <!-- previous location
+    <div class="sticky-top dark-btn">
+      <div class="one-quarter" id="switch">
+        <input type="checkbox" class="checkbox" id="chk" />
+        <label class="label" for="chk">
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
+            <div class="ball"></div>
+        </label>
+      </div>
+      </div>
+    -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %} 
+    {% for category, message in messages %} 
+    {% if category == 'error' %}
+    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input
-        type="password"
-        class="form-control"
-        id="password"
-        name="password"
-        placeholder="Enter password"
-      />
+    {% else %}
+    <div class="alert alert-success alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-    <br />
-    <button type="submit" class="btn btn-primary" 
-    style="background-color: #f59090; font-size: 1.5rem; padding:0.5% 3%;
-    border: 0; display: block; margin: 0 auto;">Login</button>
-    <br/>
-    <div class = "other">
-      <a href="/forgot-password" style="color:#000000;">Forgot Password?</a>
-      <br/>
-      <a href="/verify-email" style="color:#000000;">Send Verification Email</a>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+
+    <div>
+      <div class="row">
+      <img style="height: 100vh; width: 60%;" src="\static\hdb_image8.jpg" style="display: inline-block;">
+    
+    <div class="col" style="padding-top: 5vh;">
+      <form class="user-acc" method="POST">
+        <h3 align="center" style="color:#000000;">Log In</h3>
+        <div class="form-group">
+          <label for="email" style="color:#000000">Email Address</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Enter email"
+          />
+        </div>
+    
+        <div class="form-group">
+          <label for="password" style="color:#000000">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Enter password"
+          />
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary" 
+        style="background-color: #f59090; font-size: 1.5rem; padding:0.5% 3%;
+        border: 0; display: block; margin: 0 auto;">Login</button>
+        <br/>
+        <div class = "other">
+          <a href="/forgot-password" style="color:#000000;">Forgot Password?</a>
+          <br/>
+          <a href="/verify-email" style="color:#000000;">Send Verification Email</a>
+        </div>
+      </form>
     </div>
-  </form>
-</div>
+    
+    </div>
+    </div>
+    
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-</div>
-</div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
 
-{% endblock %}
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='index.js') }}"
+    ></script>
+
+    <script>
+     document.addEventListener("DOMContentLoaded", function () {
+
+      console.log(localStorage.getItem('dark-mode'))
+      var darkMode = localStorage.getItem('dark-mode');
+
+      if (darkMode === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('chk').checked = true;
+        console.log(document.body.classList)
+        console.log('dark mode')
+        
+      } else{
+        document.body.classList.remove('dark-mode');
+        console.log('light mode')
+        document.getElementById('chk').checked = false;
+      }
+
+      const chk = document.getElementById('chk');
+
+      
+      chk.addEventListener('change', () => {
+        document.body.classList.toggle('dark-mode');
+
+        if (document.body.classList.contains('dark-mode')){
+          localStorage.setItem('dark-mode', true);
+          var checkbox = document.getElementById('chk');
+          checkbox.checked = true;
+        } else {
+          localStorage.setItem('dark-mode', false);
+          var checkbox = document.getElementById('chk');
+          checkbox.checked = false;
+
+        }
+      });
+    });
+    </script>
+    <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
+
+  </body>
+</html>

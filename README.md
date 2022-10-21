@@ -15,5 +15,3 @@ pytest tests # Test all test cases
 pytest tests/test_function.py # Test all test cases in test_function.py
 pytest tests/test_function.py::test_func # Test test_func in test_function.py
 ```
-
-

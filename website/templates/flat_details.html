@@ -6,13 +6,12 @@
 <head>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <script type="text/javascript" src="/static/index.js"></script>
   
  <script>
   $(document).ready(function(){
-      $('.favourite_button').click(function(){
+      $('.like_button').click(function(){
         $("#createAccountModal").modal('show');
       }); 
   });
@@ -45,7 +44,7 @@
       display: inline-flex;
     }
 
-    button[class^="favourite_button"] {
+    button[class^="like_button"] {
       background-color: white;
       border:none;
       outline:none;
@@ -54,7 +53,7 @@
       padding-top:6px;
     }
     
-    .favourite_count{
+    .like_count{
       display: inline-flex;
       align-self: flex-start;
       padding-top:6px;
@@ -78,7 +77,7 @@
 </head>
 
 <body>
-  <div class="row" style="margin: 0 auto;">
+  <div class="row">
     <div class = "column">
       <div id="map" style="width:500px; height:400px;"></div>
     </div>
@@ -103,18 +102,18 @@
 <div class="street_name">
   <h1>{{flat.address_no_postal_code}}</h1>
   {% if user.is_authenticated %}
-        {% if flat.id in user.favourites|map(attribute="flat_id")|list %}
-        <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="unfavourite({{ flat.id }})">
-          <span id ="favourite_button_id{{flat.id}}"><i class="fa-solid fa-heart"></i></span>
+        {% if flat.id in user.likes|map(attribute="flat_id")|list %}
+        <button class="like_button" id ="like_button{{flat.id}}" type="button" onClick="flat_unlike({{ flat.id }})">
+          <span id ="like_button_id{{flat.id}}"><i class="fa-solid fa-heart"></i></span>
         </button>
         {% else %}
-        <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button" onClick="favourite({{ flat.id }})">
-          <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
+        <button class="like_button" id ="like_button{{flat.id}}" type="button" onClick="flat_like({{ flat.id }})">
+          <span id ="like_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
         </button>
         {% endif %}
   {% else %}
-      <button class="favourite_button" id ="favourite_button{{flat.id}}" type="button">
-        <span id ="favourite_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
+      <button class="like_button" id ="like_button{{flat.id}}" type="button">
+        <span id ="like_button_id{{flat.id}}"><i class="fa-regular fa-heart"></i></span>
       </button>
       <div class = "guest_error">
         <div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -130,7 +129,7 @@
     
               <div class="modal-body mx-3">
                 <div class="md-form mb-5">
-                  <a href='/sign-up'<h5> Create an account to use this feature!</h5></a> 
+                  <a href='/sign-up' class="modal-sign-up"> Create an account to use this feature!</a> 
                 </div>
     
               </div>
@@ -139,7 +138,7 @@
         </div>
     </div>
     {% endif %}
-  <span id="favourite_count{{flat.id}}" class="favourite_count">{{flat.favourites|length}}</span>
+  <span id="like_count{{flat.id}}" class="like_count">{{flat.likes|length}}</span>
   
 </div>
 
@@ -251,7 +250,6 @@
       border-width: 1px;
       outline:none;
       border-radius: 5px;
-      margin: 0 10px;
     }
 </style>
 
@@ -402,12 +400,12 @@
     </div>
 <br>
 {% if user.is_authenticated %}
-<form method="POST">
+<form method="POST" >
   <span class="input-group-append ">
     <textarea name="review" id="review" class="form-control" style ="height: 50px" placeholder="Write your review here!"></textarea>
     <br />
-    <div align="center">
-      <button type="submit" class="btn btn-primary btn-sm">Add Review</button>  
+    <div align="center" >
+      <button type="submit" class="btn btn-primary btn-sm" style="background-color: #f59090; border:0;">Add Review</button>  
     </div>
   </span>
 </form>
@@ -419,7 +417,7 @@
   <br />
   <div align="center">
     <div class = "review_button">
-      <button  class="btn btn-primary btn-sm" class = "review_button">Login to add review</a>
+      <button class="btn btn-primary btn-sm" class = "review_button" id = "submit_button" style="background-color: #f59090; border:0;">Login to add review</a>
     </div> 
   </div>
 </span>
@@ -436,7 +434,8 @@
 {% endif %}
 
 <ul class="list-group list-group-flush" id="reviews">
-  {% for review in review1.items|sort(attribute='review_path') %}
+  {% for review in review1.items %}
+  
       <!-- Begin review indentation -->
       {% if review.level() == 0 %}
       <div class="col-sm-12" >
@@ -459,7 +458,7 @@
                                     <p>{{ review.data }}</p>
                                         <div class="row justify-content-end">
                                           <span id="reply_button-{{review.id}}">
-                                          <button type="button" class="btn btn-link btn-sm" id="reply_button-{{review.id}}" onClick=reply({{review.id}})>Reply</button>
+                                          <button type="button" class="btn btn-link btn-sm" id="reply_button-{{review.id}}" onClick=reply({{review.id}}) style="color:black">Reply</button>
                                         </span>
                                             <small class="text-muted"> Posted {{moment(review.date).fromNow() }}</small>
                                               {% if review.user == user %}
@@ -468,18 +467,18 @@
                                               </button>
                                               {% endif %}
                                               {% if user.is_authenticated %}
-                                                {% if review.id in user.review_favourites|map(attribute="review_id")|list %}
-                                                <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_unfavourite({{ review.id }})" >
-                                                  <span id ="review_favourite_button_id{{review.id}}"><i class="fa-solid fa-heart" ></i></span>
+                                                {% if review.id in user.review_likes|map(attribute="review_id")|list %}
+                                                <button class="like_button justify-content-end" id ="review_like_button{{review.id}}" type="button" onClick="review_unlike({{ review.id }})" >
+                                                  <span id ="review_like_button_id{{review.id}}"><i class="fa-solid fa-heart" ></i></span>
                                                 </button>
                                                 {% else %}
-                                                <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" onClick="review_favourite({{ review.id }})">
-                                                  <span id ="review_favourite_button_id{{review.id}}"><i class="fa-regular fa-heart"></i></span>
+                                                <button class="like_button justify-content-end" id ="review_like_button{{review.id}}" type="button" onClick="review_like({{ review.id }})">
+                                                  <span id ="review_like_button_id{{review.id}}"><i class="fa-regular fa-heart"></i></span>
                                                 </button>
                                                 {% endif %}
                                               {% else %}
-                                              <button class="favourite_button justify-content-end" id ="review_favourite_button{{review.id}}" type="button" 
-                                                <span id ="review_favourite_button_id{{review.id}}"><i class="fa-regular fa-heart"></i></span>
+                                              <button class="like_button justify-content-end" id ="review_like_button{{review.id}}" type="button" 
+                                                <span id ="review_like_button_id{{review.id}}"><i class="fa-regular fa-heart"></i></span>
                                               </button>
                                               <div class = "guest_error">
                                                 <div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -495,7 +494,7 @@
                                             
                                                       <div class="modal-body mx-3">
                                                         <div class="md-form mb-5">
-                                                          <a href='/sign-up'<h5> Create an account to use this feature!</h5></a> 
+                                                          <a href='/sign-up'> Create an account to use this feature!</a> 
                                                         </div>
                                             
                                                       </div>
@@ -504,7 +503,7 @@
                                                 </div>
                                             </div>
                                             {% endif %}
-                                            <span id="review_favourite_count{{review.id}}" class="favourite_count justify-content-end">{{review.favourites|length}}</span>
+                                            <span id="review_like_count{{review.id}}" class="like_count justify-content-end">{{review.likes|length}}</span>
                                         </div>
                                   </div>
                                   
@@ -517,7 +516,7 @@
                                   <br />
                                   <div align="center">
                                     <input type="hidden" name="parent_id" id="parent_id" value={{review['id']}} />
-                                    <button type="submit" id="reply_submit_button-{{review.id}}" class="btn btn-primary btn-sm" style="display:none;">Add reply</button>  
+                                    <button type="submit" id="reply_submit_button-{{review.id}}" class="btn btn-primary btn-sm" style=" background-color: #f59090; border:0; display:none;">Add reply</button>  
                                   </div>
                                 </span>
                               </form>
@@ -529,7 +528,7 @@
                                 <br />
                                 <div align="center">
                                   <div class = "reply_button">
-                                    <button class="btn btn-primary btn-sm" id="reply_submit_button-{{review.id}}" class="reply_button" style="display:none;">Login to add reply</a>
+                                    <button class="btn btn-primary btn-sm" id="reply_submit_button-{{review.id}}" class="reply_button" style="background-color: #f59090; border:0; display:none;">Login to add reply</a>
                                   </div> 
                                 </div>
                               </span>
@@ -566,7 +565,7 @@
   color: white;
 }
 </style>
-<div class="text-right">
+<div class="text-right" style="margin-top:20px;">
   <a href="{{ url_for('views.flat_details', flatId=flat.id, page=review1.prev_num) }}"
      class="pagebutton btn-others
      {% if review1.page == 1 %}disabled{% endif %}">
@@ -597,8 +596,16 @@
       &raquo;
   </a>
 </div>
-<p class="text-right mt-3">
- Showing page {{ review1.page }} of {{ review1.pages }}
-</p>
+{% if review1.pages >= 1 %}
+  <div class="text-right mt-3">
+      <p>Page {{ review1.page }} of {{ review1.pages }}</p>
+  </div>
+
+{% else %}
+  <div class="text-right mt-3">
+      <p>Page 0 of {{ review1.pages }}</p>
+  </div>
+{% endif %}
+
 </body>
 {% endblock %}
