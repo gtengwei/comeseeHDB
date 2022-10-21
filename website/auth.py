@@ -18,13 +18,26 @@ def login():
         new_user = User(email = "test@gmail.com" ,
                         username = "12345678",
                         password = generate_password_hash("12345678", method="sha256"),
-                        #access_id = 0,
-                        postal_code = 75,
+                        access_id = 0,
+                        postal_code = 12,
                         email_verified = True,
                         email_verified_date = datetime.now())
         db.session.add(new_user)
         db.session.commit()
         print("test12345 added!")
+        
+    if User.query.filter_by(email="agent@gmail.com").first() is None:
+        new_user = User(email = "agent@gmail.com" ,
+                        username = "agent12345",
+                        password = generate_password_hash("12345678", method="sha256"),
+                        access_id = 1,
+                        postal_code = 12,
+                        email_verified = True,
+                        email_verified_date = datetime.now())
+        db.session.add(new_user)
+        db.session.commit()
+        print("agent12345 added!")
+        
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
@@ -87,8 +100,11 @@ def sign_up():
 
         ## Need to add verification code/function here
         else:
-            new_user = User(email=email, username = username, postal_code = postal_code,
-                password=generate_password_hash(password1, method='sha256'))
+            new_user = User(email=email, 
+                            username = username, 
+                            postal_code = postal_code,
+                            access_id = 0,
+                            password=generate_password_hash(password1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
             send_mail_verify(new_user)       
@@ -99,6 +115,58 @@ def sign_up():
         
 
     return render_template("sign_up.html", user=current_user)
+
+## Route for Agent Sign Up Page
+@auth.route('/sign-up-for-agent', methods=['GET','POST'])
+def sign_up_agent():
+
+    if request.method == 'POST':
+        email = request.form.get('email')
+        username = request.form.get('username')
+        if request.form.get('postalCode'):
+            postal_code = int(request.form.get('postalCode'))
+        password1 = request.form.get('password1')
+        password2 = request.form.get('password2')
+
+        user = User.query.filter_by(email=email).first()
+        check_username = User.query.filter_by(username=username).first()
+        if user:
+            flash('Email already exists.', category='error')
+        elif check_username:
+            flash('Username already exists.', category='error')
+        elif len(email) < 4:
+            flash('Email must be greater than 3 characters.', category='error')
+
+        elif len(username) < 4:
+            flash('Username must be at least 4 character long.', category='error')
+
+        elif (postal_code < 1 or postal_code > 80):
+            flash('First two digits of postal code must be between 1 and 80.', category='error')
+
+        elif len(password1) < 8:
+            flash('Password must be at least 8 characters.', category='error')
+
+        elif password1 != password2:
+            flash('Passwords don\'t match.', category='error')
+
+        ## Need to add verification code/function here
+        else:
+            new_agent = User(email=email, 
+                            username = username, 
+                            postal_code = postal_code,
+                            access_id = 1,
+                            password=generate_password_hash(password1, method='sha256'))
+            db.session.add(new_agent)
+            db.session.commit()
+            send_mail_verify(new_agent)       
+            flash('Business Account created! Please verify your email before logging in.', category='success')
+
+            return redirect(url_for('auth.login'))
+        
+        
+
+    return render_template("sign_up_agent.html", user=current_user)
+
 
 
 ## Route for Forgot Password Page

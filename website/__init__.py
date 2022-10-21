@@ -41,10 +41,15 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = EMAIL
 app.config['MAIL_PASSWORD'] = PASSWORD
 
+# To save the property's images in file system
+app.config['UPLOAD_FOLDER'] = "static/images/"
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
 moment = Moment(app)
 login_manager.init_app(app)
 db.init_app(app)
 mail.init_app(app)
+
 
 # Insert Blueprint here
 from .user import user
