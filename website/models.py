@@ -69,6 +69,7 @@ class User(db.Model, UserMixin):
     reviews = db.relationship('Review', backref = 'user', passive_deletes=True)
     review_likes = db.relationship('ReviewLikes')
     property = db.relationship('Property', backref = 'user', passive_deletes=True)
+    propertyLikes = db.relationship('PropertyLikes', backref = 'user', passive_deletes=True)
 
     def get_token(self,expires_sec=120):
         serial=Serializer(current_app.config['SECRET_KEY'],expires_in = expires_sec)
@@ -137,23 +138,19 @@ class Property(db.Model):
     town = db.Column(db.String(150))
     flat_type = db.Column(db.String(150))
     flat_model = db.Column(db.String(150))
-    #address = db.Column(db.String(150))
     block = db.Column(db.String(150))
     storey_range = db.Column(db.String(150))
     street_name = db.Column(db.String(150))
     floor_area_sqm = db.Column(db.Float)
     price = db.Column(Float) 
-    #numOfFavourites = db.Column(db.Integer, default=0)
-    #latitude = db.Column(db.Float)
-    #longitude = db.Column(db.Float)
+    numOfLikes = db.Column(db.Integer, default=0)
     postal_code = db.Column(db.Integer)
     postal_sector = db.Column(db.Integer)
     address_no_postal_code = db.Column(db.String(150))
     time = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
     images = db.relationship('PropertyImage', backref = 'property', cascade="all,delete")
     description = db.Column(db.String(3000))
-    #reviews = db.relationship('Review', backref = 'flat', passive_deletes=True)
-    #favourites = db.relationship('Favourites', backref = 'flat', passive_deletes=True)   
+    likes = db.relationship('PropertyLikes', backref = 'property',  cascade="all,delete")   
 
 class PropertyImage(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
@@ -163,3 +160,8 @@ class PropertyImage(db.Model):
 
     def address(self):
         return self.url
+
+class PropertyLikes(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    prop_id = db.Column(db.Integer, db.ForeignKey('property.id', ondelete='CASCADE'))

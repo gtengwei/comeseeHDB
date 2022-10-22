@@ -42,6 +42,21 @@
 </head> 
 
 <body class="bg">
+
+<div class="subsection text-center">
+  <div class="row">
+    <div class="subsection-cell col-6">
+      <a class="subsection-button" href="{{ url_for('views.home') }}">
+        <button class="subsection-button">Past Transactions</button>
+      </a>
+    </div>
+    <div class="subsection-cell col-6"> 
+      <a class="subsection-button" href="{{ url_for('views.home_property') }}">
+        <button class="subsection-button">On-Listings</button>
+      </a>
+    </div>
+  </div>
+</div>
 <form class="search-bar" method="POST">
   <div class="container py-2 ">
       <div class="row justify-content-center">
@@ -206,7 +221,7 @@
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
           
             
           {% endif %}

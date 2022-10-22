@@ -52,7 +52,7 @@
               <div class="d-flex justify-content-center mb-2">
                 <a class="m-1" href="{{ url_for('user.profile', username=current_user.username) }}"> <button type="button" class="btn btn-primary">Personal Information</button></a> 
                 {% if current_user.access_id == 0 %}
-                <a class="m-1" href="{{ url_for('user.favourites', username=current_user.username) }}"> <button type="button" class="btn btn-primary">Favourites</button></a>
+                <a class="m-1" href="{{ url_for('user.likes', username=current_user.username) }}"> <button type="button" class="btn btn-primary">Likes</button></a>
                 {% elif current_user.access_id == 1 %}
                 <a class="m-1" href="{{ url_for('user.property', username=current_user.username) }}"> <button type="button" class="btn btn-outline-primary ms-1">Property</button></a>          
                 {% endif %}  
@@ -85,7 +85,19 @@
             <div class="card mb-3">
               <div class="card-header">
                   <strong><a href ="{{url_for('user.property_details', property_id = prop.id) }}" target = "_blank">{{prop.address_no_postal_code}}</strong></a>
-              </div>
+  
+                  {% if prop.id in user.propertyLikes|map(attribute="prop_id")|list %}
+                  <button class="like_button" id ="like_button{{prop.id}}" type="button" onClick="property_unlike({{ prop.id }})">
+                    <span id ="like_button_id{{prop.id}}"><i class="fa-solid fa-heart"></i></span>
+                  </button>
+                  {% else %}
+                  <button class="like_button" id ="like_button{{prop.id}}" type="button" onClick="property_like({{ prop.id }})">
+                    <span id ="like_button_id{{prop.id}}"><i class="fa-regular fa-heart"></i></span>
+                  </button>
+                  {% endif %}
+
+                  <span id="like_count{{prop.id}}">{{prop.likes|length}}</span>
+                </div>
               <div class="card-body">
                 <div class="row">
                   <div class="col">
