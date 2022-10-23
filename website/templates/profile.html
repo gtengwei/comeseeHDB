@@ -3,7 +3,6 @@
 
 {% block content %}
 <h1 align="center">Profile</h1>
-
 <section style="background-color: rgba(255, 182, 193, 0.178);">
       <div class="row">
         <div class="col-lg-4">
@@ -13,10 +12,12 @@
               <h5 class="my-3">{{user.username}}</h5>
 
               <div class="d-flex justify-content-center mb-2">
-                <a <button type="button" id="solid-button" class="btn btn-primary" href="{{ url_for('user.profile', username=current_user.username) }}"
-                >Personal Information</button></a> 
-                <a <button type="button" id="outline-button" class="btn btn-outline-primary ms-1" href="{{ url_for('user.likes', username=current_user.username) }}"
-                >Likes</button></a>
+                <a class="m-1" href="{{ url_for('user.profile', username=current_user.username) }}"> <button type="button" class="btn btn-outline-primary ms-1">Personal Information</button></a> 
+                {% if current_user.access_id == 0 %}
+                <a class="m-1" href="{{ url_for('user.favourites', username=current_user.username) }}"> <button type="button" class="btn btn-primary">Favourites</button></a>
+                {% elif current_user.access_id == 1 %}
+                <a class="m-1" href="{{ url_for('user.property', username=current_user.username) }}"> <button type="button" class="btn btn-primary">Property</button></a>          
+                {% endif %}    
               </div>
             </div>
           </div>

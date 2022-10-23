@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+    
+{% block title %}Property Details{% endblock %}
+    
+{% block content %}
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
+  <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script type="text/javascript" src="/static/index.js"></script>
+  <div hidden="hidden">
+    <script 
+      {{ moment.include_moment() }}
+    ></script>
+  </div>
+ <script>
+  $(document).ready(function(){
+      $('.like_button').click(function(){
+        $("#createAccountModal").modal('show');
+      }); 
+  });
+</script>
+<script>
+  $(document).ready(function(){
+      $('.review_button').click(function(){
+        $("#createAccountModal").modal('show');
+      }); 
+  });
+</script>
+<script>
+  $(document).ready(function(){
+      $('.reply_button').click(function(){
+        $("#createAccountModal").modal('show');
+      }); 
+  });
+</script>
+
+
+
+<style>
+  .street_name {
+    display: inline-flex;
+  }
+
+  button[class^="like_button"] {
+    background-color: white;
+    border:none;
+    outline:none;
+    color: red;
+    align-self: flex-start;
+    padding-top:6px;
+  }
+  .carousel-inner{
+    display: flex;
+    justify-content: center; 
+    max-height: 400x !important;
+  } 
+
+  .carousel-indicators{
+    filter: invert(100%);
+  }
+
+  .carousel-control-next{
+    filter: invert(100%);
+  }
+  .carousel-control-prev{
+    filter: invert(100%);
+  }
+
+  .carousel-control-next{
+    filter: invert(100%);
+  }
+
+
+  .img-carousel{
+    width: 100%;
+    height: 600px;
+  }
+
+  .like_count{
+    display: inline-flex;
+    align-self: flex-start;
+    padding-top:6px;
+  }
+  
+  .map{
+    width: 48%;
+    margin-left: 0.5cm;
+    float: right;
+  }
+  .clearfix{
+    clear:both
+  }
+
+    
+</style>
+</head>
+<body>
+<br>
+
+{% if images|length > 2 %}
+<div id="propertyCarouselIndicators" class="carousel slide" data-ride="carousel" data-interval="20000">
+  <ol class="carousel-indicators">
+    <li data-target="#propertyCarouselIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#propertyCarouselIndicators" data-slide-to="1"></li>
+    <li data-target="#propertyCarouselIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active mx-auto">
+      <img src="{{ url_for('user.retrieve_picture', image_id = images[0].id) }}" class="img-carousel" style="object-fit: contain;" alt="...">
+    </div>
+    <div class="carousel-item mx-auto">
+      <img src="{{ url_for('user.retrieve_picture', image_id = images[1].id) }}" class="img-carousel"  style="object-fit: contain;" alt="...">
+    </div>
+    <div class="carousel-item mx-auto">
+      <img src="{{ url_for('user.retrieve_picture', image_id = images[2].id) }}" class="img-carousel" style="object-fit: contain;" alt="...">
+    </div>
+  </div>
+</div>
+<a class="carousel-control-prev" href="#propertyCarouselIndicators" role="button" data-slide="prev">
+  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  <span class="sr-only">Previous</span>
+</a>
+<a class="carousel-control-next" href="#propertyCarouselIndicators" role="button" data-slide="next">
+  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  <span class="sr-only">Next</span>
+</a>
+{% elif images|length == 2 %}
+<div id="propertyCarouselIndicators" class="carousel slide" data-ride="carousel" data-interval="20000">
+  <ol class="carousel-indicators">
+    <li data-target="#propertyCarouselIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#propertyCarouselIndicators" data-slide-to="1"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active mx-auto">
+      <img src="{{ url_for('user.retrieve_picture', image_id = images[0].id) }}" class="img-carousel" style="object-fit: contain;" alt="...">
+    </div>
+    <div class="carousel-item mx-auto">
+      <img src="{{ url_for('user.retrieve_picture', image_id = images[1].id) }}" class="img-carousel"  style="object-fit: contain;" alt="...">
+    </div>
+  </div>
+</div>
+<a class="carousel-control-prev" href="#propertyCarouselIndicators" role="button" data-slide="prev">
+  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  <span class="sr-only">Previous</span>
+</a>
+<a class="carousel-control-next" href="#propertyCarouselIndicators" role="button" data-slide="next">
+  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  <span class="sr-only">Next</span>
+</a>
+{% elif images|length == 1 %}
+<div id="propertyCarouselIndicators" class="carousel slide" data-ride="carousel" style=" background-color: lightgray;">
+  <div class="carousel-inner">
+    <div class="carousel-item active mx-auto">
+      <img src="{{ url_for('user.retrieve_picture', image_id = images[0].id) }}" class="img-carousel" style="object-fit: contain;" alt="...">
+    </div>
+  </div>
+</div>
+{% else %}
+<div>
+  <p>Image Not Found!</p>
+</div>
+{% endif %}
+
+<div class="container">
+  <div class="street_name">
+    <h1>{{property.address_no_postal_code}}</h1>
+    {% if user.is_authenticated %}
+          {% if property.id in user.likes|map(attribute="property_id")|list %}
+          <button class="like_button" id = "like_button{{property.id}}" type="button" onClick="flat_unlike({{ property.id }})">
+            <span id ="like_button_id{{ property.id}}"><i class="fa-solid fa-heart"></i></span>
+          </button>
+          {% else %}
+          <button class="like_button" id ="like_button{{property.id}}" type="button" onClick="flat_like({{ property.id }})">
+            <span id ="like_button_id{{property.id}}"><i class="fa-regular fa-heart"></i></span>
+          </button>
+          {% endif %}
+    {% else %}
+        <button class="like_button" id ="like_button{{property.id}}" type="button">
+          <span id ="like_button_id{{property.id}}"><i class="fa-regular fa-heart"></i></span>
+        </button>
+        <div class = "guest_error">
+          <div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header text-center">
+                  <h4 class="modal-title w-100 font-weight-bold">Login Feature</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+      
+                <div class="modal-body mx-3">
+                  <div class="md-form mb-5">
+                    <a href='/sign-up'><h5> Create an account to use this feature!</h5></a> 
+                  </div>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      {% endif %}
+    <span id="like_count{{property.id}}" class="like_count">{{property.likes|length}}</span>
+    
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <p class="mb-0">Town</p>
+    </div>
+    <div class="col-sm-3 border-right">
+      <p class="text-muted mb-0">{{property.town}}</p>
+    </div>
+    <div class="col-sm-3">
+        <p class="mb-0">Block</p>
+    </div>
+    <div class="col-sm-3">
+        <p class="text-muted mb-0">{{property.block}}</p>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-3">
+        <p class="mb-0">Flat Type</p>
+    </div>
+    <div class="col-sm-3 border-right">
+        <p class="text-muted mb-0">{{property.flat_type}}</p>
+    </div>
+    <div class="col-sm-3">
+      <p class="mb-0">Flat Model</p>
+    </div>
+    <div class="col-sm-3">
+      <p class="text-muted mb-0">{{property.flat_model}}</p>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+  <div class="col-sm-3">
+      <p class="mb-0">Storey Range</p>
+  </div>
+  <div class="col-sm-3 border-right">
+      <p class="text-muted mb-0">{{property.storey_range}}</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="mb-0">Price per Square Metre</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="text-muted mb-0">${{property.price/property.floor_area_sqm}}</p>
+  </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-3">
+      <p class="mb-0">Floor Area(Metre Square)</p>
+    </div>
+    <div class="col-sm-3">
+      <p class="text-muted mb-0">{{property.floor_area_sqm}}</p>
+    </div>
+    <div class="col-sm-3">
+      <p class="mb-0">Price</p>
+    </div>
+    <div class="col-sm-3 border-right">
+      <p class="text-muted mb-0">${{property.price}}</p>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+  <div class="col-sm-3">
+      <p class="mb-0">Postal District</p>
+  </div>
+  <div class="col-sm-3 border-right">
+      <p class="text-muted mb-0">{{property.postal_sector}}</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="mb-0">Postal Code</p>
+  </div>
+  <div class="col-sm-3">
+      <p class="text-muted mb-0">{{property.postal_code}}</p>
+  </div>
+  </div>
+
+  <br>
+
+  <div>
+    <h2>Description</h2>
+    <br>
+    <p>{{ property.description }}</p>
+  </div>
+</div>
+{% endblock %}
