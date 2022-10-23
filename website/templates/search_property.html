@@ -1,0 +1,645 @@
+{% extends 'base.html' %}
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      $(document).ready(function(){
+          $('.like_button').click(function(){
+            $("#createAccountModal").modal('show');
+          }); 
+      });
+  </script>
+
+  <script>
+    $(document).ready(function(){
+        $('#helpBtn').click(function(){
+          $("#helpModal").modal('show');
+        }); 
+    });
+  </script>
+
+  <script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"
+  ></script>
+
+  <script>
+    $(document).ready(function() {
+      $(window).scroll(function() {
+        if ($(this).scrollTop() > 20) {
+          $('#toTopBtn').fadeIn();
+        } else {
+          $('#toTopBtn').fadeOut();
+        }
+      });
+
+      $('#toTopBtn').click(function() {
+        $("html, body").animate({
+          scrollTop: 0
+        }, 1000);
+        return false;
+      });
+    });
+  </script>
+</head> 
+
+
+  <form class="search-bar" method="POST">
+    <div class="container py-2 ">
+        <div class="row justify-content-center">
+            <div class="input-group" style="width:44vh;" >
+                <input class="form-control py-2 border-right-0 border" name="search" id="search" placeholder = "Search here!">
+                <span class="input-group-append ">
+                    <button id="outline-button" class="btn btn-outline-primary border-left-0 border" type="submit" type="button" style="color: #fc9483;">
+                      <i class="fa fa-search"></i>
+                    </button>
+                    <a href= "{{ url_for('user.property_details', property_id = random) }}" title="Click here for a random flat!"
+                    <button id="outline-button"  class="btn btn-outline-primary border" type="submit" type="button" style="color: #fc9483;">
+                      <i class="fa-solid fa-dice"></i>
+                    </button> </a>
+                    <div class="btn-group">
+                      <button  id="outline-button" class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                      style="color: #fc9483; background-color: #ffffff; border-color: #e1e3e6; border-radius: 0;">
+                        Sort
+                      </button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" name = "likes_high" id="likes_high" href="{{ url_for('views.sort', criteria = 'likes_high') }}">Likes (High to Low)</a>
+                        <a class="dropdown-item" name = "likes_low" id="likes_low" href="{{ url_for('views.sort', criteria = 'likes_low') }}">Likes (Low to High)</a>
+                        <a class="dropdown-item" name= "price_high" id = "price_high" href="{{ url_for('views.sort',  criteria = 'price_high') }}">Price (High to Low)</a>
+                        <a class="dropdown-item" name = "price_low" id="price_low" href="{{ url_for('views.sort', criteria = 'price_low') }}">Price (Low to High)</a>
+                        <a class="dropdown-item" name = "remaining_lease_high" id="remaining_lease_high" href="{{ url_for('views.sort', criteria = 'remaining_lease_high') }}">Remaining Lease (High to Low)</a>
+                        <a class="dropdown-item" name = "remaining_lease_low" id="remaining_lease_low" href="{{ url_for('views.sort', criteria = 'remaining_lease_low') }}">Remaining Lease (Low to High)</a>
+                        <a class="dropdown-item" name = "storey_high" id="storey_high" href="{{ url_for('views.sort', criteria = 'storey_high') }}">Floor (High to Low)</a>
+                        <a class="dropdown-item" name = "storey_low" id="storey_low" href="{{ url_for('views.sort', criteria = 'storey_low') }}">Floor (Low to High)</a>
+                        <a class="dropdown-item" name = "price_per_sqm_high" id="price_per_sqm_high" href="{{ url_for('views.sort', criteria = 'price_per_sqm_high') }}">Price per Square Metre (High to Low)</a>
+                        <a class="dropdown-item" name = "price_per_sqm_low" id="price_per_sqm_low" href="{{ url_for('views.sort', criteria = 'price_per_sqm_low') }}">Price per Square Metre (Low to High)</a>
+                        
+                      </div>
+                    </div> 
+                  </span>
+  
+                  <button id="outline-button" class="btn btn-outline-primary ms-1" type="button" data-toggle="collapse" data-target="#filter" aria-expanded="false" aria-controls="filter" style="color: #fc9483; background-color: #ffffff; border-color: #e1e3e6; 
+                  border-radius: 0 3px 3px 0;">Filters<span class="fa fa-filter pl-1"></span></button>
+                  <div class="collapse" id="filter">
+                      <div class="border-bottom pb-2 ml-2">
+                          <h4 id="burgundy">Filter</h4>
+                      </div>
+                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#price" aria-expanded="false" aria-controls="price"><h6 class="font-weight-bold">Price Range<span style = "padding: 0.5em;" class="fa-solid fa-money"></h6></span></button>
+                      <div class="collapse" id="price">
+                          <div class="py-2 border-bottom ml-3">
+                              <div style="color: pink"><span class="fa fa-minus"></span></div>
+                                  <div class="form-group"> <input type="checkbox" id="200000" name="price" value ="100000-200000"> <label for="200000">$100000 - $200000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="300000" name="price" value ="200000-300000"> <label for="300000">$200000 - $300000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="400000" name="price" value ="300000-400000"> <label for="400000">$300000 - $400000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="500000" name="price" value ="400000-500000"> <label for="500000">$400000 - $500000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="600000" name="price" value ="500000-600000"> <label for="600000">$500000 - $600000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="700000" name="price" value ="600000-700000"> <label for="700000">$600000 - $700000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="800000" name="price" value ="700000-800000"> <label for="800000">$700000 - $800000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="900000" name="price" value ="800000-900000"> <label for="900000">$800000 - $900000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="1000000" name="price" value ="900000-1000000"> <label for="1000000">$900000 - $1000000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="1100000" name="price" value ="1000000-1100000"> <label for="1100000">$1000000 - $1100000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="1200000" name="price" value ="1100000-1200000"> <label for="1200000">$1100000 - $1200000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="1300000" name="price" value ="1200000-1300000"> <label for="1300000">$1200000 - $1300000</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="1400000" name="price" value ="1300000-1400000"> <label for="1400000">$1300000 - $1400000</label> </div>
+                                  
+                          </div>
+                      </div>
+
+                      <br>
+                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#town" aria-expanded="false" aria-controls="town"><h6 class="font-weight-bold">Towns<span style = "padding: 0.5em;" class="fa fa-building pl-1 "></h6></span></button>
+                      <div class="collapse" id="town">
+                          <div class="py-2 border-bottom ml-3">
+                              <div style="color: pink"><span class="fa fa-minus"></span></div>
+                              
+                                  <div class="form-group"> <input type="checkbox" id="ang mo kio" name="town" value="ANG MO KIO"> <label for="ang mo kio">Ang Mo Kio</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="bedok" name="town" value ="BEDOK"> <label for="bedok">Bedok</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="bishan" name="town" value ="BISHAN"> <label for="bishan">Bishan</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="bukit batok" name="town" value = "BUKIT BATOK"> <label for="bukit batok">Bukit Batok</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="bukit merah" name="town" value = "BUKIT MERAH"> <label for="bukit merah">Bukit Merah</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="bukit panjang" name="town" value = "BUKIT PANJANG"> <label for="bukit panjang">Bukit Panjang</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="bukit timah" name="town" value = "BUKIT TIMAH"> <label for="bukit timah">Bukit Timah</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="central area" name="town" value = "CENTRAL AREA"> <label for="central area">Central Area</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="choa chu kang" name="town" value = "CHOA CHU KANG"> <label for="choa chu kang">Choa Chu Kang</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="clementi" name="town" value = "CLEMENTI"> <label for="clementi">Clementi</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="geylang" name="town" value = "GEYLANG"> <label for="geylang">Geylang</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="hougang" name="town" value = "HOUGANG"> <label for="houhang">Hougang</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="jurong east" name="town" value = "JURONG EAST"> <label for="jurong east">Jurong East</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="jurong west" name="town" value = "JURONG WEST"> <label for="jurong west">Jurong West</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="kallang/whampoa" name="town" value = "KALLANG/WHAMPOA"> <label for="kallang/whampoa">Kallang/Whompoa</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="pasir ris" name="town" value = "PASIR RIS"> <label for="pasir ris">Pasir Ris</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="punggol" name="town" value = "PUNGGOL"> <label for="punggol">Punggol</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="queenstown" name="town" value = "QUEENSTOWN"> <label for="queenstown">Queenstown</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="sembawang" name="town" value = "SEMBAWANG"> <label for="sembawang">Sembawang</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="sengkeng" name="town" value = "SENGKANG"> <label for="sengkang">Sengkang</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="serangoon" name="town" value = "SERANGOON"> <label for="serangoon">Serangoon</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="tampines" name="town" value = "TAMPINES"> <label for="tampines">Tampines</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="toa payoh" name="town" value = "TOA PAYOH"> <label for="toa payoh">Toa Payoh</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="woodlands" name="town" value = "WOODLANDS"> <label for="woodlands">Woodlands</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="yishun" name="town" value = "YISHUN"> <label for="yishun">Yishun</label> </div>
+  
+  
+                          </div>
+                      </div>
+  
+                      <br>
+  
+                      <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#flat_type" aria-expanded="false" aria-controls="flat_type"><h6 class="font-weight-bold">Flat Types<span style = "padding: 0.5em;" class="fa fa-home pl-1"></h6></span></button>
+                      <div class="collapse" id="flat_type">
+                          <div class="py-2 border-bottom ml-3">
+                              <div style="color: pink"><span class="fa fa-minus"></span></div>
+                              
+                                  <div class="form-group"> <input type="checkbox" id="2room" name="flat_type" value="2 ROOM"> <label for="2room">2 Room</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="3room" name="flat_type" value="3 ROOM"> <label for="3room">3 Room</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="4room" name="flat_type" value="4 ROOM"> <label for="4room">4 Room</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="5room" name="flat_type" value="5 ROOM"> <label for="5room">5 Room</label> </div>
+                                  <div class="form-group"> <input type="checkbox" id="executive" name="flat_type" value="EXECUTIVE"> <label for="executive">Executive</label> </div>
+                              
+                          </div>
+                      </div>
+  
+                      <br>
+  
+                  </div>
+            </div>
+        </div>
+    </div>
+  </form>
+
+{% if session['price'] and session['address'] and session['towns'] and session['flat_types'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}, {{session['flat_types']}}</h3>
+
+{% elif session['price'] and session['address'] and session['towns'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}</h3>
+
+{% elif session['price'] and session['address'] and session['flat_types'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}, {{session['flat_types']}}</h3>
+
+{% elif session['price'] and session['address'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['price']}}</h3>
+
+{% elif session['price'] and session['towns'] and session['flat_types'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}, {{session['flat_types']}}</h3>
+
+{% elif session['price'] and session['towns'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['towns']}}</h3>
+
+{% elif session['price'] and session['flat_types'] %}
+<h3 align="center">Filtered by {{session['price']}}, {{session['flat_types']}}</h3>
+
+{% elif session['price'] %}
+<h3 align="center">Filtered by {{session['price']}}</h3>
+
+{% elif session['address'] and session['towns'] and session['flat_types'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['towns']}}, {{session['flat_types']}}</h3>
+
+{% elif session['address'] and session['towns'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['towns']}}</h3>
+
+{% elif session['address'] and session['flat_types'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+<h3 align="center">Filtered by {{session['flat_types']}}</h3>
+
+{% elif session['towns'] and session['flat_types'] %}
+<h3 align="center">Filtered by {{session['towns']}}, {{session['flat_types']}}</h3>
+
+{% elif session['towns'] %}
+<h3 align="center">Filtered by {{session['towns']}}</h3>
+
+{% elif session['flat_types'] %}
+<h3 align="center">Filtered by {{session['flat_types']}}</h3>
+
+{% elif session['address'] %}
+<h3 align="center">You searched for: {{session['address']}}</h3>
+{% endif %}
+
+{% if property %}
+<h4 class = "text-muted" align="center">  {{data_length}} flats found  </h4>
+{% endif %}
+
+
+
+
+
+<body class="bg">
+    <div id="properties" class="card-body mx-auto bg-pink">
+        {% for i in range(0, (property|length)|int, 2) %}
+        <div class="row">
+          <div class="col-md-6">
+          <div class="card mb-3">
+            <div class="card-header">
+              <strong><a href ="{{ url_for('user.property_details', property_id=property[i].id) }}" target = "_blank">{{property[i].address_no_postal_code}}</strong></a>
+              {% if user.is_authenticated %}
+                {% if property[i].id in user.propertyLikes|map(attribute="prop_id")|list %}
+                <button class="like_button" id = "like_button{{property[i].id}}" type="button" onClick="property_unlike({{ property[i].id }})">
+                  <span id ="like_button_id{{ property[i].id}}"><i class="fa-solid fa-heart"></i></span>
+                </button>
+                {% else %}
+                <button class="like_button" id ="like_button{{property[i].id}}" type="button" onClick="property_like({{ property[i].id }})">
+                  <span id ="like_button_id{{property[i].id}}"><i class="fa-regular fa-heart"></i></span>
+                </button>
+                {% endif %}
+              {% else %}
+              <button class="like_button" id ="like_button{{property[i].id}}" type="button">
+                <span id ="like_button_id{{property[i].id}}"><i class="fa-regular fa-heart"></i></span>
+              </button>
+              <div class = "guest_error">
+                <div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold">Login Feature</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+            
+                      <div class="modal-body mx-3">
+                        <div class="md-form mb-5">
+                          <a href='/sign-up'><h5> Create an account to use this feature!</h5></a> 
+                        </div>
+            
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              <span id="like_count{{property[i].id}}">{{ property[i].likes|length }}</span>
+    
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <div class="img">
+                  <img src="{{ url_for('user.retrieve_main_picture', property_id = property[i].id)}}" class="img-thumbnail">
+                </div>
+                </div>
+                <div class="col">
+                  <p><strong>Price    : </strong>${{property[i].price}}</p>
+                  <br/>
+                  <p><strong>Flat Type: </strong>{{property[i].flat_type}}</p>
+                  <br/>
+                  <p><strong>Floor    : </strong>{{property[i].storey_range}}</p>
+                  <br/>
+                  <p><strong>Date     : </strong>{{property[i].time.date()}}</p>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% if (i+1) <= (property|length-1)%}
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <div class="card-header">
+              <strong><a href ="{{ url_for('user.property_details', property_id=property[i+1].id) }}" target = "_blank">{{property[i+1].address_no_postal_code}}</strong></a>
+              {% if user.is_authenticated %}
+                {% if property[i+1].id in user.propertyLikes|map(attribute="prop_id")|list %}
+                <button class="like_button" id ="like_button{{property[i+1].id}}" type="button" onClick="property_unlike({{ property[i+1].id }})">
+                  <span id ="like_button_id{{property[i+1].id}}"><i class="fa-solid fa-heart"></i></span>
+                </button>
+                {% else %}
+                <button class="like_button" id ="like_button{{property[i+1].id}}" type="button" onClick="property_like({{ property[i+1].id }})">
+                  <span id ="like_button_id{{property[i+1].id}}"><i class="fa-regular fa-heart"></i></span>
+                </button>
+                {% endif %}
+              {% else %}
+                <button class="like_button" id ="like_button{{property[i+1].id}}" type="button">
+                  <span id ="like_button_id{{property[i+1].id}}"><i class="fa-regular fa-heart"></i></span>
+                </button>
+                <div class = "guest_error">
+                  <div class="modal fade" id="createAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header text-center">
+                          <h4 class="modal-title w-100 font-weight-bold">Login Feature</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                
+                        <div class="modal-body mx-3">
+                          <div class="md-form mb-5">
+                              <a href='/sign-up' class='modal-sign-up'> Create an account to use this feature!</a>
+                          </div>
+                
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              
+                
+              {% endif %}
+              <span id="like_count{{property[i+1].id}}">{{property[i+1].likes|length}}</span>
+    
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <div class="img">
+                  <img src="{{ url_for('user.retrieve_main_picture', property_id = property[i+1].id)}}" class="img-thumbnail">
+                </div>
+                </div>
+                <div class="col">
+                  <p><strong>Price    : </strong>${{property[i+1].price}}</p>
+                  <br/>
+                  <p><strong>Flat Type: </strong>{{property[i+1].flat_type}}</p>
+                  <br/>
+                  <p><strong>Floor    : </strong>{{property[i+1].storey_range}}</p>
+                  <br/>
+                  <p><strong>Date     : </strong>{{property[i+1].time.date()}}</p>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+      
+      </div>
+
+<div class = 'bottom-right'>
+  <div class = 'fixed-bottom-right'>
+    <button id="toTopBtn" class="btn btn-primary btn-circle cd-top text-replace js-cd-top cd-top--is-visible cd-top--fade-out" 
+    type= "button" style="display:none;">
+      <i class="fa fa-arrow-up"></i>
+    </button>
+  </div>
+</div>  
+
+<div  class = 'bottom-left'>
+  <div class = 'fixed-bottom-left'>
+      <button id="helpBtn" class="btn btn-primary btn-circle cd-top" type= "button" >
+      <i class="fa fa-question"></i>
+    </button>
+  </div>
+</div> 
+
+<meta id="my-data" data-f="{{user.likes|map(attribute='flat_id')|list}}" data-flat_length="{{data_length}}">  
+<script type="text/javascript">
+    var index = 20;
+    var limit = 20;
+  
+    $(window).scroll(() => {
+      var current_y = $(window).scrollTop();
+      var window_height = $(window).height();
+      var document_height = $(document).height();
+
+      if (current_y + window_height  >= (document_height-1)) {
+        downloadContent(index, limit);
+        index += 20
+      }
+    });
+  
+  
+    function downloadContent(index, limit) {
+    $.get('/load_search?index=' + index + '&limit=' + limit, (data) => {
+      for (var index = 0; index < data.data.length; index+=2) {
+        var like = $('#my-data').data().f;
+        var flat = "/flat-details/" + data.data[index][0]; 
+        var image = "/static/" + data.data[index][5];
+
+        if (like.includes(data.data[index][0])) {
+        var page = `
+          <div class="row">
+            <div class="col-md-6">
+            <div class="card mb-3">
+
+            <div class="card-header">
+              <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
+              <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="unlike(`+data.data[index][0]+`)">
+                <span id ="like_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
+              </button>
+              <span id="like_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <img src="` + image + `" class="img-thumbnail">
+                </div>
+                <div class="col">
+                  <p><strong>Price: </strong>` +`$`+ data.data[index][2] + `</p>
+                  <br/>
+                  <p><strong>Flat Type: </strong>` + data.data[index][3] + `</p>
+                  <br/>
+                  <p><strong>Floor: </strong>` + data.data[index][4] + `</p>
+                  <br/>
+                  <p><strong>Sold Date: </strong>` + data.data[index][6] + `</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`
+        if ((index+1)%2 == 1){
+        image = "/static/" + data.data[index+1][5];
+        page +=
+        `
+
+        <div class="col-md-6">
+            <div class="card mb-3">
+
+            <div class="card-header">
+              <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
+              <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="unlike(`+data.data[index][0]+`)">
+                <span id ="like_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
+              </button>
+              <span id="like_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <img src="` + image + `" class="img-thumbnail">
+                </div>
+                <div class="col">
+                  <p><strong>Price: </strong>` +`$`+ data.data[index][2] + `</p>
+                  <br/>
+                  <p><strong>Flat Type: </strong>` + data.data[index][3] + `</p>
+                  <br/>
+                  <p><strong>Floor: </strong>` + data.data[index][4] + `</p>
+                  <br/>
+                  <p><strong>Sold Date: </strong>` + data.data[index][6] + `</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          `
+      }
+        }
+
+      else {
+        var page = `
+        <div class="row">
+        <div class="col-md-6">
+        <div class="card mb-3">
+
+        <div class="card-header">
+        <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
+          <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="like(`+data.data[index][0]+`)">
+            <span id ="like_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
+          </button>
+          <span id="like_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
+        </div>
+        <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <img src="` + image + `" class="img-thumbnail">
+                </div>
+                <div class="col">
+                  <p><strong>Price: </strong>` +`$`+ data.data[index][2] + `</p>
+                  <br/>
+                  <p><strong>Flat Type: </strong>` + data.data[index][3] + `</p>
+                  <br/>
+                  <p><strong>Floor: </strong>` + data.data[index][4] + `</p>
+                  <br/>
+                  <p><strong>Sold Date: </strong>` + data.data[index][6] + `</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        `
+
+        if ((index+1)%2 == 1){
+        image = "/static/" + data.data[index+1][5];
+        page +=
+        ` 
+        <div class="col-md-6">
+            <div class="card mb-3">
+
+            <div class="card-header">
+              <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index+1][1] + `</strong></a>
+              <button class="like_button" id ="like_button`+data.data[index+1][0]+`" type="button" onClick="unlike(`+data.data[index+1][0]+`)">
+                <span id ="like_button_id`+data.data[index+1][0]+`"><i class="fa-regular fa-heart"></i></span>
+              </button>
+              <span id="like_count`+data.data[index+1][0]+`">`+data.data[index+1][7]+`</span>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <img src="` + image + `" class="img-thumbnail">
+                </div>
+                <div class="col">
+                  <p><strong>Price: </strong>` +`$`+ data.data[index+1][2] + `</p>
+                  <br/>
+                  <p><strong>Flat Type: </strong>` + data.data[index+1][3] + `</p>
+                  <br/>
+                  <p><strong>Floor: </strong>` + data.data[index+1][4] + `</p>
+                  <br/>
+                  <p><strong>Sold Date: </strong>` + data.data[index+1][6] + `</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          `
+      }
+        }    
+        $('#properties').append(page)
+        
+        }
+      });
+      var flat_length = $('#my-data').data().flat_length;
+      if (flat_length <= (index)) {
+        document.getElementById("end_page").innerHTML = '<h3>You Have Reached The End of Your Search Results</h3>';
+      }
+    }
+    
+</script>
+{% if property|length == 0 %}
+  <h3 class="text-muted mb-0" align="center">No flats found!</h3>
+  <h3 class ="text-muted mb-0" align="center">  Please ensure that your input is correct!</h3>
+
+
+{% elif 0 < property|length < 20 %}
+<div class="fa-3x d-flex justify-content-center" id = "end_page" >
+  <h3>You Have Reached The End of Your Search Results</h3>
+</div>
+
+{% else %}
+  
+{% endif %}
+
+
+<div class = "guest_error">
+  <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Help</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body mx-3">
+          <div class="md-form mb-5">
+            <div class="help-text">
+            <h4> What is comeseeHDB?</h4>
+            <p> <b>comeseeHDB</b> is a extensive search engine for resale HDB flats in Singapore. 
+              <br>
+              You can search for flats by <b>address</b> or <b>postal code</b>!
+              <br>
+              You can also sort flats by <b>Price</b>, <b>Floor</b>, <b>Price per sqm</b> and more simply by clicking on the sort button!
+              <br>
+              You can also filter flats by <b>Price Range</b>, <b>Town</b> and <b>Flat Type</b>!
+              <h5> 1. How to Search?</h5>
+              <p>
+                <ul>
+                <li>You can search for flats by entering the postal code or the address.</li>
+                <b>The address can be entered in the following format:</b>
+                <br/>
+                <li>Town Name</li>
+                <li>Street as <b>st</b></li>
+                <li>Block as <b>blk</b></li>
+                e.g. <i><b>"Ang Mo Kio st 5 blk 5"</b></i> or <i><b>"Ang Mo Kio st 5"</b></i>
+              </ul>
+              </p>
+              <h5> 2. How to like?</h5>
+              <p>
+                <ul>
+                <li>You can like a flat by clicking on the heart icon at the side of the address.</li>
+                <li>You can only do this if you are logged in.</li>
+              </ul>
+              </p>
+              <h5> 3. How to Sort?</h5>
+              <p>
+                <ul>
+                <li>You can sort flats by clicking on the Sort button.</li>
+                <li>You can sort by <b>Price</b>, <b>Floor</b>, <b>Price per sqm</b> and more simply by clicking on the sort button.</li>
+              </ul>
+              </p>
+              <h5> 4. How to Filter?</h5>
+              <p>
+                <ul>
+                <li>You can filter flats by clicking on the Filter button.</li>
+                <li>You can filter by <b>Price Range</b>, <b>Town</b> or even a combination of these!</li>
+              </ul>
+              </p> 
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+    
+
+{% endblock %}

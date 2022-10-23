@@ -21,6 +21,12 @@
     });
   </script>
 
+  <script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"
+  ></script>
+
   <script>
     $(document).ready(function() {
       $(window).scroll(function() {
@@ -66,8 +72,8 @@
                   <button id="outline-button" class="btn btn-outline-primary border-left-0 border" type="submit" type="button">
                     <i class="fa fa-search"></i>
                   </button>
-                  <a href= "{{ url_for('user.property_details', property_id = random) }}" title="Click here for a random property!"
-                  <button id="outline-button" class="btn btn-outline-primary border" type="submit" type="button">
+                  <a href="{{ url_for('user.property_details', property_id = random) }}" title="Click here for a random property!"
+                  <button id="outline-button" class="btn btn-outline-primary border" type="button">
                     <i class="fa-solid fa-dice"></i>
                   </button> </a>
                   <div class="btn-group">
@@ -251,7 +257,7 @@
     <div class="col-md-6">
       <div class="card mb-3">
         <div class="card-header">
-          <strong><a href ="{{ url_for('user.property_details', propety_id=property[i+1].id) }}" target = "_blank">{{property[i+1].address_no_postal_code}}</strong></a>
+          <strong><a href ="{{ url_for('user.property_details', property_id=property[i+1].id) }}" target = "_blank">{{property[i+1].address_no_postal_code}}</strong></a>
           {% if user.is_authenticated %}
             {% if property[i+1].id in user.propertyLikes|map(attribute="prop_id")|list %}
             <button class="like_button" id ="like_button{{property[i+1].id}}" type="button" onClick="property_unlike({{ property[i+1].id }})">
@@ -291,7 +297,7 @@
           
             
           {% endif %}
-          <span id="like_count{{property[i+1].id}}">{{flats[i+1].likes|length}}</span>
+          <span id="like_count{{property[i+1].id}}">{{property[i+1].likes|length}}</span>
 
         </div>
         <div class="card-body">
@@ -533,7 +539,7 @@
   
   </script>
   
-  {% if flats|length < 20 %}
+  {% if property|length < 20 %}
   <div class="fa-3x d-flex justify-content-center" id = "end_page" >
     <h3>You Have Reached The End of Your Search Results</h3>
   </div>
