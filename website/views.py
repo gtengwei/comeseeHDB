@@ -224,7 +224,7 @@ def home():
                 price_range[i] = int(price_range[i])
                 if i % 2 == 0:
                     data = list(itertools.chain(Flat.query.filter(
-                        Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
+                        Flat.resale_price.between(price_range[i], price_range[i+1])).order_by(Flat.month.desc()).all()))
 
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -664,7 +664,7 @@ def search(address):
                 price_range[i] = int(price_range[i])
                 if i % 2 == 0:
                     data = list(itertools.chain(Flat.query.filter(
-                        Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
+                        Flat.resale_price.between(price_range[i], price_range[i+1])).order_by(Flat.month.desc()).all()))
 
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -842,7 +842,7 @@ def load_search():
             price_range[i] = int(price_range[i])
             if i % 2 == 0:
                 data_price = list(itertools.chain(Flat.query.filter(
-                    Flat.resale_price.between(price_range[i], price_range[i+1])).all()))
+                    Flat.resale_price.between(price_range[i], price_range[i+1])).order_by(Flat.month.desc()).all()))
 
         if address and flat_types and amenities and towns:
             searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -1027,7 +1027,7 @@ def sort(criteria):
                 price_range[i] = int(price_range[i])
                 if i % 2 == 0:
                     data.extend(Flat.query.filter(Flat.resale_price.between(
-                        price_range[i], price_range[i+1])).all())
+                        price_range[i], price_range[i+1])).order_by(Flat.month.desc()).all())
 
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -1185,7 +1185,7 @@ def sort(criteria):
                 price_range[i] = int(price_range[i])
                 if i % 2 == 0:
                     data.extend(Flat.query.filter(Flat.resale_price.between(
-                        price_range[i], price_range[i+1])).all())
+                        price_range[i], price_range[i+1])).order_by(Flat.month.desc()).all())
 
             if address and flat_types and amenities and towns:
                 searchedFlats = Flat.query.filter(Flat.address.like(address), Flat.flat_type.in_(
@@ -1492,7 +1492,7 @@ def load_sort():
             price_range[i] = int(price_range[i])
             if i % 2 == 0:
                 data.extend(Flat.query.filter(Flat.resale_price.between(
-                    price_range[i], price_range[i+1])).all())
+                    price_range[i], price_range[i+1])).order_by(Flat.month.desc()).all())
         if flat_types:
             searchedFlats = Flat.query.filter(
                 Flat.flat_type.in_(flat_types)).all()
@@ -1633,40 +1633,6 @@ def load_sort():
                 Flat.amenities.in_(amenities)).all()
 
         return sorting_criteria_load(criteria, searchedFlats)
-
-
-@views.route('/filter', methods=['GET', 'POST'])
-def filter():
-    if request.method == 'POST':
-        towns = request.form.getlist('town')
-        flat_types = request.form.getlist('flat_type')
-        amenities = request.form.getlist('amenity')
-        if towns:
-            if flat_types:
-                if amenities:
-                    flat = Flat.query.filter(Flat.town.in_(towns)).filter(
-                        Flat.flat_type.in_(flat_types)).filter(Flat.amenity.in_(amenities)).order_by(Flat.month.desc()).all()
-                else:
-                    flat = Flat.query.filter(Flat.town.in_(towns)).filter(
-                        Flat.flat_type.in_(flat_types)).order_by(Flat.month.desc()).all()
-            else:
-                if amenities:
-                    flat = Flat.query.filter(Flat.town.in_(towns)).filter(
-                        Flat.amenity.in_(amenities)).order_by(Flat.month.desc()).all()
-                else:
-                    flat = Flat.query.filter(Flat.town.in_(towns)).order_by(Flat.month.desc()).all()
-        elif flat_types:
-            if amenities:
-                flat = Flat.query.filter(Flat.flat_type.in_(flat_types)).filter(
-                    Flat.amenity.in_(amenities)).order_by(Flat.month.desc()).all()
-            else:
-                flat = Flat.query.filter(Flat.flat_type.in_(flat_types)).order_by(Flat.month.desc()).all()
-        elif amenities:
-            flat = Flat.query.filter(Flat.amenity.in_(amenities)).order_by(Flat.month.desc()).all()
-
-        return render_template('filter.html', user=current_user, flats=flat[:INDEX])
-
-    return render_template('filter.html', user=current_user)
 
 
 # TESTING
