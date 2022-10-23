@@ -287,11 +287,11 @@
           <strong><a href ="{{ url_for('views.flat_details', flatId=flats[i].id) }}" target = "_blank">{{flats[i].address_no_postal_code}}</strong></a>
           {% if user.is_authenticated %}
             {% if flats[i].id in user.likes|map(attribute="flat_id")|list %}
-            <button class="like_button" id ="like_button{{flats[i].id}}" type="button" onClick="unlike({{ flats[i].id }})">
+            <button class="like_button" id ="like_button{{flats[i].id}}" type="button" onClick="flat_unlike({{ flats[i].id }})">
               <span id ="like_button_id{{flats[i].id}}"><i class="fa-solid fa-heart"></i></span>
             </button>
             {% else %}
-            <button class="like_button" id ="like_button{{flats[i].id}}" type="button" onClick="like({{ flats[i].id }})">
+            <button class="like_button" id ="like_button{{flats[i].id}}" type="button" onClick="flat_like({{ flats[i].id }})">
               <span id ="like_button_id{{flats[i].id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
             {% endif %}
@@ -355,11 +355,11 @@
           <strong><a href ="{{ url_for('views.flat_details', flatId=flats[i+1].id) }}" target = "_blank">{{flats[i+1].address_no_postal_code}}</strong></a>
           {% if user.is_authenticated %}
             {% if flats[i+1].id in user.likes|map(attribute="flat_id")|list %}
-            <button class="like_button" id ="like_button{{flats[i+1].id}}" type="button" onClick="unlike({{ flats[i+1].id }})">
+            <button class="like_button" id ="like_button{{flats[i+1].id}}" type="button" onClick="flat_unlike({{ flats[i+1].id }})">
               <span id ="like_button_id{{flats[i+1].id}}"><i class="fa-solid fa-heart"></i></span>
             </button>
             {% else %}
-            <button class="like_button" id ="like_button{{flats[i+1].id}}" type="button" onClick="like({{ flats[i+1].id }})">
+            <button class="like_button" id ="like_button{{flats[i+1].id}}" type="button" onClick="flat_like({{ flats[i+1].id }})">
               <span id ="like_button_id{{flats[i+1].id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
             {% endif %}
@@ -471,7 +471,7 @@
 
             <div class="card-header">
               <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-              <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="unlike(`+data.data[index][0]+`)">
+              <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="flat_unlike(`+data.data[index][0]+`)">
                 <span id ="like_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
               </button>
               <span id="like_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
@@ -504,7 +504,7 @@
 
             <div class="card-header">
               <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-              <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="unlike(`+data.data[index][0]+`)">
+              <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="flat_unlike(`+data.data[index][0]+`)">
                 <span id ="like_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
               </button>
               <span id="like_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
@@ -539,7 +539,7 @@
 
         <div class="card-header">
         <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-          <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="like(`+data.data[index][0]+`)">
+          <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="flat_like(`+data.data[index][0]+`)">
             <span id ="like_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
           </button>
           <span id="like_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
@@ -573,7 +573,7 @@
 
             <div class="card-header">
               <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index+1][1] + `</strong></a>
-              <button class="like_button" id ="like_button`+data.data[index+1][0]+`" type="button" onClick="unlike(`+data.data[index+1][0]+`)">
+              <button class="like_button" id ="like_button`+data.data[index+1][0]+`" type="button" onClick="flat_like(`+data.data[index+1][0]+`)">
                 <span id ="like_button_id`+data.data[index+1][0]+`"><i class="fa-regular fa-heart"></i></span>
               </button>
               <span id="like_count`+data.data[index+1][0]+`">`+data.data[index+1][7]+`</span>
