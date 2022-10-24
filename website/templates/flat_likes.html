@@ -34,7 +34,7 @@
           <div class="card mb-4 mb-lg-0">
             <div class="card-body p-0">
                 <div class="input-group">
-                  <input class="form-control py-2 border-right-0 border" name="searchLikes" id="searchLikes" placeholder = "Search here to find your liked flats!">
+                  <input class="form-control py-2 border-right-0 border" name="searchFlatLikes" id="searchFlatLikes" placeholder = "Search here to find your liked flats!">
                   <span class="input-group-append ">
                   <button id="outline-button" class="btn btn-outline-primary border-left-0 border" type="submit" type="button" >
                         <i class="fa fa-search"></i>
@@ -47,40 +47,55 @@
         </div>          
         
         
-
-        <div class="col-lg-5">
-            {% for flat in flats%}
-            <div class="card mb-3">
-              <div class="card-header">
-                <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.address_no_postal_code}}</strong></a>
-                <button class="like_button" id ="like_button{{flat.id}}" type="button" onClick="flat_unlike({{ flat.id }})">
-                  <span id ="like_button_id{{flat.id}}"><i class="fa-solid fa-heart"></i></span>
-                </button>
-                <span id="like_count{{flat.id}}">{{flat.likes|length}}</span>
+        <div class='col' style="padding:0;">
+          <div class="subsection text-center">
+            <div class="row" style="width:100%;">
+              <div class="subsection-cell col-6">
+                <a class="subsection-button" href="{{ url_for('user.flat_likes', username=current_user.username) }}">
+                  <button id="solid-button" class="subsection-button">Liked Flats</button>
+                </a>
               </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <img src="{{ url_for('static', filename = flat.image)}}" class="img-thumbnail">
-                  </div>
-                  <div class="col">
-                    <p><strong>Price: </strong>${{flat.resale_price}}</p>
-                    <br/>
-                    <p><strong>Flat Type: </strong>{{flat.flat_type}}</p>
-                    <br/>
-                    <p><strong>Floor: </strong>{{flat.storey_range}}</p>
-                    <br/>
-                    <p><strong>Sold Date: </strong>{{flat.month}}</p>
-                    
+              <div class="subsection-cell col-6"> 
+                <a  class="subsection-button" href="{{ url_for('user.property_likes', username=current_user.username) }}">
+                  <button id="outline-button" class="subsection-button">Liked Properties</button>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8">
+              {% for flat in flats%}
+              <div class="card mb-3">
+                <div class="card-header">
+                  <strong><a href ="{{ url_for('views.flat_details', flatId=flat.id) }}" target = "_blank">{{flat.address_no_postal_code}}</strong></a>
+                  <button class="like_button" id ="like_button{{flat.id}}" type="button" onClick="flat_unlike({{ flat.id }})">
+                    <span id ="like_button_id{{flat.id}}"><i class="fa-solid fa-heart"></i></span>
+                  </button>
+                  <span id="like_count{{flat.id}}">{{flat.likes|length}}</span>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <img src="{{ url_for('static', filename = flat.image)}}" class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                      <p><strong>Price: </strong>${{flat.resale_price}}</p>
+                      <br/>
+                      <p><strong>Flat Type: </strong>{{flat.flat_type}}</p>
+                      <br/>
+                      <p><strong>Floor: </strong>{{flat.storey_range}}</p>
+                      <br/>
+                      <p><strong>Sold Date: </strong>{{flat.month}}</p>
+                      
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            {% endfor %}
-        </div> 
+              {% endfor %}
+          </div> 
+        </div>
       </div>
     </div>   
-        
+  
     
   </section>
 
