@@ -1,6 +1,4 @@
 ## Everything related to the user
-from fileinput import filename
-from ssl import VERIFY_ALLOW_PROXY_CERTS
 from unicodedata import category
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify, session, current_app, send_from_directory
 from .models import *
