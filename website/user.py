@@ -109,7 +109,7 @@ def change_postal_code(username):
 ## To be completed
 @user.route('/likes/<username>', methods=['GET', 'POST']) 
 @login_required
-def likes(username):
+def flat_likes(username):
     like_list = []
     for x in current_user.likes:
             like_list.append(x.flat_id)
@@ -121,12 +121,12 @@ def likes(username):
         .filter(FlatLikes.user_id == current_user.id)\
         .filter(Flat.address.like(address)).all()
         if flats:
-            return render_template("likes.html", user=current_user, flats=flats)
+            return render_template("flat_likes.html", user=current_user, flats=flats)
         else:
             flash('No results found.', category='error')
-            return render_template("likes.html", user=current_user, flats=[])
+            return render_template("flat_likes.html", user=current_user, flats=[])
             
-    return render_template("likes.html", user=current_user, flats = [Flat.query.get(x) for x in like_list])
+    return render_template("flat_likes.html", user=current_user, flats = [Flat.query.get(x) for x in like_list])
 
 
 #Allow AGENT to see his/her property
