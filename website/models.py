@@ -1,13 +1,11 @@
 ## To create relational schema and the attributes of the schema
 
-from tkinter import CASCADE
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from hashlib import md5
 from sqlalchemy import Float
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 import pandas as pd
 import os
