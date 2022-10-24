@@ -40,6 +40,37 @@ function flat_like(flatID) {
   .catch((e) => click_like_button());
 }
 
+// To unlike a property
+function property_unlike(likeID) {
+  const fav_count = document.getElementById("like_count" + likeID.toString());
+  fetch("/prop_unlike",{
+    method: "POST",
+    body: JSON.stringify({ likeID:likeID }) })
+    .then((res) => res.json())
+    .then((data) => { 
+    fav_count.innerHTML = data["like_count"];
+    document.getElementById("like_button_id" + likeID.toString()).innerHTML = '<i class="fa-regular fa-heart"></i>';
+    document.getElementById("like_button" + likeID.toString()).setAttribute( 'onClick', ("property_like(" + likeID.toString() + ")"));
+  })
+  .catch((e) => click_like_button());
+}
+
+
+// To like a property
+function property_like(propID) {
+  const fav_count = document.getElementById("like_count" + propID.toString());
+  fetch("/prop_like",{
+    method: "POST",
+    body: JSON.stringify({ propID:propID }) })
+    .then((res) => res.json())
+    .then((data) => { 
+    fav_count.innerHTML = data["like_count"];
+    document.getElementById("like_button_id" + propID.toString()).innerHTML = '<i class="fa-solid fa-heart"></i>';
+    document.getElementById("like_button" + propID.toString()).setAttribute( 'onClick', ("property_unlike(" + propID.toString() + ")"));
+  })
+  .catch((e) => click_like_button());
+}
+
 
 // To get the like count of a flat
 function like_count(flatID) {
@@ -54,6 +85,18 @@ function like_count(flatID) {
   })
 }
 
+// To get the like count of a property
+function property_like_count(propID) {
+  const fav_count = document.getElementById("like_count" + propID.toString());
+  fetch("/prop_like_count",{
+    method: "POST",
+    body: JSON.stringify({ propID:propID }) })
+    .then((res) => res.json())
+    .then((data) => { 
+    fav_count.innerHTML = data["like_count"];
+    console.log("onload print this");
+  })
+}
 
 // To unlike a review
 function review_unlike(reviewID) {

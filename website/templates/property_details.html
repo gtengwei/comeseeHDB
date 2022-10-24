@@ -166,12 +166,12 @@
   <div class="street_name">
     <h1>{{property.address_no_postal_code}}</h1>
     {% if user.is_authenticated %}
-          {% if property.id in user.likes|map(attribute="property_id")|list %}
-          <button class="like_button" id = "like_button{{property.id}}" type="button" onClick="flat_unlike({{ property.id }})">
+          {% if property.id in user.propertyLikes|map(attribute="prop_id")|list %}
+          <button class="like_button" id = "like_button{{property.id}}" type="button" onClick="property_unlike({{ property.id }})">
             <span id ="like_button_id{{ property.id}}"><i class="fa-solid fa-heart"></i></span>
           </button>
           {% else %}
-          <button class="like_button" id ="like_button{{property.id}}" type="button" onClick="flat_like({{ property.id }})">
+          <button class="like_button" id ="like_button{{property.id}}" type="button" onClick="property_like({{ property.id }})">
             <span id ="like_button_id{{property.id}}"><i class="fa-regular fa-heart"></i></span>
           </button>
           {% endif %}

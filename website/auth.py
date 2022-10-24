@@ -8,6 +8,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from flask_mail import Message as MailMessage
 from .misc import *
 from datetime import datetime
+import requests
 
 auth = Blueprint('auth', __name__)
 
@@ -119,15 +120,37 @@ def sign_up():
 ## Route for Agent Sign Up Page
 @auth.route('/sign-up-for-agent', methods=['GET','POST'])
 def sign_up_agent():
-
+    
     if request.method == 'POST':
         email = request.form.get('email')
-        username = request.form.get('username')
-        if request.form.get('postalCode'):
-            postal_code = int(request.form.get('postalCode'))
+        username = request.form.get('username').upper()
+        reg_no = request.form.get('reg_no')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
+        #Check if the salesperson exists/active by using data.gov API
+        url = f'https://data.gov.sg/api/action/datastore_search?resource_id=a41ce851-728e-4d65-8dc5-e0515a01ff31&limit=5&q={username}'
+        response = requests.get(url)
+
+        if response.status_code <= 200 & response.status_code >= 29:
+            found = False
+            result = response.json()['result']['records']
+            for query in result:
+                print(query['salesperson_name'], username)
+                print( query['registration_no'], reg_no)
+                if(username in query['salesperson_name'].upper() and query['registration_no'] == reg_no):
+                    username = query['salesperson_name'].upper()
+                    found = True
+
+            if (not found):
+                flash("Invalid Name and Registration Number!", category='error')
+                return render_template("sign_up_agent.html", user=current_user)
+        else:
+            #If the data.gov API happens to be maintenancing
+            flash('Encountered Unexpected Problem. Please try again after an hour!', category='error')
+            return render_template("sign_up_agent.html", user=current_user)
+        
+        #Check if the information follows the requirements
         user = User.query.filter_by(email=email).first()
         check_username = User.query.filter_by(username=username).first()
         if user:
@@ -137,34 +160,24 @@ def sign_up_agent():
         elif len(email) < 4:
             flash('Email must be greater than 3 characters.', category='error')
 
-        elif len(username) < 4:
-            flash('Username must be at least 4 character long.', category='error')
-
-        elif (postal_code < 1 or postal_code > 80):
-            flash('First two digits of postal code must be between 1 and 80.', category='error')
-
         elif len(password1) < 8:
             flash('Password must be at least 8 characters.', category='error')
 
         elif password1 != password2:
             flash('Passwords don\'t match.', category='error')
 
-        ## Need to add verification code/function here
+        
         else:
-            new_agent = User(email=email, 
-                            username = username, 
-                            postal_code = postal_code,
+            new_agent = User(username = username,
+                            email=email,
                             access_id = 1,
                             password=generate_password_hash(password1, method='sha256'))
             db.session.add(new_agent)
             db.session.commit()
             send_mail_verify(new_agent)       
-            flash('Business Account created! Please verify your email before logging in.', category='success')
+            flash('Please verify your email before logging in.', category='success')
 
             return redirect(url_for('auth.login'))
-        
-        
-
     return render_template("sign_up_agent.html", user=current_user)
 
 

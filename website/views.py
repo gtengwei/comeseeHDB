@@ -132,6 +132,31 @@ def flat_unlike():
             db.session.commit()
     return jsonify({"like_count": len(flat.likes)})
 
+@views.route('/prop_like', methods=['POST'])
+@login_required
+def prop_like():
+    prop = json.loads(request.data)
+    propID = prop['propID']
+    prop = Property.query.get(propID)
+    new_likes = PropertyLikes(user_id=current_user.id, prop_id=propID)
+    db.session.add(new_likes)
+    prop.numOfLikes += 1
+    db.session.commit()
+    return jsonify({"like_count": len(prop.likes)})
+
+@views.route('/prop_unlike', methods=['POST'])
+@login_required
+def prop_unlike():
+    like = json.loads(request.data)
+    propID = like['likeID']
+    prop = Property.query.get(propID)
+    for like in current_user.propertyLikes:
+        if like.prop_id == propID:
+            db.session.delete(like)
+            prop.numOfLikes -= 1
+            db.session.commit()
+    return jsonify({"like_count": len(prop.likes)})
+
 
 @views.route('/review_unlike', methods=['POST'])
 @login_required
@@ -170,6 +195,13 @@ def flat_like_count():
     flatID = flat['flatID']
     flat = Flat.query.get(flatID)
     return jsonify({"like_count": len(flat.likes)})
+
+@views.route('/prop_like_count', methods=['POST'])
+def prop_like_count():
+    prop = json.loads(request.data)
+    propID = prop['propID']
+    prop = Property.query.get(propID)
+    return jsonify({"like_count": len(prop.likes)})
 
 
 @views.route('/review_like_count', methods=['POST'])
@@ -397,6 +429,131 @@ def home():
     session.clear()
     # return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], likes = likes.query.all(), random = RANDOM, image = image, image_id = image_id)
     return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in data], likes=FlatLikes.query.all(), random=RANDOM, image=[Flat.query.get(x).image for x in data])
+
+@views.route('/home_property', methods=['GET', 'POST'])
+@login_required
+def home_property():
+    cwd = Path(__file__).parent.absolute()
+    os.chdir(cwd)
+    # print(os.getcwd())
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    myquery = (
+        "SELECT id FROM Property ORDER BY numOfLikes DESC;")
+    c.execute(myquery)
+    data = list(c.fetchall())
+    # random.shuffle(data)
+    RANDOM = generate_random_property(data)
+    data = data[:INDEX]
+
+    # Search for flats from homepage
+    if request.method == 'POST':
+        price = request.form.getlist('price')
+        towns = request.form.getlist('town')
+        flat_types = request.form.getlist('flat_type')
+        address = request.form.get('search')
+        session['price'] = price
+        session['address'] = address
+        session['towns'] = towns
+        session['flat_types'] = flat_types
+        data = []
+        if address:
+            address = "%{}%".format(address)
+
+        if price:
+            price_range = [word for line in price for word in line.split('-')]
+            for i in range(len(price_range)):
+                price_range[i] = int(price_range[i])
+                if i % 2 == 0:
+                    data = list(itertools.chain(Property.query.filter(
+                        Property.price.between(price_range[i], price_range[i+1])).all()))
+
+            if address and flat_types and towns:
+                searchedProps = Property.query.filter(Property.address_no_postal_code.like(address), Property.flat_type.in_(
+                    flat_types), Property.town.in_(towns)).all()
+                data = [prop for prop in data if prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+
+            elif address and towns:
+                searchedProps = Property.query.filter(Property.address_no_postal_code.like(address), Property.town.in_(towns)).all()
+                data = [prop for prop in data if prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+
+            elif address and flat_types:
+                searchedProps = Property.query.filter(Property.address_no_postal_code.like(address), Property.flat_type.in_(
+                    flat_types)).all()
+                data = [prop for prop in data if prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+
+            elif address:
+                searchedProps = Property.query.filter(Property.address_no_postal_code.like(address)).all()
+                data = [prop for prop in data if prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+
+            elif towns and flat_types:
+                searchedProps = Property.query.filter(Property.flat_type.in_(flat_types), Property.town.in_(towns)).all()
+                data = [prop for prop in data if prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+
+            elif towns:
+                searchedProps = Property.query.filter(Property.town.in_(towns)).all()
+                data = [prop for prop in data if prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+
+            elif flat_types:
+                searchedProps = Property.query.filter(Property.flat_type.in_(flat_types)).all()
+                data = [prop for prop in data if prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+            
+            else:
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+
+        else:
+            if address and flat_types and towns:
+                searchedProps = Property.query.filter(Property.address_no_postal_code.like(address), Property.flat_type.in_(
+                    flat_types), Property.town.in_(towns)).all()
+                data = [prop for prop in data if prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+
+            elif address and towns:
+                searchedProps = Property.query.filter(Property.address_no_postal_code.like(address), Property.town.in_(towns)).all()
+                data = [prop for prop in data if prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+
+            elif address and flat_types:
+                searchedProps = Property.query.filter(Property.address_no_postal_code.like(address), Property.flat_type.in_(
+                    flat_types)).all()
+                data = [prop for prop in data if prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+
+            elif address:
+                searchedProps = Property.query.filter(Property.address_no_postal_code.like(address)).all()
+                data = [prop for prop in data if prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+
+            elif towns and flat_types:
+                searchedProps = Property.query.filter(Property.flat_type.in_(flat_types), Property.town.in_(towns)).all()
+                data = [prop for prop in data if prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+
+            elif towns:
+                searchedProps = Property.query.filter(Property.town.in_(towns)).all()
+                data = [prop for prop in data if prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+
+            elif flat_types:
+                searchedProps = Property.query.filter(Property.flat_type.in_(flat_types)).all()
+                data = [prop for prop in data if prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=len(data), random=RANDOM)
+            
+            else:
+                searchedProps = Property.query.filter(Property.flat_type.in_(['2 ROOM'])).all()
+                data = [print(prop) for prop in searchedProps]
+                return render_template("search_property.html", user=current_user, property=data[:INDEX], data_length=0, random=RANDOM)
+
+    session.clear()
+    # return render_template('home.html', user=current_user, flats=[Flat.query.get(x) for x in list_x], likes = likes.query.all(), random = RANDOM, image = image, image_id = image_id)
+    return render_template('home_property.html', user=current_user, property=[Property.query.get(x) for x in data], random=RANDOM, flats=[Property.query.get(x) for x in data],)
 
 
 # Infinite Scrolling for Home Page

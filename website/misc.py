@@ -71,6 +71,10 @@ def generate_random_flat():
     #print(random_num)
     return random_num
 
+def generate_random_property(data):
+    random_num = randint(0, len(data) - 1)
+    return data[random_num][0]
+
 def sorting_criteria(criteria, flats = []):
     RANDOM = generate_random_flat()
     if criteria == 'price_high':
