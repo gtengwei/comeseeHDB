@@ -247,7 +247,7 @@
       <p class="mb-0">Price per Square Metre</p>
   </div>
   <div class="col-sm-3">
-      <p class="text-muted mb-0">${{property.price/property.floor_area_sqm}}</p>
+      <p class="text-muted mb-0">${{'%0.2f'| format(property.price/property.floor_area_sqm|float)}}</p>
   </div>
   </div>
   <hr>
