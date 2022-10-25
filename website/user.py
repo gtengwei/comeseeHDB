@@ -234,37 +234,37 @@ def add_property(username):
         db.session.commit()
 
         print(new_property.id)
-        # if 'images' not in request.files:
-        #     new_image = PropertyImage(
-        #         property_id = new_property.id,
-        #         url = "hdb_image0.jpg"
-        #     )
-        #     db.session.add(new_image)
-        #     db.session.commit()
-        # else:
-        num = 1
-        for file in request.files.getlist("images"):
-            # if file.filename == '':
-            #     new_image = PropertyImage(
-            #     property_id = new_property.id,
-            #     url = "hdb_image0.jpg"
-            #     )
-            #     db.session.add(new_image)
-            #     db.session.commit()
-            # else:
-            extension = file.filename.split('.')[-1]
-            new_filename = "property{}-{}-{}.{}".format(
-                new_property.id, datetime.now().date(), num, extension
-            )
-            num += 1
-            print(new_filename)
-            file.save(os.path.abspath(os.path.join(current_app.root_path, current_app.config.get('UPLOAD_FOLDER'),new_filename)))
+        if 'images' not in request.files:
             new_image = PropertyImage(
                 property_id = new_property.id,
-                url = new_filename
+                url = "hdb_image0.jpg"
             )
             db.session.add(new_image)
             db.session.commit()
+        else:
+            num = 1
+            for file in request.files.getlist("images"):
+                if file.filename == '':
+                    new_image = PropertyImage(
+                    property_id = new_property.id,
+                    url = "hdb_image0.jpg"
+                    )
+                    db.session.add(new_image)
+                    db.session.commit()
+                else:
+                    extension = file.filename.split('.')[-1]
+                    new_filename = "property{}-{}-{}.{}".format(
+                        new_property.id, datetime.now().date(), num, extension
+                    )
+                    num += 1
+                    print(new_filename)
+                    file.save(os.path.abspath(os.path.join(current_app.root_path, current_app.config.get('UPLOAD_FOLDER'),new_filename)))
+                    new_image = PropertyImage(
+                        property_id = new_property.id,
+                        url = new_filename
+                    )
+                    db.session.add(new_image)
+                    db.session.commit()
     
         db.session.commit()
         return redirect(url_for('user.property', username=current_user.username))
@@ -283,10 +283,10 @@ def delete_property(property_id):
         flash("This user don't have the access selected property", category='error')
     else:
         print(property_id)
-        print(property.images)
         for image in property.images:
             print(image.url)
-            os.remove(os.path.abspath(os.path.join(current_app.root_path, current_app.config.get('UPLOAD_FOLDER'),image.url)))
+            if image.url != "hdb_image0.jpg":
+                os.remove(os.path.abspath(os.path.join(current_app.root_path, current_app.config.get('UPLOAD_FOLDER'),image.url)))
         db.session.delete(property)
         db.session.commit()
 
