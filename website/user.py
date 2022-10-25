@@ -1,5 +1,4 @@
 ## Everything related to the user
-from unicodedata import category
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify, session, current_app, send_from_directory
 from .models import *
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -321,7 +320,8 @@ def property_details(property_id):
     property = Property.query.filter_by(id = property_id).first()
     if property is not None:
         images = PropertyImage.query.filter_by(property_id=property_id).all()
-        return render_template("property_details.html", property = property, user=current_user, images=images, flat = property)
+        owner = User.query.filter_by(id = property.agent_id).first()
+        return render_template("property_details.html", property = property, user=current_user, images=images, flat = property, owner = owner)
     else:
         flash('Invalid Access!', category='error')
         return redirect(url_for('views.home'))

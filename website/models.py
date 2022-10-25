@@ -56,6 +56,7 @@ class ReviewLikes(db.Model):
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     email = db.Column(db.String(150), unique=True)
+    reg_no  = db.Column(db.String(8))
     password = db.Column(db.String(150))
     username = db.Column(db.String(150))
     access_id = db.Column(db.Integer(), nullable=False, default=0)

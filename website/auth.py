@@ -29,6 +29,7 @@ def login():
         
     if User.query.filter_by(email="agent@gmail.com").first() is None:
         new_user = User(email = "agent@gmail.com" ,
+                        reg_no = "R057116Z",
                         username = "agent12345",
                         password = generate_password_hash("12345678", method="sha256"),
                         access_id = 1,
@@ -143,7 +144,7 @@ def sign_up_agent():
                     found = True
 
             if (not found):
-                flash("Invalid Name and Registration Number!", category='error')
+                flash("Invalid Name and/or Registration Number!", category='error')
                 return render_template("sign_up_agent.html", user=current_user)
         else:
             #If the data.gov API happens to be maintenancing

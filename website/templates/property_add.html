@@ -128,9 +128,10 @@
 
             <!-- Floor Area Square Meter-->
             <div class="md-form mb-3">
-              <label for="floor_area_sqm">Size (in meter square)</label>
+              <label for="floor_area_sqm">Size (Meter Square)</label>
               <input  type="number"
-                      min="100"
+                      min="10"
+                      max="300"
                       step="any"
                       class="form-control"
                       id="floor_area_sqm"
@@ -141,7 +142,7 @@
 
             <!-- Price -->
             <div class="md-form mb-3">
-                <label for="price">Price (in $)</label>
+                <label for="price">Price ($)</label>
                 <input  type="number"
                         min="100000"
                         step="any"
@@ -156,8 +157,8 @@
             <div class="md-form mb-3">
               <label for="postal_code">Postal Code</label>
               <input  type="number"
-                      min="100000"
-                      max="999999"
+                      min="010000"
+                      max="829999"
                       step="1"
                       class="form-control"
                       id="postal_code"
@@ -184,8 +185,8 @@
                         id="description"
                         maxlength="3000"
                         name="description"
-                        placeholder="Enter Property's Description">
-              </textarea>
+                        placeholder="Enter Property's Description"
+                        ></textarea>
               <div class="form-text small">You can only input maximum 3000 characters
               </div>
             </div>

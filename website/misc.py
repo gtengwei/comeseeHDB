@@ -72,6 +72,8 @@ def generate_random_flat():
     return random_num
 
 def generate_random_property(data):
+    if(len(data) == 0):
+        return -1
     random_num = randint(0, len(data) - 1)
     return data[random_num][0]
 
