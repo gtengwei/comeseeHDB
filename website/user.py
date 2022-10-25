@@ -1,6 +1,4 @@
 ## Everything related to the user
-from fileinput import filename
-from ssl import VERIFY_ALLOW_PROXY_CERTS
 from unicodedata import category
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify, session, current_app, send_from_directory
 from .models import *
@@ -107,27 +105,46 @@ def change_postal_code(username):
 
 ## Display like flats for every unique user
 ## To be completed
-@user.route('/likes/<username>', methods=['GET', 'POST']) 
+@user.route('/flat_likes/<username>', methods=['GET', 'POST']) 
 @login_required
-def likes(username):
+def flat_likes(username):
     like_list = []
     for x in current_user.likes:
             like_list.append(x.flat_id)
     if request.method == 'POST':
-        address = request.form.get('searchLikes')
+        address = request.form.get('searchFlatLikes')
         print(address)
         address = "%{}%".format(address)
         flats = Flat.query.join(FlatLikes, FlatLikes.flat_id == Flat.id)\
         .filter(FlatLikes.user_id == current_user.id)\
         .filter(Flat.address.like(address)).all()
         if flats:
-            return render_template("likes.html", user=current_user, flats=flats)
+            return render_template("flat_likes.html", user=current_user, flats=flats)
         else:
             flash('No results found.', category='error')
-            return render_template("likes.html", user=current_user, flats=[])
+            return render_template("flat_likes.html", user=current_user, flats=[])
             
-    return render_template("likes.html", user=current_user, flats = [Flat.query.get(x) for x in like_list])
+    return render_template("flat_likes.html", user=current_user, flats = [Flat.query.get(x) for x in like_list])
 
+@user.route('/property_likes/<username>', methods=['GET', 'POST'])
+def property_likes(username):
+    like_list = []
+    for x in current_user.propertyLikes:
+            like_list.append(x.prop_id)
+    if request.method == 'POST':
+        address = request.form.get('searchPropertyLikes')
+        print(address)
+        address = "%{}%".format(address)
+        properties = Property.query.join(PropertyLikes, PropertyLikes.prop_id == Property.id)\
+        .filter(PropertyLikes.user_id == current_user.id)\
+        .filter(Property.address_no_postal_code.like(address)).all()
+        if properties:
+            return render_template("property_likes.html", user=current_user, properties=properties)
+        else:
+            flash('No results found.', category='error')
+            return render_template("property_likes.html", user=current_user, properties=[])
+    print(like_list)
+    return render_template("property_likes.html", user=current_user, properties = [Property.query.get(x) for x in like_list])
 
 #Allow AGENT to see his/her property
 #Including basic oprations such as INSERT,DELETE,UPDATE

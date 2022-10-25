@@ -39,12 +39,6 @@
       });
     });
   </script>
-
-  <script
-  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-  crossorigin="anonymous"
-  ></script>
 </head> 
 
 <body class="bg">
@@ -52,12 +46,12 @@
     <div class="row">
       <div class="subsection-cell col-6">
         <a class="subsection-button" href="{{ url_for('views.home') }}">
-          <button class="subsection-button">Past Transactions</button>
+          <button id="solid-button" class="subsection-button">Past Transactions</button>
         </a>
       </div>
       <div class="subsection-cell col-6"> 
-        <a class="subsection-button" href="{{ url_for('views.home_property') }}">
-          <button class="subsection-button">On-Listings</button>
+        <a  class="subsection-button" href="{{ url_for('views.home_property') }}">
+          <button id="outline-button" class="subsection-button">On-Listings</button>
         </a>
       </div>
     </div>
@@ -82,7 +76,7 @@
                     </button>
                     <div class="dropdown-menu">
                       <a class="dropdown-item" name = "likes_high" id="likes_high" href="{{ url_for('views.sort', criteria = 'likes_high') }}">Likes (High to Low)</a>
-                      <a class="dropdown-item" name = "likes_low" id="likes_low" href="{{ url_for('views.sort', criteria = 'likes_low') }}">Likes(Low to High)</a>
+                      <a class="dropdown-item" name = "likes_low" id="likes_low" href="{{ url_for('views.sort', criteria = 'likes_low') }}">Likes (Low to High)</a>
                       <a class="dropdown-item" name= "price_high" id = "price_high" href="{{ url_for('views.sort', criteria = 'price_high') }}">Price (High to Low)</a>
                       <a class="dropdown-item" name = "price_low" id="price_low" href="{{ url_for('views.sort', criteria = 'price_low') }}">Price (Low to High)</a>
                       <a class="dropdown-item" name = "remaining_lease_high" id="remaining_lease_high" href="{{ url_for('views.sort', criteria = 'remaining_lease_high') }}">Remaining Lease (High to Low)</a>

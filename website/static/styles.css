@@ -376,4 +376,5 @@ body.dark-mode .landing-text{
     margin: 3% 0 5%;
     border-bottom: 2px solid #f59090;
     border-width: 20%;
+    padding: 0;
 }

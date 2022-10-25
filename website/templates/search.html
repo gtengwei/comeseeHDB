@@ -5,13 +5,6 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='styles.css')}}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-      $(document).ready(function(){
-          $('.like_button').click(function(){
-            $("#createAccountModal").modal('show');
-          }); 
-      });
-  </script>
 
   <script>
     $(document).ready(function(){
@@ -20,12 +13,6 @@
         }); 
     });
   </script>
-
-  <script
-  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-  crossorigin="anonymous"
-  ></script>
 
   <script>
     $(document).ready(function() {
@@ -47,6 +34,20 @@
   </script>
 </head> 
 
+<div class="subsection text-center">
+  <div class="row">
+    <div class="subsection-cell col-6">
+      <a class="subsection-button" href="{{ url_for('views.home') }}">
+        <button id="solid-button" class="subsection-button">Past Transactions</button>
+      </a>
+    </div>
+    <div class="subsection-cell col-6"> 
+      <a class="subsection-button" href="{{ url_for('views.home_property') }}">
+        <button id="outline-button" class="subsection-button">On-Listings</button>
+      </a>
+    </div>
+  </div>
+</div>
 
   <form class="search-bar" method="POST">
     <div class="container py-2 ">
@@ -293,11 +294,11 @@
           <strong><a href ="{{ url_for('views.flat_details', flatId=flats[i].id) }}" target = "_blank">{{flats[i].address_no_postal_code}}</strong></a>
           {% if user.is_authenticated %}
             {% if flats[i].id in user.likes|map(attribute="flat_id")|list %}
-            <button class="like_button" id ="like_button{{flats[i].id}}" type="button" onClick="unlike({{ flats[i].id }})">
+            <button class="like_button" id ="like_button{{flats[i].id}}" type="button" onClick="flat_unlike({{ flats[i].id }})">
               <span id ="like_button_id{{flats[i].id}}"><i class="fa-solid fa-heart"></i></span>
             </button>
             {% else %}
-            <button class="like_button" id ="like_button{{flats[i].id}}" type="button" onClick="like({{ flats[i].id }})">
+            <button class="like_button" id ="like_button{{flats[i].id}}" type="button" onClick="flat_like({{ flats[i].id }})">
               <span id ="like_button_id{{flats[i].id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
             {% endif %}
@@ -361,11 +362,11 @@
           <strong><a href ="{{ url_for('views.flat_details', flatId=flats[i+1].id) }}" target = "_blank">{{flats[i+1].address_no_postal_code}}</strong></a>
           {% if user.is_authenticated %}
             {% if flats[i+1].id in user.likes|map(attribute="flat_id")|list %}
-            <button class="like_button" id ="like_button{{flats[i+1].id}}" type="button" onClick="unlike({{ flats[i+1].id }})">
+            <button class="like_button" id ="like_button{{flats[i+1].id}}" type="button" onClick="flat_unlike({{ flats[i+1].id }})">
               <span id ="like_button_id{{flats[i+1].id}}"><i class="fa-solid fa-heart"></i></span>
             </button>
             {% else %}
-            <button class="like_button" id ="like_button{{flats[i+1].id}}" type="button" onClick="like({{ flats[i+1].id }})">
+            <button class="like_button" id ="like_button{{flats[i+1].id}}" type="button" onClick="flat_like({{ flats[i+1].id }})">
               <span id ="like_button_id{{flats[i+1].id}}"><i class="fa-regular fa-heart"></i></span>
             </button>
             {% endif %}
@@ -477,7 +478,7 @@
 
             <div class="card-header">
               <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-              <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="unlike(`+data.data[index][0]+`)">
+              <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="flat_unlike(`+data.data[index][0]+`)">
                 <span id ="like_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
               </button>
               <span id="like_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
@@ -510,7 +511,7 @@
 
             <div class="card-header">
               <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-              <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="unlike(`+data.data[index][0]+`)">
+              <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="flat_unlike(`+data.data[index][0]+`)">
                 <span id ="like_button_id`+data.data[index][0]+`"><i class="fa-solid fa-heart"></i></span>
               </button>
               <span id="like_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
@@ -545,7 +546,7 @@
 
         <div class="card-header">
         <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index][1] + `</strong></a>
-          <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="like(`+data.data[index][0]+`)">
+          <button class="like_button" id ="like_button`+data.data[index][0]+`" type="button" onClick="flat_like(`+data.data[index][0]+`)">
             <span id ="like_button_id`+data.data[index][0]+`"><i class="fa-regular fa-heart"></i></span>
           </button>
           <span id="like_count`+data.data[index][0]+`">`+data.data[index][7]+`</span>
@@ -579,7 +580,7 @@
 
             <div class="card-header">
               <strong>` +`<a href="${flat}" target = "_blank">`+ data.data[index+1][1] + `</strong></a>
-              <button class="like_button" id ="like_button`+data.data[index+1][0]+`" type="button" onClick="unlike(`+data.data[index+1][0]+`)">
+              <button class="like_button" id ="like_button`+data.data[index+1][0]+`" type="button" onClick="flat_like(`+data.data[index+1][0]+`)">
                 <span id ="like_button_id`+data.data[index+1][0]+`"><i class="fa-regular fa-heart"></i></span>
               </button>
               <span id="like_count`+data.data[index+1][0]+`">`+data.data[index+1][7]+`</span>
