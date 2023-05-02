@@ -11,6 +11,7 @@ from pathlib import Path
 from .misc import *
 import itertools
 import requests
+from collections import defaultdict
 
 views = Blueprint('views', __name__)
 #url = url_for('static', filename='images/' + str(random.randint(1,10)) + '.jpg')
@@ -100,11 +101,23 @@ def flat_details(flatId):
     # f = open('testing.json') #FOR TESTING CAUSE EXPENSIVE
     # amenity = json.load(f)
     # amenity = amenity
-
+    
     # PAGINATION
     page = request.args.get('page', 1, type=int)
     review1 = Review.query.filter(Review.flat_id == flatId).order_by(Review.numOfParentLikes.desc()).paginate(page=page, per_page=10)
-    #review1 = Review.query.filter(Review.flat_id == flatId).filter(Review.parent_id == None).order_by(Review.numOfLikes.desc()).paginate(page=page, per_page=10)
+    
+    temp = defaultdict(list)
+    review2 = []
+    
+    for item in review1.items:
+        comment = item.review_path.split(".")
+        temp[int(comment[0])].append(item)
+    
+    for key, value in temp.items():
+        review2.extend(value)
+        
+    review1.items = review2
+    print(review1.items)
     return render_template("flat_details.html", user=current_user, flat=flat, amenities=amenity, latitude=latitude, longitude=longitude, review1=review1)
 
 @views.route('/flat_like', methods=['POST'])
