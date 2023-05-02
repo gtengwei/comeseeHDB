@@ -1,13 +1,10 @@
 # To create the app and database
-from venv import create
 from flask import Flask, Blueprint
-from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_moment import Moment
 from .models import *
-from werkzeug.security import generate_password_hash
 from .email import EMAIL, PASSWORD
 
 DB_NAME = "database.db"
