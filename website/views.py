@@ -105,19 +105,23 @@ def flat_details(flatId):
     # PAGINATION
     page = request.args.get('page', 1, type=int)
     review1 = Review.query.filter(Review.flat_id == flatId).order_by(Review.numOfParentLikes.desc()).paginate(page=page, per_page=10)
-    
+    # print(review1.items)
     temp = defaultdict(list)
     review2 = []
     
     for item in review1.items:
         comment = item.review_path.split(".")
-        temp[int(comment[0])].append(item)
-    
+        temp[int(comment[0])].append([item, len(comment), item.numOfLikes])
+
     for key, value in temp.items():
-        review2.extend(value)
-        
+        value = sorted(value, key=lambda x: (x[1], -x[2]))
+        # print(value)
+        for item in value:
+            review2.append(item[0])
+    
+    # print(review2)
     review1.items = review2
-    print(review1.items)
+    # print(review1.items)
     return render_template("flat_details.html", user=current_user, flat=flat, amenities=amenity, latitude=latitude, longitude=longitude, review1=review1)
 
 @views.route('/flat_like', methods=['POST'])
