@@ -1,6 +1,6 @@
 # For creation of stuff that can be viewed on homepage
 from cgi import print_exception
-from flask import Blueprint, render_template, request, flash, jsonify, session
+from flask import Blueprint, render_template, request, flash, jsonify, session, url_for, redirect
 from flask_login import login_required, current_user
 from .models import *
 from . import db
@@ -236,7 +236,7 @@ def landing():
     return render_template("landing.html", user=current_user)
 
 # Route for Home Page
-@views.route('/home', methods=['GET', 'POST'])
+@views.route('/home/', methods=['GET', 'POST'])
 def home():
     cwd = Path(__file__).parent.absolute()
     os.chdir(cwd)
@@ -264,9 +264,9 @@ def home():
         session['flat_types'] = flat_types
         session['amenities'] = amenities
         data = []
-        if address:
-            address = "%{}%".format(address)
-
+        # if address:
+        #     address = "%{}%".format(address)
+        return redirect(url_for('views.search', address=address, price=price, towns=towns, flat_types=flat_types, amenities=amenities))
         if price:
             price_range = [word for line in price for word in line.split('-')]
             for i in range(len(price_range)):
@@ -814,9 +814,64 @@ def load_home():
 
 
 # Route for Searching flats
-@views.route('/search/<address>', methods=['GET', 'POST'])
-def search(address):
+@views.route('/search/', methods=['GET', 'POST'])
+def search():
     RANDOM = generate_random_flat()
+    if request.method == 'POST':
+        price = request.form.getlist('price')
+        towns = request.form.getlist('town')
+        flat_types = request.form.getlist('flat_type')
+        amenities = request.form.getlist('amenity')
+        address = request.form.get('search')
+        session['price'] = price
+        session['address'] = address
+        session['towns'] = towns
+        session['flat_types'] = flat_types
+        session['amenities'] = amenities
+        return redirect(url_for('views.search', address=address, flat_types=flat_types, towns=towns, amenities=amenities, price=price))
+    
+    searched_flats_address = None
+    searched_flats_flat_types = None
+    searched_flats_towns = None
+    searched_flats_amenities = None
+    searched_flats_price = None
+    searched_flats = []
+    
+    address = request.args.get('address')
+    flat_types = request.args.get('flat_types')
+    towns = request.args.get('towns')
+    amenities = request.args.get('amenities')
+    price = request.args.get('price')
+    print(address, flat_types, towns, amenities, price)
+    
+    
+    if address:
+        address = "%{}%".format(address)
+        searched_flats_address = Flat.query.filter(Flat.address_no_postal_code.like(address)).all()
+        searched_flats.append(searched_flats_address)
+    if flat_types:
+        searched_flats_flat_types = Flat.query.filter(Flat.flat_type.like(flat_types)).all()
+        searched_flats.append(searched_flats_flat_types)
+    if towns:
+        searched_flats_towns = Flat.query.filter(Flat.town.like(towns)).all()
+        searched_flats.append(searched_flats_towns)
+    if amenities:
+        searched_flats_amenities = Flat.query.filter(Flat.amenities.like(amenities)).all()
+        searched_flats.append(searched_flats_amenities)
+    if price:
+        price_range = [word for line in price for word in line.split('-')]
+        print(price_range)
+        for i in range(len(price_range)):
+            price_range[i] = int(price_range[i])
+            if i % 2 == 0:
+                searched_flats_price = list(itertools.chain(Flat.query.filter(
+                    Flat.resale_price.between(price_range[i], price_range[i+1])).order_by(Flat.month.desc()).all()))
+                searched_flats.append(searched_flats_price)
+    searched_flats = [i for i in searched_flats if i is not None]
+    searched_flats = list(set.intersection(*map(set, searched_flats)))
+    # searched_flats = searched_flats.order_by(Flat.month.desc()).all()
+    searched_flats.sort(key=lambda x: x.month, reverse=True)
+    return render_template("search.html", user=current_user, flats=searched_flats[:INDEX], data_length=len(searched_flats))
     if request.method == 'POST':
         price = request.form.getlist('price')
         towns = request.form.getlist('town')
