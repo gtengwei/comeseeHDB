@@ -822,7 +822,18 @@ def search():
         towns = request.form.getlist('town')
         flat_types = request.form.getlist('flat_type')
         amenities = request.form.getlist('amenity')
+        if price:
+            price = ','.join(price)
+        if towns:
+            towns = ','.join(towns)
+        if flat_types:
+            flat_types = ','.join(flat_types)
+        if amenities:
+            amenities = ','.join(amenities)
+
         address = request.form.get('search')
+        if address == '':
+            address = None
         session['price'] = price
         session['address'] = address
         session['towns'] = towns
@@ -850,15 +861,19 @@ def search():
         searched_flats_address = Flat.query.filter(Flat.address_no_postal_code.like(address)).all()
         searched_flats.append(searched_flats_address)
     if flat_types:
-        searched_flats_flat_types = Flat.query.filter(Flat.flat_type.like(flat_types)).all()
+        flat_types = flat_types.split(',')
+        searched_flats_flat_types = Flat.query.filter(Flat.flat_type.in_(flat_types)).order_by(Flat.month.desc()).all()
         searched_flats.append(searched_flats_flat_types)
     if towns:
-        searched_flats_towns = Flat.query.filter(Flat.town.like(towns)).all()
+        towns = towns.split(',')
+        searched_flats_towns = Flat.query.filter(Flat.town.in_(towns)).all()
         searched_flats.append(searched_flats_towns)
     if amenities:
-        searched_flats_amenities = Flat.query.filter(Flat.amenities.like(amenities)).all()
+        amenities = amenities.split(',')
+        searched_flats_amenities = Flat.query.filter(Flat.amenities.in_(amenities)).order_by(Flat.month.desc()).all()
         searched_flats.append(searched_flats_amenities)
     if price:
+        price = price.split(',')
         price_range = [word for line in price for word in line.split('-')]
         print(price_range)
         for i in range(len(price_range)):
@@ -866,10 +881,14 @@ def search():
             if i % 2 == 0:
                 searched_flats_price = list(itertools.chain(Flat.query.filter(
                     Flat.resale_price.between(price_range[i], price_range[i+1])).order_by(Flat.month.desc()).all()))
-                searched_flats.append(searched_flats_price)
+                # print(searched_flats_price)
+        searched_flats.append(searched_flats_price)
     searched_flats = [i for i in searched_flats if i is not None]
+    print(len(searched_flats))
     searched_flats = list(set.intersection(*map(set, searched_flats)))
+    
     # searched_flats = searched_flats.order_by(Flat.month.desc()).all()
+    # print(searched_flats)
     searched_flats.sort(key=lambda x: x.month, reverse=True)
     return render_template("search.html", user=current_user, flats=searched_flats[:INDEX], data_length=len(searched_flats))
     if request.method == 'POST':
