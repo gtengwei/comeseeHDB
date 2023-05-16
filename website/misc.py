@@ -179,7 +179,7 @@ def sorting_criteria(criteria, flats = []):
             session['criteria'] = criteria
             # return render_template('search.html', user=current_user, flats=flats[:INDEX], data_length = len(flats), random = RANDOM)
     
-    return render_template('search.html', user=current_user, flats=list(flats[:INDEX]), random = RANDOM)
+    return render_template('search.html', user=current_user, flats=list(flats[:INDEX]), data_length=len(flats), random = RANDOM)
     
 
 
