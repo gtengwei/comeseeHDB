@@ -853,39 +853,79 @@ def search():
     towns = request.args.get('towns')
     amenities = request.args.get('amenities')
     price = request.args.get('price')
-    print(address, flat_types, towns, amenities, price)
-    
-    
-    if address:
-        address = "%{}%".format(address)
-        searched_flats_address = Flat.query.filter(Flat.address_no_postal_code.like(address)).all()
-        searched_flats.append(searched_flats_address)
-    if flat_types:
-        flat_types = flat_types.split(',')
-        searched_flats_flat_types = Flat.query.filter(Flat.flat_type.in_(flat_types)).order_by(Flat.month.desc()).all()
-        searched_flats.append(searched_flats_flat_types)
-    if towns:
-        towns = towns.split(',')
-        searched_flats_towns = Flat.query.filter(Flat.town.in_(towns)).all()
-        searched_flats.append(searched_flats_towns)
-    if amenities:
-        amenities = amenities.split(',')
-        searched_flats_amenities = Flat.query.filter(Flat.amenities.in_(amenities)).order_by(Flat.month.desc()).all()
-        searched_flats.append(searched_flats_amenities)
-    if price:
-        price = price.split(',')
-        price_range = [word for line in price for word in line.split('-')]
-        print(price_range)
-        for i in range(len(price_range)):
-            price_range[i] = int(price_range[i])
-            if i % 2 == 0:
-                searched_flats_price = list(itertools.chain(Flat.query.filter(
-                    Flat.resale_price.between(price_range[i], price_range[i+1])).order_by(Flat.month.desc()).all()))
-                # print(searched_flats_price)
-        searched_flats.append(searched_flats_price)
-    searched_flats = [i for i in searched_flats if i is not None]
-    print(len(searched_flats))
-    searched_flats = list(set.intersection(*map(set, searched_flats)))
+    sort = request.args.get('criteria')
+    print(sort)
+    # print(address, flat_types, towns, amenities, price)
+    if sort:
+        address = session.get('address')
+        flat_types = session.get('flat_types')
+        towns = session.get('towns')
+        amenities = session.get('amenities')
+        price = session.get('price')
+        print(address, flat_types, towns, amenities, price)
+        if address:
+            address = "%{}%".format(address)
+            searched_flats_address = Flat.query.filter(Flat.address_no_postal_code.like(address)).all()
+            searched_flats.append(searched_flats_address)
+        if flat_types:
+            flat_types = flat_types.split(',')
+            searched_flats_flat_types = Flat.query.filter(Flat.flat_type.in_(flat_types)).order_by(Flat.month.desc()).all()
+            searched_flats.append(searched_flats_flat_types)
+        if towns:
+            towns = towns.split(',')
+            searched_flats_towns = Flat.query.filter(Flat.town.in_(towns)).all()
+            searched_flats.append(searched_flats_towns)
+        if amenities:
+            amenities = amenities.split(',')
+            searched_flats_amenities = Flat.query.filter(Flat.amenities.in_(amenities)).order_by(Flat.month.desc()).all()
+            searched_flats.append(searched_flats_amenities)
+        if price:
+            price = price.split(',')
+            price_range = [word for line in price for word in line.split('-')]
+            print(price_range)
+            for i in range(len(price_range)):
+                price_range[i] = int(price_range[i])
+                if i % 2 == 0:
+                    searched_flats_price = list(itertools.chain(Flat.query.filter(
+                        Flat.resale_price.between(price_range[i], price_range[i+1])).order_by(Flat.month.desc()).all()))
+                    # print(searched_flats_price)
+            searched_flats.append(searched_flats_price)
+        searched_flats = [i for i in searched_flats if i is not None]
+        print(len(searched_flats))
+        if len(searched_flats) != 0:
+            searched_flats = list(set.intersection(*map(set, searched_flats)))
+        return sorting_criteria(sort, searched_flats)
+    else:
+        if address:
+            address = "%{}%".format(address)
+            searched_flats_address = Flat.query.filter(Flat.address_no_postal_code.like(address)).all()
+            searched_flats.append(searched_flats_address)
+        if flat_types:
+            flat_types = flat_types.split(',')
+            searched_flats_flat_types = Flat.query.filter(Flat.flat_type.in_(flat_types)).order_by(Flat.month.desc()).all()
+            searched_flats.append(searched_flats_flat_types)
+        if towns:
+            towns = towns.split(',')
+            searched_flats_towns = Flat.query.filter(Flat.town.in_(towns)).all()
+            searched_flats.append(searched_flats_towns)
+        if amenities:
+            amenities = amenities.split(',')
+            searched_flats_amenities = Flat.query.filter(Flat.amenities.in_(amenities)).order_by(Flat.month.desc()).all()
+            searched_flats.append(searched_flats_amenities)
+        if price:
+            price = price.split(',')
+            price_range = [word for line in price for word in line.split('-')]
+            print(price_range)
+            for i in range(len(price_range)):
+                price_range[i] = int(price_range[i])
+                if i % 2 == 0:
+                    searched_flats_price = list(itertools.chain(Flat.query.filter(
+                        Flat.resale_price.between(price_range[i], price_range[i+1])).order_by(Flat.month.desc()).all()))
+                    # print(searched_flats_price)
+            searched_flats.append(searched_flats_price)
+        searched_flats = [i for i in searched_flats if i is not None]
+        print(len(searched_flats))
+        searched_flats = list(set.intersection(*map(set, searched_flats)))
     
     # searched_flats = searched_flats.order_by(Flat.month.desc()).all()
     # print(searched_flats)
