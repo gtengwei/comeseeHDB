@@ -202,6 +202,10 @@
     });
     </script>
     <script src="https://kit.fontawesome.com/a2160caea7.js" crossorigin="anonymous"></script>
-
+    <script>
+      $('.dropdown-menu').on('click', function(e) {
+        e.stopPropagation();
+      });
+    </script>
   </body>
 </html>
