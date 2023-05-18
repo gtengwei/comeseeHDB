@@ -265,21 +265,21 @@
                     </div> 
 
                     <div class="dropdown responsive"> 
-                      <button id = "outline-button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
-                        <span class="value" data-placeholder="Select sorting criteria" data-label-placement="true">Select sorting criteria</span> 
+                      <button id = "outline-button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">   
+                        <span id="sortingCriteria" class="value" data-placeholder="Select sorting criteria" data-label-placement="true">Select sorting criteria</span> 
                       </button> 
                         <ul class="dropdown-menu"> 
                           <div class="form-check">
-                          <li><input type="checkbox" id="likesHigh" class="form-check-input sort-check" onClick="sort_check()" name="likes_high" value="likes_high"> <label class="form-check-label" for="likesHigh">Likes (High to Low)</label></li>
-                          <li><input type="checkbox" id="likesLow" class="form-check-input sort-check" onClick="sort_check()" name="likes_low" value ="likes_low"> <label class="form-check-label" for="likesLow">Likes (Low to High)</label> </li> 
-                          <li><input type="checkbox" id="priceHigh" class="form-check-input sort-check" onClick="sort_check()" name="price_high" value ="price_high"> <label class="form-check-label" for="priceHigh">Price (High to Low)</label> </li> 
-                          <li><input type="checkbox" id="priceLow" class="form-check-input sort-check" onClick="sort_check()" name="price_low" value = "price_low"> <label class="form-check-label" for="priceLow">Price (Low to High)</label> </li> 
-                          <li><input type="checkbox" id="remainingLeaseHigh" class="form-check-input sort-check" onClick="sort_check()" name="remaining_lease_high" value = "remaining_lease_high"> <label class="form-check-label" for="remainingLeaseHigh">Remaining Lease (High to Low)</label> </li> 
-                          <li><input type="checkbox" id="remainingLeaseLow" class="form-check-input sort-check" onClick="sort_check()" name="remaining_lease_low" value = "remaining_lease_low"> <label class="form-check-label" for="remainingLeaseLow">Remaining Lease (Low to High)</label></li> 
-                          <li><input type="checkbox" id="storeyHigh" class="form-check-input sort-check" onClick="sort_check()" name="storey_high" value = "storey_high"> <label class="form-check-label" for="storeyHigh">Floor (High to Low)</label> </li> 
-                          <li><input type="checkbox" id="storeyLow" class="form-check-input sort-check" onClick="sort_check()" name="town" value = "storey_low"> <label class="form-check-label" for="storeyLow">Floor (Low to High)</label> </li> 
-                          <li><input type="checkbox" id="pricePerSqmHigh" class="form-check-input sort-check" onClick="sort_check()" name="town" value = "price_per_sqm_high"> <label class="form-check-label" for="pricePerSqmHigh">Price per Square Metre (High to Low)</label></li> 
-                          <li><input type="checkbox" id="pricePerSqmLow" class="form-check-input sort-check" onClick="sort_check()" name="town" value = "price_per_sqm_low"> <label class="form-check-label" for="pricePerSqmLow">Price per Square Metre (Low to High)</label> 
+                          <li><input type="checkbox" id="likesHigh" class="form-check-input sort-check" onClick="sort_check()" name="sorting_criteria[]" value="likes_high"> <label class="form-check-label" for="likesHigh">Likes (High to Low)</label></li>
+                          <li><input type="checkbox" id="likesLow" class="form-check-input sort-check" onClick="sort_check()" name="sorting_criteria[]"" value ="likes_low"> <label class="form-check-label" for="likesLow">Likes (Low to High)</label> </li> 
+                          <li><input type="checkbox" id="priceHigh" class="form-check-input sort-check" onClick="sort_check()" name="sorting_criteria[]"" value ="price_high"> <label class="form-check-label" for="priceHigh">Price (High to Low)</label> </li> 
+                          <li><input type="checkbox" id="priceLow" class="form-check-input sort-check" onClick="sort_check()" name="sorting_criteria[]"" value = "price_low"> <label class="form-check-label" for="priceLow">Price (Low to High)</label> </li> 
+                          <li><input type="checkbox" id="remainingLeaseHigh" class="form-check-input sort-check" onClick="sort_check()" name="sorting_criteria[]" value = "remaining_lease_high"> <label class="form-check-label" for="remainingLeaseHigh">Remaining Lease (High to Low)</label> </li> 
+                          <li><input type="checkbox" id="remainingLeaseLow" class="form-check-input sort-check" onClick="sort_check()" name="sorting_criteria[]"" value = "remaining_lease_low"> <label class="form-check-label" for="remainingLeaseLow">Remaining Lease (Low to High)</label></li> 
+                          <li><input type="checkbox" id="storeyHigh" class="form-check-input sort-check" onClick="sort_check()" name="sorting_criteria[]"" value = "storey_high"> <label class="form-check-label" for="storeyHigh">Floor (High to Low)</label> </li> 
+                          <li><input type="checkbox" id="storeyLow" class="form-check-input sort-check" onClick="sort_check()" name="sorting_criteria[]"town" value = "storey_low"> <label class="form-check-label" for="storeyLow">Floor (Low to High)</label> </li> 
+                          <li><input type="checkbox" id="pricePerSqmHigh" class="form-check-input sort-check" onClick="sort_check()" name="sorting_criteria[]"" value = "price_per_sqm_high"> <label class="form-check-label" for="pricePerSqmHigh">Price per Square Metre (High to Low)</label></li> 
+                          <li><input type="checkbox" id="pricePerSqmLow" class="form-check-input sort-check" onClick="sort_check()" name="sorting_criteria[]"" value = "price_per_sqm_low"> <label class="form-check-label" for="pricePerSqmLow">Price per Square Metre (Low to High)</label> 
                           </div>
                         </ul> 
                         </div>

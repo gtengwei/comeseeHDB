@@ -195,4 +195,24 @@ function sort_check(){
     $('.form-check-input.sort-check').click(function() {
       $('.form-check-input.sort-check').not(this).prop('checked', false);
   });
+  var checkboxes = document.getElementsByName('sorting_criteria[]');
+  var vals = [];
+  for (var i=0, n=checkboxes.length;i<n;i++) 
+  {
+      if (checkboxes[i].checked) 
+      {
+          vals.unshift(checkboxes[i].value);
+      }
+  }
+  console.log(vals)
+  document.getElementById("sortingCriteria").textContent = vals[0]
+  if (vals === undefined || vals.length == 0){
+    document.getElementById("sortingCriteria").textContent = "Select sorting criteria"
+  }
+
+}
+
+function update_filter_placeholder(){
+  document.getElementById("sortingCriteria").textContent = "test"
+
 }
