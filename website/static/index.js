@@ -192,7 +192,7 @@ function click_like_button(){
 }
 
 function sort_check(){
-    $('.sort_check').click(function() {
-      $('.sort_check').not(this).prop('checked', false);
+    $('.form-check-input.sort-check').click(function() {
+      $('.form-check-input.sort-check').not(this).prop('checked', false);
   });
 }

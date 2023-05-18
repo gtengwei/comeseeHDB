@@ -214,7 +214,7 @@
           
                 <div class="dropdown responsive"> 
                   <button id = "outline-button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
-                    <span class="value" data-placeholder="Select season" data-label-placement="true">Select flat type</span> 
+                    <span class="value" data-placeholder="Select flat type" data-label-placement="true">Select flat type</span> 
                   </button> 
                     <ul class="dropdown-menu"> 
                       <li> <input type="checkbox" id="2room" name="flat_type" value="2 ROOM"> <label for="2room">2 Room</label></li> 
@@ -227,7 +227,7 @@
           
                   <div class="dropdown responsive"> 
                     <button id = "outline-button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
-                      <span class="value" data-placeholder="Select season" data-label-placement="true">Select town</span> 
+                      <span class="value" data-placeholder="Select town" data-label-placement="true">Select town</span> 
                     </button> 
                       <ul class="dropdown-menu">  
                           <li><input type="checkbox" id="ang mo kio" name="town" value="ANG MO KIO"> <label for="ang mo kio">Ang Mo Kio</label> </li> 
@@ -260,24 +260,24 @@
 
                     <div class="dropdown responsive"> 
                       <button id = "outline-button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
-                        <span class="value" data-placeholder="Select season" data-label-placement="true">Select sorting criteria</span> 
+                        <span class="value" data-placeholder="Select sorting criteria" data-label-placement="true">Select sorting criteria</span> 
                       </button> 
                         <ul class="dropdown-menu"> 
-                          <li><input type="checkbox" id="likes_high" class="sort_check" onClick="sort_check()" name="likes_high" value="likes_high"> <label for="likes_high">Likes (High to Low)</label> </li> 
-                          <li><input type="checkbox" id="likes_low" class="sort_check" onClick="sort_check()" name="likes_low" value ="likes_low"> <label for="likes_low">Likes (Low to High)</label> </li> 
-                          <li><input type="checkbox" id="price_high" class="sort_check" onClick="sort_check()" name="price_high" value ="price_high"> <label for="price_high">Price (High to Low)</label> </li> 
-                          <li><input type="checkbox" id="price_low" class="sort_check" onClick="sort_check()" name="price_low" value = "price_low"> <label for="price_low">Price (Low to High)</label> </li> 
-                          <li><input type="checkbox" id="remaining_lease_high" class="sort_check" onClick="sort_check()" name="remaining_lease_high" value = "remaining_lease_high"> <label for="remaining_lease_high">Remaining Lease (High to Low)</label> </li> 
-                          <li><input type="checkbox" id="remaining_lease_low" class="sort_check" onClick="sort_check()" name="remaining_lease_low" value = "remaining_lease_low"> <label for="remaining_lease_low">Remaining Lease (Low to High)</label></li> 
-                          <li><input type="checkbox" id="storey_high" class="sort_check" onClick="sort_check()" name="storey_high" value = "storey_high"> <label for="storey_high">Floor (High to Low)</label> </li> 
-                          <li><input type="checkbox" id="storey_low" class="sort_check" onClick="sort_check()" name="town" value = "storey_low"> <label for="storey_low">Floor (Low to High)</label> </li> 
-                          <li><input type="checkbox" id="price_per_sqm_high" class="sort_check" onClick="sort_check()" name="town" value = "price_per_sqm_high"> <label for="price_per_sqm_high">Price per Square Metre (High to Low)</label></li> 
-                          <li><input type="checkbox" id="price_per_sqm_low" class="sort_check" onClick="sort_check()" name="town" value = "price_per_sqm_low"> <label for="price_per_sqm_low">Price per Square Metre (Low to High)</label> 
-                        </ul> 
+                          <div class="form-check">
+                          <li><input type="checkbox" id="likesHigh" class="form-check-input sort-check" onClick="sort_check()" name="likes_high" value="likes_high"> <label class="form-check-label" for="likesHigh">Likes (High to Low)</label></li>
+                          <li><input type="checkbox" id="likesLow" class="form-check-input sort-check" onClick="sort_check()" name="likes_low" value ="likes_low"> <label class="form-check-label" for="likesLow">Likes (Low to High)</label> </li> 
+                          <li><input type="checkbox" id="priceHigh" class="form-check-input sort-check" onClick="sort_check()" name="price_high" value ="price_high"> <label class="form-check-label" for="priceHigh">Price (High to Low)</label> </li> 
+                          <li><input type="checkbox" id="priceLow" class="form-check-input sort-check" onClick="sort_check()" name="price_low" value = "price_low"> <label class="form-check-label" for="priceLow">Price (Low to High)</label> </li> 
+                          <li><input type="checkbox" id="remainingLeaseHigh" class="form-check-input sort-check" onClick="sort_check()" name="remaining_lease_high" value = "remaining_lease_high"> <label class="form-check-label" for="remainingLeaseHigh">Remaining Lease (High to Low)</label> </li> 
+                          <li><input type="checkbox" id="remainingLeaseLow" class="form-check-input sort-check" onClick="sort_check()" name="remaining_lease_low" value = "remaining_lease_low"> <label class="form-check-label" for="remainingLeaseLow">Remaining Lease (Low to High)</label></li> 
+                          <li><input type="checkbox" id="storeyHigh" class="form-check-input sort-check" onClick="sort_check()" name="storey_high" value = "storey_high"> <label class="form-check-label" for="storeyHigh">Floor (High to Low)</label> </li> 
+                          <li><input type="checkbox" id="storeyLow" class="form-check-input sort-check" onClick="sort_check()" name="town" value = "storey_low"> <label class="form-check-label" for="storeyLow">Floor (Low to High)</label> </li> 
+                          <li><input type="checkbox" id="pricePerSqmHigh" class="form-check-input sort-check" onClick="sort_check()" name="town" value = "price_per_sqm_high"> <label class="form-check-label" for="pricePerSqmHigh">Price per Square Metre (High to Low)</label></li> 
+                          <li><input type="checkbox" id="pricePerSqmLow" class="form-check-input sort-check" onClick="sort_check()" name="town" value = "price_per_sqm_low"> <label class="form-check-label" for="pricePerSqmLow">Price per Square Metre (Low to High)</label> 
+                          </div>
+                        </div>
+
+                          </ul> 
                       </div> 
                     </div>
-                  </div>
-
-
-        
 {% endblock %}
