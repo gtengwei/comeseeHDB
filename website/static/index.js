@@ -190,3 +190,9 @@ function reply(reviewId){
 function click_like_button(){
   $("#createAccountModal").modal('show');
 }
+
+function sort_check(){
+    $('.sort_check').click(function() {
+      $('.sort_check').not(this).prop('checked', false);
+  });
+}
