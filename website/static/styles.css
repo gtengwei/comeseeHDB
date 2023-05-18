@@ -393,9 +393,8 @@ label {
 }
 
 .dropdown{
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    margin: 0;
+    padding-right: 1vw;
+    padding-top: 1vw;
     display:flexbox;
     width: auto;
 }
@@ -405,6 +404,7 @@ label {
     overflow-y: auto;
     overflow-x: hidden;
     white-space: nowrap;
+    padding:0.5vw;
 }
 .dropdown .dropdown-toggle{
     display:flex;

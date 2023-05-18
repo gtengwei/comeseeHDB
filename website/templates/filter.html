@@ -61,6 +61,7 @@
         </div>
       </div>
     </div>
+
     <form class="search-bar" method="POST">
             <div class="row">
                 <div class="input-group" >
@@ -72,10 +73,9 @@
                         <a href= "{{ url_for('views.flat_details', flatId = random) }}" title="Click here for a random flat!"
                         <button id="outline-button" class="btn btn-outline-primary border" type="submit" type="button">
                           <i class="fa-solid fa-dice"></i>
-                        </button> </a>
-                        
-      
-                </div>
+                        </button> </a>      
+                  </div>
+
                     <div class="dropdown responsive"> 
                       <button id = "outline-button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
                         <span class="value" data-placeholder="Select price range" data-label-placement="true">Select price range</span> 
@@ -161,7 +161,125 @@
                               </ul> 
                             </div> 
         </div>
+      </div>
       </form>
-    
 
+      <form class="search-bar" method="POST">
+        <div class="row">
+            <div class="input-group" >
+                <input class="form-control py-2 border-right-0 border" name="search" id="search" placeholder = "Search here!">
+                <span class="input-group-append ">
+                  <button id="outline-button" class="btn btn-outline-primary border-left-0 border" type="submit" type="button">
+                    <i class="fa fa-search"></i>
+                  </button>
+                  <a href= "{{ url_for('views.flat_details', flatId = random) }}" title="Click here for a random flat!"
+                  <button id="outline-button" class="btn btn-outline-primary border" type="submit" type="button">
+                    <i class="fa-solid fa-dice"></i>
+                  </button> </a>
+                  <a href= "{{ url_for('views.filter') }}" title="Click here for a random flat!"
+                  <button id="outline-button" class="btn btn-outline-primary border" type="submit" type="button">
+                    <i class="fa-solid fa-dice"></i>
+                  </button> </a>
+                  <button id="outline-button" class="btn btn-outline-primary ms-1" type="button" data-toggle="collapse"
+                  data-target="#filter" aria-expanded="false" aria-controls="filter">Filters<span class="fa fa-filter pl-1"></span></button>
+                </span>
+              </div>
+            </div>
+              
+            </form>
+
+
+        
+          <div class="collapse" id="filter">
+            <div class="row">
+              <div class="dropdown responsive"> 
+                <button id = "outline-button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
+                  <span class="value" data-placeholder="Select price range" data-label-placement="true">Select price range</span> 
+                </button> 
+                
+                  <ul class="dropdown-menu"> 
+                      <li> <input type="checkbox" id="200000" name="price" value ="100000-200000"> <label for="200000">$100000 - $200000</label> </li>
+                      <li> <input type="checkbox" id="300000" name="price" value ="200000-300000"> <label for="300000">$200000 - $300000</label> </li>
+                      <li>  <input type="checkbox" id="400000" name="price" value ="300000-400000"> <label for="400000">$300000 - $400000</label> </li>
+                      <li>  <input type="checkbox" id="500000" name="price" value ="400000-500000"> <label for="500000">$400000 - $500000</label> </li>
+                      <li>  <input type="checkbox" id="600000" name="price" value ="500000-600000"> <label for="600000">$500000 - $600000</label> </li>
+                      <li>  <input type="checkbox" id="700000" name="price" value ="600000-700000"> <label for="700000">$600000 - $700000</label> </li>
+                      <li>  <input type="checkbox" id="800000" name="price" value ="700000-800000"> <label for="800000">$700000 - $800000</label> </li>
+                      <li>  <input type="checkbox" id="900000" name="price" value ="800000-900000"> <label for="900000">$800000 - $900000</label> </li>
+                      <li>  <input type="checkbox" id="1000000" name="price" value ="900000-1000000"> <label for="1000000">$900000 - $1000000</label> </li>
+                      <li>  <input type="checkbox" id="1100000" name="price" value ="1000000-1100000"> <label for="1100000">$1000000 - $1100000</label> </li>
+                      <li>  <input type="checkbox" id="1200000" name="price" value ="1100000-1200000"> <label for="1200000">$1100000 - $1200000</label> </li>
+                      <li>  <input type="checkbox" id="1300000" name="price" value ="1200000-1300000"> <label for="1300000">$1200000 - $1300000</label> </li>
+                      <li>  <input type="checkbox" id="1400000" name="price" value ="1300000-1400000"> <label for="1400000">$1300000 - $1400000</label> </li>
+                  </ul> 
+                </div> 
+          
+                <div class="dropdown responsive"> 
+                  <button id = "outline-button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
+                    <span class="value" data-placeholder="Select season" data-label-placement="true">Select flat type</span> 
+                  </button> 
+                    <ul class="dropdown-menu"> 
+                      <li> <input type="checkbox" id="2room" name="flat_type" value="2 ROOM"> <label for="2room">2 Room</label></li> 
+                      <li> <input type="checkbox" id="3room" name="flat_type" value="3 ROOM"> <label for="3room">3 Room</label> </li>
+                      <li> <input type="checkbox" id="4room" name="flat_type" value="4 ROOM"> <label for="4room">4 Room</label></li>
+                      <li> <input type="checkbox" id="5room" name="flat_type" value="5 ROOM"> <label for="5room">5 Room</label> </li> 
+                      <li> <input type="checkbox" id="executive" name="flat_type" value="EXECUTIVE"> <label for="executive">Executive </li> 
+                    </ul> 
+                  </div> 
+          
+                  <div class="dropdown responsive"> 
+                    <button id = "outline-button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
+                      <span class="value" data-placeholder="Select season" data-label-placement="true">Select town</span> 
+                    </button> 
+                      <ul class="dropdown-menu">  
+                          <li><input type="checkbox" id="ang mo kio" name="town" value="ANG MO KIO"> <label for="ang mo kio">Ang Mo Kio</label> </li> 
+                          <li><input type="checkbox" id="bedok" name="town" value ="BEDOK"> <label for="bedok">Bedok</label> </li> 
+                          <li><input type="checkbox" id="bishan" name="town" value ="BISHAN"> <label for="bishan">Bishan</label> </li> 
+                          <li><input type="checkbox" id="bukit batok" name="town" value = "BUKIT BATOK"> <label for="bukit batok">Bukit Batok</label> </li> 
+                          <li><input type="checkbox" id="bukit merah" name="town" value = "BUKIT MERAH"> <label for="bukit merah">Bukit Merah</label> </li> 
+                          <li><input type="checkbox" id="bukit panjang" name="town" value = "BUKIT PANJANG"> <label for="bukit panjang">Bukit Panjang</label></li> 
+                          <li><input type="checkbox" id="bukit timah" name="town" value = "BUKIT TIMAH"> <label for="bukit timah">Bukit Timah</label> </li> 
+                          <li><input type="checkbox" id="central area" name="town" value = "CENTRAL AREA"> <label for="central area">Central Area</label> </li> 
+                          <li><input type="checkbox" id="choa chu kang" name="town" value = "CHOA CHU KANG"> <label for="choa chu kang">Choa Chu Kang</label></li> 
+                          <li><input type="checkbox" id="clementi" name="town" value = "CLEMENTI"> <label for="clementi">Clementi</label> 
+                          <li><input type="checkbox" id="geylang" name="town" value = "GEYLANG"> <label for="geylang">Geylang</label> 
+                          <li><input type="checkbox" id="hougang" name="town" value = "HOUGANG"> <label for="houhang">Hougang</label> 
+                          <li><input type="checkbox" id="jurong east" name="town" value = "JURONG EAST"> <label for="jurong east">Jurong East</label> </li>
+                          <li><input type="checkbox" id="jurong west" name="town" value = "JURONG WEST"> <label for="jurong west">Jurong West</label> </li>
+                          <li><input type="checkbox" id="kallang/whampoa" name="town" value = "KALLANG/WHAMPOA"> <label for="kallang/whampoa">Kallang/Whompoa
+                          <li><input type="checkbox" id="pasir ris" name="town" value = "PASIR RIS"> <label for="pasir ris">Pasir Ris</label> </li>
+                          <li><input type="checkbox" id="punggol" name="town" value = "PUNGGOL"> <label for="punggol">Punggol</label> </li>
+                          <li><input type="checkbox" id="queenstown" name="town" value = "QUEENSTOWN"> <label for="queenstown">Queenstown</label> </li>
+                          <li> <input type="checkbox" id="sembawang" name="town" value = "SEMBAWANG"> <label for="sembawang">Sembawang</label> </li>
+                          <li><input type="checkbox" id="sengkeng" name="town" value = "SENGKANG"> <label for="sengkang">Sengkang</label> </li>
+                          <li><input type="checkbox" id="serangoon" name="town" value = "SERANGOON"> <label for="serangoon">Serangoon</label> </li>
+                          <li><input type="checkbox" id="tampines" name="town" value = "TAMPINES"> <label for="tampines">Tampines</label> </li>
+                          <li><input type="checkbox" id="toa payoh" name="town" value = "TOA PAYOH"> <label for="toa payoh">Toa Payoh</label> </li>
+                          <li><input type="checkbox" id="woodlands" name="town" value = "WOODLANDS"> <label for="woodlands">Woodlands</label> </li>
+                          <li><input type="checkbox" id="yishun" name="town" value = "YISHUN"> <label for="yishun">Yishun</label> </li>
+                      </ul> 
+                    </div> 
+
+                    <div class="dropdown responsive"> 
+                      <button id = "outline-button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
+                        <span class="value" data-placeholder="Select season" data-label-placement="true">Select sorting criteria</span> 
+                      </button> 
+                        <ul class="dropdown-menu"> 
+                          <li><input type="checkbox" id="likes_high" name="likes_high" value="likes_high"> <label for="likes_high">Likes (High to Low)</label> </li> 
+                          <li><input type="checkbox" id="likes_low" name="likes_low" value ="likes_low"> <label for="likes_low">Likes (Low to High)</label> </li> 
+                          <li><input type="checkbox" id="price_high" name="price_high" value ="price_high"> <label for="price_high">Price (High to Low)</label> </li> 
+                          <li><input type="checkbox" id="price_low" name="price_low" value = "price_low"> <label for="price_low">Price (Low to High)</label> </li> 
+                          <li><input type="checkbox" id="remaining_lease_high" name="remaining_lease_high" value = "remaining_lease_high"> <label for="remaining_lease_high">Remaining Lease (High to Low)</label> </li> 
+                          <li><input type="checkbox" id="remaining_lease_low" name="remaining_lease_low" value = "remaining_lease_low"> <label for="remaining_lease_low">Remaining Lease (Low to High)</label></li> 
+                          <li><input type="checkbox" id="storey_high" name="storey_high" value = "storey_high"> <label for="storey_high">Floor (High to Low)</label> </li> 
+                          <li><input type="checkbox" id="storey_low" name="town" value = "storey_low"> <label for="storey_low">Floor (Low to High)</label> </li> 
+                          <li><input type="checkbox" id="price_per_sqm_high" name="town" value = "price_per_sqm_high"> <label for="price_per_sqm_high">Price per Square Metre (High to Low)</label></li> 
+                          <li><input type="checkbox" id="price_per_sqm_low" name="town" value = "price_per_sqm_low"> <label for="price_per_sqm_low">Price per Square Metre (Low to High)</label> 
+                        </ul> 
+                      </div> 
+                    </div>
+                  </div>
+
+
+        
 {% endblock %}

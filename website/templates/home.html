@@ -39,6 +39,11 @@
       });
     });
   </script>
+  <script>
+    $('.dropdown-menu').on('click', function(e) {
+      e.stopPropagation();
+    });
+  </script>
 </head> 
 
 <body class="bg">
@@ -56,6 +61,51 @@
       </div>
     </div>
   </div>
+
+    <div class="row">
+    <div class="dropdown responsive"> 
+      <button id = "outline-button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
+        <span class="value" data-placeholder="Select price range" data-label-placement="true">Select price range</span> 
+      </button> 
+        <ul class="dropdown-menu"> 
+          <form method="POST">
+          <li> <input type="checkbox" id="test" name="test" value ="100000-200000"> <label for="200000">$100000 - $200000</label> </li>
+          <li> <input type="checkbox" id="season-summer" name="season[]" value="summer" /> <label for="season-summer">Summer</label> </li>
+          <li> <input type="checkbox" id="season-spring" name="season[]" value="spring" /> <label for="season-spring">Spring</label> </li>
+          <li> <input type="checkbox" id="season-winter" name="season[]" value="winter" /> <label for="season-winter">Winter</label> </li> 
+          <li> <input type="checkbox" id="season-unknown" name="season[]" value="unknown" /> <label for="season-unknown">Unknown</label> </li> 
+          </form>
+        </ul> 
+      </div> 
+
+      <div class="dropdown responsive"> 
+        <button id = "outline-button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
+          <span class="value" data-placeholder="Select season" data-label-placement="true">Select season</span> 
+        </button> 
+          <ul class="dropdown-menu"> 
+            <li> <input type="checkbox" id="season-fall" name="season[]" value="fall" /> <label for="season-fall">Fall</label> </li> 
+            <li> <input type="checkbox" id="season-summer" name="season[]" value="summer" /> <label for="season-summer">Summer</label> </li>
+            <li> <input type="checkbox" id="season-spring" name="season[]" value="spring" /> <label for="season-spring">Spring</label> </li>
+            <li> <input type="checkbox" id="season-winter" name="season[]" value="winter" /> <label for="season-winter">Winter</label> </li> 
+            <li> <input type="checkbox" id="season-unknown" name="season[]" value="unknown" /> <label for="season-unknown">Unknown</label> </li> 
+          </ul> 
+        </div> 
+
+        <div class="dropdown responsive"> 
+          <button id = "outline-button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
+            <span class="value" data-placeholder="Select season" data-label-placement="true">Select season</span> 
+          </button> 
+            <ul class="dropdown-menu"> 
+              <li> <input type="checkbox" id="season-fall" name="season[]" value="fall" /> <label for="season-fall">Fall</label> </li> 
+              <li> <input type="checkbox" id="season-summer" name="season[]" value="summer" /> <label for="season-summer">Summer</label> </li>
+              <li> <input type="checkbox" id="season-spring" name="season[]" value="spring" /> <label for="season-spring">Spring</label> </li>
+              <li> <input type="checkbox" id="season-winter" name="season[]" value="winter" /> <label for="season-winter">Winter</label> </li> 
+              <li> <input type="checkbox" id="season-unknown" name="season[]" value="unknown" /> <label for="season-unknown">Unknown</label> </li> 
+            </ul> 
+          </div> 
+        </div>
+        
+
 <form class="search-bar" method="POST">
   <div class="container py-2 ">
       <div class="row justify-content-center">
@@ -69,6 +119,11 @@
                   <button id="outline-button" class="btn btn-outline-primary border" type="submit" type="button">
                     <i class="fa-solid fa-dice"></i>
                   </button> </a>
+                  <a href= "{{ url_for('views.filter') }}" title="Click here for a random flat!"
+                  <button id="outline-button" class="btn btn-outline-primary border" type="submit" type="button">
+                    <i class="fa-solid fa-dice"></i>
+                  </button> </a>
+
                   <div class="btn-group">
                     <button id="outline-button" class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
                     style="color: #fc9483; background-color: #ffffff; border-color: #e1e3e6; border-radius: 0;">
@@ -171,7 +226,6 @@
                     </div>
 
                     <br>
-
                 </div>
           </div>
       </div>
