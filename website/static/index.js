@@ -191,31 +191,82 @@ function click_like_button(){
   $("#createAccountModal").modal('show');
 }
 
-function sort_check(){
+function sortCheck(){
     $('.form-check-input.sort-check').click(function() {
       $('.form-check-input.sort-check').not(this).prop('checked', false);
   });
   sleep(5).then(() => {
-  var checkboxes = document.getElementsByName('sorting_criteria[]');
-  var vals = [];
-  for (var i=0, n=checkboxes.length;i<n;i++) 
-  {
-      if (checkboxes[i].checked) 
-      { 
-          vals.splice(0,0,checkboxes[i].value);
-      }
-  }
-  console.log(vals)
-  document.getElementById("sortingCriteria").textContent = vals[0]
-  if (vals === undefined || vals.length == 0){
-    document.getElementById("sortingCriteria").textContent = "Select sorting criteria"
-  }
+    updateFilterPlaceholder('sort');
 });
 }
 
-function update_filter_placeholder(){
-  document.getElementById("sortingCriteria").textContent = "test"
+function updateFilterPlaceholder(filter){
+  if (filter == 'priceRange'){
+    var checkboxes = document.getElementsByName('priceRange[]');
+    var vals = [];
+    for (var i=0, n=checkboxes.length;i<n;i++)
+    {
+        if (checkboxes[i].checked)
+        {
+            vals.push(checkboxes[i].value)
+        }
+    }
+    console.log(vals)
+    document.getElementById("priceRange").textContent = vals
+    if (vals === undefined || vals.length == 0){
+      document.getElementById("priceRange").textContent = "Select price range"
+    }
+  }
+  else if (filter == 'flatType'){
+    var checkboxes = document.getElementsByName('flatType[]');
+    var vals = [];
+    for (var i=0, n=checkboxes.length;i<n;i++)
+    {
+        if (checkboxes[i].checked)
+        {
+            vals.push(checkboxes[i].value)
+        }
+    }
+    console.log(vals)
+    document.getElementById("flatType").textContent = vals
+    if (vals === undefined || vals.length == 0){
+      document.getElementById("flatType").textContent = "Select flat type"
+    }
+  }
+  
+  else if (filter == 'town'){
+    var checkboxes = document.getElementsByName('town[]');
+    var vals = [];
+    for (var i=0, n=checkboxes.length;i<n;i++)
+    {
+        if (checkboxes[i].checked)
+        {
+            vals.push(checkboxes[i].value)
+        }
+    }
+    console.log(vals)
+    document.getElementById("town").textContent = vals
+    if (vals === undefined || vals.length == 0){
+      document.getElementById("town").textContent = "Select town"
+    }
+  }
 
+  else if (filter == 'sort'){
+    var checkboxes = document.getElementsByName('sortingCriteria[]');
+    var vals = [];
+    for (var i=0, n=checkboxes.length;i<n;i++) 
+    {
+        if (checkboxes[i].checked) 
+        { 
+            vals.splice(0,0,checkboxes[i].value);
+        }
+    }
+    console.log(vals)
+    document.getElementById("sortingCriteria").textContent = vals[0]
+    if (vals === undefined || vals.length == 0){
+      document.getElementById("sortingCriteria").textContent = "Select sorting criteria"
+    }
+  }
 }
 
 function sleep (time) {
