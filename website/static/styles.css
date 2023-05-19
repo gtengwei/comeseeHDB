@@ -399,6 +399,10 @@ label {
     width: auto;
 }
 
+.dropdown-menu{
+    transform: translate3d(0px, 50px, 0px)!important;
+}
+
 .dropdown-menu.show{
     max-height: 500px;
     overflow-y: auto;
