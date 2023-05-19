@@ -269,6 +269,36 @@ function updateFilterPlaceholder(filter){
   }
 }
 
+function checkFilter(){
+  var filterCheckboxes = [];
+  var priceRangeCheckboxes = document.getElementsByName('priceRange[]');
+  var flatTypeCheckboxes = document.getElementsByName('flatType[]');
+  var townCheckboxes = document.getElementsByName('town[]');
+  var sortingCriteriaCheckboxes = document.getElementsByName('sortingCriteria[]');
+  filterCheckboxes.push(priceRangeCheckboxes, flatTypeCheckboxes, townCheckboxes, sortingCriteriaCheckboxes);
+  let form = document.querySelector('form');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    for (i=0; i<filterCheckboxes.length; i++){
+      var checkboxes = filterCheckboxes[i];
+      checkCheckboxes(checkboxes);
+    }
+  });
+}
+
+function checkCheckboxes(checkboxes){
+  var checkboxesArr = [];
+  for (var i=0, n=checkboxes.length;i<n;i++){
+    if (checkboxes[i].checked){
+      checkboxesArr.push(checkboxes[i]);
+    }
+  }
+  for (i=0; i<checkboxesArr.length; i++){
+    checkboxesArr[i].checked = true;
+  }
+
+}
+
 function sleep (time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
